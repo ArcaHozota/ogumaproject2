@@ -2,58 +2,43 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja-JP">
-
-<head>
-<title>pgcrowd</title>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="keys" content="">
-<meta name="author" content="">
-<base
-	href="https://${pageContext.request.serverName }:${pageContext.request.serverPort }${pageContext.request.contextPath }/" />
-<link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="../static/css/font-awesome.min.css">
-<link rel="stylesheet" href="../static/css/login.css">
-<script type="text/javascript"
-	src="../static/jquery/jquery-3.6.2.min.js"></script>
-<script type="text/javascript"
-	src="../static/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../static/layer/layer.js"></script>
-</head>
-
+<%@include file="included-header.jsp"%>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<div>
-					<a class="navbar-brand" href="index.html" style="font-size: 32px;">PGアプリケーション</a>
+	<%@include file="included-navibar.jsp"%>
+	<div class="container-fluid">
+		<div class="row">
+			<%@include file="included-sidebar.jsp"%>
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				<h1 class="page-header">控制面板</h1>
+
+				<div class="row placeholders">
+					<div class="col-xs-6 col-sm-3 placeholder">
+						<img data-src="holder.js/200x200/auto/sky" class="img-responsive"
+							alt="Generic placeholder thumbnail">
+						<h4>Label</h4>
+						<span class="text-muted">Something else</span>
+					</div>
+					<div class="col-xs-6 col-sm-3 placeholder">
+						<img data-src="holder.js/200x200/auto/vine" class="img-responsive"
+							alt="Generic placeholder thumbnail">
+						<h4>Label</h4>
+						<span class="text-muted">Something else</span>
+					</div>
+					<div class="col-xs-6 col-sm-3 placeholder">
+						<img data-src="holder.js/200x200/auto/sky" class="img-responsive"
+							alt="Generic placeholder thumbnail">
+						<h4>Label</h4>
+						<span class="text-muted">Something else</span>
+					</div>
+					<div class="col-xs-6 col-sm-3 placeholder">
+						<img data-src="holder.js/200x200/auto/vine" class="img-responsive"
+							alt="Generic placeholder thumbnail">
+						<h4>Label</h4>
+						<span class="text-muted">Something else</span>
+					</div>
 				</div>
 			</div>
 		</div>
-	</nav>
-
-	<div class="container">
-
-		<form class="form-signin" role="form">
-			<h2 class="form-signin-heading">
-				<i class="glyphicon glyphicon-log-in"></i>PGアプリケーション社員登録
-			</h2>
-			<p>${requestScope.exception.message}</p>
-			<div class="form-group has-success has-feedback">
-				<input type="text" class="form-control" id="inputSuccess4"
-					placeholder="アカウント名を入力してください" autofocus> <span
-					class="glyphicon glyphicon-user form-control-feedback"></span>
-			</div>
-			<div class="form-group has-success has-feedback">
-				<input type="text" class="form-control" id="inputSuccess4"
-					placeholder="パスワードを入力してください" style="margin-top: 10px;"> <span
-					class="glyphicon glyphicon-lock form-control-feedback"></span>
-			</div>
-			<a class="btn btn-lg btn-success btn-block" href="main.html">登録</a>
-		</form>
 	</div>
 </body>
-
 </html>
