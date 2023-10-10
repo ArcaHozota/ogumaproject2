@@ -9,8 +9,9 @@ import lombok.Setter;
 /**
  * 共通ページングクラス
  *
- * @param <T>
- * @author Administrator
+ * @param <T> データタイプ
+ * @author ArkamaHozota
+ * @since 1.10
  */
 @Getter
 @Setter
