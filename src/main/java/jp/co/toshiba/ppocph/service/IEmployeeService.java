@@ -2,7 +2,13 @@ package jp.co.toshiba.ppocph.service;
 
 import jp.co.toshiba.ppocph.entity.Employee;
 
-public interface EmployeeService {
+/**
+ * 社員サービスインターフェス
+ *
+ * @author ArkamaHozota
+ * @since 1.00beta
+ */
+public interface IEmployeeService {
 
 	Employee getAdminByLoginAccount(String account, String password);
 }
