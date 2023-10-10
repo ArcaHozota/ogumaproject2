@@ -10,5 +10,12 @@ import jp.co.toshiba.ppocph.entity.Employee;
  */
 public interface IEmployeeService {
 
+	/**
+	 * ログイン処理
+	 *
+	 * @param account  アカウント
+	 * @param password パスワード
+	 * @return Employee
+	 */
 	Employee getAdminByLoginAccount(String account, String password);
 }
