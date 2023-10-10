@@ -1,5 +1,7 @@
 package jp.co.toshiba.ppocph.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 
@@ -9,6 +11,7 @@ import jp.co.toshiba.ppocph.service.IEmployeeService;
  * @author ArkamaHozota
  * @since 1.00beta
  */
+@Service
 public class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
