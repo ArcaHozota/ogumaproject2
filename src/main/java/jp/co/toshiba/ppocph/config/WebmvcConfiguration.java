@@ -41,6 +41,7 @@ public class WebmvcConfiguration extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	public void addViewControllers(final ViewControllerRegistry registry) {
+		registry.addViewController("/admin/to/login/page.html").setViewName("admin-login");
 		registry.addViewController("/admin/to/main/page.html").setViewName("admin-main");
 	}
 
