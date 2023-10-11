@@ -19,10 +19,14 @@ spring:
     database: POSTGRESQL
     show-sql: true
     open-in-view: false
-  mvc:
-    view:
-      prefix: classpath:templates/*
-      suffix: .html
   output:
     ansi:
       enabled: ALWAYS
+  thymeleaf:
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    prefix: classpath:/templates/
+    suffix: .html
