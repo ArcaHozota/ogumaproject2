@@ -55,7 +55,7 @@ public final class EmployeeController {
 	 * @param session セッション
 	 * @return String
 	 */
-	@PostMapping("/do/logout")
+	@PostMapping("/logout")
 	public String doLogout(final HttpSession session) {
 		// セッションを無効化する
 		session.invalidate();
