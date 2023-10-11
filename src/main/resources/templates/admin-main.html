@@ -44,6 +44,7 @@
 		});
 		$("#logout-link").click(function (e) {
 			e.preventDefault();
+			$(this).removeAttr("href");
 			$("#logout-form").submit(); 
 		});
 	</script>
