@@ -26,5 +26,4 @@ public final class LoginInterceptor implements AsyncHandlerInterceptor {
 		}
 		return true;
 	}
-
 }

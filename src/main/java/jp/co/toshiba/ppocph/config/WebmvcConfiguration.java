@@ -2,14 +2,18 @@ package jp.co.toshiba.ppocph.config;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import jp.co.toshiba.ppocph.common.PgcrowdConstants;
+import jp.co.toshiba.ppocph.listener.LoginInterceptor;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -21,6 +25,20 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Configuration
 public class WebmvcConfiguration extends WebMvcConfigurationSupport {
+
+	@Resource
+	private LoginInterceptor loginInterceptor;
+
+	/**
+	 * ログインインターセプタを定義する
+	 *
+	 * @param registry レジストリ
+	 */
+	@Override
+	protected void addInterceptors(final InterceptorRegistry registry) {
+		registry.addInterceptor(this.loginInterceptor).addPathPatterns("/**")
+				.excludePathPatterns("/admin/to/login/page.html", "/admin/do/login.html", "/admin/do/logout.html");
+	}
 
 	/**
 	 * 静的なリソースのマッピングを設定する
