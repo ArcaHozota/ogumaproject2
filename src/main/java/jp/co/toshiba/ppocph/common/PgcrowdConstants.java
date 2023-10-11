@@ -30,5 +30,5 @@ public final class PgcrowdConstants {
 
 	public static final String MESSAGE_STRING_NOTLOGIN = "ログインしてください";
 
-	public static final String MESSAGE_STRING_PROHIBITED = "ユーザは存在しません";
+	public static final String MESSAGE_STRING_PROHIBITED = "ユーザは存在しません、もう一度やり直してください";
 }
