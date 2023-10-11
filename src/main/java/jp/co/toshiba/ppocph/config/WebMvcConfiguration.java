@@ -22,17 +22,6 @@ import lombok.extern.log4j.Log4j2;
 @Configuration
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
-//	/**
-//	 * ログインインターセプタを定義する
-//	 *
-//	 * @param registry レジストリ
-//	 */
-//	@Override
-//	protected void addInterceptors(final InterceptorRegistry registry) {
-//		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns(
-//				"/pgcrowd/employee/login", "/pgcrowd/employee/do/login", "/pgcrowd/employee/do/logout");
-//	}
-
 	/**
 	 * 静的なリソースのマッピングを設定する
 	 *
