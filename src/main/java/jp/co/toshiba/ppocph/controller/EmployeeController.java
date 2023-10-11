@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import jp.co.toshiba.ppocph.common.PgcrowdConstants;
 import jp.co.toshiba.ppocph.entity.Employee;
@@ -35,16 +36,17 @@ public final class EmployeeController {
 	 * @param account  アカウント
 	 * @param password パスワード
 	 * @param session  セッション
-	 * @return String
+	 * @return ModelAndView
 	 */
 	@PostMapping("/do/login")
-	public String doLogin(@RequestParam("loginAcct") final String account,
-			@RequestParam("userPswd") final String password, final HttpSession session) {
+	public ModelAndView doLogin(@RequestParam("loginAcct") final String account,
+			@RequestParam("userPswd") final String password) {
 		// EmployeeServiceメソッドを呼び出して、ログインチェックを実行します。このメソッドがEmployeeオブジェクトを返すことができれば、ログインは成功です。アカウントとパスワードが間違っている場合は、例外がスローされます。
 		final Employee employee = this.iEmployeeService.getAdminByLoginAccount(account, password);
 		// 成功したログインによって返された管理オブジェクトをセッションドメインに保存します。
-		session.setAttribute(PgcrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
-		return "redirect:/pgcrowd/employee/pages";
+		final ModelAndView modelAndView = new ModelAndView("admin-main");
+		modelAndView.addObject(PgcrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
+		return modelAndView;
 	}
 
 	/**

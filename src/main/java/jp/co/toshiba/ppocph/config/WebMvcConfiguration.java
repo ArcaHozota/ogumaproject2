@@ -57,7 +57,6 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 	@Override
 	public void addViewControllers(final ViewControllerRegistry registry) {
 		registry.addViewController("/pgcrowd/employee/login").setViewName("admin-login");
-		registry.addViewController("/pgcrowd/employee/pages").setViewName("admin-main");
 	}
 
 	/**
