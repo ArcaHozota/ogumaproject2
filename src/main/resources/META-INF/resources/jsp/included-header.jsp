@@ -9,9 +9,10 @@
 <meta name="author" content="">
 <base
 	href="https://${pageContext.request.serverName }:${pageContext.request.serverPort }${pageContext.request.contextPath }/" />
-<link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="../static/css/font-awesome.min.css">
-<link rel="stylesheet" href="../static/css/main.css">
+<link rel="stylesheet"
+	href="../../../static/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../../static/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../../static/css/main.css">
 <style>
 .tree li {
 	list-style-type: none;
@@ -27,11 +28,11 @@
 }
 </style>
 <script type="text/javascript"
-	src="../static/jquery/jquery-3.6.2.min.js"></script>
+	src="../../../static/jquery/jquery-3.6.2.min.js"></script>
 <script type="text/javascript"
-	src="../static/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../static/script/docs.min.js"></script>
-<script type="text/javascript" src="../static/layer/layer.js"></script>
+	src="../../../static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../../static/script/docs.min.js"></script>
+<script type="text/javascript" src="../../../static/layer/layer.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$(".list-group-item").click(function() {
