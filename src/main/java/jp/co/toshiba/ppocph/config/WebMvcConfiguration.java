@@ -30,7 +30,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 //	@Override
 //	protected void addInterceptors(final InterceptorRegistry registry) {
 //		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns(
-//				"/pgcrowd/employee/login", "/pgcrowd/employee/logout", "/pgcrowd/employee/do/login");
+//				"/pgcrowd/employee/login", "/pgcrowd/employee/do/logout", "/pgcrowd/employee/do/login");
 //	}
 
 	/**
