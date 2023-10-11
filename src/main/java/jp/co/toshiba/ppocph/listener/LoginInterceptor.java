@@ -34,8 +34,8 @@ public final class LoginInterceptor implements AsyncHandlerInterceptor {
 		// 获取请求的路径
 		final String path = request.getServletPath();
 		// 定义一个数组，存放不需要拦截的路径
-		final String[] excludes = { "/pgcrowd/employee/login", "/pgcrowd/employee/do/login",
-				"/pgcrowd/employee/logout" };
+		final String[] excludes = { "/pgcrowd/employee/login", "/pgcrowd/employee/do/login", "/pgcrowd/employee/logout",
+				"/pgcrowd/employee/do/logout" };
 		// 遍历数组，判断当前路径是否在其中
 		for (final String exclude : excludes) {
 			// 如果匹配，返回 true，表示不拦截
