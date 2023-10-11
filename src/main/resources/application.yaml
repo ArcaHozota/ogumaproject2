@@ -21,8 +21,8 @@ spring:
     open-in-view: false
   mvc:
     view:
-      prefix: /WEB-INF/jsp/
-      suffix: .jsp
+      prefix: /public/
+      suffix: .html
   output:
     ansi:
       enabled: ALWAYS
