@@ -46,6 +46,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 		registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
 		registry.addResourceHandler("/layer/**").addResourceLocations("classpath:/static/layer/");
 		registry.addResourceHandler("/jquery/**").addResourceLocations("classpath:/static/jquery/");
+		registry.addResourceHandler("/script/**").addResourceLocations("classpath:/static/script/");
 	}
 
 	/**
