@@ -55,7 +55,7 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<div>
-					<a class="navbar-brand" style="font-size: 32px;" href="#">PGアプリケーション</a>
+					<a class="navbar-brand" style="font-size:32px;" th:href="@{/pgcrowd/to/index}">PGアプリケーション</a>
 				</div>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
@@ -74,7 +74,8 @@
 										メッセージ</a></li>
 								<li class="divider"></li>
 								<li>
-									<a id="logout-link" href="logout"><i class="glyphicon glyphicon-off"></i>ログアウト</a>
+									<a id="logout-link" href="/do/logout"><i
+											class="glyphicon glyphicon-off"></i>ログアウト</a>
 									<form id="logout-form" method="post" th:action="@{/pgcrowd/employee/logout}"
 										style="display:none;"></form>
 								</li>
