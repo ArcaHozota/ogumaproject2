@@ -5,13 +5,11 @@ import java.util.List;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import jp.co.toshiba.ppocph.common.PgcrowdConstants;
-import jp.co.toshiba.ppocph.listener.LoginInterceptor;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -24,16 +22,16 @@ import lombok.extern.log4j.Log4j2;
 @Configuration
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
-	/**
-	 * ログインインターセプタを定義する
-	 *
-	 * @param registry レジストリ
-	 */
-	@Override
-	protected void addInterceptors(final InterceptorRegistry registry) {
-		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns(
-				"pgcrowd/employee/login", "pgcrowd/employee/do/login", "pgcrowd/employee/do/logout");
-	}
+//	/**
+//	 * ログインインターセプタを定義する
+//	 *
+//	 * @param registry レジストリ
+//	 */
+//	@Override
+//	protected void addInterceptors(final InterceptorRegistry registry) {
+//		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns(
+//				"/pgcrowd/employee/login", "/pgcrowd/employee/do/login", "/pgcrowd/employee/do/logout");
+//	}
 
 	/**
 	 * 静的なリソースのマッピングを設定する
