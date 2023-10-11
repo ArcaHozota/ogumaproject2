@@ -21,7 +21,7 @@ spring:
     open-in-view: false
   mvc:
     view:
-      prefix: /jsp/
+      prefix: /WEB-INF/jsp/
       suffix: .jsp
   output:
     ansi:
