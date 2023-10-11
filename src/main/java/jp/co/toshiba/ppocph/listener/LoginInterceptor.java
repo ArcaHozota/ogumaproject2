@@ -22,7 +22,7 @@ import jp.co.toshiba.ppocph.exception.LoginFailedException;
  */
 @Component
 @Order(10)
-public class LoginInterceptor implements AsyncHandlerInterceptor {
+public final class LoginInterceptor implements AsyncHandlerInterceptor {
 
 	@Override
 	public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response,
