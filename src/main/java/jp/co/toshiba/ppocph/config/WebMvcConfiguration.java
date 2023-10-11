@@ -44,7 +44,10 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 	protected void addResourceHandlers(final ResourceHandlerRegistry registry) {
 		log.info(PgcrowdConstants.MSG002);
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-		registry.addResourceHandler("/templates/**").addResourceLocations("classpath:/templates/");
+		registry.addResourceHandler("/bootstrap/**").addResourceLocations("classpath:/static/bootstrap/");
+		registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
+		registry.addResourceHandler("/layer/**").addResourceLocations("classpath:/static/layer/");
+		registry.addResourceHandler("/jquery/**").addResourceLocations("classpath:/static/jquery/");
 	}
 
 	/**
