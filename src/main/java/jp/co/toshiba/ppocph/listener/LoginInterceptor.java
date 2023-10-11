@@ -10,6 +10,12 @@ import jp.co.toshiba.ppocph.common.PgcrowdConstants;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.exception.LoginFailedException;
 
+/**
+ * アノテーションに基づく例外ハンドラークラス
+ *
+ * @author ArkamaHozota
+ * @since 1.17
+ */
 public final class LoginInterceptor implements AsyncHandlerInterceptor {
 
 	@Override

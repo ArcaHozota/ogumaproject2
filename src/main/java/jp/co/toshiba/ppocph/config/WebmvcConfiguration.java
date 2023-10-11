@@ -2,8 +2,6 @@ package jp.co.toshiba.ppocph.config;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -26,9 +24,6 @@ import lombok.extern.log4j.Log4j2;
 @Configuration
 public final class WebmvcConfiguration extends WebMvcConfigurationSupport {
 
-	@Resource
-	private LoginInterceptor loginInterceptor;
-
 	/**
 	 * ログインインターセプタを定義する
 	 *
@@ -36,7 +31,7 @@ public final class WebmvcConfiguration extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	protected void addInterceptors(final InterceptorRegistry registry) {
-		registry.addInterceptor(this.loginInterceptor).addPathPatterns("/**")
+		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**")
 				.excludePathPatterns("/admin/to/login/page.html", "/admin/do/login.html", "/admin/do/logout.html");
 	}
 
@@ -49,7 +44,7 @@ public final class WebmvcConfiguration extends WebMvcConfigurationSupport {
 	protected void addResourceHandlers(final ResourceHandlerRegistry registry) {
 		log.info(PgcrowdConstants.MSG002);
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-		registry.addResourceHandler("/public/**").addResourceLocations("classpath:/public/");
+		registry.addResourceHandler("/templates/**").addResourceLocations("classpath:/templates/");
 	}
 
 	/**
