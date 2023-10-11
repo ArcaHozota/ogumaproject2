@@ -32,7 +32,7 @@
 			<h2 class="form-signin-heading">
 				<i class="glyphicon glyphicon-log-in"></i>社員登録
 			</h2>
-			<h4 th:text="${exception.message}"></h4>
+			<h4 th:text="${exception} eq null ? '' : ${exception.message}"></h4>
 			<div class="form-group has-success has-feedback">
 				<input type="text" name="loginAcct" class="form-control" id="inputSuccess4"
 					placeholder="アカウント名を入力してください" autofocus>
