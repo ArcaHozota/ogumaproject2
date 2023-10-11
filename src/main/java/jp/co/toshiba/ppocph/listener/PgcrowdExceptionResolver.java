@@ -61,10 +61,10 @@ public final class PgcrowdExceptionResolver {
 		}
 		// 9.创建ModelAndView 对象
 		final ModelAndView modelAndView = new ModelAndView();
-		// 10.将Exception 对象存入模型
-		modelAndView.addObject(PgcrowdConstants.ATTRNAME_EXCEPTION, exception);
-		// 11.设置目标视图名称
+		// 10.设置目标视图名称
 		modelAndView.setViewName(viewName);
+		// 11.将Exception 对象存入模型
+		modelAndView.addObject(PgcrowdConstants.ATTRNAME_EXCEPTION, exception);
 		// 12.返回ModelAndView 对象
 		return modelAndView;
 	}
