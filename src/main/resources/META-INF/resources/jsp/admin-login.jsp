@@ -33,7 +33,6 @@
 		</div>
 	</nav>
 	<div class="container">
-
 		<form action="admin/do/login.html" method="post" class="form-signin"
 			role="form">
 			<h2 class="form-signin-heading">

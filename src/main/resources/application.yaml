@@ -21,7 +21,7 @@ spring:
     open-in-view: false
   mvc:
     view:
-      prefix: classpath:/templates/*
+      prefix: /META-INF/resources/jsp/
       suffix: .jsp
   output:
     ansi:
