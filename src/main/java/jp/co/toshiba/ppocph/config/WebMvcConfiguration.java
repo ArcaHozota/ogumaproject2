@@ -22,7 +22,7 @@ import lombok.extern.log4j.Log4j2;
  */
 @Log4j2
 @Configuration
-public class WebmvcConfiguration extends WebMvcConfigurationSupport {
+public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
 	/**
 	 * ログインインターセプタを定義する
