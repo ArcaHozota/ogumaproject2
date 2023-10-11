@@ -41,11 +41,10 @@
 					}
 				}
 			});
-		});
-		$("#logout-link").click(function (e) {
-			e.preventDefault();
-			$(this).removeAttr("href");
-			$("#logout-form").submit(); 
+			$("#logout-link").click(function (e) {
+				e.preventDefault();
+				$("#logout-form").submit();
+			});
 		});
 	</script>
 </head>
