@@ -43,8 +43,8 @@ public class WebmvcConfiguration extends WebMvcConfigurationSupport {
 	@Override
 	protected void addResourceHandlers(final ResourceHandlerRegistry registry) {
 		log.info(PgcrowdConstants.MSG002);
+		registry.addResourceHandler("/public/**").addResourceLocations("classpath:/public/");
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-		registry.addResourceHandler("/WEB-INF/jsp/**").addResourceLocations("classpath:/WEB-INF/jsp/");
 	}
 
 	/**
