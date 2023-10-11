@@ -44,4 +44,17 @@ public final class EmployeeController {
 		session.setAttribute(PgcrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		return "redirect:/admin/to/main/page.html";
 	}
+
+	/**
+	 * ログアウト処理
+	 *
+	 * @param session セッション
+	 * @return String
+	 */
+	@PostMapping("/admin/do/logout.html")
+	public String doLogout(final HttpSession session) {
+		// セッションを無効化する
+		session.invalidate();
+		return "redirect:/admin/to/login/page.html";
+	}
 }
