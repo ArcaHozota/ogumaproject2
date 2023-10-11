@@ -44,10 +44,7 @@
 		});
 		$("#logout-link").click(function (e) {
 			e.preventDefault();
-			$.post("logout", function (data) {
-				alert(data.message);
-				window.location.href = data.redirect;
-			});
+			$("#logout-form").submit(); 
 		});
 	</script>
 </head>
@@ -75,7 +72,9 @@
 								<li><a href="#"><i class="glyphicon glyphicon-comment"></i>
 										メッセージ</a></li>
 								<li class="divider"></li>
-								<li><a id="logout-link" href="logout"><i class="glyphicon glyphicon-off"></i>ログアウト</a>
+								<li>
+									<a id="logout-link" href="logout"><i class="glyphicon glyphicon-off"></i>ログアウト</a>
+									<form id="logout-form" method="post" action="logout" style="display:none;"></form>
 								</li>
 							</ul>
 						</div>
