@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import jp.co.toshiba.ppocph.entity.Employee;
 
+/**
+ * 社員管理リポジトリ
+ */
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer>, JpaSpecificationExecutor<Employee> {
 }
