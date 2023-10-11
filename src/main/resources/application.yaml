@@ -21,7 +21,7 @@ spring:
     open-in-view: false
   mvc:
     view:
-      prefix: /public/
+      prefix: classpath:templates/*
       suffix: .html
   output:
     ansi:

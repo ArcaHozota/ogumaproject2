@@ -43,7 +43,7 @@ public class WebmvcConfiguration extends WebMvcConfigurationSupport {
 	@Override
 	protected void addResourceHandlers(final ResourceHandlerRegistry registry) {
 		log.info(PgcrowdConstants.MSG002);
-		registry.addResourceHandler("/public/**").addResourceLocations("classpath:/public/");
+		registry.addResourceHandler("/templates/**").addResourceLocations("classpath:/templates/");
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
 	}
 
