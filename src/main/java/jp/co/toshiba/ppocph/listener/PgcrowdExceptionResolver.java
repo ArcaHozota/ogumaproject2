@@ -73,7 +73,7 @@ public final class PgcrowdExceptionResolver {
 	@ExceptionHandler(value = Exception.class)
 	public ModelAndView resolveException(final Exception exception, final HttpServletRequest request,
 			final HttpServletResponse response) throws IOException {
-		// 只是指定当前异常对应的页面即可
+		// 現在の例外に対応するページを指定する
 		final String viewName = "system-error";
 		return this.commonResolveException(exception, request, response, viewName);
 	}
@@ -82,7 +82,7 @@ public final class PgcrowdExceptionResolver {
 	@ExceptionHandler(value = LoginFailedException.class)
 	public ModelAndView resolveLoginFailedException(final LoginFailedException exception,
 			final HttpServletRequest request, final HttpServletResponse response) throws IOException {
-		// 只是指定当前异常对应的页面即可
+		// 現在の例外に対応するページを指定する
 		final String viewName = "admin-login";
 		return this.commonResolveException(exception, request, response, viewName);
 	}
