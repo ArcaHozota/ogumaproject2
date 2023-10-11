@@ -4,7 +4,9 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import jp.co.toshiba.ppocph.common.PgcrowdConstants;
 import jp.co.toshiba.ppocph.entity.Employee;
+import jp.co.toshiba.ppocph.exception.LoginFailedException;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.utils.PgcrowdUtils;
@@ -33,6 +35,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		employee.setLoginAccount(account);
 		employee.setPassword(plainToMD5);
 		final Example<Employee> example = Example.of(employee, ExampleMatcher.matchingAll());
-		return this.employeeRepository.findOne(example).orElseGet(Employee::new);
+		return this.employeeRepository.findOne(example).orElseGet(() -> {
+			throw new LoginFailedException(PgcrowdConstants.MESSAGE_STRING_PROHIBITED);
+		});
 	}
 }

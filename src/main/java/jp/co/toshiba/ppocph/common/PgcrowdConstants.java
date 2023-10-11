@@ -29,4 +29,6 @@ public final class PgcrowdConstants {
 	public static final String MESSAGE_STRING_INVALIDATE = "Invalid password string";
 
 	public static final String MESSAGE_STRING_NOTLOGIN = "ログインしてください";
+
+	public static final String MESSAGE_STRING_PROHIBITED = "ユーザは存在しません";
 }
