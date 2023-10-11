@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja-JP">
-
 <head>
 <title>pgcrowd</title>
 <meta charset="UTF-8">
@@ -12,7 +11,7 @@
 <meta name="keys" content="">
 <meta name="author" content="">
 <base
-	href="https://${pageContext.request.serverName }:${pageContext.request.serverPort }${pageContext.request.contextPath }/" />
+	href="https://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/" />
 <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="../static/css/font-awesome.min.css">
 <link rel="stylesheet" href="../static/css/login.css">
@@ -40,7 +39,6 @@
 			</div>
 		</div>
 	</nav>
-
 	<div class="container" style="text-align: center;">
 		<h3>システム情報</h3>
 		<h4>${requestScope.exception.message}</h4>
