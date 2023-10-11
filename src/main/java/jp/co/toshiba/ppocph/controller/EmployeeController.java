@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.toshiba.ppocph.common.PgcrowdConstants;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
  * @since 1.00beta
  */
 @Controller
+@RequestMapping("/pgcrowd/employee")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EmployeeController {
 
@@ -35,14 +37,14 @@ public final class EmployeeController {
 	 * @param session  セッション
 	 * @return String
 	 */
-	@PostMapping("/admin/do/login.html")
+	@PostMapping("/do/login")
 	public String doLogin(@RequestParam("loginAcct") final String account,
 			@RequestParam("userPswd") final String password, final HttpSession session) {
 		// EmployeeServiceメソッドを呼び出して、ログインチェックを実行します。このメソッドがEmployeeオブジェクトを返すことができれば、ログインは成功です。アカウントとパスワードが間違っている場合は、例外がスローされます。
 		final Employee employee = this.iEmployeeService.getAdminByLoginAccount(account, password);
 		// 成功したログインによって返された管理オブジェクトをセッションドメインに保存します。
 		session.setAttribute(PgcrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
-		return "redirect:/admin/to/main/page.html";
+		return "redirect:/pgcrowd/employee/pages";
 	}
 
 	/**
@@ -51,10 +53,10 @@ public final class EmployeeController {
 	 * @param session セッション
 	 * @return String
 	 */
-	@PostMapping("/admin/do/logout.html")
+	@PostMapping("/logout")
 	public String doLogout(final HttpSession session) {
 		// セッションを無効化する
 		session.invalidate();
-		return "redirect:/admin/to/login/page.html";
+		return "redirect:/pgcrowd/employee/login";
 	}
 }

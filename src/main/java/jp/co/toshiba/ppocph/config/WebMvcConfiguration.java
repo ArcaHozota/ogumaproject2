@@ -31,8 +31,8 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	protected void addInterceptors(final InterceptorRegistry registry) {
-		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**")
-				.excludePathPatterns("/admin/to/login/page.html", "/admin/do/login.html", "/admin/do/logout.html");
+		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns(
+				"/pgcrowd/employee/login", "/pgcrowd/employee/logout", "/pgcrowd/employee/do/login");
 	}
 
 	/**
@@ -57,8 +57,8 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	public void addViewControllers(final ViewControllerRegistry registry) {
-		registry.addViewController("/admin/to/login/page.html").setViewName("admin-login");
-		registry.addViewController("/admin/to/main/page.html").setViewName("admin-main");
+		registry.addViewController("/pgcrowd/employee/login").setViewName("admin-login");
+		registry.addViewController("/pgcrowd/employee/pages").setViewName("admin-main");
 	}
 
 	/**
