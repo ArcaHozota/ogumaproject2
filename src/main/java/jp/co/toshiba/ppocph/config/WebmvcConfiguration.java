@@ -24,7 +24,7 @@ import lombok.extern.log4j.Log4j2;
  */
 @Log4j2
 @Configuration
-public class WebmvcConfiguration extends WebMvcConfigurationSupport {
+public final class WebmvcConfiguration extends WebMvcConfigurationSupport {
 
 	@Resource
 	private LoginInterceptor loginInterceptor;

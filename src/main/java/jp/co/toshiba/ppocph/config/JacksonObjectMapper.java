@@ -23,7 +23,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
  * @author ArkamaHozota
  * @since 1.00beta
  */
-public class JacksonObjectMapper extends ObjectMapper {
+public final class JacksonObjectMapper extends ObjectMapper {
 
 	private static final long serialVersionUID = 3882120239622401371L;
 
