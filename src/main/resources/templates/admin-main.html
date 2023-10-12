@@ -67,9 +67,8 @@
 							<li>
 								<hr class="dropdown-divider">
 							</li>
-							<li> <a id="logout-link" href="/do/logout"><i class="bi bi-box-arrow-right"></i>ログアウト</a>
-								<form id="logout-form" method="post" th:action="@{/pgcrowd/employee/logout}"
-									style="display:none;"></form>
+							<li> <a id="logout-link" th:href="@{/pgcrowd/employee/logout}"><i
+										class="bi bi-box-arrow-right"></i>ログアウト</a>
 							</li>
 						</ul>
 					</li>
