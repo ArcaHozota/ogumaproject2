@@ -20,14 +20,9 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<div>
-					<a class="navbar-brand" th:href="@{/pgcrowd/to/index}" style="font-size:32px;">PGアプリケーション</a>
-				</div>
-			</div>
-		</div>
+	<nav class="navbar navbar-dark bg-dark fixed-top" role="navigation">
+		<div class="container-fluid"> <a class="navbar-brand" th:href="@{/pgcrowd/to/index}"
+				style="font-size:32px;">PGアプリケーション</a> </div>
 	</nav>
 	<div class="container">
 		<form th:action="@{/pgcrowd/employee/do/login}" method="post" class="form-signin" role="form">
