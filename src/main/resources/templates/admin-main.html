@@ -52,45 +52,31 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<div>
-					<a class="navbar-brand" style="font-size:32px;" th:href="@{/pgcrowd/to/index}">PGアプリケーション</a>
-				</div>
-			</div>
+	<nav class="navbar navbar-dark bg-dark fixed-top" role="navigation">
+		<div class="container-fluid"> <a class="navbar-brand" style="font-size:32px;"
+				th:href="@{/pgcrowd/to/index}">PGアプリケーション</a>
 			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-right">
+				<ul class="nav navbar-nav ml-auto">
 					<li style="padding-top: 8px;">
-						<div class="btn-group">
-							<button type="button" class="btn btn-default btn-success dropdown-toggle"
-								data-toggle="dropdown">
-								<i class="bi bi-person-fill" th:text="${employee.username}"></i> <span
-									class="caret"></span>
-							</button>
+						<div class="btn-group"> <button type="button" class="btn btn-default btn-success
+								dropdown-toggle" data-toggle="dropdown"> <i class="bi bi-person-fill" th:text="${employee.username}"></i> <span
+									class="caret"></span> </button>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="#"><i class="bi bi-gear-wide-connected"></i>
-										個人設定</a></li>
-								<li><a href="#"><i class="bi bi-chat-dots"></i>
-										メッセージ</a></li>
+								<li><a href="#"><i class="bi bi-gear-wide-connected"></i> 個人設定</a></li>
+								<li><a href="#"><i class="bi bi-chat-dots"></i> メッセージ</a></li>
 								<li class="divider"></li>
-								<li>
-									<a id="logout-link" href="/do/logout"><i class="bi bi-box-arrow-right"></i>ログアウト</a>
+								<li> <a id="logout-link" href="/do/logout"><i class="bi
+											bi-box-arrow-right"></i>ログアウト</a>
 									<form id="logout-form" method="post" th:action="@{/pgcrowd/employee/logout}"
 										style="display:none;"></form>
 								</li>
 							</ul>
 						</div>
 					</li>
-					<li style="margin-left: 10px; padding-top: 8px;">
-						<button type="button" class="btn btn-default btn-danger">
-							<i class="bi bi-info-circle"></i>ヘルプ
-						</button>
-					</li>
-				</ul>
-				<form class="navbar-form navbar-right">
-					<input type="text" class="form-control" placeholder="検索">
-				</form>
+					<li style="margin-left: 10px; padding-top: 8px;"> <button type="button" class="btn btn-default
+							btn-danger"> <i class="bi bi-info-circle"></i>ヘルプ </button> </li>
+				</ul> <!-- form-inlineクラスを追加 -->
+				<form class="form-inline"> <input type="text" class="form-control" placeholder="検索"> </form>
 			</div>
 		</div>
 	</nav>
@@ -101,12 +87,13 @@
 					<ul style="padding-left: 0px;" class="list-group">
 						<li class="list-group-item tree-closed"><a href="main.html"><i
 									class="bi bi-speedometer2"></i></i>コントロールパネル</a></li>
-						<li class="list-group-item tree-closed"><span><i class="bi bi-bank"></i>権限管理<span
-									class="badge" style="float: right">3</span></span>
+						<li class="list-group-item tree-closed"><span><i class="bi bi-bank"></i>権限管理<span class="badge"
+									style="float: right">3</span></span>
 							<ul style="margin-top: 10px; display: none;">
 								<li style="height: 30px;"><a href="user.html"><i
 											class="bi bi-person-fill-gear"></i></i>ユーザーメンテナンス</a></li>
-								<li style="height: 30px;"><a href="role.html"><i class="bi bi-list-check"></i>役割メンテナンス</a>
+								<li style="height: 30px;"><a href="role.html"><i
+											class="bi bi-list-check"></i>役割メンテナンス</a>
 								</li>
 								<li style="height: 30px;"><a href="permission.html"><i
 											class="bi bi-menu-down"></i>メニューメンテナンス</a></li>
