@@ -33,7 +33,7 @@
 	<script type="text/javascript" th:src="@{/static/layer/layer.js}"></script>
 	<script type="text/javascript">
 		$(function () {
-			$(".list-group-item").click(function () {
+			$(".list-group-item").on('click', function () {
 				if ($(this).find("ul")) {
 					$(this).toggleClass("tree-closed");
 					if ($(this).hasClass("tree-closed")) {
@@ -43,9 +43,13 @@
 					}
 				}
 			});
-			$("#logout-link").click(function (e) {
+			$("#logout-link").on('click', function (e) {
 				e.preventDefault();
 				$("#logout-form").submit();
+			});
+			$("#search-icon").on('click', function (e) {
+				let searchInput = $(".form-control").val();
+				alert('您输入的搜索词是: ' + searchInput);
 			});
 		});
 	</script>
@@ -56,9 +60,9 @@
 		<div class="container-fluid"> <a class="navbar-brand" style="font-size:27px;"
 				th:href="@{/pgcrowd/to/index}">PGアプリケーション</a>
 			<div class="collapse navbar-collapse">
-				<div class="input-group d-flex me-auto">
-					<input type="text" class="form-control" placeholder="検索" style="max-width: 90px;">
-					<span class="input-group-text"><i class="bi bi-search"></i></span>
+				<div class="input-group d-flex ms-auto">
+					<input type="text" class="form-control" placeholder="検索" style="max-width: 150px;">
+					<span class="input-group-text" id="search-icon"><i class="bi bi-search"></i></span>
 				</div>
 				<ul class="navbar-nav mb-2 mb-lg-0 d-flex" id="dropdown-info">
 					<li class="nav-item dropdown"> <a class="nav-link dropdown-toggle btn btn-success me-2" href="#"
