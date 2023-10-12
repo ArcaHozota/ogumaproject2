@@ -43,7 +43,7 @@
 					}
 				}
 			});
-			$("#logout-link").click(function (e) {
+			$("#logout-link").on('click', function (e) {
 				e.preventDefault();
 				$("#logout-form").submit();
 			});
@@ -65,18 +65,17 @@
 						<div class="btn-group">
 							<button type="button" class="btn btn-default btn-success dropdown-toggle"
 								data-toggle="dropdown">
-								<i class="glyphicon glyphicon-user" th:text="${employee.username}"></i><span
+								<i class="bi bi-person-fill" th:text="${employee.username}"></i> <span
 									class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="#"><i class="glyphicon glyphicon-cog"></i>
+								<li><a href="#"><i class="bi bi-gear-wide-connected"></i>
 										個人設定</a></li>
-								<li><a href="#"><i class="glyphicon glyphicon-comment"></i>
+								<li><a href="#"><i class="bi bi-chat-dots"></i>
 										メッセージ</a></li>
 								<li class="divider"></li>
 								<li>
-									<a id="logout-link" href="/do/logout"><i
-											class="glyphicon glyphicon-off"></i>ログアウト</a>
+									<a id="logout-link" href="/do/logout"><i class="bi bi-box-arrow-right"></i>ログアウト</a>
 									<form id="logout-form" method="post" th:action="@{/pgcrowd/employee/logout}"
 										style="display:none;"></form>
 								</li>
@@ -85,7 +84,7 @@
 					</li>
 					<li style="margin-left: 10px; padding-top: 8px;">
 						<button type="button" class="btn btn-default btn-danger">
-							<span class="glyphicon glyphicon-question-sign"></span>ヘルプ
+							<i class="bi bi-info-circle"></i>ヘルプ
 						</button>
 					</li>
 				</ul>
@@ -101,17 +100,16 @@
 				<div class="tree">
 					<ul style="padding-left: 0px;" class="list-group">
 						<li class="list-group-item tree-closed"><a href="main.html"><i
-									class="glyphicon glyphicon-dashboard"></i>コントロールパネル</a></li>
-						<li class="list-group-item tree-closed"><span><i
-									class="glyphicon glyphicon glyphicon-tasks"></i>権限管理<span class="badge"
-									style="float: right">3</span></span>
+									class="bi bi-speedometer2"></i></i>コントロールパネル</a></li>
+						<li class="list-group-item tree-closed"><span><i class="bi bi-bank"></i>権限管理<span
+									class="badge" style="float: right">3</span></span>
 							<ul style="margin-top: 10px; display: none;">
 								<li style="height: 30px;"><a href="user.html"><i
-											class="glyphicon glyphicon-user"></i>ユーザーメンテナンス</a></li>
-								<li style="height: 30px;"><a href="role.html"><i
-											class="glyphicon glyphicon-king"></i>役割メンテナンス</a></li>
+											class="bi bi-person-fill-gear"></i></i>ユーザーメンテナンス</a></li>
+								<li style="height: 30px;"><a href="role.html"><i class="bi bi-list-check"></i>役割メンテナンス</a>
+								</li>
 								<li style="height: 30px;"><a href="permission.html"><i
-											class="glyphicon glyphicon-lock"></i>メニューメンテナンス</a></li>
+											class="bi bi-menu-down"></i>メニューメンテナンス</a></li>
 							</ul>
 						</li>
 						<li class="list-group-item tree-closed"><span><i class="glyphicon glyphicon-ok"></i>事業レビュー<span
