@@ -54,31 +54,37 @@
 <body>
 	<nav class="navbar navbar-dark bg-dark fixed-top" role="navigation">
 		<div class="container-fluid"> <a class="navbar-brand" style="font-size:27px;"
-				th:href="@{/pgcrowd/to/index}">PGアプリケーション</a>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav ml-auto">
-					<li style="padding-top: 8px;">
-						<div class="btn-group"> <button type="button" class="btn btn-default btn-success
-								dropdown-toggle" data-toggle="dropdown"> <i class="bi bi-person-fill" th:text="${employee.username}"></i> <span
-									class="caret"></span> </button>
+				th:href="@{/pgcrowd/to/index}">PGアプリケーション</a> <button type="button" class="navbar-toggler"
+				data-bs-toggle="collapse" data-bs-target="#navber" aria-controls="navber" aria-expanded="false"
+				aria-label="ナビゲーションの切替"> <span class="navbar-toggler-icon"></span> </button>
+			<div class="collapse navbar-collapse" id="navber">
+				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<div class="btn-group"> <button type="button" class="btn btn-success dropdown-toggle"
+								data-bs-toggle="dropdown"> <i class="bi bi-person-fill"
+									th:text="${employee.username}"></i> <span class="caret"></span> </button>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="#"><i class="bi bi-gear-wide-connected"></i> 個人設定</a></li>
-								<li><a href="#"><i class="bi bi-chat-dots"></i> メッセージ</a></li>
-								<li class="divider"></li>
-								<li> <a id="logout-link" href="/do/logout"><i class="bi
-											bi-box-arrow-right"></i>ログアウト</a>
+								<li><a class="dropdown-item" href="#"><i class="bi bi-gear-wide-connected"></i> 個人設定</a>
+								</li>
+								<li><a class="dropdown-item" href="#"><i class="bi bi-chat-dots"></i> メッセージ</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<li> <a id="logout-link" href="/do/logout"><i
+											class="bi bi-box-arrow-right"></i>ログアウト</a>
 									<form id="logout-form" method="post" th:action="@{/pgcrowd/employee/logout}"
 										style="display:none;"></form>
 								</li>
 							</ul>
 						</div>
 					</li>
-					<li style="margin-left: 10px; padding-top: 8px;"> <button type="button" class="btn btn-default
-							btn-danger"> <i class="bi bi-info-circle"></i>ヘルプ </button> </li>
-				</ul> 
-				<form class="form-inline"> <input type="text" class="form-control" placeholder="検索"> </form>
-			</div>
-		</div>
+					<li class="nav-item ms-2"> <button type="button" class="btn btn-danger"> <i
+								class="bi bi-info-circle"></i>ヘルプ </button> </li>
+				</ul>
+				<form class="d-flex ms-2"> <input type="text" class="form-control me-2" placeholder="検索"> <button
+						type="submit" class="btn btn-outline-light flex-shrink-0">検索</button> </form>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
 	</nav>
 	<div class="container-fluid">
 		<div class="row">
