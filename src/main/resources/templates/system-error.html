@@ -27,18 +27,13 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<div>
-					<a class="navbar-brand" th:href="@{/pgcrowd/to/index}" style="font-size:32px;">PGアプリケーション</a>
-				</div>
-			</div>
-		</div>
+	<nav class="navbar navbar-dark bg-dark fixed-top" role="navigation">
+		<div class="container-fluid"> <a class="navbar-brand" th:href="@{/pgcrowd/to/index}"
+				style="font-size:27px;">PGアプリケーション</a> </div>
 	</nav>
-	<div class="container" style="text-align: center;">
-		<h3>システム情報</h3>
-		<h4 th:text="${exception.message}"></h4>
+	<div class="container" style="text-align: center; margin-top: 60px;">
+		<h2>システム情報</h2>
+		<h5 th:text="${exception.message}"></h5>
 		<button id="backbutton" style="width: 300px; margin: 0px auto 0px auto;"
 			class="btn btn-lg btn-success btn-block">戻る</button>
 	</div>
