@@ -19,7 +19,7 @@
 	<script type="text/javascript" th:src="@{/static/layer/layer.js}"></script>
 	<script type="text/javascript">
 		$(function () {
-			$("button").click(function () {
+			$("#backbutton").on('click', function () {
 				window.history.back();
 			});
 		});
@@ -39,7 +39,8 @@
 	<div class="container" style="text-align: center;">
 		<h3>システム情報</h3>
 		<h4 th:text="${exception.message}"></h4>
-		<button style="width: 300px; margin: 0px auto 0px auto;" class="btn btn-lg btn-success btn-block">戻る</button>
+		<button id="backbutton" style="width: 300px; margin: 0px auto 0px auto;"
+			class="btn btn-lg btn-success btn-block">戻る</button>
 	</div>
 </body>
 
