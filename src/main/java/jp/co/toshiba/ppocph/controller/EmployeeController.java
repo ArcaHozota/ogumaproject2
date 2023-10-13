@@ -70,7 +70,7 @@ public final class EmployeeController {
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/mainmenu")
-	public ModelAndView toMainMenu(@RequestParam("username") final String username) {
+	public ModelAndView toMainmenu(@RequestParam("username") final String username) {
 		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
 		final ModelAndView modelAndView = new ModelAndView("admin-main");
 		modelAndView.addObject(PgcrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
