@@ -12,9 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
-import jp.co.toshiba.ppocph.common.PgcrowdConstants;
+import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.exception.LoginFailedException;
-import jp.co.toshiba.ppocph.utils.PgcrowdUtils;
+import jp.co.toshiba.ppocph.utils.PgCrowdUtils;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 
 /**
@@ -24,7 +24,7 @@ import jp.co.toshiba.ppocph.utils.ResultDto;
  * @since 1.00beta
  */
 @ControllerAdvice
-public final class PgcrowdExceptionResolver {
+public final class PgCrowdExceptionResolver {
 
 	/**
 	 * コア例外処理メソッド
@@ -39,7 +39,7 @@ public final class PgcrowdExceptionResolver {
 	private ModelAndView commonResolveException(final Exception exception, final HttpServletRequest request,
 			final HttpServletResponse response, final String viewName) throws IOException {
 		// 1.判断当前请求是“普通请求”还是“Ajax 请求”
-		final boolean ajaxorNot = PgcrowdUtils.discernRequestType(request);
+		final boolean ajaxorNot = PgCrowdUtils.discernRequestType(request);
 		// 2.如果是Ajax 请求
 		if (ajaxorNot) {
 			// 3.从当前异常对象中获取异常信息
@@ -64,7 +64,7 @@ public final class PgcrowdExceptionResolver {
 		// 10.设置目标视图名称
 		modelAndView.setViewName(viewName);
 		// 11.将Exception 对象存入模型
-		modelAndView.addObject(PgcrowdConstants.ATTRNAME_EXCEPTION, exception);
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EXCEPTION, exception);
 		// 12.返回ModelAndView 对象
 		return modelAndView;
 	}

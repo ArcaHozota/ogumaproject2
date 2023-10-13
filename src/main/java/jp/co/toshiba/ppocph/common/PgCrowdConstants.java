@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class PgcrowdConstants {
+public final class PgCrowdConstants {
 
 	public static final String MSG001 = "拡張メッセージコンバーターの設置は完了しました。";
 
