@@ -137,6 +137,34 @@
 						<i class="bi bi-search"></i>検索
 					</button>
 				</form>
+				<tbody>
+						<tr th:each="pg:${pageInfo.getContent()}">
+							<td th:text="${pg.id()}" th:class="'text-center'" th:style="'width:70px;'"></td>
+							<td th:text="${pg.name()}" th:class="'text-center'"
+								th:style="${pg.name().trim().length() ge 15 ? 'width:120px;font-size:12px;':'width:120px;font-size:15px;'}">
+							</td>
+							<td th:text="${pg.continent()}" th:class="'text-center'" th:style="'width:100px;'"></td>
+							<td th:text="${pg.nation()}" th:class="'text-center'"
+								th:style="${pg.nation().trim().length() ge 15 ? 'width:120px;font-size:12px;':'width:120px;font-size:15px;'}">
+							</td>
+							<td th:text="${pg.district()}" th:class="'text-center'"
+								th:style="${pg.district().trim().length() ge 15 ? 'width:120px;font-size:12px;':'width:120px;font-size:15px;'}">
+							</td>
+							<td th:text="${pg.population()}" th:class="'text-center'" th:style="'width:70px;'"></td>
+							<td th:text="${pg.language()}" th:class="'text-center'"
+								th:style="${pg.language().trim().length() ge 15 ? 'width:80px;font-size:12px;':'width:80px;font-size:15px;'}">
+							</td>
+							<td th:class="'text-center'" th:style="'width:120px;'">
+								<button th:class="'btn btn-primary btn-sm edit_btn'" th:id="*{pg.id()}">
+									<span th:class="'glyphicon glyphicon-pencil'"></span>編集
+								</button>
+								<button th:class="'btn btn-danger btn-sm delete_btn'" th:id="*{pg.name()}"
+									th:deleteId="*{pg.id()}">
+									<span th:class="'glyphicon glyphicon-trash'"></span>削除
+								</button>
+							</td>
+						</tr>
+					</tbody>
 			</div>
 		</div>
 	</div>
