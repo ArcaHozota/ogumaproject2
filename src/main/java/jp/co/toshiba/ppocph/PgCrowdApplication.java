@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
-import jp.co.toshiba.ppocph.common.PgcrowdConstants;
+import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -19,6 +19,6 @@ import lombok.extern.log4j.Log4j2;
 public class PgCrowdApplication {
 	public static void main(final String[] args) {
 		SpringApplication.run(PgCrowdApplication.class, args);
-		log.info(PgcrowdConstants.MSG003);
+		log.info(PgCrowdConstants.MSG003);
 	}
 }

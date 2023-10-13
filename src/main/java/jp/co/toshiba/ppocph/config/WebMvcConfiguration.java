@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
-import jp.co.toshiba.ppocph.common.PgcrowdConstants;
+import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -29,7 +29,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	protected void addResourceHandlers(final ResourceHandlerRegistry registry) {
-		log.info(PgcrowdConstants.MSG002);
+		log.info(PgCrowdConstants.MSG002);
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
 	}
 
@@ -50,7 +50,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	protected void extendMessageConverters(final List<HttpMessageConverter<?>> converters) {
-		log.info(PgcrowdConstants.MSG001);
+		log.info(PgCrowdConstants.MSG001);
 		// 創建消息轉換器對象；
 		final MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
 		// 設置對象轉換器，底層使用Jackson將Java對象轉為JSON；

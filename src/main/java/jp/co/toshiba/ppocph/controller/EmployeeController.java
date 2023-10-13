@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import jp.co.toshiba.ppocph.common.PgcrowdConstants;
+import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import lombok.AccessLevel;
@@ -46,7 +46,7 @@ public final class EmployeeController {
 		final Employee employee = this.iEmployeeService.getAdminByLoginAccount(account, password);
 		// 成功したログインによって返された管理オブジェクトをセッションドメインに保存します。
 		final ModelAndView modelAndView = new ModelAndView("admin-main");
-		modelAndView.addObject(PgcrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		return modelAndView;
 	}
 
@@ -73,7 +73,7 @@ public final class EmployeeController {
 	public ModelAndView toMainmenu(@RequestParam("username") final String username) {
 		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
 		final ModelAndView modelAndView = new ModelAndView("admin-main");
-		modelAndView.addObject(PgcrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		return modelAndView;
 	}
 }

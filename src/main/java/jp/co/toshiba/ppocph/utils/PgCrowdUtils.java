@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import jp.co.toshiba.ppocph.common.PgcrowdConstants;
+import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -47,7 +47,7 @@ public final class PgCrowdUtils {
 		// 1.判断source 是否有效
 		if ((source == null) || (source.length() == 0)) {
 			// 2.如果不是有效的字符串抛出异常
-			throw new PgCrowdException(PgcrowdConstants.MESSAGE_STRING_INVALIDATE);
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_INVALIDATE);
 		}
 		try {
 			// 3.获取MessageDigest 对象

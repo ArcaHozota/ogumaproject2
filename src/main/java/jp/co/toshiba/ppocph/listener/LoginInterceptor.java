@@ -10,7 +10,7 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
-import jp.co.toshiba.ppocph.common.PgcrowdConstants;
+import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.exception.LoginFailedException;
 
@@ -44,11 +44,11 @@ public final class LoginInterceptor implements AsyncHandlerInterceptor {
 			}
 		}
 		// セッションドメインから社員オブジェクトを取得する
-		final Employee employee = (Employee) session.getAttribute(PgcrowdConstants.ATTRNAME_LOGIN_ADMIN);
+		final Employee employee = (Employee) session.getAttribute(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN);
 		// 社員オブジェクトが空かどうかを判断する
 		if (employee == null) {
 			// 例外をスローする
-			throw new LoginFailedException(PgcrowdConstants.MESSAGE_STRING_NOTLOGIN);
+			throw new LoginFailedException(PgCrowdConstants.MESSAGE_STRING_NOTLOGIN);
 		}
 		return true;
 	}

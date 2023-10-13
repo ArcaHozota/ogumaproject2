@@ -4,12 +4,12 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
-import jp.co.toshiba.ppocph.common.PgcrowdConstants;
+import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.exception.LoginFailedException;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
-import jp.co.toshiba.ppocph.utils.PgcrowdUtils;
+import jp.co.toshiba.ppocph.utils.PgCrowdUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -30,13 +30,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public Employee getAdminByLoginAccount(final String account, final String password) {
-		final String plainToMD5 = PgcrowdUtils.plainToMD5(password);
+		final String plainToMD5 = PgCrowdUtils.plainToMD5(password);
 		final Employee employee = new Employee();
 		employee.setLoginAccount(account);
 		employee.setPassword(plainToMD5);
 		final Example<Employee> example = Example.of(employee, ExampleMatcher.matchingAll());
 		return this.employeeRepository.findOne(example).orElseGet(() -> {
-			throw new LoginFailedException(PgcrowdConstants.MESSAGE_STRING_PROHIBITED);
+			throw new LoginFailedException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
 	}
 
