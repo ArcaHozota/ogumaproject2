@@ -1,6 +1,6 @@
 package jp.co.toshiba.ppocph.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import jp.co.toshiba.ppocph.entity.Employee;
 
@@ -36,5 +36,5 @@ public interface IEmployeeService {
 	 * @param keyword キーワード
 	 * @return List<Employee>
 	 */
-	List<Employee> getEmployeesByKeyword(Integer pageNum, String keyword);
+	Page<Employee> getEmployeesByKeyword(Integer pageNum, String keyword);
 }

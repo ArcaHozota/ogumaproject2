@@ -1,9 +1,11 @@
 package jp.co.toshiba.ppocph.service.impl;
 
-import java.util.List;
-
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
@@ -51,8 +53,17 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public List<Employee> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+	public Page<Employee> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
+		final PageRequest pageRequest = PageRequest.of(pageNum - 1, 5, Sort.by(Direction.ASC, "id"));
+		final Employee employee = new Employee();
+		employee.setLoginAccount(keyword);
+		employee.setUsername(keyword);
+		employee.setEmail(keyword);
+		final ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("username", GenericPropertyMatchers.contains())
+				.withMatcher("loginAccount", GenericPropertyMatchers.contains())
+				.withMatcher("email", GenericPropertyMatchers.contains());
+		final Example<Employee> example = Example.of(employee, matcher);
+		return this.employeeRepository.findAll(example, pageRequest);
 	}
 }
