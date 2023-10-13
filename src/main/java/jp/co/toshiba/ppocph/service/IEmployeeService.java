@@ -18,4 +18,12 @@ public interface IEmployeeService {
 	 * @return Employee
 	 */
 	Employee getAdminByLoginAccount(String account, String password);
+
+	/**
+	 * ユーザ名称によって社員情報を取得する
+	 *
+	 * @param username ユーザ名称
+	 * @return Employee
+	 */
+	Employee getEmployeeByUsername(String username);
 }

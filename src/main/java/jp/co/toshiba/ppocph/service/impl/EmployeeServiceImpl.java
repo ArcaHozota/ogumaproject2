@@ -39,4 +39,10 @@ public class EmployeeServiceImpl implements IEmployeeService {
 			throw new LoginFailedException(PgcrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
 	}
+
+	@Override
+	public Employee getEmployeeByUsername(final String username) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
 }

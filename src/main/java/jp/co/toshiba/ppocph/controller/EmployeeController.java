@@ -3,6 +3,7 @@ package jp.co.toshiba.ppocph.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,5 +61,19 @@ public final class EmployeeController {
 		// セッションを無効化する
 		session.invalidate();
 		return "redirect:/pgcrowd/employee/login";
+	}
+
+	/**
+	 * ログアウト処理
+	 *
+	 * @param session セッション
+	 * @return String
+	 */
+	@GetMapping("/to/mainmenu")
+	public ModelAndView toMainMenu(@RequestParam("username") final String username) {
+		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
+		final ModelAndView modelAndView = new ModelAndView("admin-main");
+		modelAndView.addObject(PgcrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
+		return modelAndView;
 	}
 }

@@ -48,8 +48,17 @@
 				$("#logout-form").submit();
 			});
 			$("#search-button").on('click', function (e) {
-				let searchInput = $(".form-control").val();
+				let searchInput = $("#search-input").val();
 				//alert('您输入的搜索词是: ' + searchInput);
+			});
+			$("#to-mainmenu").on('click', function (e) {
+				e.preventDefault();
+				let username = $("#user-info").text();
+				$.ajax({
+					url: '/pgcrowd/employee/to/mainmenu',
+					data: 'username=' + username,
+					type: 'GET'
+				});
 			});
 		});
 	</script>
@@ -62,14 +71,15 @@
 			<div class="collapse navbar-collapse">
 				<div class="input-group d-flex ms-auto">
 					<input type="text" class="form-control" id="search-input" placeholder="検索"
-						style="max-width: 170px;">
-					<button class="input-group-text bg-transparent p-0" id="search-button">
+						style="max-width: 180px;">
+					<button class="input-group-text bg-transparent p-0 px-2" id="search-button">
 						<i class="bi bi-search"></i>
 					</button>
 				</div>
 				<ul class="navbar-nav mb-2 mb-lg-0 d-flex" id="dropdown-info">
-					<li class="nav-item dropdown"> <a class="nav-link dropdown-toggle btn btn-success me-2" href="#"
-							role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size:15px;">
+					<li class="nav-item dropdown"> <a id="user-info"
+							class="nav-link dropdown-toggle btn btn-success me-2" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false" style="font-size:13px;">
 							<i class="bi bi-person-fill" th:text="${employee.username}"></i></a>
 						<ul class="dropdown-menu dropdown-menu-end" role="menu">
 							<li><a class="dropdown-item" href="#"><i class="bi bi-gear-wide-connected"></i> 個人設定</a>
@@ -96,8 +106,8 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				<div class="tree">
 					<ul style="padding-left: 0px;" class="list-group">
-						<li class="list-group-item tree-closed"><a th:href="@{/pgcrowd/employee/to/mainmenu}"><i
-									class="bi bi-speedometer2"></i></i>コントロールパネル</a></li>
+						<li class="list-group-item tree-closed"><a href="#" id="to-mainmanu"><i
+									class="bi bi-speedometer2"></i>コントロールパネル</a></li>
 						<li class="list-group-item tree-closed"><span><i class="bi bi-bank"></i>権限管理<span class="badge"
 									style="float: right">3</span></span>
 							<ul style="margin-top: 10px; display: none;">
