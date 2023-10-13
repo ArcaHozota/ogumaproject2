@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PgCrowdConstants {
 
+	public static final Integer DEFAULT_PAGE_SIZE = 7;
+
 	public static final String MSG001 = "拡張メッセージコンバーターの設置は完了しました。";
 
 	public static final String MSG002 = "静的リソースのマッピングが開始しました。";

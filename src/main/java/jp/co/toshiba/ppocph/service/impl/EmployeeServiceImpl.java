@@ -55,7 +55,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public Page<Employee> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
-		final PageRequest pageRequest = PageRequest.of(pageNum - 1, 5, Sort.by(Direction.ASC, "id"));
+		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
+				Sort.by(Direction.ASC, "id"));
 		final Employee employee = new Employee();
 		employee.setLoginAccount(keyword);
 		employee.setUsername(keyword);
