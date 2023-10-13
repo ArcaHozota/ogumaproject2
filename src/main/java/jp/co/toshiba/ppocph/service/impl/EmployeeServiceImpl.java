@@ -42,7 +42,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public Employee getEmployeeByUsername(final String username) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		final Employee employee = new Employee();
+		employee.setUsername(username);
+		final Example<Employee> example = Example.of(employee, ExampleMatcher.matching());
+		return this.employeeRepository.findOne(example).orElseGet(Employee::new);
 	}
 }

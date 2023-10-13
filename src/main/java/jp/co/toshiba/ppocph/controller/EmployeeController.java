@@ -64,10 +64,10 @@ public final class EmployeeController {
 	}
 
 	/**
-	 * ログアウト処理
+	 * メインメニューへの移動
 	 *
-	 * @param session セッション
-	 * @return String
+	 * @param username ユーザ名称
+	 * @return ModelAndView
 	 */
 	@GetMapping("/to/mainmenu")
 	public ModelAndView toMainMenu(@RequestParam("username") final String username) {
