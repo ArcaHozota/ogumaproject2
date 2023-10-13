@@ -7,7 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.servlet.http.HttpServletRequest;
 
 import jp.co.toshiba.ppocph.common.PgcrowdConstants;
-import jp.co.toshiba.ppocph.exception.PgcrowdException;
+import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
  * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class PgcrowdUtils {
+public final class PgCrowdUtils {
 
 	/**
 	 * 現在のリクエストがAJAXリクエストであるかどうかを判断する
@@ -47,7 +47,7 @@ public final class PgcrowdUtils {
 		// 1.判断source 是否有效
 		if ((source == null) || (source.length() == 0)) {
 			// 2.如果不是有效的字符串抛出异常
-			throw new PgcrowdException(PgcrowdConstants.MESSAGE_STRING_INVALIDATE);
+			throw new PgCrowdException(PgcrowdConstants.MESSAGE_STRING_INVALIDATE);
 		}
 		try {
 			// 3.获取MessageDigest 对象
@@ -65,6 +65,6 @@ public final class PgcrowdUtils {
 		} catch (final NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return StringUtils.EMPTY_STRING;
 	}
 }

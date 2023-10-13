@@ -6,15 +6,15 @@ package jp.co.toshiba.ppocph.exception;
  * @author ArkamaHozota
  * @since 1.00beta
  */
-public class PgcrowdException extends RuntimeException {
+public class PgCrowdException extends RuntimeException {
 
 	private static final long serialVersionUID = 8469408957890840211L;
 
-	public PgcrowdException() {
+	public PgCrowdException() {
 		super();
 	}
 
-	public PgcrowdException(final String message) {
+	public PgCrowdException(final String message) {
 		super(message);
 	}
 }
