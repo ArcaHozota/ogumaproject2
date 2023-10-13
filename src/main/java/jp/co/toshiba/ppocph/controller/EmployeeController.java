@@ -1,9 +1,8 @@
 package jp.co.toshiba.ppocph.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,10 +76,10 @@ public final class EmployeeController {
 	 */
 	@GetMapping("/pages")
 	@ResponseBody
-	public ResultDto<List<Employee>> pagination(
+	public ResultDto<Page<Employee>> pagination(
 			@RequestParam(name = "page-num", defaultValue = "1") final Integer pageNum,
 			@RequestParam(name = "keyword", defaultValue = StringUtils.EMPTY_STRING) final String keyword) {
-		final List<Employee> employees = this.iEmployeeService.getEmployeesByKeyword(pageNum, keyword);
+		final Page<Employee> employees = this.iEmployeeService.getEmployeesByKeyword(pageNum, keyword);
 		return ResultDto.successWithData(employees);
 	}
 
@@ -107,7 +106,7 @@ public final class EmployeeController {
 	@GetMapping("/to/pages")
 	public ModelAndView toPages(@RequestParam("username") final String username) {
 		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
-		final List<Employee> employees = this.iEmployeeService.getEmployeesByKeyword(1, StringUtils.EMPTY_STRING);
+		final Page<Employee> employees = this.iEmployeeService.getEmployeesByKeyword(1, StringUtils.EMPTY_STRING);
 		final ModelAndView modelAndView = new ModelAndView("admin-pages");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_INFO, employees);
