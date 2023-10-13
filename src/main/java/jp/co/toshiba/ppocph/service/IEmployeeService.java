@@ -1,5 +1,7 @@
 package jp.co.toshiba.ppocph.service;
 
+import java.util.List;
+
 import jp.co.toshiba.ppocph.entity.Employee;
 
 /**
@@ -26,4 +28,13 @@ public interface IEmployeeService {
 	 * @return Employee
 	 */
 	Employee getEmployeeByUsername(String username);
+
+	/**
+	 * キーワードによって社員情報を取得する
+	 *
+	 * @param pageNum ページ数
+	 * @param keyword キーワード
+	 * @return List<Employee>
+	 */
+	List<Employee> getEmployeesByKeyword(Integer pageNum, String keyword);
 }

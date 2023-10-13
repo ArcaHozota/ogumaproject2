@@ -101,8 +101,7 @@ public final class EmployeeController {
 	/**
 	 * 社員情報初期表示
 	 *
-	 * @param pageNum ページ数
-	 * @param keyword キーワード
+	 * @param username ユーザ名称
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/pages")

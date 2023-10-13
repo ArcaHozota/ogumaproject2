@@ -1,5 +1,7 @@
 package jp.co.toshiba.ppocph.service.impl;
 
+import java.util.List;
+
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
@@ -46,5 +48,11 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		employee.setUsername(username);
 		final Example<Employee> example = Example.of(employee, ExampleMatcher.matching());
 		return this.employeeRepository.findOne(example).orElseGet(Employee::new);
+	}
+
+	@Override
+	public List<Employee> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
 	}
 }
