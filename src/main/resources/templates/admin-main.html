@@ -31,37 +31,7 @@
 	<script type="text/javascript" th:src="@{/static/bootstrap/js/bootstrap.bundle.min.js}"></script>
 	<script type="text/javascript" th:src="@{/static/script/docs.min.js}"></script>
 	<script type="text/javascript" th:src="@{/static/layer/layer.js}"></script>
-	<script type="text/javascript">
-		$(function () {
-			$(".list-group-item").on('click', function () {
-				if ($(this).find("ul")) {
-					$(this).toggleClass("tree-closed");
-					if ($(this).hasClass("tree-closed")) {
-						$("ul", this).hide("fast");
-					} else {
-						$("ul", this).show("fast");
-					}
-				}
-			});
-			$("#logout-link").on('click', function (e) {
-				e.preventDefault();
-				$("#logout-form").submit();
-			});
-			$("#search-button").on('click', function (e) {
-				let searchInput = $("#search-input").val();
-				//alert('您输入的搜索词是: ' + searchInput);
-			});
-			$("#to-mainmenu").on('click', function (e) {
-				e.preventDefault();
-				let username = $("#user-info").text();
-				$.ajax({
-					url: '/pgcrowd/employee/to/mainmenu',
-					data: 'username=' + username,
-					type: 'GET'
-				});
-			});
-		});
-	</script>
+	<script type="text/javascript" th:src="@{/static/customizes/employee.js}"></script>
 </head>
 
 <body>
@@ -77,7 +47,7 @@
 					</button>
 				</div>
 				<ul class="navbar-nav mb-2 mb-lg-0 d-flex" id="dropdown-info">
-					<li class="nav-item dropdown"> <a id="user-info"
+					<li class="nav-item dropdown"> <a id="userinfo"
 							class="nav-link dropdown-toggle btn btn-success me-2" href="#" role="button"
 							data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 13.34px;">
 							<i class="bi bi-person-fill" th:text="${employee.username}"></i></a>
@@ -111,7 +81,7 @@
 						<li class="list-group-item tree-closed"><span><i class="bi bi-bank"></i>権限管理<span class="badge"
 									style="float: right">3</span></span>
 							<ul style="margin-top: 10px; display: none;">
-								<li style="height: 30px;"><a href="user.html"><i
+								<li style="height: 30px;"><a href="user.html" id="userinfo2"><i
 											class="bi bi-people-fill"></i>ユーザーメンテナンス</a></li>
 								<li style="height: 30px;"><a href="role.html"><i
 											class="bi bi-list-check"></i>役割メンテナンス</a></li>
