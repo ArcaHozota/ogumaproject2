@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
@@ -255,6 +256,16 @@ public final class StringUtils {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * ある文字列はすべて数字であるかどうかを判断する
+	 *
+	 * @param string ストリング
+	 * @return true: すべて数字, false: 文字も含める
+	 */
+	public static boolean isDigital(@Nullable final String string) {
+		return Pattern.compile("\\d*").matcher(string).matches();
 	}
 
 	/**
