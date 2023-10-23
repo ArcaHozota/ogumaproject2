@@ -1,7 +1,6 @@
-let pageNum = 1;
 let totalRecords, totalPages, keyword;
 $(document).ready(function() {
-	toSelectedPg(pageNum, keyword);
+	toSelectedPg(1, keyword);
 });
 $("#searchBtn").on('click', function() {
 	keyword = $("#keywordInput").val().trim().toString();
