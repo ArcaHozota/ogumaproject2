@@ -40,7 +40,6 @@ public final class EmployeeController {
 	 *
 	 * @param account  アカウント
 	 * @param password パスワード
-	 * @param session  セッション
 	 * @return ModelAndView
 	 */
 	@PostMapping("/do/login")
@@ -88,7 +87,7 @@ public final class EmployeeController {
 	 * @param keyword キーワード
 	 * @return ResultDto<List<Employee>>
 	 */
-	@GetMapping("/pages")
+	@GetMapping("/pagination")
 	@ResponseBody
 	public ResultDto<Page<Employee>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
