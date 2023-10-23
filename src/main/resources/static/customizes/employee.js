@@ -26,7 +26,7 @@ $(function() {
 			dataType: 'html'
 		});
 	});
-	$("#userinfo2").on('click', function(e) {
+	$("#toAdmin").on('click', function(e) {
 		e.preventDefault();
 		let username = $("#userinfo").text();
 		$.ajax({
