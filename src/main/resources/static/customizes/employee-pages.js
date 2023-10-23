@@ -94,6 +94,5 @@ function buildPageNavi(result) {
 		ul.append(numsLi);
 	});
 	ul.append(nextPageLi).append(lastPageLi);
-	let navElement = $("<nav></nav>").append(ul);
-	navElement.appendTo("#pageNavi");
+	$("<nav></nav>").append(ul).appendTo("#pageNavi");
 }

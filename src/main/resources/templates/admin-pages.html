@@ -32,6 +32,7 @@
 	<script type="text/javascript" th:src="@{/static/script/docs.min.js}"></script>
 	<script type="text/javascript" th:src="@{/static/layer/layer.js}"></script>
 	<script type="text/javascript" th:src="@{/static/customizes/employee.js}"></script>
+	<script type="text/javascript" th:src="@{/static/customizes/employee-pages.js}"></script>
 </head>
 
 <body>
@@ -131,15 +132,19 @@
 					<div class="form-group has-feedback">
 						<div class="input-group">
 							<div class="input-group-addon">検索条件</div>
-							<input name="keyword" class="form-control has-success" type="text"
+							<input id="keywordInput" name="keyword" class="form-control has-success" type="text"
 								placeholder="検索条件を入力してください">
 						</div>
 					</div>
-					<button type="submit" class="btn btn-warning">
+					<button id="searchBtn" type="submit" class="btn btn-warning">
 						<i class="bi bi-search"></i>検索
 					</button>
 				</form>
 				<tbody id="tableBody"></tbody>
+				<div class="row">
+					<div id="pageInfos" class="col-md-5"></div>
+					<div id="pageNavi" class="col-md-7 d-flex justify-content-end"></div>
+				</div>
 			</div>
 		</div>
 	</div>
