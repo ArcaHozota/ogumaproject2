@@ -9,12 +9,13 @@ $("#searchBtn").on('click', function() {
 });
 function toSelectedPg(pageNum, keyword) {
 	$.ajax({
-		url: '/pgcrowd/employee/pages',
+		url: '/pgcrowd/employee/pagination',
 		data: {
 			'pageNum': pageNum,
 			'keyword': keyword
 		},
 		type: 'GET',
+		dataType: 'json',
 		success: function(result) {
 			buildCityTable(result);
 			buildPageInfos(result);
