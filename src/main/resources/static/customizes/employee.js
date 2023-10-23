@@ -19,21 +19,11 @@ $(function() {
 	$("#to-mainmenu").on('click', function(e) {
 		e.preventDefault();
 		let username = $("#userinfo").text();
-		$.ajax({
-			url: '/pgcrowd/employee/to/mainmenu',
-			data: 'username=' + username,
-			type: 'GET',
-			dataType: 'html'
-		});
+		window.location.replace('/pgcrowd/employee/to/mainmenu?username=' + username);
 	});
 	$("#toAdmin").on('click', function(e) {
 		e.preventDefault();
 		let username = $("#userinfo").text();
-		$.ajax({
-			url: '/pgcrowd/employee/to/pages',
-			data: 'username=' + username,
-			type: 'GET',
-			dataType: 'html'
-		});
+		window.location.replace('/pgcrowd/employee/to/pages?username=' + username);
 	});
 });
