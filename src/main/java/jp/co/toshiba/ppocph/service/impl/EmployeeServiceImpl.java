@@ -14,6 +14,7 @@ import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.exception.LoginFailedException;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
+import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.PgCrowdUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +55,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public Page<Employee> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
+	public Pagination<Employee> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		final Employee employee = new Employee();
@@ -66,6 +67,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 				.withMatcher("loginAccount", GenericPropertyMatchers.contains())
 				.withMatcher("email", GenericPropertyMatchers.contains());
 		final Example<Employee> example = Example.of(employee, matcher);
-		return this.employeeRepository.findAll(example, pageRequest);
+		final Page<Employee> pages = this.employeeRepository.findAll(example, pageRequest);
+		return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum);
 	}
 }

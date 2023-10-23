@@ -1,8 +1,7 @@
 package jp.co.toshiba.ppocph.service;
 
-import org.springframework.data.domain.Page;
-
 import jp.co.toshiba.ppocph.entity.Employee;
+import jp.co.toshiba.ppocph.utils.Pagination;
 
 /**
  * 社員サービスインターフェス
@@ -36,5 +35,5 @@ public interface IEmployeeService {
 	 * @param keyword キーワード
 	 * @return List<Employee>
 	 */
-	Page<Employee> getEmployeesByKeyword(Integer pageNum, String keyword);
+	Pagination<Employee> getEmployeesByKeyword(Integer pageNum, String keyword);
 }
