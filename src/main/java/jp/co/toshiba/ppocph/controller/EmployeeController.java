@@ -77,7 +77,7 @@ public final class EmployeeController {
 	@GetMapping("/pages")
 	@ResponseBody
 	public ResultDto<Page<Employee>> pagination(
-			@RequestParam(name = "page-num", defaultValue = "1") final Integer pageNum,
+			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
 			@RequestParam(name = "keyword", defaultValue = StringUtils.EMPTY_STRING) final String keyword) {
 		final Page<Employee> employees = this.iEmployeeService.getEmployeesByKeyword(pageNum, keyword);
 		return ResultDto.successWithData(employees);
