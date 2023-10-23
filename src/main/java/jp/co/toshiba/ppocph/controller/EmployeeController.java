@@ -2,7 +2,6 @@ package jp.co.toshiba.ppocph.controller;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
+import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 import jp.co.toshiba.ppocph.utils.StringUtils;
 import lombok.AccessLevel;
@@ -90,10 +90,10 @@ public final class EmployeeController {
 	 */
 	@GetMapping("/pagination")
 	@ResponseBody
-	public ResultDto<Page<Employee>> pagination(
+	public ResultDto<Pagination<Employee>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
 			@RequestParam(name = "keyword", defaultValue = StringUtils.EMPTY_STRING) final String keyword) {
-		final Page<Employee> employees = this.iEmployeeService.getEmployeesByKeyword(pageNum, keyword);
+		final Pagination<Employee> employees = this.iEmployeeService.getEmployeesByKeyword(pageNum, keyword);
 		return ResultDto.successWithData(employees);
 	}
 

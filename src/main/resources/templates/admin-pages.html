@@ -127,21 +127,24 @@
 				</div>
 			</div>
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-				<form th:action="@{/pgcrowd/employee/pages}" method="get" class="form-inline" role="form"
-					style="float: left;">
-					<div class="form-group has-feedback">
-						<div class="input-group">
-							<div class="input-group-addon">検索条件</div>
-							<input id="keywordInput" name="keyword" class="form-control has-success" type="text"
-								placeholder="検索条件を入力してください">
+				<div class="row">
+					<form th:action="@{/pgcrowd/employee/pages}" method="get" class="form-inline" role="form"
+						style="float: left;">
+						<div class="form-group has-feedback">
+							<div class="input-group">
+								<div class="input-group-addon">検索条件</div>
+								<input id="keywordInput" name="keyword" class="form-control has-success" type="text"
+									placeholder="検索条件を入力してください">
+							</div>
 						</div>
-					</div>
-					<button id="searchBtn" type="submit" class="btn btn-warning">
-						<i class="bi bi-search"></i>検索
-					</button>
-				</form>
-				<div></div>
-				<tbody id="tableBody"></tbody>
+						<button id="searchBtn" type="submit" class="btn btn-warning">
+							<i class="bi bi-search"></i>検索
+						</button>
+					</form>
+				</div>
+				<table>
+					<tbody id="tableBody"></tbody>
+				</table>
 				<div class="row">
 					<div id="pageInfos" class="col-md-5"></div>
 					<div id="pageNavi" class="col-md-7 d-flex justify-content-end"></div>
