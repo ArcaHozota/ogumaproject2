@@ -106,10 +106,8 @@ public final class EmployeeController {
 	@GetMapping("/to/pages")
 	public ModelAndView toPages(@RequestParam("username") final String username) {
 		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
-		final Page<Employee> employees = this.iEmployeeService.getEmployeesByKeyword(1, StringUtils.EMPTY_STRING);
 		final ModelAndView modelAndView = new ModelAndView("admin-pages");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_INFO, employees);
 		return modelAndView;
 	}
 }
