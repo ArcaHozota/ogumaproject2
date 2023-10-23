@@ -22,7 +22,8 @@ $(function() {
 		$.ajax({
 			url: '/pgcrowd/employee/to/mainmenu',
 			data: 'username=' + username,
-			type: 'GET'
+			type: 'GET',
+			dataType: 'html'
 		});
 	});
 	$("#userinfo2").on('click', function(e) {
@@ -31,7 +32,8 @@ $(function() {
 		$.ajax({
 			url: '/pgcrowd/employee/to/pages',
 			data: 'username=' + username,
-			type: 'GET'
+			type: 'GET',
+			dataType: 'html'
 		});
 	});
 });
