@@ -68,6 +68,20 @@ public final class EmployeeController {
 	}
 
 	/**
+	 * 社員情報初期表示
+	 *
+	 * @param username ユーザ名称
+	 * @return ModelAndView
+	 */
+	@GetMapping("/to/pages")
+	public ModelAndView initialPages(@RequestParam("username") final String username) {
+		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
+		final ModelAndView modelAndView = new ModelAndView("admin-pages");
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
+		return modelAndView;
+	}
+
+	/**
 	 * キーワードによってページング検索
 	 *
 	 * @param pageNum ページ数
@@ -93,20 +107,6 @@ public final class EmployeeController {
 	public ModelAndView toMainmenu(@RequestParam("username") final String username) {
 		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
 		final ModelAndView modelAndView = new ModelAndView("admin-main");
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
-		return modelAndView;
-	}
-
-	/**
-	 * 社員情報初期表示
-	 *
-	 * @param username ユーザ名称
-	 * @return ModelAndView
-	 */
-	@GetMapping("/to/pages")
-	public ModelAndView toPages(@RequestParam("username") final String username) {
-		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
-		final ModelAndView modelAndView = new ModelAndView("admin-pages");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		return modelAndView;
 	}
