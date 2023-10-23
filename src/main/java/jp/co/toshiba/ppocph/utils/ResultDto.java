@@ -69,19 +69,19 @@ public class ResultDto<T> {
 	/**
 	 * 検索したデータ
 	 */
-	private T result;
+	private T data;
 
 	/**
 	 * コンストラクタ
 	 *
 	 * @param status  ステータス
 	 * @param message メッセージ
-	 * @param result  検索したデータ
+	 * @param data    検索したデータ
 	 */
-	private ResultDto(final String status, final String message, final T result) {
+	private ResultDto(final String status, final String message, final T data) {
 		super();
 		this.status = status;
 		this.message = message;
-		this.result = result;
+		this.data = data;
 	}
 }
