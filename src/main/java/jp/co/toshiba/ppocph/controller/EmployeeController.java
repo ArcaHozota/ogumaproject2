@@ -75,7 +75,8 @@ public final class EmployeeController {
 	@GetMapping("/to/pages")
 	public ModelAndView initialPages(@RequestParam("username") final String username) {
 		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
-		final ModelAndView modelAndView = new ModelAndView("admin-pages");
+		final ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("admin-pages");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		return modelAndView;
 	}
@@ -105,7 +106,8 @@ public final class EmployeeController {
 	@GetMapping("/to/mainmenu")
 	public ModelAndView toMainmenu(@RequestParam("username") final String username) {
 		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
-		final ModelAndView modelAndView = new ModelAndView("admin-main");
+		final ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("admin-main");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		return modelAndView;
 	}
