@@ -3,7 +3,7 @@ let totalRecords, totalPages, keyword;
 $(document).ready(function() {
 	toSelectedPg(pageNum, keyword);
 });
-$("#searchBtn").on('click', function() {
+$("#searchBtn2").on('click', function() {
 	keyword = $("#keywordInput").val();
 	toSelectedPg(1, keyword);
 });

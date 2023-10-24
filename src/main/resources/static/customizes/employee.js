@@ -13,9 +13,9 @@ $(function() {
 		e.preventDefault();
 		$("#logout-form").submit();
 	});
-	$("#search-button").on('click', function(e) {
-		let searchInput = $("#search-input").val();
-	});
+	// $("#searchBtn").on('click', function(e) {
+	// let searchInput = $("#searchInput").val();
+	// });
 	$("#to-mainmenu").on('click', function(e) {
 		e.preventDefault();
 		let username = $("#userinfo").text();
