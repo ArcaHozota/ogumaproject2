@@ -2,11 +2,11 @@ package jp.co.toshiba.ppocph.service.impl;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
@@ -58,16 +58,14 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	public Pagination<Employee> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
-		final Employee employee = new Employee();
-		employee.setLoginAccount(keyword);
-		employee.setUsername(keyword);
-		employee.setEmail(keyword);
-		final ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("username", GenericPropertyMatchers.contains())
-				.withMatcher("loginAccount", GenericPropertyMatchers.contains())
-				.withMatcher("email", GenericPropertyMatchers.contains());
-		final Example<Employee> example = Example.of(employee, matcher);
-		final Page<Employee> pages = this.employeeRepository.findAll(example, pageRequest);
+		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.like(root.get("loginAccount"), keyword);
+		final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.like(root.get("username"), keyword);
+		final Specification<Employee> where3 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("email"),
+				keyword);
+		final Specification<Employee> specification = Specification.where(where1).or(where2).or(where3);
+		final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
 		return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
 }
