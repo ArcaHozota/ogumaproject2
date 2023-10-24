@@ -48,7 +48,7 @@ public final class EmployeeController {
 		// EmployeeServiceメソッドを呼び出して、ログインチェックを実行します。このメソッドがEmployeeオブジェクトを返すことができれば、ログインは成功です。アカウントとパスワードが間違っている場合は、例外がスローされます。
 		final Employee employee = this.iEmployeeService.getAdminByLoginAccount(account, password);
 		// 成功したログインによって返された管理オブジェクトをセッションドメインに保存します。
-		final ModelAndView modelAndView = new ModelAndView("admin-main");
+		final ModelAndView modelAndView = new ModelAndView("mainmenu");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		return modelAndView;
 	}
@@ -106,8 +106,7 @@ public final class EmployeeController {
 	@GetMapping("/to/mainmenu")
 	public ModelAndView toMainmenu(@RequestParam("username") final String username) {
 		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
-		final ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("admin-main");
+		final ModelAndView modelAndView = new ModelAndView("mainmenu");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		return modelAndView;
 	}
