@@ -16,6 +16,7 @@ import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.PgCrowdUtils;
+import jp.co.toshiba.ppocph.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -58,13 +59,16 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	public Pagination<Employee> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
-		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.like(root.get("loginAccount"), keyword);
-		final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.like(root.get("username"), keyword);
-		final Specification<Employee> where3 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("email"),
-				keyword);
-		final Specification<Employee> specification = Specification.where(where1).or(where2).or(where3);
+		Specification<Employee> specification = null;
+		if (StringUtils.isNotEmpty(keyword)) {
+			final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
+					.like(root.get("loginAccount"), keyword);
+			final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
+					.like(root.get("username"), keyword);
+			final Specification<Employee> where3 = (root, query, criteriaBuilder) -> criteriaBuilder
+					.like(root.get("email"), keyword);
+			specification = Specification.where(where1).or(where2).or(where3);
+		}
 		final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
 		return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
