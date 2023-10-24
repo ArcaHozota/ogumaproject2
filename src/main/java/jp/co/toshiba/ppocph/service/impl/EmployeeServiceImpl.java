@@ -59,17 +59,14 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	public Pagination<Employee> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
-		Specification<Employee> specification = null;
-		if (StringUtils.isNotEmpty(keyword)) {
-			final String searchStr = "%" + keyword + "%";
-			final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-					.like(root.get("loginAccount"), searchStr);
-			final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
-					.like(root.get("username"), searchStr);
-			final Specification<Employee> where3 = (root, query, criteriaBuilder) -> criteriaBuilder
-					.like(root.get("email"), searchStr);
-			specification = Specification.where(where1).or(where2).or(where3);
-		}
+		final String searchStr = "%" + keyword + "%";
+		final Specification<Employee> where1 = StringUtils.isEmpty(keyword) ? null
+				: (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("loginAccount"), searchStr);
+		final Specification<Employee> where2 = StringUtils.isEmpty(keyword) ? null
+				: (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("username"), searchStr);
+		final Specification<Employee> where3 = StringUtils.isEmpty(keyword) ? null
+				: (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("email"), searchStr);
+		final Specification<Employee> specification = Specification.where(where1).or(where2).or(where3);
 		final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
 		return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
