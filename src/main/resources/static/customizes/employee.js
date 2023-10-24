@@ -9,9 +9,9 @@ $(function() {
 			}
 		}
 	});
-	$("#logout-link").on('click', function(e) {
+	$("#logoutLink").on('click', function(e) {
 		e.preventDefault();
-		$("#logout-form").submit();
+		$("#logoutForm").submit();
 	});
 	$("#toMainmenu").on('click', function(e) {
 		e.preventDefault();
