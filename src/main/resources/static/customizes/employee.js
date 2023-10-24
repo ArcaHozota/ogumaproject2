@@ -16,7 +16,7 @@ $(function() {
 	// $("#searchBtn").on('click', function(e) {
 	// let searchInput = $("#searchInput").val();
 	// });
-	$("#to-mainmenu").on('click', function(e) {
+	$("#toMainmenu").on('click', function(e) {
 		e.preventDefault();
 		let username = $("#userinfo").text();
 		window.location.replace('/pgcrowd/employee/to/mainmenu?username=' + username);
