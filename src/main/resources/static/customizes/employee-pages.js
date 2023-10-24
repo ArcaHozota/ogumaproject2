@@ -27,8 +27,8 @@ function buildCityTable(result) {
 	let index = result.data.records;
 	$.each(index, (index, item) => {
 		let idTd = $("<th scope='row' class='text-center' style='width:70px;vertical-align:bottom;'></th>").append(item.id);
-		let usernameTd = $("<th scope='row' class='text-center' style='width:120px;vertical-align:bottom;'></th>").append(item.username);
-		let emailTd = $("<th scope='row' class='text-center' style='width:120px;vertical-align:bottom;'></th>").append(item.email);
+		let usernameTd = $("<td scope='row' class='text-center' style='width:120px;vertical-align:bottom;'></td>").append(item.username);
+		let emailTd = $("<td scope='row' class='text-center' style='width:120px;vertical-align:bottom;'></td>").append(item.email);
 		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
 			.append($("<i class='bi bi-pencil-fill'></i>")).append("編集");
 		editBtn.attr("editId", item.id);
