@@ -61,12 +61,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
 				Sort.by(Direction.ASC, "id"));
 		Specification<Employee> specification = null;
 		if (StringUtils.isNotEmpty(keyword)) {
+			final String searchStr = "%" + keyword + "%";
 			final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-					.like(root.get("loginAccount"), keyword);
+					.like(root.get("loginAccount"), searchStr);
 			final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
-					.like(root.get("username"), keyword);
+					.like(root.get("username"), searchStr);
 			final Specification<Employee> where3 = (root, query, criteriaBuilder) -> criteriaBuilder
-					.like(root.get("email"), keyword);
+					.like(root.get("email"), searchStr);
 			specification = Specification.where(where1).or(where2).or(where3);
 		}
 		final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
