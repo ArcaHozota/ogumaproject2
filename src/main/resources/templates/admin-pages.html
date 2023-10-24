@@ -125,31 +125,41 @@
 				</div>
 			</div>
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-				<div class="row">
-					<form class="form-inline col-md-5" role="form">
-						<div class="input-group col-md-5">
-							<input id="keywordInput" class="form-control" type="text" placeholder="検索条件を入力してください">
-							<button id="searchBtn2" class="btn btn-info my-2 my-sm-0" type="button">
-								<i class="bi bi-search"></i> 検索
-							</button>
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="bi bi-grid"></i>データリスト
+						</h3>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<form class="form-inline col-md-5" role="form">
+								<div class="input-group col-md-5">
+									<input id="keywordInput" class="form-control" type="text"
+										placeholder="検索条件を入力してください">
+									<button id="searchBtn2" class="btn btn-info my-2 my-sm-0" type="button">
+										<i class="bi bi-search"></i> 検索
+									</button>
+								</div>
+							</form>
 						</div>
-					</form>
-				</div>
-				<table class="table table-sm">
-					<caption style="font-size: 10px;">社員情報一覧</caption>
-					<thead>
-						<tr class="table-primary">
-							<th scope="col" class="text-center" style="width: 70px;">ID</th>
-							<th scope="col" class="text-center" style="width: 120px;">名称</th>
-							<th scope="col" class="text-center" style="width: 120px;">メール</th>
-							<th scope="col" class="text-center" style="width: 120px;">操作</th>
-						</tr>
-					</thead>
-					<tbody id="tableBody" class="table-group-divider"></tbody>
-				</table>
-				<div class="row">
-					<div id="pageInfos" class="col-md-5" style="font-size: 12px;"></div>
-					<div id="pageNavi" class="col-md-7 d-flex justify-content-end"></div>
+						<table class="table table-sm">
+							<caption style="font-size: 10px;">社員情報一覧</caption>
+							<thead>
+								<tr class="table-primary">
+									<th scope="col" class="text-center" style="width: 70px;">ID</th>
+									<th scope="col" class="text-center" style="width: 120px;">名称</th>
+									<th scope="col" class="text-center" style="width: 120px;">メール</th>
+									<th scope="col" class="text-center" style="width: 120px;">操作</th>
+								</tr>
+							</thead>
+							<tbody id="tableBody" class="table-group-divider"></tbody>
+						</table>
+						<div class="row">
+							<div id="pageInfos" class="col-md-5" style="font-size: 12px;"></div>
+							<div id="pageNavi" class="col-md-7 d-flex justify-content-end"></div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
