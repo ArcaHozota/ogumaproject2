@@ -45,7 +45,7 @@ function buildPageInfos(result) {
 	pageNum = result.data.pageNum;
 	totalPages = result.data.totalPages;
 	totalRecords = result.data.totalRecords;
-	pageInfos.append(totalPages + "ページ中の" + pageNum + "ページ、" + totalRecords + "件のレコードが見つかりました");
+	pageInfos.append(totalPages + "ページ中の" + pageNum + "ページ、" + totalRecords + "件のレコードが見つかりました。");
 }
 function buildPageNavi(result) {
 	$("#pageNavi").empty();
