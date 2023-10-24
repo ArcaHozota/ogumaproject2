@@ -1,14 +1,4 @@
 $(function() {
-	$(".list-group-item").on('click', function() {
-		if ($(this).find("ul")) {
-			$(this).toggleClass("collapsed");
-			if ($(this).hasClass("collapsed")) {
-				$("ul", this).hide("fast");
-			} else {
-				$("ul", this).show("fast");
-			}
-		}
-	});
 	$("#logoutLink").on('click', function(e) {
 		e.preventDefault();
 		$("#logoutForm").submit();
