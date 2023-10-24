@@ -128,18 +128,14 @@
 			</div>
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
 				<div class="row">
-					<form th:action="@{/pgcrowd/employee/pages}" method="get" class="form-inline" role="form"
-						style="float: left;">
-						<div class="form-group has-feedback">
-							<div class="input-group">
-								<div class="input-group-addon">検索条件</div>
-								<input id="keywordInput" name="keyword" class="form-control has-success" type="text"
-									placeholder="検索条件を入力してください">
-							</div>
+					<form th:action="@{/pgcrowd/employee/pages}" method="get" class="form-inline col-md-5" role="form">
+						<div class="input-group has-validation col-md-5">
+							<input id="keywordInput" class="form-control" type="text" placeholder="検索条件を入力してください"
+								aria-describedby="searchBtn">
+							<button id="searchBtn" class="btn btn-warning my-2 my-sm-0" type="button">
+								<i class="bi bi-search"></i> 検索
+							</button>
 						</div>
-						<button id="searchBtn" type="submit" class="btn btn-warning">
-							<i class="bi bi-search"></i>検索
-						</button>
 					</form>
 				</div>
 				<table class="table table-sm">
@@ -155,7 +151,7 @@
 					<tbody id="tableBody" class="table-group-divider"></tbody>
 				</table>
 				<div class="row">
-					<div id="pageInfos" class="col-md-5"></div>
+					<div id="pageInfos" class="col-md-5" style="font-size: 12px;"></div>
 					<div id="pageNavi" class="col-md-7 d-flex justify-content-end"></div>
 				</div>
 			</div>
