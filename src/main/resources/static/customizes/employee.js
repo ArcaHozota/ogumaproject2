@@ -9,13 +9,10 @@ $(function() {
 			}
 		}
 	});
-	$("#logout-link").on('click', function(e) {
+	$("#logoutLink").on('click', function(e) {
 		e.preventDefault();
-		$("#logout-form").submit();
+		$("#logoutForm").submit();
 	});
-	// $("#searchBtn").on('click', function(e) {
-	// let searchInput = $("#searchInput").val();
-	// });
 	$("#toMainmenu").on('click', function(e) {
 		e.preventDefault();
 		let username = $("#userinfo").text();
