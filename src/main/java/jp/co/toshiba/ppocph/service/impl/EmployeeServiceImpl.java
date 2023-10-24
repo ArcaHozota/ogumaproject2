@@ -68,6 +68,6 @@ public class EmployeeServiceImpl implements IEmployeeService {
 				.withMatcher("email", GenericPropertyMatchers.contains());
 		final Example<Employee> example = Example.of(employee, matcher);
 		final Page<Employee> pages = this.employeeRepository.findAll(example, pageRequest);
-		return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum);
+		return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
 }
