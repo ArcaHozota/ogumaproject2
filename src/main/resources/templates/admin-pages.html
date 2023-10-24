@@ -128,11 +128,13 @@
 			</div>
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
 				<div class="row">
-					<form class="row g-3 col-md-5">
-						<div class="col-auto"> <input id="keywordInput" class="form-control" type="text"
-								placeholder="検索条件を入力してください" aria-describedby="searchBtn"> </div>
-						<div class="col-auto"> <button id="searchBtn" class="btn btn-info my-2 my-sm-0" type="button">
-								<i class="bi bi-search"></i> 検索 </button> </div>
+					<form class="form-inline col-md-5" role="form">
+						<div class="input-group col-md-5">
+							<input id="keywordInput" class="form-control" type="text" placeholder="検索条件を入力してください">
+							<button id="searchBtn" class="btn btn-info my-2 my-sm-0" type="button">
+								<i class="bi bi-search"></i> 検索
+							</button>
+						</div>
 					</form>
 				</div>
 				<table class="table table-sm">
