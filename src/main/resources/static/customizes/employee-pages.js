@@ -3,7 +3,7 @@ $(document).ready(function() {
 	toSelectedPg(1, keyword);
 });
 $("#searchBtn").on('click', function() {
-	keyword = $("#keywordInput").val().trim().toString();
+	keyword = $("#keywordInput").val();
 	toSelectedPg(1, keyword);
 });
 function toSelectedPg(pageNum, keyword) {
