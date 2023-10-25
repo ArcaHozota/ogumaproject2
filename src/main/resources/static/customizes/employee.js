@@ -3,9 +3,9 @@ $(function() {
 		if ($(this).find("ul")) {
 			$(this).toggleClass("collapsed");
 			if ($(this).hasClass("collapsed")) {
-				$("ul", this).hide("fast");
+				$("ul", this).hide('fast');
 			} else {
-				$("ul", this).show("fast");
+				$("ul", this).show('fast');
 			}
 		}
 	});
