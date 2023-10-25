@@ -33,4 +33,9 @@ $(function() {
 		let username = $("#userinfo").text();
 		window.location.replace('/pgcrowd/employee/to/pages?username=' + username);
 	});
+	$("#addInfoBtn").on('click', function(e) {
+		e.preventDefault();
+		let username = $("#userinfo").text();
+		window.location.replace('/pgcrowd/employee/to/addition?username=' + username);
+	});
 });

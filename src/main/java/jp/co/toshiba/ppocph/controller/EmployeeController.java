@@ -97,6 +97,20 @@ public final class EmployeeController {
 	}
 
 	/**
+	 * 情報追加初期表示
+	 *
+	 * @param username ユーザ名称
+	 * @return ModelAndView
+	 */
+	@GetMapping("/to/addition")
+	public ModelAndView toAddition(@RequestParam("username") final String username) {
+		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
+		final ModelAndView modelAndView = new ModelAndView("admin-addinfo");
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
+		return modelAndView;
+	}
+
+	/**
 	 * メインメニューへの移動
 	 *
 	 * @param username ユーザ名称
