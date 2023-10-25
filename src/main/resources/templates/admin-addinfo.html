@@ -136,15 +136,47 @@
 				</div>
 			</div>
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+				<ol class="breadcrumb">
+					<li><a href="#" id="toMainmenu2">コントロールパネル</a></li>
+					<li><a href="#" id="toPages">数据列表</a></li>
+					<li class="active">新增</li>
+				</ol>
+				<div class="panel panel-default">
+					<div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal"
+							data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div>
+					</div>
+					<div class="panel-body">
+						<form role="form">
+							<div class="form-group">
+								<label for="loginAccountInput">ログインアカウント</label>
+								<input type="text" class="form-control" id="loginAccountInput"
+									placeholder="ログインアカウントを入力してください">
+							</div>
+							<div class="form-group">
+								<label for="usernameInput">ユーザ名</label>
+								<input type="text" class="form-control" id="usernameInput" placeholder="ユーザ名を入力してください">
+							</div>
+							<div class="form-group">
+								<label for="passwordInput">パスワード</label>
+								<input type="text" class="form-control" id="passwordInput" placeholder="パスワードを入力してください">
+							</div>
+							<div class="form-group">
+								<label for="emailInput">メールアドレス</label>
+								<input type="email" class="form-control" id="emailInput" placeholder="メールアドレスを入力してください">
+							</div>
+							<button type="button" class="btn btn-success my-2 my-sm-0" id="saveInfoBtn">
+								<i class="bi bi-person-plus"></i> 追加
+							</button>
+							<button type="button" class="btn btn-primary my-2 my-sm-0" id="resetBtn">
+								<i class="bi bi-arrow-clockwise"></i> リセット
+							</button>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
-		$(document).ready(function () {
-			$("#adminKanri").removeClass('collapsed');
-			$("ul", $("#adminKanri")).show('fast');
-		});
-	</script>
+	<script type="text/javascript" th:src="@{/static/customizes/employee-pages.js}"></script>
 </body>
 
 </html>
