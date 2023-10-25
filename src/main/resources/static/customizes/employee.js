@@ -18,7 +18,17 @@ $(function() {
 		let username = $("#userinfo").text();
 		window.location.replace('/pgcrowd/employee/to/mainmenu?username=' + username);
 	});
+	$("#toMainmenu2").on('click', function(e) {
+		e.preventDefault();
+		let username = $("#userinfo").text();
+		window.location.replace('/pgcrowd/employee/to/mainmenu?username=' + username);
+	});
 	$("#toAdmin").on('click', function(e) {
+		e.preventDefault();
+		let username = $("#userinfo").text();
+		window.location.replace('/pgcrowd/employee/to/pages?username=' + username);
+	});
+	$("#toPages").on('click', function(e) {
 		e.preventDefault();
 		let username = $("#userinfo").text();
 		window.location.replace('/pgcrowd/employee/to/pages?username=' + username);
