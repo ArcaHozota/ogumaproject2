@@ -19,12 +19,8 @@
 			cursor: pointer;
 		}
 
-		.tree-closed {
-			height: 40px;
-		}
-
-		.tree-expanded {
-			height: auto;
+		a {
+			text-decoration: none;
 		}
 	</style>
 	<script type="text/javascript" th:src="@{/static/jquery/jquery-3.6.2.min.js}"></script>
@@ -35,11 +31,6 @@
 </head>
 
 <body>
-	<style>
-		a {
-			text-decoration: none;
-		}
-	</style>
 	<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" data-bs-theme="dark">
 		<div class="container-fluid"> <a class="navbar-brand" style="font-size:24px;"
 				th:href="@{/pgcrowd/to/index}">PGアプリケーション</a>
