@@ -111,7 +111,7 @@ $("#emailInput").on('change', function() {
 	let inputEmail = $("#emailInput").val().trim();
 	let regularEmail = /^^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 	if (!regularEmail.test(inputEmail)) {
-		showValidationMsg("#passwordInput", "error", "入力したメールアドレスが正しくありません。");
+		showValidationMsg("#emailInput", "error", "入力したメールアドレスが正しくありません。");
 		$("#saveInfoBtn").attr("ajax-va", "error");
 	}
 });
