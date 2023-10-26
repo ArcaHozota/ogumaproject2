@@ -99,10 +99,33 @@ function buildPageNavi(result) {
 	ul.append(nextPageLi).append(lastPageLi);
 	$("<nav></nav>").append(ul).appendTo("#pageNavi");
 }
+$("#loginAccountInput").on('change', function() {
+	let inputLoginAccount = $("#loginAccountInput").val().trim();
+	if (inputLoginAccount === "") {
+		showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
+		$("#saveInfoBtn").attr("ajax-va", "error");
+	} else {
+		showValidationMsg("#loginAccountInput", "success", "√");
+		$("#saveInfoBtn").attr("ajax-va", "success");
+	}
+});
+$("#usernameInput").on('change', function() {
+	let inputUsername = $("#usernameInput").val().trim();
+	if (inputUsername === "") {
+		showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
+		$("#saveInfoBtn").attr("ajax-va", "error");
+	} else {
+		showValidationMsg("#usernameInput", "success", "√");
+		$("#saveInfoBtn").attr("ajax-va", "success");
+	}
+});
 $("#passwordInput").on('change', function() {
 	let inputPassword = $("#passwordInput").val().trim();
 	let regularPassword = /^[a-zA-Z-\d]{8,23}$/;
-	if (!regularPassword.test(inputPassword)) {
+	if (inputPassword === "") {
+		showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
+		$("#saveInfoBtn").attr("ajax-va", "error");
+	} else if (!regularPassword.test(inputPassword)) {
 		showValidationMsg("#passwordInput", "error", "入力したパスワードが8桁から23桁までの英数字にしなければなりません。");
 		$("#saveInfoBtn").attr("ajax-va", "error");
 	} else {
@@ -113,7 +136,10 @@ $("#passwordInput").on('change', function() {
 $("#emailInput").on('change', function() {
 	let inputEmail = $("#emailInput").val().trim();
 	let regularEmail = /^^[a-zA-Z-\d._%+-]+@[a-zA-Z-\d.-]+\.[a-zA-Z]{2,}$/;
-	if (!regularEmail.test(inputEmail)) {
+	if (inputEmail === "") {
+		showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
+		$("#saveInfoBtn").attr("ajax-va", "error");
+	} else if (!regularEmail.test(inputEmail)) {
 		showValidationMsg("#emailInput", "error", "入力したメールアドレスが正しくありません。");
 		$("#saveInfoBtn").attr("ajax-va", "error");
 	} else {
@@ -134,53 +160,6 @@ $("#saveInfoBtn").on('click', function() {
 	$("#inputForm").find(".form-text").text("");
 	if ($(this).attr("ajax-va") === "error") {
 		return false;
-	} else if (inputLoginAccount === "" && inputUsername === "" && inputPassword === "" && inputEmail === "") {
-		showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-		showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-		showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-		showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
-	} else if (inputLoginAccount === "" && inputUsername === "" && inputPassword === "") {
-		showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-		showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-		showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-	} else if (inputLoginAccount === "" && inputUsername === "" && inputEmail === "") {
-		showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-		showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-		showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
-	} else if (inputLoginAccount === "" && inputPassword === "" && inputEmail === "") {
-		showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-		showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-		showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
-	} else if (inputUsername === "" && inputPassword === "" && inputEmail === "") {
-		showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-		showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-		showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
-	} else if (inputPassword === "" && inputEmail === "") {
-		showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-		showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
-	} else if (inputLoginAccount === "" && inputUsername === "") {
-		showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-		showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-	} else if (inputLoginAccount === "" && inputEmail === "") {
-		showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-		showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
-	} else if (inputUsername === "" && inputPassword === "") {
-		showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-		showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-	} else if (inputUsername === "" && inputEmail === "") {
-		showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-		showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
-	} else if (inputLoginAccount === "" && inputPassword === "") {
-		showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-		showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-	} else if (inputLoginAccount === "") {
-		showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-	} else if (inputUsername === "") {
-		showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-	} else if (inputPassword === "") {
-		showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-	} else if (inputEmail === "") {
-		showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
 	} else {
 		/*$.ajax({
 			url: '/jpasample/city',
