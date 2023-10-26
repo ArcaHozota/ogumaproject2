@@ -116,7 +116,7 @@ $("#emailInput").on('change', function() {
 	if (!regularEmail.test(inputEmail)) {
 		showValidationMsg("#emailInput", "error", "入力したメールアドレスが正しくありません。");
 		$("#saveInfoBtn").attr("ajax-va", "error");
-	}else{
+	} else {
 		showValidationMsg("#emailInput", "success", "√");
 		$("#saveInfoBtn").attr("ajax-va", "success");
 	}
@@ -125,11 +125,21 @@ $("#resetBtn").on('click', function() {
 	formReset($("#inputForm"));
 });
 $("#saveInfoBtn").on('click', function() {
+	let inputLoginAccount = $("#loginAccountInput").val().trim();
+	let inputUsername = $("#usernameInput").val().trim();
+	let inputPassword = $("#passwordInput").val().trim();
+	let inputEmail = $("#emailInput").val().trim();
 	if ($(this).attr("ajax-va") === "error") {
 		return false;
+	} else if (inputLoginAccount === "") {
+		showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
+	} else if (inputUsername === "") {
+		showValidationMsg("#usernameInput", "error", "ログインアカウントを空になってはいけません。");
+	} else if (inputPassword === "") {
+		showValidationMsg("#passwordInput", "error", "ログインアカウントを空になってはいけません。");
+	} else if (inputEmail === "") {
+		showValidationMsg("#emailInput", "error", "ログインアカウントを空になってはいけません。");
 	} else {
-		showValidationMsg("#districtInput", "success", "√");
-		showValidationMsg("#populationInput", "success", "√");
 		/*$.ajax({
 			url: '/jpasample/city',
 			type: 'POST',
