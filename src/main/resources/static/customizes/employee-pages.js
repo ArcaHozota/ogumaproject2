@@ -99,3 +99,68 @@ function buildPageNavi(result) {
 	ul.append(nextPageLi).append(lastPageLi);
 	$("<nav></nav>").append(ul).appendTo("#pageNavi");
 }
+$("#passwordInput").on('change', function() {
+	let inputPassword = $("#passwordInput").val().trim();
+	let regularPassword = /^[a-zA-Z-\d]{8,23}$/;
+	if (!regularPassword.test(inputPassword)) {
+		showValidationMsg("#passwordInput", "error", "入力したパスワードが8桁から23桁までの英数字にしなければなりません。");
+		$("#saveInfoBtn").attr("ajax-va", "error");
+	}
+});
+$("#emailInput").on('change', function() {
+	let inputEmail = $("#emailInput").val().trim();
+	let regularEmail = /^^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	if (!regularEmail.test(inputEmail)) {
+		showValidationMsg("#passwordInput", "error", "入力したメールアドレスが正しくありません。");
+		$("#saveInfoBtn").attr("ajax-va", "error");
+	}
+});
+$("#saveInfoBtn").on('click', function() {
+	if ($(this).attr("ajax-va") === "error") {
+		return false;
+	} else {
+		showValidationMsg("#districtInput", "success", "√");
+		showValidationMsg("#populationInput", "success", "√");
+		/*$.ajax({
+			url: '/jpasample/city',
+			type: 'POST',
+			dataType: 'json',
+			data: JSON.stringify({
+				'name': $("#nameInput").val().trim(),
+				'continent': $("#continentInput option:selected").val(),
+				'nation': $("#nationInput option:selected").val(),
+				'district': inputDistrict,
+				'population': inputPopulation
+			}),
+			contentType: 'application/json;charset=UTF-8',
+			success: function(result) {
+				if (result.code === 200) {
+					$("#cityAddModal").modal('hide');
+					window.location
+						.replace('/jpasample/city?pageNum=' + totalPages + '&keyword=');
+				} else if (undefined !== result.extend.errorFields.name) {
+					showValidationMsg("#nameInput", "error", result.extend.errorFields.name);
+				}
+			}
+		});*/
+	}
+});
+function formReset(element) {
+	$(element)[0].reset();
+	$(element).find(".form-control").removeClass("is-valid is-invalid");
+	$(element).find(".form-text").removeClass("valid-feedback invalid-feedback");
+	$(element).find(".form-text").text("");
+}
+
+function showValidationMsg(element, status, msg) {
+	$(element).removeClass("is-valid is-invalid");
+	$(element).next("span").removeClass("valid-feedback invalid-feedback");
+	$(element).next("span").text("");
+	if (status === "success") {
+		$(element).addClass("is-valid");
+		$(element).next("span").addClass("valid-feedback");
+	} else if (status === "error") {
+		$(element).addClass("is-invalid");
+		$(element).next("span").addClass("invalid-feedback").text(msg);
+	}
+}
