@@ -99,7 +99,7 @@ function buildPageNavi(result) {
 	ul.append(nextPageLi).append(lastPageLi);
 	$("<nav></nav>").append(ul).appendTo("#pageNavi");
 }
-$("#passwordInput").change(function() {
+$("#passwordInput").on('change', function() {
 	let inputPassword = $("#passwordInput").val().trim();
 	let regularPassword = /^[a-zA-Z-\d]{8,23}$/;
 	if (!regularPassword.test(inputPassword)) {
@@ -109,7 +109,7 @@ $("#passwordInput").change(function() {
 });
 $("#emailInput").change(function() {
 	let inputEmail = $("#emailInput").val().trim();
-	let regularEmail = /^^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	let regularEmail = /^^[a-zA-Z-\d._%+-]+@[a-zA-Z-\d.-]+\.[a-zA-Z]{2,}$/;
 	if (!regularEmail.test(inputEmail)) {
 		showValidationMsg("#emailInput", "error", "入力したメールアドレスが正しくありません。");
 		$("#saveInfoBtn").attr("ajax-va", "error");
