@@ -105,14 +105,20 @@ $("#passwordInput").on('change', function() {
 	if (!regularPassword.test(inputPassword)) {
 		showValidationMsg("#passwordInput", "error", "入力したパスワードが8桁から23桁までの英数字にしなければなりません。");
 		$("#saveInfoBtn").attr("ajax-va", "error");
+	} else {
+		showValidationMsg("#passwordInput", "success", "√");
+		$("#saveInfoBtn").attr("ajax-va", "success");
 	}
 });
-$("#emailInput").change(function() {
+$("#emailInput").on('change', function() {
 	let inputEmail = $("#emailInput").val().trim();
 	let regularEmail = /^^[a-zA-Z-\d._%+-]+@[a-zA-Z-\d.-]+\.[a-zA-Z]{2,}$/;
 	if (!regularEmail.test(inputEmail)) {
 		showValidationMsg("#emailInput", "error", "入力したメールアドレスが正しくありません。");
 		$("#saveInfoBtn").attr("ajax-va", "error");
+	}else{
+		showValidationMsg("#emailInput", "success", "√");
+		$("#saveInfoBtn").attr("ajax-va", "success");
 	}
 });
 $("#resetBtn").on('click', function() {
@@ -154,7 +160,6 @@ function formReset(element) {
 	$(element).find(".form-text").removeClass("valid-feedback invalid-feedback");
 	$(element).find(".form-text").text("");
 }
-
 function showValidationMsg(element, status, msg) {
 	$(element).removeClass("is-valid is-invalid");
 	$(element).next("span").removeClass("valid-feedback invalid-feedback");
