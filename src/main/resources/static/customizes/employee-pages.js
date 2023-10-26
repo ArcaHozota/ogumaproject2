@@ -155,9 +155,6 @@ $("#saveInfoBtn").on('click', function() {
 	let inputUsername = $("#usernameInput").val().trim();
 	let inputPassword = $("#passwordInput").val().trim();
 	let inputEmail = $("#emailInput").val().trim();
-	$("#inputForm").find(".form-control").removeClass("is-valid is-invalid");
-	$("#inputForm").find(".form-text").removeClass("valid-feedback invalid-feedback");
-	$("#inputForm").find(".form-text").text("");
 	if ($(this).attr("ajax-va") === "error") {
 		return false;
 	} else if (inputLoginAccount === "" || inputUsername === "" || inputPassword === "" || inputEmail === "") {
