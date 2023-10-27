@@ -77,13 +77,16 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		final String searchStr = "%" + keyword + "%";
+		final Specification<Employee> status = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("status"), PgCrowdConstants.EMPLOYEE_NORMAL_STATUS);
 		final Specification<Employee> where1 = StringUtils.isEmpty(keyword) ? null
 				: (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("loginAccount"), searchStr);
 		final Specification<Employee> where2 = StringUtils.isEmpty(keyword) ? null
 				: (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("username"), searchStr);
 		final Specification<Employee> where3 = StringUtils.isEmpty(keyword) ? null
 				: (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("email"), searchStr);
-		final Specification<Employee> specification = Specification.where(where1).or(where2).or(where3);
+		final Specification<Employee> specification = Specification.where(status)
+				.and(Specification.where(where1).or(where2).or(where3));
 		final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
 		return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
