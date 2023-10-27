@@ -32,6 +32,14 @@ public final class PgCrowdConstants {
 
 	public static final String ATTRNAME_PAGE_NUMBER = "pageNum";
 
+	public static final String DELETE_FLG = "removed";
+
+	public static final String DELETE_INITIAL = "visible";
+
+	public static final String EMPLOYEE_ABNORMAL_STATUS = "rejected";
+
+	public static final String EMPLOYEE_NORMAL_STATUS = "approved";
+
 	public static final String MESSAGE_STRING_INVALIDATE = "Invalid password string";
 
 	public static final String MESSAGE_STRING_NOTLOGIN = "ログインしてください";
