@@ -114,7 +114,7 @@ $("#loginAccountInput").on('change', function() {
 					showValidationMsg("#loginAccountInput", "success", "√");
 					$("#saveInfoBtn").attr("ajax-va", "success");
 				} else {
-					showValidationMsg("#loginAccountInput", "error", result.data.validatedMsg);
+					showValidationMsg("#loginAccountInput", "error", result.data.message);
 					$("#saveInfoBtn").attr("ajax-va", "error");
 				}
 			}
