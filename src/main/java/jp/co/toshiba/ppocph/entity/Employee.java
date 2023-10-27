@@ -27,7 +27,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Table(name = "employee")
 @NamedQuery(name = "Employee.saiban", query = "select count(em.id) + 1 from Employee as em")
-@NamedQuery(name = "Employee.removeById", query = "update Employee as em set em.deleteFlg = 'removed' where em.id =:id")
+@NamedQuery(name = "Employee.removeById", query = "update Employee as em set em.status = 'rejected' where em.id =:id")
 public final class Employee implements Serializable {
 
 	private static final long serialVersionUID = -7478708453453699683L;

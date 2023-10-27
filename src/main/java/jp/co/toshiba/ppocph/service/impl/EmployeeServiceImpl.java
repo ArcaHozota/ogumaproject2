@@ -96,6 +96,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		BeanUtils.copyProperties(employeeDto, employee, "password");
 		employee.setId(saibanId);
 		employee.setPassword(plainToMD5);
+		employee.setStatus(PgCrowdConstants.EMPLOYEE_NORMAL_STATUS);
 		employee.setCreatedTime(LocalDateTime.now());
 		this.employeeRepository.save(employee);
 	}
