@@ -1,4 +1,4 @@
-let pageNum = /*[[${pageNumber}]]*/{};
+let pageNum = /*[[${pageNum}]]*/{};
 let totalRecords, totalPages, keyword;
 $(document).ready(function() {
 	$("#adminKanri").removeClass('collapsed');
