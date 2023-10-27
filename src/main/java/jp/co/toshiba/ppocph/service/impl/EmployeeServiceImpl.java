@@ -48,6 +48,11 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
+	public void deleteById(final Integer userId) {
+		this.employeeRepository.deleteById(userId);
+	}
+
+	@Override
 	public Employee getAdminByLoginAccount(final String account, final String password) {
 		final String plainToMD5 = PgCrowdUtils.plainToMD5(password);
 		final Employee employee = new Employee();

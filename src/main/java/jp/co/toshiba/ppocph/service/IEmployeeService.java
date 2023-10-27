@@ -20,6 +20,13 @@ public interface IEmployeeService {
 	boolean check(String loginAccount);
 
 	/**
+	 * 社員情報削除
+	 *
+	 * @param userId 社員ID
+	 */
+	void deleteById(Integer userId);
+
+	/**
 	 * ログイン処理
 	 *
 	 * @param account  アカウント
