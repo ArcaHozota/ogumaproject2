@@ -251,6 +251,11 @@ $(document).on('click', '.delete_btn', function() {
 		});
 	}
 });
+$(document).on('click', '.edit_btn', function() {
+	let editId = $(this).attr("editId");
+	let username = $("#userinfo").text();
+	window.location.replace('/pgcrowd/employee/to/edition?editId=' + editId + '&username=' + username);
+});
 function formReset(element) {
 	$(element)[0].reset();
 	$(element).find(".form-control").removeClass("is-valid is-invalid");
