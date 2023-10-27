@@ -230,10 +230,9 @@ $("#saveInfoBtn").on('click', function() {
 				'email': inputEmail
 			}),
 			contentType: 'application/json;charset=UTF-8',
-			success: function(result) {
-				if (result.message === 'SUCCESS') {
-					window.location.replace('/pgcrowd/employee/to/pages?pageNum=120000&username=' + username);
-				}
+			success: function() {
+				let username = $("#userinfo").text();
+				window.location.replace('/pgcrowd/employee/to/pages?pageNum=120000&username=' + username);
 			}
 		});
 	}
