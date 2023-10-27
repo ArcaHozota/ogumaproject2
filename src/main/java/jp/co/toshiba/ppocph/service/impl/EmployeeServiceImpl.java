@@ -1,5 +1,7 @@
 package jp.co.toshiba.ppocph.service.impl;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -69,5 +71,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		final Specification<Employee> specification = Specification.where(where1).or(where2).or(where3);
 		final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
 		return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+	}
+
+	@Override
+	public void saveInfo(final Employee employee) {
+		final Integer saibanId = this.employeeRepository.saiban();
+		employee.setId(saibanId);
+		employee.setCreatedTime(LocalDateTime.now());
+		this.employeeRepository.save(employee);
 	}
 }

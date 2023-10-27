@@ -36,4 +36,11 @@ public interface IEmployeeService {
 	 * @return List<Employee>
 	 */
 	Pagination<Employee> getEmployeesByKeyword(Integer pageNum, String keyword);
+
+	/**
+	 * 社員情報追加
+	 *
+	 * @param employee 社員エンティティ
+	 */
+	void saveInfo(Employee employee);
 }
