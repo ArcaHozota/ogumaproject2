@@ -100,7 +100,7 @@ function buildPageNavi(result) {
 	$("<nav></nav>").append(ul).appendTo("#pageNavi");
 }
 $("#loginAccountInput").on('change', function() {
-	let inputLoginAccount = $("#loginAccountInput").val().trim();
+	let inputLoginAccount = this.value;
 	if (inputLoginAccount === "") {
 		showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
 		$("#saveInfoBtn").attr("ajax-va", "error");
@@ -110,7 +110,7 @@ $("#loginAccountInput").on('change', function() {
 	}
 });
 $("#usernameInput").on('change', function() {
-	let inputUsername = $("#usernameInput").val().trim();
+	let inputUsername = this.value;
 	if (inputUsername === "") {
 		showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
 		$("#saveInfoBtn").attr("ajax-va", "error");
@@ -120,7 +120,7 @@ $("#usernameInput").on('change', function() {
 	}
 });
 $("#passwordInput").on('change', function() {
-	let inputPassword = $("#passwordInput").val().trim();
+	let inputPassword = this.value;
 	let regularPassword = /^[a-zA-Z-\d]{8,23}$/;
 	if (inputPassword === "") {
 		showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
@@ -134,7 +134,7 @@ $("#passwordInput").on('change', function() {
 	}
 });
 $("#emailInput").on('change', function() {
-	let inputEmail = $("#emailInput").val().trim();
+	let inputEmail = this.value;
 	let regularEmail = /^^[a-zA-Z-\d._%+-]+@[a-zA-Z-\d.-]+\.[a-zA-Z]{2,}$/;
 	if (inputEmail === "") {
 		showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
