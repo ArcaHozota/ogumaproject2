@@ -2,6 +2,7 @@ package jp.co.toshiba.ppocph.service.impl;
 
 import java.time.LocalDateTime;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
+import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.exception.LoginFailedException;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
@@ -74,9 +76,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public void saveInfo(final Employee employee) {
+	public void save(final EmployeeDto employeeDto) {
 		final Integer saibanId = this.employeeRepository.saiban();
+		final String plainToMD5 = PgCrowdUtils.plainToMD5(employeeDto.getPassword());
+		final Employee employee = new Employee();
+		BeanUtils.copyProperties(employeeDto, employee, "password");
 		employee.setId(saibanId);
+		employee.setPassword(plainToMD5);
 		employee.setCreatedTime(LocalDateTime.now());
 		this.employeeRepository.save(employee);
 	}

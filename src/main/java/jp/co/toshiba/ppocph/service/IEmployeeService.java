@@ -1,5 +1,6 @@
 package jp.co.toshiba.ppocph.service;
 
+import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.utils.Pagination;
 
@@ -40,7 +41,7 @@ public interface IEmployeeService {
 	/**
 	 * 社員情報追加
 	 *
-	 * @param employee 社員エンティティ
+	 * @param employeeDto 社員情報転送クラス
 	 */
-	void saveInfo(Employee employee);
+	void save(EmployeeDto employeeDto);
 }
