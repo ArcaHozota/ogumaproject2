@@ -46,7 +46,10 @@ public final class EmployeeController {
 	@GetMapping("/check")
 	@ResponseBody
 	public ResultDto<String> checkDuplicated(@RequestParam("loginAcct") final String loginAccount) {
-		this.iEmployeeService.check(loginAccount);
+		final boolean checkDuplicated = this.iEmployeeService.check(loginAccount);
+		if (checkDuplicated) {
+			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_DUPLICATED);
+		}
 		return ResultDto.successWithoutData();
 	}
 
