@@ -57,6 +57,12 @@ public final class Employee implements Serializable {
 	private String password;
 
 	/**
+	 * ステータス
+	 */
+	@Column(nullable = false)
+	private String status;
+
+	/**
 	 * メール
 	 */
 	@Column(nullable = false)
@@ -67,10 +73,4 @@ public final class Employee implements Serializable {
 	 */
 	@Column(nullable = false)
 	private LocalDateTime createdTime;
-
-	/**
-	 * 論理削除
-	 */
-	@Column(nullable = false)
-	private String deleteFlg;
 }
