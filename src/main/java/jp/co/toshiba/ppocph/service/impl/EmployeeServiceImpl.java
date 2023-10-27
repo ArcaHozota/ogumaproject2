@@ -16,6 +16,7 @@ import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.exception.LoginFailedException;
+import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.utils.Pagination;
@@ -61,6 +62,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		final Example<Employee> example = Example.of(employee, ExampleMatcher.matchingAll());
 		return this.employeeRepository.findOne(example).orElseGet(() -> {
 			throw new LoginFailedException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
+		});
+	}
+
+	@Override
+	public Employee getEmployeeById(final Integer id) {
+		return this.employeeRepository.findById(id).orElseGet(() -> {
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
 	}
 

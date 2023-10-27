@@ -36,6 +36,14 @@ public interface IEmployeeService {
 	Employee getAdminByLoginAccount(String account, String password);
 
 	/**
+	 * IDによって社員情報を取得する
+	 *
+	 * @param id 社員ID
+	 * @return Employee
+	 */
+	Employee getEmployeeById(Integer id);
+
+	/**
 	 * ユーザ名称によって社員情報を取得する
 	 *
 	 * @param username ユーザ名称
