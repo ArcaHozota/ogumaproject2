@@ -14,4 +14,11 @@ import jp.co.toshiba.ppocph.entity.Employee;
  */
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer>, JpaSpecificationExecutor<Employee> {
+
+	/**
+	 * ID採番を取得する
+	 *
+	 * @return 採番ID
+	 */
+	Integer saiban();
 }

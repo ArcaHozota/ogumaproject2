@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -25,6 +26,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Table(name = "employee")
+@NamedQuery(name = "Employee.saiban", query = "select count(em.id) + 1 from Employee as em")
 public final class Employee implements Serializable {
 
 	private static final long serialVersionUID = -7478708453453699683L;
