@@ -166,7 +166,7 @@ public final class EmployeeController {
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/edition")
-	public ModelAndView toEdition(@RequestParam("editId") final String id,
+	public ModelAndView toEdition(@RequestParam("editId") final Integer id,
 			@RequestParam("username") final String username) {
 		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
 		final Employee employee2 = this.iEmployeeService.getEmployeeById(id);
