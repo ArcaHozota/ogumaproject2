@@ -1,7 +1,6 @@
 package jp.co.toshiba.ppocph.service.impl;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Example;
@@ -45,8 +44,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		final Employee employee = new Employee();
 		employee.setLoginAccount(loginAccount);
 		final Example<Employee> example = Example.of(employee, ExampleMatcher.matching());
-		final Optional<Employee> optional = this.employeeRepository.findOne(example);
-		return optional.isEmpty();
+		return this.employeeRepository.findOne(example).isPresent();
 	}
 
 	@Override
