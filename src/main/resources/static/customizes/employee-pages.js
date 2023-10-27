@@ -105,8 +105,20 @@ $("#loginAccountInput").on('change', function() {
 		showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
 		$("#saveInfoBtn").attr("ajax-va", "error");
 	} else {
-		showValidationMsg("#loginAccountInput", "success", "√");
-		$("#saveInfoBtn").attr("ajax-va", "success");
+		$.ajax({
+			url: '/pgcrowd/employee/check',
+			data: 'loginAcct=' + inputLoginAccount,
+			type: 'GET',
+			success: function(result) {
+				if (result.status === 'SUCCESS') {
+					showValidationMsg("#loginAccountInput", "success", "√");
+					$("#saveInfoBtn").attr("ajax-va", "success");
+				} else {
+					showValidationMsg("#loginAccountInput", "error", result.data.validatedMsg);
+					$("#saveInfoBtn").attr("ajax-va", "error");
+				}
+			}
+		});
 	}
 });
 $("#usernameInput").on('change', function() {
