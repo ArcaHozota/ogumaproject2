@@ -207,28 +207,22 @@ $("#saveInfoBtn").on('click', function() {
 			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
 		}
 	} else {
-		/*$.ajax({
-			url: '/jpasample/city',
+		$.ajax({
+			url: '/pgcrowd/employee/infosave',
 			type: 'POST',
 			dataType: 'json',
 			data: JSON.stringify({
-				'name': $("#nameInput").val().trim(),
-				'continent': $("#continentInput option:selected").val(),
-				'nation': $("#nationInput option:selected").val(),
-				'district': inputDistrict,
-				'population': inputPopulation
+				'loginAccount': inputLoginAccount,
+				'username': inputUsername,
+				'password': inputPassword,
+				'email': inputEmail
 			}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function(result) {
-				if (result.code === 200) {
-					$("#cityAddModal").modal('hide');
-					window.location
-						.replace('/jpasample/city?pageNum=' + totalPages + '&keyword=');
-				} else if (undefined !== result.extend.errorFields.name) {
-					showValidationMsg("#nameInput", "error", result.extend.errorFields.name);
-				}
+				pageNum = result.data.totalPages;
+				window.location.replace('/pgcrowd/employee/to/pages?username=' + username);
 			}
-		});*/
+		});
 	}
 });
 function formReset(element) {
