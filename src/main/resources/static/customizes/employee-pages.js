@@ -238,7 +238,7 @@ $("#saveInfoBtn").on('click', function() {
 	}
 });
 $(document).on('click', '.delete_btn', function() {
-	let userName = $(this).parents("tr").find("td:eq(1)").text().trim();
+	let userName = $(this).parents("tr").find("td:eq(0)").text().trim();
 	let userId = $(this).attr("deleteId");
 	if (confirm("この" + userName + "という社員の情報を削除するとよろしいでしょうか。")) {
 		$.ajax({
