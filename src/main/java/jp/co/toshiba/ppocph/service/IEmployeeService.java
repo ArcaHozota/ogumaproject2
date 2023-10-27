@@ -50,5 +50,5 @@ public interface IEmployeeService {
 	 *
 	 * @param employeeDto 社員情報転送クラス
 	 */
-	Integer save(EmployeeDto employeeDto);
+	void save(EmployeeDto employeeDto);
 }

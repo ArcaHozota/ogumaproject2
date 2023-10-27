@@ -84,7 +84,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public Integer save(final EmployeeDto employeeDto) {
+	public void save(final EmployeeDto employeeDto) {
 		final Integer saibanId = this.employeeRepository.saiban();
 		final String plainToMD5 = PgCrowdUtils.plainToMD5(employeeDto.getPassword());
 		final Employee employee = new Employee();
@@ -93,6 +93,5 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		employee.setPassword(plainToMD5);
 		employee.setCreatedTime(LocalDateTime.now());
 		this.employeeRepository.save(employee);
-		return saibanId;
 	}
 }

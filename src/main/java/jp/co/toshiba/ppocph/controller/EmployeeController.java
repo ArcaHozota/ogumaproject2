@@ -125,9 +125,9 @@ public final class EmployeeController {
 	 */
 	@PostMapping("/infosave")
 	@ResponseBody
-	public ResultDto<Integer> saveInfo(@RequestBody final EmployeeDto employeeDto) {
-		final Integer integer = this.iEmployeeService.save(employeeDto);
-		return ResultDto.successWithData(integer);
+	public ResultDto<String> saveInfo(@RequestBody final EmployeeDto employeeDto) {
+		this.iEmployeeService.save(employeeDto);
+		return ResultDto.successWithoutData();
 	}
 
 	/**
