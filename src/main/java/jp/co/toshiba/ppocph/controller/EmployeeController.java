@@ -38,6 +38,19 @@ public final class EmployeeController {
 	private final IEmployeeService iEmployeeService;
 
 	/**
+	 * ログインアカウントを重複するかどうかを確認する
+	 *
+	 * @param loginAccount ログインアカウント
+	 * @return ResultDto<String>
+	 */
+	@GetMapping("/check")
+	@ResponseBody
+	public ResultDto<String> checkDuplicated(@RequestParam("loginAcct") final String loginAccount) {
+		this.iEmployeeService.check(loginAccount);
+		return ResultDto.successWithoutData();
+	}
+
+	/**
 	 * ログイン処理
 	 *
 	 * @param account  アカウント
