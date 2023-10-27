@@ -17,7 +17,7 @@ public interface IEmployeeService {
 	 *
 	 * @param loginAccount ログインアカウント
 	 */
-	void check(String loginAccount);
+	boolean check(String loginAccount);
 
 	/**
 	 * ログイン処理

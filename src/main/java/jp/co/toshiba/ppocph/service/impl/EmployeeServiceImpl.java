@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
-import jp.co.toshiba.ppocph.exception.LoginAccountExistsException;
 import jp.co.toshiba.ppocph.exception.LoginFailedException;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
@@ -42,14 +41,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	private final EmployeeRepository employeeRepository;
 
 	@Override
-	public void check(final String loginAccount) {
+	public boolean check(final String loginAccount) {
 		final Employee employee = new Employee();
 		employee.setLoginAccount(loginAccount);
 		final Example<Employee> example = Example.of(employee, ExampleMatcher.matching());
 		final Optional<Employee> optional = this.employeeRepository.findOne(example);
-		if (optional.isPresent()) {
-			throw new LoginAccountExistsException(PgCrowdConstants.MESSAGE_STRING_DUPLICATED);
-		}
+		return optional.isEmpty();
 	}
 
 	@Override
