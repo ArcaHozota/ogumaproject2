@@ -30,6 +30,8 @@ public final class PgCrowdConstants {
 
 	public static final String ATTRNAME_PAGE_INFO = "pageInfo";
 
+	public static final String ATTRNAME_PAGE_NUMBER = "pageNumber";
+
 	public static final String MESSAGE_STRING_INVALIDATE = "Invalid password string";
 
 	public static final String MESSAGE_STRING_NOTLOGIN = "ログインしてください";
