@@ -3,6 +3,7 @@ package jp.co.toshiba.ppocph.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,6 +51,19 @@ public final class EmployeeController {
 		if (checkDuplicated) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_DUPLICATED);
 		}
+		return ResultDto.successWithoutData();
+	}
+
+	/**
+	 * IDによって社員情報を削除する
+	 *
+	 * @param userId 社員ID
+	 * @return ResultDto<String>
+	 */
+	@DeleteMapping("/delete")
+	@ResponseBody
+	public ResultDto<String> deleteInfo(@RequestParam("userId") final Integer userId) {
+		this.iEmployeeService.deleteById(userId);
 		return ResultDto.successWithoutData();
 	}
 
