@@ -13,6 +13,13 @@ import jp.co.toshiba.ppocph.utils.Pagination;
 public interface IEmployeeService {
 
 	/**
+	 * ログインアカウントを重複するかどうかを確認する
+	 *
+	 * @param loginAccount ログインアカウント
+	 */
+	void check(String loginAccount);
+
+	/**
 	 * ログイン処理
 	 *
 	 * @param account  アカウント

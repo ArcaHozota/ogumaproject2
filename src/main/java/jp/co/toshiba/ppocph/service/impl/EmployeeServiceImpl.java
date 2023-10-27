@@ -1,6 +1,7 @@
 package jp.co.toshiba.ppocph.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Example;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
+import jp.co.toshiba.ppocph.exception.LoginAccountExistsException;
 import jp.co.toshiba.ppocph.exception.LoginFailedException;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
@@ -38,6 +40,17 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	 * 社員管理リポジトリ
 	 */
 	private final EmployeeRepository employeeRepository;
+
+	@Override
+	public void check(final String loginAccount) {
+		final Employee employee = new Employee();
+		employee.setLoginAccount(loginAccount);
+		final Example<Employee> example = Example.of(employee, ExampleMatcher.matching());
+		final Optional<Employee> optional = this.employeeRepository.findOne(example);
+		if (optional.isPresent()) {
+			throw new LoginAccountExistsException("");
+		}
+	}
 
 	@Override
 	public Employee getAdminByLoginAccount(final String account, final String password) {
