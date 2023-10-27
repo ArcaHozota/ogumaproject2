@@ -1,4 +1,4 @@
-let pageNum = 1;
+let pageNum = /*[[${pageNumber}]]*/{};
 let totalRecords, totalPages, keyword;
 $(document).ready(function() {
 	$("#adminKanri").removeClass('collapsed');
@@ -231,7 +231,8 @@ $("#saveInfoBtn").on('click', function() {
 			}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function(result) {
-				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + result.data.totalPages + '&username=' + username);
+				totalPages = result.data.totalPages;
+				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + totalPages + '&username=' + username);
 			}
 		});
 	}
