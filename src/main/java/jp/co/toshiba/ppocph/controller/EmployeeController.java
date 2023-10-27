@@ -102,11 +102,11 @@ public final class EmployeeController {
 	 * 情報追加
 	 *
 	 * @param employeeDto 社員情報DTO
-	 * @return ResultDto<?>
+	 * @return ResultDto<String>
 	 */
-	@PostMapping("/addition")
+	@PostMapping("/infosave")
 	@ResponseBody
-	public ResultDto<?> saveInfo(@RequestBody final EmployeeDto employeeDto) {
+	public ResultDto<String> saveInfo(@RequestBody final EmployeeDto employeeDto) {
 		this.iEmployeeService.save(employeeDto);
 		return ResultDto.successWithoutData();
 	}
