@@ -6,7 +6,7 @@ import lombok.Data;
  * 社員情報転送クラス
  */
 @Data
-public class EmployeeDto {
+public final class EmployeeDto {
 
 	/**
 	 * アカウント
