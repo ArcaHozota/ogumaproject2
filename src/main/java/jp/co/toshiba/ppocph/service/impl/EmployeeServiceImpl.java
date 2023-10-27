@@ -48,7 +48,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		final Example<Employee> example = Example.of(employee, ExampleMatcher.matching());
 		final Optional<Employee> optional = this.employeeRepository.findOne(example);
 		if (optional.isPresent()) {
-			throw new LoginAccountExistsException("");
+			throw new LoginAccountExistsException(PgCrowdConstants.MESSAGE_STRING_DUPLICATED);
 		}
 	}
 
