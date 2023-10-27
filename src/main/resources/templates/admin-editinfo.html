@@ -153,6 +153,37 @@
 						</h5>
 					</div>
 					<div class="card-body">
+						<form role="form" id="editForm">
+							<div class="form-group col-md-3">
+								<label for="loginAccountInput">ログインアカウント</label>
+								<input type="text" class="form-control" id="loginAccountInput"
+									placeholder="ログインアカウントを入力してください">
+								<span class="form-text" style="font-size: 12px;"></span>
+							</div>
+							<div class="form-group col-md-3">
+								<label for="usernameEdit">ユーザ名</label>
+								<input type="text" class="form-control" id="usernameInput" placeholder="ユーザ名を入力してください">
+								<span class="form-text" style="font-size: 12px;"></span>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="passwordEdit">パスワード</label>
+								<input type="text" class="form-control" id="passwordInput" placeholder="パスワードを入力してください">
+								<span class="form-text" style="font-size: 12px;"></span>
+							</div>
+							<div class="form-group col-md-5">
+								<label for="emailEdit">メールアドレス</label>
+								<input type="email" class="form-control" id="emailInput" placeholder="メールアドレスを入力してください">
+								<span class="form-text" style="font-size: 12px;"></span>
+							</div>
+						</form>
+					</div>
+					<div class="card-footer">
+						<button type="button" class="btn btn-primary my-2 my-sm-0" id="editInfoBtn">
+							<i class="bi bi-person-plus"></i> 更新
+						</button>
+						<button type="button" class="btn btn-secondary my-2 my-sm-0" id="restoreBtn">
+							<i class="bi bi-arrow-clockwise"></i> 廃棄
+						</button>
 					</div>
 				</div>
 			</div>
