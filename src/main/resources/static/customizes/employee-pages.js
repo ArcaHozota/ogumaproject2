@@ -231,7 +231,6 @@ $("#saveInfoBtn").on('click', function() {
 			}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function(result) {
-				totalPages = result.data.totalPages;
 				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + totalPages + '&username=' + username);
 			}
 		});
