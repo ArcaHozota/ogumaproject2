@@ -231,8 +231,9 @@ $("#saveInfoBtn").on('click', function() {
 			}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function(result) {
-				totalRecords = result.data;
-				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + totalRecords + '&username=' + username);
+				if (result.message === 'SUCCESS') {
+					window.location.replace('/pgcrowd/employee/to/pages?pageNum=120000&username=' + username);
+				}
 			}
 		});
 	}
