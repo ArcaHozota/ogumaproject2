@@ -242,9 +242,9 @@ $(document).on('click', '.delete_btn', function() {
 	let userId = $(this).attr("deleteId");
 	if (confirm("この" + userName + "という社員の情報を削除するとよろしいでしょうか。")) {
 		$.ajax({
-			url: '/pgcrowd/employee/delete',
-			data: 'userId=' + userId,
+			url: '/pgcrowd/employee/delete/' + userId,
 			type: 'DELETE',
+			dataType: 'json',
 			success: function() {
 				toSelectedPg(pageNum, keyword);
 			}
