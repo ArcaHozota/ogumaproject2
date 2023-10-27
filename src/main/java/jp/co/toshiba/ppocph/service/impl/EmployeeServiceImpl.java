@@ -3,6 +3,7 @@ package jp.co.toshiba.ppocph.service.impl;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
+import jp.co.toshiba.ppocph.exception.LoginAccountExistsException;
 import jp.co.toshiba.ppocph.exception.LoginFailedException;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
@@ -92,6 +94,10 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		employee.setId(saibanId);
 		employee.setPassword(plainToMD5);
 		employee.setCreatedTime(LocalDateTime.now());
-		this.employeeRepository.save(employee);
+		try {
+			this.employeeRepository.save(employee);
+		} catch (final DuplicateKeyException e) {
+			throw new LoginAccountExistsException(PgCrowdConstants.MESSAGE_STRING_DUPLICATED);
+		}
 	}
 }
