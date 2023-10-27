@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
+import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.utils.Pagination;
@@ -100,13 +101,13 @@ public final class EmployeeController {
 	/**
 	 * 情報追加
 	 *
-	 * @param employee 社員エンティティ
+	 * @param employeeDto 社員情報DTO
 	 * @return ResultDto<?>
 	 */
 	@PostMapping("/addition")
 	@ResponseBody
-	public ResultDto<?> saveInfo(@RequestBody final Employee employee) {
-		this.iEmployeeService.saveInfo(employee);
+	public ResultDto<?> saveInfo(@RequestBody final EmployeeDto employeeDto) {
+		this.iEmployeeService.save(employeeDto);
 		return ResultDto.successWithoutData();
 	}
 
