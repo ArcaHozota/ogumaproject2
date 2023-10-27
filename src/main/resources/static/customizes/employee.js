@@ -26,12 +26,12 @@ $(function() {
 	$("#toAdmin").on('click', function(e) {
 		e.preventDefault();
 		let username = $("#userinfo").text();
-		window.location.replace('/pgcrowd/employee/to/pages?username=' + username);
+		window.location.replace('/pgcrowd/employee/to/pages?pageNum=1&username=' + username);
 	});
 	$("#toPages").on('click', function(e) {
 		e.preventDefault();
 		let username = $("#userinfo").text();
-		window.location.replace('/pgcrowd/employee/to/pages?username=' + username);
+		window.location.replace('/pgcrowd/employee/to/pages?pageNum=1&username=' + username);
 	});
 	$("#addInfoBtn").on('click', function(e) {
 		e.preventDefault();
