@@ -15,27 +15,27 @@ $(function() {
 	});
 	$("#toMainmenu").on('click', function(e) {
 		e.preventDefault();
-		let username = $("#userinfo").text();
-		window.location.replace('/pgcrowd/employee/to/mainmenu?username=' + username);
+		let username = $("#userinfoId").text();
+		window.location.replace('/pgcrowd/employee/to/mainmenu?userId=' + username);
 	});
 	$("#toMainmenu2").on('click', function(e) {
 		e.preventDefault();
-		let username = $("#userinfo").text();
-		window.location.replace('/pgcrowd/employee/to/mainmenu?username=' + username);
+		let username = $("#userinfoId").text();
+		window.location.replace('/pgcrowd/employee/to/mainmenu?userId=' + username);
 	});
 	$("#toAdmin").on('click', function(e) {
 		e.preventDefault();
-		let username = $("#userinfo").text();
-		window.location.replace('/pgcrowd/employee/to/pages?pageNum=1&username=' + username);
+		let username = $("#userinfoId").text();
+		window.location.replace('/pgcrowd/employee/to/pages?pageNum=1&userId=' + username);
 	});
 	$("#toPages").on('click', function(e) {
 		e.preventDefault();
-		let username = $("#userinfo").text();
-		window.location.replace('/pgcrowd/employee/to/pages?pageNum=1&username=' + username);
+		let username = $("#userinfoId").text();
+		window.location.replace('/pgcrowd/employee/to/pages?pageNum=1&userId=' + username);
 	});
 	$("#addInfoBtn").on('click', function(e) {
 		e.preventDefault();
-		let username = $("#userinfo").text();
-		window.location.replace('/pgcrowd/employee/to/addition?username=' + username);
+		let username = $("#userinfoId").text();
+		window.location.replace('/pgcrowd/employee/to/addition?userId=' + username);
 	});
 });
