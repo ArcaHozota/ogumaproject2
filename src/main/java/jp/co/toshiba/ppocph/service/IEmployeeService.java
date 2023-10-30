@@ -52,14 +52,6 @@ public interface IEmployeeService {
 	Employee getEmployeeByLoginAccount(String loginAccount);
 
 	/**
-	 * ユーザ名称によって社員情報を取得する
-	 *
-	 * @param username ユーザ名称
-	 * @return Employee
-	 */
-	Employee getEmployeeByUsername(String username);
-
-	/**
 	 * キーワードによって社員情報を取得する
 	 *
 	 * @param pageNum ページ数

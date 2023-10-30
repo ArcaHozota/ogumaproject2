@@ -140,8 +140,8 @@ public final class EmployeeController {
 	 */
 	@GetMapping("/inforestore")
 	@ResponseBody
-	public ResultDto<Employee> restoreInfo(@RequestParam("loginAcct") final String loginAccount) {
-		final Employee employee = this.iEmployeeService.getEmployeeByLoginAccount(loginAccount);
+	public ResultDto<Employee> restoreInfo(@RequestParam("userId") final Integer userId) {
+		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
 		return ResultDto.successWithData(employee);
 	}
 

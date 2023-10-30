@@ -79,14 +79,6 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public Employee getEmployeeByUsername(final String username) {
-		final Employee employee = new Employee();
-		employee.setUsername(username);
-		final Example<Employee> example = Example.of(employee, ExampleMatcher.matching());
-		return this.employeeRepository.findOne(example).orElseGet(Employee::new);
-	}
-
-	@Override
 	public Pagination<Employee> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
