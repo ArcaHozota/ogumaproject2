@@ -250,8 +250,8 @@ $(document).on('click', '.delete_btn', function() {
 });
 $(document).on('click', '.edit_btn', function() {
 	let editId = $(this).attr("editId");
-	let username = $("#userinfo").text();
-	window.location.replace('/pgcrowd/employee/to/edition?editId=' + editId + '&username=' + username);
+	let userId = $("#userinfoId").text();
+	window.location.replace('/pgcrowd/employee/to/edition?editId=' + editId + '&userId=' + userId);
 });
 $("#resetBtn").on('click', function() {
 	formReset($("#inputForm"));
