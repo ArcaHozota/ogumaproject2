@@ -159,9 +159,6 @@ $("#emailInput").change(function() {
 		$("#saveInfoBtn").attr("ajax-va", "success");
 	}
 });
-$("#resetBtn").on('click', function() {
-	formReset($("#inputForm"));
-});
 $("#saveInfoBtn").on('click', function() {
 	let inputLoginAccount = $("#loginAccountInput").val().trim();
 	let inputUsername = $("#usernameInput").val().trim();
@@ -255,6 +252,25 @@ $(document).on('click', '.edit_btn', function() {
 	let editId = $(this).attr("editId");
 	let username = $("#userinfo").text();
 	window.location.replace('/pgcrowd/employee/to/edition?editId=' + editId + '&username=' + username);
+});
+$("#resetBtn").on('click', function() {
+	formReset($("#inputForm"));
+});
+$("#restoreBtn").on('click', function() {
+	let loginAccount = $("#loginAccountEdit").text();
+	formReset($("#editForm"));
+	$.ajax({
+		url: '/pgcrowd/employee/inforestore',
+		data: 'loginAcct=' + loginAccount,
+		type: 'GET',
+		dataType: 'json',
+		success: function(result) {
+			let restoredInfo = result.data;
+			$("#usernameEdit").text(restoredInfo.username);
+			$("#passwordEdit").text('**************************************');
+			$("#emailEdit").text(restoredInfo.email);
+		}
+	});
 });
 function formReset(element) {
 	$(element)[0].reset();
