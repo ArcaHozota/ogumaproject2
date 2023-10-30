@@ -102,14 +102,14 @@ public final class EmployeeController {
 	/**
 	 * 社員情報初期表示
 	 *
-	 * @param username ユーザ名称
-	 * @param pageNum  ページナンバー
+	 * @param userId  ユーザID
+	 * @param pageNum ページナンバー
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/pages")
-	public ModelAndView initialPages(@RequestParam("username") final String username,
+	public ModelAndView initialPages(@RequestParam("userId") final Integer userId,
 			@RequestParam(name = "pageNum") final Integer pageNum) {
-		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
+		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
 		final ModelAndView modelAndView = new ModelAndView("admin-pages");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
@@ -193,12 +193,12 @@ public final class EmployeeController {
 	/**
 	 * メインメニューへの移動
 	 *
-	 * @param username ユーザ名称
+	 * @param userId ユーザID
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/mainmenu")
-	public ModelAndView toMainmenu(@RequestParam("username") final String username) {
-		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
+	public ModelAndView toMainmenu(@RequestParam("userId") final Integer userId) {
+		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
 		final ModelAndView modelAndView = new ModelAndView("mainmenu");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		return modelAndView;
