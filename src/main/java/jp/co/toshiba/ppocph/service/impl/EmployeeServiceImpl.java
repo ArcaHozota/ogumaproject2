@@ -73,6 +73,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
+	public Employee getEmployeeByLoginAccount(final String loginAccount) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+	@Override
 	public Employee getEmployeeByUsername(final String username) {
 		final Employee employee = new Employee();
 		employee.setUsername(username);
