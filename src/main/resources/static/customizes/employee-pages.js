@@ -257,11 +257,11 @@ $("#resetBtn").on('click', function() {
 	formReset($("#inputForm"));
 });
 $("#restoreBtn").on('click', function() {
-	let loginAccount = $("#loginAccountEdit").text();
+	let userId = $("#editId").text();
 	formReset($("#editForm"));
 	$.ajax({
 		url: '/pgcrowd/employee/inforestore',
-		data: 'loginAcct=' + loginAccount,
+		data: 'userId=' + userId,
 		type: 'GET',
 		dataType: 'json',
 		success: function(result) {
