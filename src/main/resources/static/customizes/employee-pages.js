@@ -266,9 +266,9 @@ $("#restoreBtn").on('click', function() {
 		dataType: 'json',
 		success: function(result) {
 			let restoredInfo = result.data;
-			$("#usernameEdit").text(restoredInfo.username);
-			$("#passwordEdit").text('**************************************');
-			$("#emailEdit").text(restoredInfo.email);
+			$("#usernameEdit").val(restoredInfo.username);
+			$("#passwordEdit").val('**************************************');
+			$("#emailEdit").val(restoredInfo.email);
 		}
 	});
 });
