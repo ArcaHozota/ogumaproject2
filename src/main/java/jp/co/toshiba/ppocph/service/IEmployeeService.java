@@ -44,14 +44,6 @@ public interface IEmployeeService {
 	Employee getEmployeeById(Integer id);
 
 	/**
-	 * ログインアカウントによって社員情報を取得する
-	 *
-	 * @param loginAccount ログインアカウント
-	 * @return Employee
-	 */
-	Employee getEmployeeByLoginAccount(String loginAccount);
-
-	/**
 	 * キーワードによって社員情報を取得する
 	 *
 	 * @param pageNum ページ数
