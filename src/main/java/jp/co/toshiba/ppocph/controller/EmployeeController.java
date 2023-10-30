@@ -133,6 +133,19 @@ public final class EmployeeController {
 	}
 
 	/**
+	 * ログインアカウントによって社員情報を取得する
+	 *
+	 * @param loginAccount ログインアカウント
+	 * @return ResultDto<String>
+	 */
+	@GetMapping("/inforestore")
+	@ResponseBody
+	public ResultDto<Employee> restoreInfo(@RequestParam("loginAcct") final String loginAccount) {
+		final Employee employee = this.iEmployeeService.getEmployeeByLoginAccount(loginAccount);
+		return ResultDto.successWithData(employee);
+	}
+
+	/**
 	 * 情報追加
 	 *
 	 * @param employeeDto 社員情報DTO
