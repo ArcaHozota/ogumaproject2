@@ -161,12 +161,12 @@ public final class EmployeeController {
 	/**
 	 * 情報追加初期表示
 	 *
-	 * @param username ユーザ名称
+	 * @param userId ユーザID
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/addition")
-	public ModelAndView toAddition(@RequestParam("username") final String username) {
-		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
+	public ModelAndView toAddition(@RequestParam("userId") final Integer userId) {
+		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
 		final ModelAndView modelAndView = new ModelAndView("admin-addinfo");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		return modelAndView;
@@ -175,14 +175,14 @@ public final class EmployeeController {
 	/**
 	 * 情報更新初期表示
 	 *
-	 * @param id       社員ID
-	 * @param username ユーザ名称
+	 * @param id     社員ID
+	 * @param userId ユーザID
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/edition")
 	public ModelAndView toEdition(@RequestParam("editId") final Integer id,
-			@RequestParam("username") final String username) {
-		final Employee employee = this.iEmployeeService.getEmployeeByUsername(username);
+			@RequestParam("userId") final Integer userId) {
+		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
 		final Employee employee2 = this.iEmployeeService.getEmployeeById(id);
 		final ModelAndView modelAndView = new ModelAndView("admin-editinfo");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
