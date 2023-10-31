@@ -253,6 +253,44 @@ $(document).on('click', '.edit_btn', function() {
 	let userId = $("#userinfoId").text();
 	window.location.replace('/pgcrowd/employee/to/edition?editId=' + editId + '&userId=' + userId);
 });
+$("#usernameEdit").change(function() {
+	let editUsername = this.value;
+	if (editUsername === "") {
+		showValidationMsg("#usernameEdit", "error", "ユーザ名称を空になってはいけません。");
+		$("#editInfoBtn").attr("ajax-va", "error");
+	} else {
+		showValidationMsg("#usernameEdit", "success", "√");
+		$("#editInfoBtn").attr("ajax-va", "success");
+	}
+});
+$("#passwordEdit").change(function() {
+	let editPassword = this.value;
+	let regularPassword = /^[a-zA-Z-\d]{8,23}$/;
+	if (editPassword === "") {
+		showValidationMsg("#passwordEdit", "error", "パスワードを空になってはいけません。");
+		$("#editInfoBtn").attr("ajax-va", "error");
+	} else if (!regularPassword.test(editPassword)) {
+		showValidationMsg("#passwordEdit", "error", "入力したパスワードが8桁から23桁までの英数字にしなければなりません。");
+		$("#editInfoBtn").attr("ajax-va", "error");
+	} else {
+		showValidationMsg("#passwordEdit", "success", "√");
+		$("#editInfoBtn").attr("ajax-va", "success");
+	}
+});
+$("#emailEdit").change(function() {
+	let editEmail = this.value;
+	let regularEmail = /^^[a-zA-Z-\d._%+-]+@[a-zA-Z-\d.-]+\.[a-zA-Z]{2,}$/;
+	if (editEmail === "") {
+		showValidationMsg("#emailEdit", "error", "メールアドレスを空になってはいけません。");
+		$("#editInfoBtn").attr("ajax-va", "error");
+	} else if (!regularEmail.test(editEmail)) {
+		showValidationMsg("#emailEdit", "error", "入力したメールアドレスが正しくありません。");
+		$("#editInfoBtn").attr("ajax-va", "error");
+	} else {
+		showValidationMsg("#emailEdit", "success", "√");
+		$("#editInfoBtn").attr("ajax-va", "success");
+	}
+});
 $("#editInfoBtn").on('click', function() {
 	let editId = $("#editId").text();
 	let editLoginAccount = $("#loginAccountEdit").text();
