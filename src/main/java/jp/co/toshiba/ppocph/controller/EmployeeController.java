@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -202,5 +203,18 @@ public final class EmployeeController {
 		final ModelAndView modelAndView = new ModelAndView("mainmenu");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		return modelAndView;
+	}
+
+	/**
+	 * 情報更新
+	 *
+	 * @param employeeDto 社員情報DTO
+	 * @return ResultDto<String>
+	 */
+	@PutMapping("/infoupd")
+	@ResponseBody
+	public ResultDto<String> updateInfo(@RequestBody final EmployeeDto employeeDto) {
+		this.iEmployeeService.update(employeeDto);
+		return ResultDto.successWithoutData();
 	}
 }
