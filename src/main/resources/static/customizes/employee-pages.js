@@ -254,13 +254,14 @@ $(document).on('click', '.edit_btn', function() {
 	window.location.replace('/pgcrowd/employee/to/edition?editId=' + editId + '&userId=' + userId);
 });
 $("#editInfoBtn").on('click', function() {
-	let inputLoginAccount = $("#loginAccountInput").val().trim();
-	let inputUsername = $("#usernameInput").val().trim();
-	let inputPassword = $("#passwordInput").val().trim();
-	let inputEmail = $("#emailInput").val().trim();
+	let editId = $("#editId").text();
+	let editLoginAccount = $("#loginAccountEdit").text();
+	let editUsername = $("#usernameEdit").val().trim();
+	let editPassword = $("#passwordEdit").val().trim();
+	let editEmail = $("#emailEdit").val().trim();
 	if ($(this).attr("ajax-va") === "error") {
 		return false;
-	} else if (inputLoginAccount === "" || inputUsername === "" || inputPassword === "" || inputEmail === "") {
+	} else if (editUsername === "" || editPassword === "" || editEmail === "") {
 		if (inputLoginAccount === "" && inputUsername === "" && inputPassword === "" && inputEmail === "") {
 			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
 			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
