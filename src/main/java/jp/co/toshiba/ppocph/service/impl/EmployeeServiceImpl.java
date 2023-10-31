@@ -103,4 +103,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		employee.setCreatedTime(LocalDateTime.now());
 		this.employeeRepository.save(employee);
 	}
+
+	@Override
+	public void update(final EmployeeDto employeeDto) {
+		final String plainToMD5 = PgCrowdUtils.plainToMD5(employeeDto.getPassword());
+		final Employee employee = new Employee();
+		BeanUtils.copyProperties(employeeDto, employee, "password");
+		employee.setPassword(plainToMD5);
+		this.employeeRepository.save(employee);
+	}
 }

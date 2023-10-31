@@ -58,4 +58,11 @@ public interface IEmployeeService {
 	 * @param employeeDto 社員情報転送クラス
 	 */
 	void save(EmployeeDto employeeDto);
+
+	/**
+	 * 社員情報行更新
+	 *
+	 * @param employeeDto 社員情報転送クラス
+	 */
+	void update(EmployeeDto employeeDto);
 }
