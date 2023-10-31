@@ -354,7 +354,7 @@ $("#restoreBtn").on('click', function() {
 		success: function(result) {
 			let restoredInfo = result.data;
 			$("#usernameEdit").val(restoredInfo.username);
-			$("#passwordEdit").val('**************************************');
+			$("#passwordEdit").val(restoredInfo.password);
 			$("#emailEdit").val(restoredInfo.email);
 		}
 	});
