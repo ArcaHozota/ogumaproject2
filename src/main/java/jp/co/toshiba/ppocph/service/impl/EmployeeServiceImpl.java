@@ -60,14 +60,14 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		employee.setLoginAccount(account);
 		employee.setPassword(plainToMD5);
 		final Example<Employee> example = Example.of(employee, ExampleMatcher.matchingAll());
-		return this.employeeRepository.findOne(example).orElseGet(() -> {
+		return this.employeeRepository.findOne(example).orElseThrow(() -> {
 			throw new LoginFailedException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
 	}
 
 	@Override
 	public Employee getEmployeeById(final Integer id) {
-		return this.employeeRepository.findById(id).orElseGet(() -> {
+		return this.employeeRepository.findById(id).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
 	}
@@ -107,7 +107,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	@Override
 	public void update(final EmployeeDto employeeDto) {
 		final String plainToMD5 = PgCrowdUtils.plainToMD5(employeeDto.getPassword());
-		final Employee employee = new Employee();
+		final Employee employee = this.employeeRepository.findById(employeeDto.getId()).orElseThrow(() -> {
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
+		});
 		BeanUtils.copyProperties(employeeDto, employee, "password");
 		employee.setPassword(plainToMD5);
 		this.employeeRepository.save(employee);
