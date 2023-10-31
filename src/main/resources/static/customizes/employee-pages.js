@@ -321,6 +321,9 @@ $("#editInfoBtn").on('click', function() {
 			showValidationMsg("#emailEdit", "error", "メールアドレスを空になってはいけません。");
 		}
 	} else {
+		if (editPassword === "**************************************") {
+			editPassword = null;
+		}
 		$.ajax({
 			url: '/pgcrowd/employee/infoupd',
 			type: 'PUT',
