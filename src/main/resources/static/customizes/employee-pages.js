@@ -228,8 +228,8 @@ $("#saveInfoBtn").on('click', function() {
 			}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function() {
-				let username = $("#userinfo").text();
-				window.location.replace('/pgcrowd/employee/to/pages?pageNum=120000&username=' + username);
+				let userId = $("#userinfoId").text();
+				window.location.replace('/pgcrowd/employee/to/pages?pageNum=120000&userId=' + userId);
 			}
 		});
 	}
@@ -262,69 +262,42 @@ $("#editInfoBtn").on('click', function() {
 	if ($(this).attr("ajax-va") === "error") {
 		return false;
 	} else if (editUsername === "" || editPassword === "" || editEmail === "") {
-		if (inputLoginAccount === "" && inputUsername === "" && inputPassword === "" && inputEmail === "") {
-			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
-		} else if (inputLoginAccount === "" && inputUsername === "" && inputPassword === "") {
-			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-		} else if (inputLoginAccount === "" && inputUsername === "" && inputEmail === "") {
-			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
-		} else if (inputLoginAccount === "" && inputPassword === "" && inputEmail === "") {
-			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
-		} else if (inputUsername === "" && inputPassword === "" && inputEmail === "") {
-			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
-		} else if (inputPassword === "" && inputEmail === "") {
-			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
-		} else if (inputLoginAccount === "" && inputUsername === "") {
-			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-		} else if (inputLoginAccount === "" && inputEmail === "") {
-			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
-		} else if (inputUsername === "" && inputPassword === "") {
-			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-		} else if (inputUsername === "" && inputEmail === "") {
-			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
-		} else if (inputLoginAccount === "" && inputPassword === "") {
-			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-		} else if (inputLoginAccount === "") {
-			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-		} else if (inputUsername === "") {
-			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-		} else if (inputPassword === "") {
-			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
+		if (editUsername === "" && editPassword === "" && editEmail === "") {
+			showValidationMsg("#usernameEdit", "error", "ユーザ名称を空になってはいけません。");
+			showValidationMsg("#passwordEdit", "error", "パスワードを空になってはいけません。");
+			showValidationMsg("#emailEdit", "error", "メールアドレスを空になってはいけません。");
+		} else if (editUsername === "" && editPassword === "") {
+			showValidationMsg("#usernameEdit", "error", "ユーザ名称を空になってはいけません。");
+			showValidationMsg("#passwordEdit", "error", "パスワードを空になってはいけません。");
+		} else if (editUsername === "" && editEmail === "") {
+			showValidationMsg("#usernameEdit", "error", "ユーザ名称を空になってはいけません。");
+			showValidationMsg("#emailEdit", "error", "メールアドレスを空になってはいけません。");
+		} else if (editPassword === "" && editEmail === "") {
+			showValidationMsg("#passwordEdit", "error", "パスワードを空になってはいけません。");
+			showValidationMsg("#emailEdit", "error", "メールアドレスを空になってはいけません。");
+		} else if (editUsername === "") {
+			showValidationMsg("#usernameEdit", "error", "ユーザ名称を空になってはいけません。");
+		} else if (editPassword === "") {
+			showValidationMsg("#passwordEdit", "error", "パスワードを空になってはいけません。");
 		} else {
-			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
+			showValidationMsg("#emailEdit", "error", "メールアドレスを空になってはいけません。");
 		}
 	} else {
 		$.ajax({
-			url: '/pgcrowd/employee/infosave',
-			type: 'POST',
+			url: '/pgcrowd/employee/infoupd',
+			type: 'PUT',
 			dataType: 'json',
 			data: JSON.stringify({
-				'loginAccount': inputLoginAccount,
-				'username': inputUsername,
-				'password': inputPassword,
-				'email': inputEmail
+				'id': editId,
+				'loginAccount': editLoginAccount,
+				'username': editUsername,
+				'password': editPassword,
+				'email': editEmail
 			}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function() {
-				let username = $("#userinfo").text();
-				window.location.replace('/pgcrowd/employee/to/pages?pageNum=120000&username=' + username);
+				let userId = $("#userinfoId").text();
+				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + pageNum + '&userId=' + userId);
 			}
 		});
 	}
