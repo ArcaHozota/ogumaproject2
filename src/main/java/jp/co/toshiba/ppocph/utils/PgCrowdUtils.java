@@ -44,22 +44,22 @@ public final class PgCrowdUtils {
 	 * @return String
 	 */
 	public static String plainToMD5(final String source) {
-		// 1.判断source 是否有效
+		// 1.ソースが有効かどうかを判断する
 		if ((source == null) || (source.length() == 0)) {
-			// 2.如果不是有效的字符串抛出异常
+			// 2.有効な文字列でない場合は例外をスローする
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_INVALIDATE);
 		}
 		try {
-			// 3.获取MessageDigest 对象
+			// 3.MessageDigestオブジェクトを取得する
 			final MessageDigest messageDigest = MessageDigest.getInstance("md5");
-			// 4.获取明文字符串对应的字节数组
+			// 4.平文文字列に対応するバイト配列を取得する
 			final byte[] input = source.getBytes();
-			// 5.执行加密
+			// 5.暗号化を実行する
 			final byte[] output = messageDigest.digest(input);
-			// 6.创建BigInteger 对象
+			// 6.BigIntegerオブジェクトを作成する
 			final int signum = 1;
 			final BigInteger bigInteger = new BigInteger(signum, output);
-			// 7.按照16 进制将bigInteger 的值转换为字符串
+			// 7.BigIntegerの値を16進数に従って文字列に変換する
 			final int radix = 16;
 			return bigInteger.toString(radix).toUpperCase();
 		} catch (final NoSuchAlgorithmException e) {
