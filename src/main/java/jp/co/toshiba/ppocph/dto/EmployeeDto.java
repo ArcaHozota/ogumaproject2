@@ -9,6 +9,11 @@ import lombok.Data;
 public final class EmployeeDto {
 
 	/**
+	 * ID
+	 */
+	private Integer id;
+
+	/**
 	 * アカウント
 	 */
 	private String loginAccount;

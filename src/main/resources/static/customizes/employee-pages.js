@@ -253,6 +253,81 @@ $(document).on('click', '.edit_btn', function() {
 	let userId = $("#userinfoId").text();
 	window.location.replace('/pgcrowd/employee/to/edition?editId=' + editId + '&userId=' + userId);
 });
+$("#editInfoBtn").on('click', function() {
+	let inputLoginAccount = $("#loginAccountInput").val().trim();
+	let inputUsername = $("#usernameInput").val().trim();
+	let inputPassword = $("#passwordInput").val().trim();
+	let inputEmail = $("#emailInput").val().trim();
+	if ($(this).attr("ajax-va") === "error") {
+		return false;
+	} else if (inputLoginAccount === "" || inputUsername === "" || inputPassword === "" || inputEmail === "") {
+		if (inputLoginAccount === "" && inputUsername === "" && inputPassword === "" && inputEmail === "") {
+			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
+			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
+			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
+			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
+		} else if (inputLoginAccount === "" && inputUsername === "" && inputPassword === "") {
+			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
+			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
+			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
+		} else if (inputLoginAccount === "" && inputUsername === "" && inputEmail === "") {
+			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
+			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
+			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
+		} else if (inputLoginAccount === "" && inputPassword === "" && inputEmail === "") {
+			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
+			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
+			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
+		} else if (inputUsername === "" && inputPassword === "" && inputEmail === "") {
+			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
+			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
+			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
+		} else if (inputPassword === "" && inputEmail === "") {
+			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
+			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
+		} else if (inputLoginAccount === "" && inputUsername === "") {
+			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
+			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
+		} else if (inputLoginAccount === "" && inputEmail === "") {
+			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
+			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
+		} else if (inputUsername === "" && inputPassword === "") {
+			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
+			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
+		} else if (inputUsername === "" && inputEmail === "") {
+			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
+			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
+		} else if (inputLoginAccount === "" && inputPassword === "") {
+			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
+			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
+		} else if (inputLoginAccount === "") {
+			showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
+		} else if (inputUsername === "") {
+			showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
+		} else if (inputPassword === "") {
+			showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
+		} else {
+			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
+		}
+	} else {
+		$.ajax({
+			url: '/pgcrowd/employee/infosave',
+			type: 'POST',
+			dataType: 'json',
+			data: JSON.stringify({
+				'loginAccount': inputLoginAccount,
+				'username': inputUsername,
+				'password': inputPassword,
+				'email': inputEmail
+			}),
+			contentType: 'application/json;charset=UTF-8',
+			success: function() {
+				let username = $("#userinfo").text();
+				window.location.replace('/pgcrowd/employee/to/pages?pageNum=120000&username=' + username);
+			}
+		});
+	}
+});
 $("#resetBtn").on('click', function() {
 	formReset($("#inputForm"));
 });
