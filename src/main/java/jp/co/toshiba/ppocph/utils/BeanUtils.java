@@ -41,17 +41,16 @@ public final class BeanUtils extends org.springframework.beans.BeanUtils {
 	private static String[] getNullProperties(final Object source) {
 		final BeanWrapper beanWrapper = new BeanWrapperImpl(source);
 		final PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();
-		final Set<String> noNullProperties = new HashSet<>();
+		final Set<String> nullFields = new HashSet<>();
 		if (propertyDescriptors.length > 0) {
 			for (final PropertyDescriptor p : propertyDescriptors) {
 				final String name = p.getName();
 				final Object value = beanWrapper.getPropertyValue(name);
 				if (Objects.isNull(value)) {
-					noNullProperties.add(name);
+					nullFields.add(name);
 				}
 			}
 		}
-		final String[] notNullFields = new String[noNullProperties.size()];
-		return noNullProperties.toArray(notNullFields);
+		return nullFields.toArray(new String[nullFields.size()]);
 	}
 }
