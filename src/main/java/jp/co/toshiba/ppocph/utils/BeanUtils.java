@@ -12,6 +12,12 @@ import org.springframework.beans.BeansException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+/**
+ * 共通Beanツール
+ *
+ * @author ArkamaHozota
+ * @since 4.31
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BeanUtils extends org.springframework.beans.BeanUtils {
 
@@ -26,6 +32,12 @@ public final class BeanUtils extends org.springframework.beans.BeanUtils {
 		org.springframework.beans.BeanUtils.copyProperties(source, target, BeanUtils.getNullProperties(source));
 	}
 
+	/**
+	 * コピー元のNULLプロパティを取得する
+	 *
+	 * @param source コピー元
+	 * @return NULLプロパティ
+	 */
 	private static String[] getNullProperties(final Object source) {
 		final BeanWrapper beanWrapper = new BeanWrapperImpl(source);
 		final PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();
