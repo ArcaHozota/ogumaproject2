@@ -110,7 +110,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		final Employee employee = this.employeeRepository.findById(employeeDto.getId()).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
-		BeanUtils.copyProperties(employeeDto, employee, "id");
+		BeanUtils.copyProperties(employeeDto, employee, "password");
 		if (StringUtils.isNotEmpty(password)) {
 			final String plainToMD5 = PgCrowdUtils.plainToMD5(password);
 			employee.setPassword(plainToMD5);
