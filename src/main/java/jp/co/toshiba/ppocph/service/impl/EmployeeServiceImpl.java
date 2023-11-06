@@ -106,12 +106,15 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public void update(final EmployeeDto employeeDto) {
-		final String plainToMD5 = PgCrowdUtils.plainToMD5(employeeDto.getPassword());
+		final String password = employeeDto.getPassword();
 		final Employee employee = this.employeeRepository.findById(employeeDto.getId()).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
-		BeanUtils.copyProperties(employeeDto, employee, "password");
-		employee.setPassword(plainToMD5);
+		BeanUtils.copyProperties(employeeDto, employee, "id");
+		if (StringUtils.isNotEmpty(password)) {
+			final String plainToMD5 = PgCrowdUtils.plainToMD5(password);
+			employee.setPassword(plainToMD5);
+		}
 		this.employeeRepository.save(employee);
 	}
 }
