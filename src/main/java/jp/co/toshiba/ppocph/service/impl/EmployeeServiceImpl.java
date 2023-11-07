@@ -101,7 +101,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		employee.setPassword(plainToMD5);
 		employee.setStatus(PgCrowdConstants.EMPLOYEE_NORMAL_STATUS);
 		employee.setCreatedTime(LocalDateTime.now());
-		this.employeeRepository.save(employee);
+		this.employeeRepository.saveAndFlush(employee);
 	}
 
 	@Override
@@ -115,6 +115,6 @@ public class EmployeeServiceImpl implements IEmployeeService {
 			final String plainToMD5 = PgCrowdUtils.plainToMD5(password);
 			employee.setPassword(plainToMD5);
 		}
-		this.employeeRepository.save(employee);
+		this.employeeRepository.saveAndFlush(employee);
 	}
 }
