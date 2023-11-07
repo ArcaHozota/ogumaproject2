@@ -18,9 +18,9 @@ import jp.co.toshiba.ppocph.exception.LoginFailedException;
 import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
-import jp.co.toshiba.ppocph.utils.BeanUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.PgCrowdUtils;
+import jp.co.toshiba.ppocph.utils.SecondBeanUtils;
 import jp.co.toshiba.ppocph.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -96,7 +96,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		final Integer saibanId = this.employeeRepository.saiban();
 		final String plainToMD5 = PgCrowdUtils.plainToMD5(employeeDto.getPassword());
 		final Employee employee = new Employee();
-		BeanUtils.copyNullableProperties(employeeDto, employee);
+		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setId(saibanId);
 		employee.setPassword(plainToMD5);
 		employee.setStatus(PgCrowdConstants.EMPLOYEE_NORMAL_STATUS);
@@ -110,7 +110,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		final Employee employee = this.employeeRepository.findById(employeeDto.getId()).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
-		BeanUtils.copyNullableProperties(employeeDto, employee);
+		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		if (StringUtils.isNotEmpty(password)) {
 			final String plainToMD5 = PgCrowdUtils.plainToMD5(password);
 			employee.setPassword(plainToMD5);

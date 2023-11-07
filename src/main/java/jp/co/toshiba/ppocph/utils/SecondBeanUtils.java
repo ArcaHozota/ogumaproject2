@@ -2,9 +2,9 @@ package jp.co.toshiba.ppocph.utils;
 
 import java.beans.PropertyDescriptor;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.BeansException;
@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
  * @since 4.31
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class BeanUtils extends org.springframework.beans.BeanUtils {
+public final class SecondBeanUtils extends BeanUtils {
 
 	/**
 	 * NULLではないプロパティだけコピーする
@@ -29,7 +29,7 @@ public final class BeanUtils extends org.springframework.beans.BeanUtils {
 	 * @throws BeansException
 	 */
 	public static void copyNullableProperties(final Object source, final Object target) throws BeansException {
-		org.springframework.beans.BeanUtils.copyProperties(source, target, BeanUtils.getNullProperties(source));
+		BeanUtils.copyProperties(source, target, SecondBeanUtils.getNullProperties(source));
 	}
 
 	/**
@@ -46,7 +46,7 @@ public final class BeanUtils extends org.springframework.beans.BeanUtils {
 			for (final PropertyDescriptor p : propertyDescriptors) {
 				final String name = p.getName();
 				final Object value = beanWrapper.getPropertyValue(name);
-				if (Objects.isNull(value)) {
+				if (value == null) {
 					nullFields.add(name);
 				}
 			}
