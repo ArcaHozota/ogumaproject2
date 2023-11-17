@@ -8,7 +8,7 @@ import java.util.Random;
  * @author ArkamaHozota
  * @since 4.36
  */
-public final class SnowflakeUtils {
+public final class SnowflakeUtils extends SnowflakeIdGenerator {
 
 	private static final Random RANDOM = new Random();
 
@@ -17,16 +17,19 @@ public final class SnowflakeUtils {
 	 *
 	 * @return long ID
 	 */
-	public static long nextId() {
+	public static Long snowflakeId() {
 		final int nextInt1 = RANDOM.nextInt(31);
 		final int nextInt2 = RANDOM.nextInt(31);
-		return new SnowflakeIdGenerator(nextInt1, nextInt2).nextId();
+		return new SnowflakeUtils(nextInt1, nextInt2).nextId();
 	}
 
 	/**
 	 * コンストラクタ
+	 *
+	 * @param workerId     ワークID(最大値は31)
+	 * @param datacenterId データセンターID(最大値は31)
 	 */
-	private SnowflakeUtils() {
-		throw new IllegalStateException("Utility class");
+	private SnowflakeUtils(final long workerId, final long datacenterId) {
+		super(workerId, datacenterId);
 	}
 }
