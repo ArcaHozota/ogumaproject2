@@ -48,7 +48,7 @@ public interface IEmployeeService {
 	 *
 	 * @param pageNum ページ数
 	 * @param keyword キーワード
-	 * @return List<Employee>
+	 * @return Pagination<Employee>
 	 */
 	Pagination<Employee> getEmployeesByKeyword(Integer pageNum, String keyword);
 

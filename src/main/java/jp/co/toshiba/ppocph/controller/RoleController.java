@@ -11,6 +11,7 @@ import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
+import jp.co.toshiba.ppocph.service.IRoleService;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 import jp.co.toshiba.ppocph.utils.StringUtils;
@@ -34,6 +35,11 @@ public final class RoleController {
 	private final IEmployeeService iEmployeeService;
 
 	/**
+	 * 役割サービスインターフェス
+	 */
+	private final IRoleService iRoleService;
+
+	/**
 	 * 役割情報初期表示
 	 *
 	 * @param userId  ユーザID
@@ -55,7 +61,7 @@ public final class RoleController {
 	 *
 	 * @param pageNum ページ数
 	 * @param keyword キーワード
-	 * @return ResultDto<List<Employee>>
+	 * @return ResultDto<Pagination<Role>>
 	 */
 	@GetMapping("/pagination")
 	@ResponseBody

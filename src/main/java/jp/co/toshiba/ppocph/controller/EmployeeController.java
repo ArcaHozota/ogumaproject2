@@ -122,7 +122,7 @@ public final class EmployeeController {
 	 *
 	 * @param pageNum ページ数
 	 * @param keyword キーワード
-	 * @return ResultDto<List<Employee>>
+	 * @return ResultDto<Pagination<Employee>>
 	 */
 	@GetMapping("/pagination")
 	@ResponseBody
