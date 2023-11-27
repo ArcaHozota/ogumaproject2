@@ -30,8 +30,7 @@ function buildCityTable(result) {
 	let index = result.data.records;
 	$.each(index, (index, item) => {
 		let idTd = $("<th scope='row' class='text-center' style='width:70px;vertical-align:bottom;'></th>").append(item.id);
-		let usernameTd = $("<td scope='row' class='text-center' style='width:120px;vertical-align:bottom;'></td>").append(item.username);
-		let emailTd = $("<td scope='row' class='text-center' style='width:120px;vertical-align:bottom;'></td>").append(item.email);
+		let nameTd = $("<td scope='row' class='text-center' style='width:120px;vertical-align:bottom;'></td>").append(item.name);
 		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
 			.append($("<i class='bi bi-pencil-fill'></i>")).append("編集");
 		editBtn.attr("editId", item.id);
@@ -39,7 +38,7 @@ function buildCityTable(result) {
 			.append($("<i class='bi bi-trash'></i>")).append("削除");
 		deleteBtn.attr("deleteId", item.id);
 		let btnTd = $("<td class='text-center' style='width:120px;vertical-align:bottom;'></td>").append(editBtn).append(" ").append(deleteBtn);
-		$("<tr></tr>").append(idTd).append(usernameTd).append(emailTd).append(btnTd).appendTo("#tableBody");
+		$("<tr></tr>").append(idTd).append(nameTd).append(btnTd).appendTo("#tableBody");
 	});
 }
 function buildPageInfos(result) {
