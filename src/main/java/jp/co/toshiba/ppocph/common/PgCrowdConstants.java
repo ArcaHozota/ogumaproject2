@@ -20,9 +20,9 @@ public final class PgCrowdConstants {
 
 	public static final String MSG003 = "アプリは正常に起動しました!";
 
-	public static final String MSG004 = "visible";
+	public static final String LOGIC_FLG = "visible";
 
-	public static final String MSG005 = "removed";
+	public static final String LOGIC_REMOVED = "removed";
 
 	public static final String ATTRNAME_EXCEPTION = "exception";
 
