@@ -86,7 +86,7 @@
 									</a>
 								</li>
 								<li style="height: 30px;">
-									<a href="role.html" id="toRole">
+									<a style="color: darkred;" href="role.html" id="toRole">
 										<i class="bi bi-list-check"></i> 役割メンテナンス
 									</a>
 								</li>
@@ -99,15 +99,15 @@
 						</li>
 						<li class="list-group-item list-group-item-action collapsed"><span><i
 									class="glyphicon glyphicon-ok"></i>事業レビュー<span class="badge"
-									style="float: right">3</span></span>
-							<ul style="margin-top: 10px; display: none;">
-								<li style="height: 30px;"><a href="auth_cert.html"><i
-											class="glyphicon glyphicon-check"></i>実名認証の見直し</a></li>
-								<li style="height: 30px;"><a href="auth_adv.html"><i
-											class="glyphicon glyphicon-check"></i>広告レビュー</a></li>
-								<li style="height: 30px;"><a href="auth_project.html"><i
-											class="glyphicon glyphicon-check"></i>プロジェクトのレビュー</a></li>
-							</ul>
+									style="float: right">3</span>
+								<ul style="margin-top: 10px; display: none;">
+									<li style="height: 30px;"><a href="auth_cert.html"><i
+												class="glyphicon glyphicon-check"></i>実名認証の見直し</a></li>
+									<li style="height: 30px;"><a href="auth_adv.html"><i
+												class="glyphicon glyphicon-check"></i>広告レビュー</a></li>
+									<li style="height: 30px;"><a href="auth_project.html"><i
+												class="glyphicon glyphicon-check"></i>プロジェクトのレビュー</a></li>
+								</ul>
 						</li>
 						<li class="list-group-item list-group-item-action collapsed"><span><i
 									class="glyphicon glyphicon-th-large"></i>ビジネス管理<span class="badge"
@@ -135,10 +135,51 @@
 				</div>
 			</div>
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-				<h1 class="page-header">コントロールパネル</h1>
+				<div class="card">
+					<div class="card-header" style="margin-top: 5px;">
+						<h5 class="card-title" style="padding-top: 5px;">
+							<i class="bi bi-grid-fill"></i> データリスト
+						</h5>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<form class="form-inline col-md-5" role="form">
+								<div class="input-group col-md-5">
+									<input id="keywordInput" class="form-control" type="text"
+										placeholder="検索条件を入力してください">
+									<button id="searchBtn2" class="btn btn-info my-2 my-sm-0" type="button">
+										<i class="bi bi-search"></i> 検索
+									</button>
+								</div>
+							</form>
+							<div class="col-md-2 offset-md-5">
+								<button class="btn btn-success my-2 my-sm-0" id="addInfoBtn">
+									<i class="bi bi-person-plus-fill"></i> 情報追加
+								</button>
+							</div>
+						</div>
+						<table class="table table-sm">
+							<caption style="font-size: 10px;">社員情報一覧</caption>
+							<thead>
+								<tr class="table-primary">
+									<th scope="col" class="text-center" style="width: 70px;">ID</th>
+									<th scope="col" class="text-center" style="width: 120px;">名称</th>
+									<th scope="col" class="text-center" style="width: 120px;">メール</th>
+									<th scope="col" class="text-center" style="width: 120px;">操作</th>
+								</tr>
+							</thead>
+							<tbody id="tableBody" class="table-group-divider"></tbody>
+						</table>
+						<div class="row">
+							<div id="pageInfos" class="col-md-5" style="font-size: 12px;"></div>
+							<div id="pageNavi" class="col-md-7 d-flex justify-content-end"></div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" th:src="@{/static/customizes/employee-pages.js}"></script>
 </body>
 
 </html>
