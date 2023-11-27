@@ -28,6 +28,11 @@ $(function() {
 		let userId = $("#userinfoId").text();
 		window.location.replace('/pgcrowd/employee/to/pages?pageNum=1&userId=' + userId);
 	});
+	$("#toRole").on('click', function(e) {
+		e.preventDefault();
+		let userId = $("#userinfoId").text();
+		window.location.replace('/pgcrowd/role/to/pages?pageNum=1&userId=' + userId);
+	});
 	$("#toPages").on('click', function(e) {
 		e.preventDefault();
 		let userId = $("#userinfoId").text();
