@@ -39,4 +39,10 @@ public final class Role implements Serializable {
 	 */
 	@Column(nullable = false)
 	private String name;
+
+	/**
+	 * 論理削除フラグ
+	 */
+	@Column(nullable = false)
+	private String deleteFlg;
 }
