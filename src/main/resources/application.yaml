@@ -1,5 +1,5 @@
 server:
-  port: 8287
+  port: 8687
 spring:
   application:
     name: pgcrowd
