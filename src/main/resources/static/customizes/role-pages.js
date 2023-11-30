@@ -98,7 +98,7 @@ function buildPageNavi(result) {
 	ul.append(nextPageLi).append(lastPageLi);
 	$("<nav></nav>").append(ul).appendTo("#pageNavi");
 }
-$("#roleAddModal").on('click', function() {
+$("#addRoleBtn").on('click', function() {
 	formReset("#roleAddModal form");
 	let addModal = new bootstrap.Modal($("#roleAddModal"), {
 		backdrop: 'static'
