@@ -99,7 +99,7 @@ function buildPageNavi(result) {
 	$("<nav></nav>").append(ul).appendTo("#pageNavi");
 }
 $("#addRoleBtn").on('click', function() {
-	formReset("#roleAddModal form");
+	formReset("#roleAddModal form-horizontal");
 	let addModal = new bootstrap.Modal($("#roleAddModal"), {
 		backdrop: 'static'
 	});
