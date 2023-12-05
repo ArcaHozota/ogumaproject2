@@ -2,12 +2,15 @@ package jp.co.toshiba.ppocph.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
+import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
@@ -70,5 +73,18 @@ public final class RoleController {
 			@RequestParam(name = "keyword", defaultValue = StringUtils.EMPTY_STRING) final String keyword) {
 		final Pagination<Role> roles = this.iRoleService.getRolesByKeyword(pageNum, keyword);
 		return ResultDto.successWithData(roles);
+	}
+
+	/**
+	 * 情報追加
+	 *
+	 * @param roleDto 役割情報DTO
+	 * @return ResultDto<String>
+	 */
+	@PostMapping("/infosave")
+	@ResponseBody
+	public ResultDto<String> saveInfo(@RequestBody final RoleDto roleDto) {
+		this.iRoleService.save(roleDto);
+		return ResultDto.successWithoutData();
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
+import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.repository.RoleRepository;
 import jp.co.toshiba.ppocph.service.IRoleService;
@@ -43,5 +44,9 @@ public class RoleServiceImpl implements IRoleService {
 		final Specification<Role> specification = Specification.where(where1).and(where2);
 		final Page<Role> pages = this.roleRepository.findAll(specification, pageRequest);
 		return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+	}
+
+	@Override
+	public void save(final RoleDto roleDto) {
 	}
 }

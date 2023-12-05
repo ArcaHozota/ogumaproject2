@@ -1,5 +1,6 @@
 package jp.co.toshiba.ppocph.service;
 
+import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.utils.Pagination;
 
@@ -19,4 +20,11 @@ public interface IRoleService {
 	 * @return Pagination<Role>
 	 */
 	Pagination<Role> getRolesByKeyword(Integer pageNum, String keyword);
+
+	/**
+	 * 役割情報追加
+	 *
+	 * @param roleDto 役割情報転送クラス
+	 */
+	void save(RoleDto roleDto);
 }
