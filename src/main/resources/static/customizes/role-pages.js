@@ -105,6 +105,23 @@ $("#addRoleBtn").on('click', function() {
 	});
 	addModal.show();
 });
+$("#nameInput").on('change', function() {
+	let nameVal = this.value;
+	$.ajax({
+		url: '/pgcrowd/role/checkname',
+		data: 'name=' + nameVal,
+		type: 'GET',
+		success: function(result) {
+			if (result.status === 'SUCCESS') {
+				showValidationMsg("#nameInput", "success", "");
+				$("#roleInfoSaveBtn").attr("ajax-va", "success");
+			} else {
+				showValidationMsg("#nameInput", "error", result.message);
+				$("#roleInfoSaveBtn").attr("ajax-va", "error");
+			}
+		}
+	});
+});
 $("#roleInfoSaveBtn").on('click', function() {
 	let inputName = $("#nameInput").val().trim();
 	if ($(this).attr("ajax-va") === "error") {
