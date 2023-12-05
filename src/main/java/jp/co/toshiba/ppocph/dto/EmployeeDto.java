@@ -4,6 +4,9 @@ import lombok.Data;
 
 /**
  * 社員情報転送クラス
+ *
+ * @author ArkamaHozota
+ * @since 3.57
  */
 @Data
 public final class EmployeeDto {
