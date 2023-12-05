@@ -13,6 +13,8 @@ import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.repository.RoleRepository;
 import jp.co.toshiba.ppocph.service.IRoleService;
 import jp.co.toshiba.ppocph.utils.Pagination;
+import jp.co.toshiba.ppocph.utils.SecondBeanUtils;
+import jp.co.toshiba.ppocph.utils.SnowflakeUtils;
 import jp.co.toshiba.ppocph.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -48,5 +50,10 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public void save(final RoleDto roleDto) {
+		final Role role = new Role();
+		SecondBeanUtils.copyNullableProperties(roleDto, role);
+		role.setId(SnowflakeUtils.snowflakeId().intValue());
+		role.setDeleteFlg(PgCrowdConstants.DELETE_INITIAL);
+		this.roleRepository.saveAndFlush(role);
 	}
 }
