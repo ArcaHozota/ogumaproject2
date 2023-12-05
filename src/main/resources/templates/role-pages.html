@@ -202,6 +202,36 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal fade" id="roleEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">役割情報更新</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group row">
+							<label for="idEdit" class="col-sm-3 col-form-label text-end">役割ID</label>
+							<div class="col-sm-9">
+								<p class="form-control" id="idEdit"></p>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="nameEdit" class="col-sm-3 col-form-label text-end">役割名</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="nameEdit" placeholder="役割の名称">
+								<span class="form-text" style="font-size: 12px;"></span>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">閉じる</button>
+					<button type="button" class="btn btn-info" id="roleInfoChangeBtn">変更</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script type="text/javascript" th:src="@{/static/customizes/role-pages.js}"></script>
 </body>
 
