@@ -43,6 +43,23 @@ public final class RoleController {
 	private final IRoleService iRoleService;
 
 	/**
+	 * 役割名称重複チェック
+	 *
+	 * @param name 役割名称
+	 * @return ResultDto<String>
+	 */
+	@GetMapping("/checkname")
+	@ResponseBody
+	public ResultDto<String> checkDuplicated(
+			@RequestParam(name = "name", defaultValue = StringUtils.EMPTY_STRING) final String name) {
+		final boolean checkDuplicated = this.iRoleService.check(name);
+		if (checkDuplicated) {
+			return ResultDto.failed(PgCrowdConstants.MESSAGE_ROLE_NAME_DUPLICATED);
+		}
+		return ResultDto.successWithoutData();
+	}
+
+	/**
 	 * 役割情報初期表示
 	 *
 	 * @param userId  ユーザID

@@ -13,6 +13,14 @@ import jp.co.toshiba.ppocph.utils.Pagination;
 public interface IRoleService {
 
 	/**
+	 * 役割名称が重複するかどうかをチェックする
+	 *
+	 * @param name 役割名称
+	 * @return true:重複する; false: 重複しない;
+	 */
+	boolean check(String name);
+
+	/**
 	 * キーワードによって役割情報を取得する
 	 *
 	 * @param pageNum ページ数

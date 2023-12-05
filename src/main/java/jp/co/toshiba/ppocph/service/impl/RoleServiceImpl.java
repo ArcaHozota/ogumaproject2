@@ -35,6 +35,16 @@ public class RoleServiceImpl implements IRoleService {
 	private final RoleRepository roleRepository;
 
 	@Override
+	public boolean check(final String name) {
+		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_FLG);
+		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("name"),
+				name);
+		final Specification<Role> specification = Specification.where(where1).and(where2);
+		return this.roleRepository.findOne(specification).isPresent();
+	}
+
+	@Override
 	public Pagination<Role> getRolesByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
