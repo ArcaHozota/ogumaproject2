@@ -105,6 +105,28 @@ $("#addRoleBtn").on('click', function() {
 	});
 	addModal.show();
 });
+$("#roleInfoSaveBtn").on('click', function() {
+	let inputName = $("#nameInput").val().trim();
+	if ($(this).attr("ajax-va") === "error") {
+		return false;
+	} else if (inputName === "") {
+		showValidationMsg("#nameInput", "error", "役割名称を空になってはいけません。");
+	} else {
+		$.ajax({
+			url: '/pgcrowd/role/infosave',
+			type: 'POST',
+			dataType: 'json',
+			data: JSON.stringify({
+				'name': inputName
+			}),
+			contentType: 'application/json;charset=UTF-8',
+			success: function() {
+				$("#roleAddModal").modal('hide');
+				toSelectedPg(pageNum, keyword);
+			}
+		});
+	}
+});
 function formReset(element) {
 	$(element)[0].reset();
 	$(element).find(".form-control").removeClass("is-valid is-invalid");
