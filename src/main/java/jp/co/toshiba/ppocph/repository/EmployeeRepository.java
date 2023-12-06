@@ -26,7 +26,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
 	 */
 	@Modifying
 	@Transactional(rollbackFor = PSQLException.class)
-	void removeById(@Param("id") Integer id);
+	void removeById(@Param("id") Long id);
 
 	/**
 	 * ID採番を取得する
