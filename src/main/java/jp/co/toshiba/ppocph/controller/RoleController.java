@@ -67,7 +67,7 @@ public final class RoleController {
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/pages")
-	public ModelAndView initialPages(@RequestParam("userId") final Integer userId,
+	public ModelAndView initialPages(@RequestParam("userId") final Long userId,
 			@RequestParam(name = "pageNum") final Integer pageNum) {
 		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
 		final ModelAndView modelAndView = new ModelAndView("role-pages");

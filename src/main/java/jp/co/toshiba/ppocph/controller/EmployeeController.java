@@ -64,7 +64,7 @@ public final class EmployeeController {
 	 */
 	@DeleteMapping("/delete/{userId}")
 	@ResponseBody
-	public ResultDto<String> deleteInfo(@PathVariable("userId") final Integer userId) {
+	public ResultDto<String> deleteInfo(@PathVariable("userId") final Long userId) {
 		this.iEmployeeService.deleteById(userId);
 		return ResultDto.successWithoutData();
 	}
@@ -108,7 +108,7 @@ public final class EmployeeController {
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/pages")
-	public ModelAndView initialPages(@RequestParam("userId") final Integer userId,
+	public ModelAndView initialPages(@RequestParam("userId") final Long userId,
 			@RequestParam(name = "pageNum") final Integer pageNum) {
 		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
 		final ModelAndView modelAndView = new ModelAndView("admin-pages");
@@ -141,7 +141,7 @@ public final class EmployeeController {
 	 */
 	@GetMapping("/inforestore")
 	@ResponseBody
-	public ResultDto<Employee> restoreInfo(@RequestParam("userId") final Integer userId) {
+	public ResultDto<Employee> restoreInfo(@RequestParam("userId") final Long userId) {
 		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
 		return ResultDto.successWithData(employee);
 	}
@@ -166,7 +166,7 @@ public final class EmployeeController {
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/addition")
-	public ModelAndView toAddition(@RequestParam("userId") final Integer userId) {
+	public ModelAndView toAddition(@RequestParam("userId") final Long userId) {
 		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
 		final ModelAndView modelAndView = new ModelAndView("admin-addinfo");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
@@ -181,8 +181,7 @@ public final class EmployeeController {
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/edition")
-	public ModelAndView toEdition(@RequestParam("editId") final Integer id,
-			@RequestParam("userId") final Integer userId) {
+	public ModelAndView toEdition(@RequestParam("editId") final Long id, @RequestParam("userId") final Long userId) {
 		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
 		final Employee employee2 = this.iEmployeeService.getEmployeeById(id);
 		final ModelAndView modelAndView = new ModelAndView("admin-editinfo");
@@ -198,7 +197,7 @@ public final class EmployeeController {
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/mainmenu")
-	public ModelAndView toMainmenu(@RequestParam("userId") final Integer userId) {
+	public ModelAndView toMainmenu(@RequestParam("userId") final Long userId) {
 		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
 		final ModelAndView modelAndView = new ModelAndView("mainmenu");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);

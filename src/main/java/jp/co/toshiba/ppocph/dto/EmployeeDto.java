@@ -14,7 +14,7 @@ public final class EmployeeDto {
 	/**
 	 * ID
 	 */
-	private Integer id;
+	private Long id;
 
 	/**
 	 * アカウント
