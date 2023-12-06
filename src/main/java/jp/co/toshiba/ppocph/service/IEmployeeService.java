@@ -24,7 +24,7 @@ public interface IEmployeeService {
 	 *
 	 * @param userId 社員ID
 	 */
-	void deleteById(Integer userId);
+	void deleteById(Long userId);
 
 	/**
 	 * ログイン処理
@@ -41,7 +41,7 @@ public interface IEmployeeService {
 	 * @param id 社員ID
 	 * @return Employee
 	 */
-	Employee getEmployeeById(Integer id);
+	Employee getEmployeeById(Long id);
 
 	/**
 	 * キーワードによって社員情報を取得する

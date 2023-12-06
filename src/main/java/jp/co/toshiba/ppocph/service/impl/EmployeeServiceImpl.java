@@ -49,7 +49,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public void deleteById(final Integer userId) {
+	public void deleteById(final Long userId) {
 		this.employeeRepository.removeById(userId);
 	}
 
@@ -66,7 +66,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public Employee getEmployeeById(final Integer id) {
+	public Employee getEmployeeById(final Long id) {
 		return this.employeeRepository.findById(id).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
@@ -93,7 +93,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public void save(final EmployeeDto employeeDto) {
-		final Integer saibanId = this.employeeRepository.saiban();
+		final Long saibanId = this.employeeRepository.saiban();
 		final String plainToMD5 = PgCrowdUtils.plainToMD5(employeeDto.getPassword());
 		final Employee employee = new Employee();
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
