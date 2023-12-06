@@ -33,5 +33,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
 	 *
 	 * @return 採番ID
 	 */
-	Integer saiban();
+	Long saiban();
 }
