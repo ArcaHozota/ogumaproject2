@@ -47,7 +47,7 @@ public class RoleServiceImpl implements IRoleService {
 	@Override
 	public Pagination<Role> getRolesByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
-				Sort.by(Direction.ASC, "created_time"));
+				Sort.by(Direction.ASC, "id"));
 		final String searchStr = "%" + keyword + "%";
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_FLG);
