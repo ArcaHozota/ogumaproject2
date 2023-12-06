@@ -144,8 +144,13 @@ $("#roleInfoSaveBtn").on('click', function() {
 		});
 	}
 });
-$(".edit_btn").on('click', function() {
+$(document).on('click','.edit_btn', function() {
 	formReset("#roleEditModal form");
+	let editId = $(this).attr("editId");
+	$("#roleInfoChangeBtn").attr("editId", editId);
+	$("#idEdit").text(editId);
+	let nameVal = $(this).parent().parent().find("td:eq(0)").text();
+	$("#nameEdit").val(nameVal);
 	let editModal = new bootstrap.Modal($("#roleEditModal"), {
 		backdrop: 'static'
 	});
