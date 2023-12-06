@@ -62,7 +62,7 @@ public class RoleServiceImpl implements IRoleService {
 	public void save(final RoleDto roleDto) {
 		final Role role = new Role();
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
-		role.setId(SnowflakeUtils.snowflakeId().intValue());
+		role.setId(SnowflakeUtils.snowflakeId());
 		role.setDeleteFlg(PgCrowdConstants.DELETE_INITIAL);
 		this.roleRepository.saveAndFlush(role);
 	}

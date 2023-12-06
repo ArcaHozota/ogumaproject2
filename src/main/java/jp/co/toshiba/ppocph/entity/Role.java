@@ -41,12 +41,6 @@ public final class Role implements Serializable {
 	private String name;
 
 	/**
-	 * 作成時間
-	 */
-	@Column(nullable = false)
-	private String createdTime;
-
-	/**
 	 * 論理削除フラグ
 	 */
 	@Column(nullable = false)
