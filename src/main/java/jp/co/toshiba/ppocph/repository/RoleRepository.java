@@ -13,5 +13,5 @@ import jp.co.toshiba.ppocph.entity.Role;
  * @since 4.45
  */
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Integer>, JpaSpecificationExecutor<Role> {
+public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificationExecutor<Role> {
 }

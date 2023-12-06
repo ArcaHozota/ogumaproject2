@@ -32,7 +32,7 @@ public final class Role implements Serializable {
 	 * ID
 	 */
 	@Id
-	private Integer id;
+	private Long id;
 
 	/**
 	 * 名称
