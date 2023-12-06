@@ -36,7 +36,7 @@ public final class Employee implements Serializable {
 	 * ID
 	 */
 	@Id
-	private Integer id;
+	private Long id;
 
 	/**
 	 * アカウント

@@ -17,7 +17,7 @@ import jp.co.toshiba.ppocph.entity.Employee;
  * @since 1.16
  */
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Integer>, JpaSpecificationExecutor<Employee> {
+public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSpecificationExecutor<Employee> {
 
 	/**
 	 * 社員情報論理削除
