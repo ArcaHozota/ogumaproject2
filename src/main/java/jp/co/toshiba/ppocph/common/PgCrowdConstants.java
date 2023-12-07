@@ -20,10 +20,6 @@ public final class PgCrowdConstants {
 
 	public static final String MSG003 = "アプリは正常に起動しました!";
 
-	public static final String LOGIC_FLG = "visible";
-
-	public static final String LOGIC_REMOVED = "removed";
-
 	public static final String ATTRNAME_EXCEPTION = "exception";
 
 	public static final String ATTRNAME_LOGIN_ADMIN = "employee";
@@ -34,9 +30,9 @@ public final class PgCrowdConstants {
 
 	public static final String ATTRNAME_PAGE_NUMBER = "pageNum";
 
-	public static final String DELETE_FLG = "removed";
+	public static final String LOGIC_DELETE_FLG = "removed";
 
-	public static final String DELETE_INITIAL = "visible";
+	public static final String LOGIC_DELETE_INITIAL = "visible";
 
 	public static final String EMPLOYEE_ABNORMAL_STATUS = "rejected";
 
