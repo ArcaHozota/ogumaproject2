@@ -200,7 +200,7 @@ $(document).on('click', '.delete_btn', function() {
 			type: 'DELETE',
 			dataType: 'json',
 			success: function() {
-				toSelectedPg(currentPage, searchName);
+				toSelectedPg(pageNum, keyword);
 			}
 		});
 	}
