@@ -311,7 +311,8 @@ $("#editInfoBtn").on('click', function() {
 				'loginAccount': editLoginAccount,
 				'username': editUsername,
 				'password': editPassword,
-				'email': editEmail
+				'email': editEmail,
+				'roleName': $("#roleEdit option:selected").val()
 			}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function() {

@@ -1,6 +1,5 @@
 package jp.co.toshiba.ppocph.dto;
 
-import jp.co.toshiba.ppocph.entity.Role;
 import lombok.Data;
 
 /**
@@ -38,7 +37,7 @@ public final class EmployeeDto {
 	private String email;
 
 	/**
-	 * 役割
+	 * 役割名称
 	 */
-	private Role role;
+	private String roleName;
 }
