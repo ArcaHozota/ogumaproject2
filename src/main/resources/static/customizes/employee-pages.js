@@ -312,7 +312,7 @@ $("#editInfoBtn").on('click', function() {
 				'username': editUsername,
 				'password': editPassword,
 				'email': editEmail,
-				'roleName': $("#roleEdit option:selected").val()
+				'roleId': $("#roleEdit option:selected").val()
 			}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function() {
