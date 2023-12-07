@@ -1,7 +1,6 @@
 package jp.co.toshiba.ppocph.controller;
 
-import java.sql.SQLIntegrityConstraintViolationException;
-
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -120,7 +119,7 @@ public final class RoleController {
 		try {
 			this.iRoleService.update(roleDto);
 			return ResultDto.successWithoutData();
-		} catch (final SQLIntegrityConstraintViolationException e) {
+		} catch (final ConstraintViolationException e) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_ROLE_NAME_DUPLICATED);
 		}
 	}

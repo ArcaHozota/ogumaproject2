@@ -1,6 +1,6 @@
 package jp.co.toshiba.ppocph.service;
 
-import java.sql.SQLIntegrityConstraintViolationException;
+import org.hibernate.exception.ConstraintViolationException;
 
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.Role;
@@ -43,5 +43,5 @@ public interface IRoleService {
 	 *
 	 * @param roleDto 役割情報転送クラス
 	 */
-	void update(RoleDto roleDto) throws SQLIntegrityConstraintViolationException;
+	void update(RoleDto roleDto) throws ConstraintViolationException;
 }

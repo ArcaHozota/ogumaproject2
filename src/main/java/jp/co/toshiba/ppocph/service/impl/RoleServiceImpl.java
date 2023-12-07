@@ -1,7 +1,6 @@
 package jp.co.toshiba.ppocph.service.impl;
 
-import java.sql.SQLIntegrityConstraintViolationException;
-
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -70,7 +69,7 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public void update(final RoleDto roleDto) throws SQLIntegrityConstraintViolationException {
+	public void update(final RoleDto roleDto) throws ConstraintViolationException {
 		final Role role = this.roleRepository.findById(roleDto.getId()).orElse(new Role());
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
 		this.roleRepository.saveAndFlush(role);
