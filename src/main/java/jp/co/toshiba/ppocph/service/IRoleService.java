@@ -1,6 +1,6 @@
 package jp.co.toshiba.ppocph.service;
 
-import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.Role;
@@ -50,5 +50,5 @@ public interface IRoleService {
 	 *
 	 * @param roleDto 役割情報転送クラス
 	 */
-	void update(RoleDto roleDto) throws ConstraintViolationException;
+	void update(RoleDto roleDto) throws DataIntegrityViolationException;
 }
