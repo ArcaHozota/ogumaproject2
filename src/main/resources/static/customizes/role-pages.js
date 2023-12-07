@@ -190,6 +190,21 @@ $("#roleInfoChangeBtn").on('click', function() {
 		});
 	}
 });
+$(document).on('click', '.delete_btn', function() {
+	let roleName = $(this).parents("tr").find("td:eq(0)").text().trim();
+	let roleId = $(this).attr("deleteId");
+	if (confirm("この" + roleName + "という役割情報を削除する、よろしいでしょうか。")) {
+		$.ajax({
+			url: '/pgcrowd/role/remove',
+			data: 'roleId=' + roleId,
+			type: 'DELETE',
+			dataType: 'json',
+			success: function() {
+				toSelectedPg(currentPage, searchName);
+			}
+		});
+	}
+});
 function formReset(element) {
 	$(element)[0].reset();
 	$(element).find(".form-control").removeClass("is-valid is-invalid");
