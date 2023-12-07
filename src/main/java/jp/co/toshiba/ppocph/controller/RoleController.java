@@ -4,6 +4,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -68,9 +69,9 @@ public final class RoleController {
 	 * @param roleId 役割ID
 	 * @return ResultDto<String>
 	 */
-	@DeleteMapping("/delete")
+	@DeleteMapping("/delete/{roleId}")
 	@ResponseBody
-	public ResultDto<String> deleteInfo(@RequestParam("roleId") final Long roleId) {
+	public ResultDto<String> deleteInfo(@PathVariable("roleId") final Long roleId) {
 		this.iRoleService.removeById(roleId);
 		return ResultDto.successWithoutData();
 	}
