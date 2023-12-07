@@ -126,6 +126,9 @@ $("#roleInfoSaveBtn").on('click', function() {
 	let inputName = $("#nameInput").val().trim();
 	if ($(this).attr("ajax-va") === "error") {
 		return false;
+	} else if (inputName === "") {
+		showValidationMsg("#nameEdit", "error", "役割名称を空になってはいけません。");
+		$("#roleInfoSaveBtn").attr("ajax-va", "error");
 	} else {
 		$.ajax({
 			url: '/pgcrowd/role/infosave',

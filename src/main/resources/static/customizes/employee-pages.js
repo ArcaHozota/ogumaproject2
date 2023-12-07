@@ -101,43 +101,25 @@ function buildPageNavi(result) {
 }
 $("#loginAccountInput").change(function() {
 	let inputLoginAccount = this.value;
-	if (inputLoginAccount === "") {
-		showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
-		$("#saveInfoBtn").attr("ajax-va", "error");
-	} else {
-		$.ajax({
-			url: '/pgcrowd/employee/check',
-			data: 'loginAcct=' + inputLoginAccount,
-			type: 'GET',
-			success: function(result) {
-				if (result.status === 'SUCCESS') {
-					showValidationMsg("#loginAccountInput", "success", "√");
-					$("#saveInfoBtn").attr("ajax-va", "success");
-				} else {
-					showValidationMsg("#loginAccountInput", "error", result.message);
-					$("#saveInfoBtn").attr("ajax-va", "error");
-				}
+	$.ajax({
+		url: '/pgcrowd/employee/check',
+		data: 'loginAcct=' + inputLoginAccount,
+		type: 'GET',
+		success: function(result) {
+			if (result.status === 'SUCCESS') {
+				showValidationMsg("#loginAccountInput", "success", "√");
+				$("#saveInfoBtn").attr("ajax-va", "success");
+			} else {
+				showValidationMsg("#loginAccountInput", "error", result.message);
+				$("#saveInfoBtn").attr("ajax-va", "error");
 			}
-		});
-	}
-});
-$("#usernameInput").change(function() {
-	let inputUsername = this.value;
-	if (inputUsername === "") {
-		showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
-		$("#saveInfoBtn").attr("ajax-va", "error");
-	} else {
-		showValidationMsg("#usernameInput", "success", "√");
-		$("#saveInfoBtn").attr("ajax-va", "success");
-	}
+		}
+	});
 });
 $("#passwordInput").change(function() {
 	let inputPassword = this.value;
 	let regularPassword = /^[a-zA-Z-\d]{8,23}$/;
-	if (inputPassword === "") {
-		showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
-		$("#saveInfoBtn").attr("ajax-va", "error");
-	} else if (!regularPassword.test(inputPassword)) {
+	if (!regularPassword.test(inputPassword)) {
 		showValidationMsg("#passwordInput", "error", "入力したパスワードが8桁から23桁までの英数字にしなければなりません。");
 		$("#saveInfoBtn").attr("ajax-va", "error");
 	} else {
@@ -148,10 +130,7 @@ $("#passwordInput").change(function() {
 $("#emailInput").change(function() {
 	let inputEmail = this.value;
 	let regularEmail = /^^[a-zA-Z-\d._%+-]+@[a-zA-Z-\d.-]+\.[a-zA-Z]{2,}$/;
-	if (inputEmail === "") {
-		showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
-		$("#saveInfoBtn").attr("ajax-va", "error");
-	} else if (!regularEmail.test(inputEmail)) {
+	if (!regularEmail.test(inputEmail)) {
 		showValidationMsg("#emailInput", "error", "入力したメールアドレスが正しくありません。");
 		$("#saveInfoBtn").attr("ajax-va", "error");
 	} else {
@@ -299,31 +278,9 @@ $("#editInfoBtn").on('click', function() {
 	let editEmail = $("#emailEdit").val().trim();
 	if ($(this).attr("ajax-va") === "error") {
 		return false;
-	} else if (editUsername === "" || editPassword === "" || editEmail === "") {
-		if (editUsername === "" && editPassword === "" && editEmail === "") {
-			showValidationMsg("#usernameEdit", "error", "ユーザ名称を空になってはいけません。");
-			showValidationMsg("#passwordEdit", "error", "パスワードを空になってはいけません。");
-			showValidationMsg("#emailEdit", "error", "メールアドレスを空になってはいけません。");
-		} else if (editUsername === "" && editPassword === "") {
-			showValidationMsg("#usernameEdit", "error", "ユーザ名称を空になってはいけません。");
-			showValidationMsg("#passwordEdit", "error", "パスワードを空になってはいけません。");
-		} else if (editUsername === "" && editEmail === "") {
-			showValidationMsg("#usernameEdit", "error", "ユーザ名称を空になってはいけません。");
-			showValidationMsg("#emailEdit", "error", "メールアドレスを空になってはいけません。");
-		} else if (editPassword === "" && editEmail === "") {
-			showValidationMsg("#passwordEdit", "error", "パスワードを空になってはいけません。");
-			showValidationMsg("#emailEdit", "error", "メールアドレスを空になってはいけません。");
-		} else if (editUsername === "") {
-			showValidationMsg("#usernameEdit", "error", "ユーザ名称を空になってはいけません。");
-		} else if (editPassword === "") {
-			showValidationMsg("#passwordEdit", "error", "パスワードを空になってはいけません。");
-		} else {
-			showValidationMsg("#emailEdit", "error", "メールアドレスを空になってはいけません。");
-		}
+	} else if (editPassword === "**************************************") {
+		editPassword = null;
 	} else {
-		if (editPassword === "**************************************") {
-			editPassword = null;
-		}
 		$.ajax({
 			url: '/pgcrowd/employee/infoupd',
 			type: 'PUT',
