@@ -126,8 +126,6 @@ $("#roleInfoSaveBtn").on('click', function() {
 	let inputName = $("#nameInput").val().trim();
 	if ($(this).attr("ajax-va") === "error") {
 		return false;
-	} else if (inputName === "") {
-		showValidationMsg("#nameInput", "error", "役割名称を空になってはいけません。");
 	} else {
 		$.ajax({
 			url: '/pgcrowd/role/infosave',
@@ -156,12 +154,20 @@ $(document).on('click', '.edit_btn', function() {
 	});
 	editModal.show();
 });
+$("#nameEdit").on('change', function() {
+	let editName = this.value;
+	if (editName === "") {
+		showValidationMsg("#nameEdit", "error", "役割名称を空になってはいけません。");
+		$("#roleInfoChangeBtn").attr("ajax-va", "error");
+	} else {
+		showValidationMsg("#nameEdit", "success", "");
+		$("#roleInfoChangeBtn").attr("ajax-va", "success");
+	}
+});
 $("#roleInfoChangeBtn").on('click', function() {
 	let editName = $("#nameEdit").val().trim();
 	if ($(this).attr("ajax-va") === "error") {
 		return false;
-	} else if (editName === "") {
-		showValidationMsg("#nameEdit", "error", "役割名称を空になってはいけません。");
 	} else {
 		$.ajax({
 			url: '/pgcrowd/role/infoupd',
