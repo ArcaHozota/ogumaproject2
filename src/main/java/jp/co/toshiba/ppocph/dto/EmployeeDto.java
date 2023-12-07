@@ -37,7 +37,7 @@ public final class EmployeeDto {
 	private String email;
 
 	/**
-	 * 役割名称
+	 * 役割ID
 	 */
-	private String roleName;
+	private Long roleId;
 }
