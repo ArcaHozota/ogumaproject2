@@ -127,7 +127,7 @@ $("#roleInfoSaveBtn").on('click', function() {
 	if ($(this).attr("ajax-va") === "error") {
 		return false;
 	} else if (inputName === "") {
-		showValidationMsg("#nameEdit", "error", "役割名称を空になってはいけません。");
+		showValidationMsg("#nameInput", "error", "役割名称を空になってはいけません。");
 		$("#roleInfoSaveBtn").attr("ajax-va", "error");
 	} else {
 		$.ajax({
