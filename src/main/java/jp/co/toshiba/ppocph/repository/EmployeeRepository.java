@@ -1,12 +1,8 @@
 package jp.co.toshiba.ppocph.repository;
 
-import org.postgresql.util.PSQLException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.toshiba.ppocph.entity.Employee;
 
@@ -18,15 +14,6 @@ import jp.co.toshiba.ppocph.entity.Employee;
  */
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSpecificationExecutor<Employee> {
-
-	/**
-	 * 社員情報論理削除
-	 *
-	 * @param id 社員ID
-	 */
-	@Modifying
-	@Transactional(rollbackFor = PSQLException.class)
-	void removeById(@Param("id") Long id);
 
 	/**
 	 * ID採番を取得する

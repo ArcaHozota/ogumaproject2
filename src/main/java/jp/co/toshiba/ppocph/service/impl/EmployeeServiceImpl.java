@@ -50,7 +50,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public void deleteById(final Long userId) {
-		this.employeeRepository.removeById(userId);
+		final Employee employee = this.employeeRepository.findById(userId).orElseGet(Employee::new);
+		employee.setStatus(PgCrowdConstants.EMPLOYEE_ABNORMAL_STATUS);
+		this.employeeRepository.saveAndFlush(employee);
 	}
 
 	@Override
