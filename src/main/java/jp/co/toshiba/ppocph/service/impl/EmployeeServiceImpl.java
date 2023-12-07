@@ -88,18 +88,23 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public List<Role> getEmployeeRolesById(final Long id) {
+		final List<Role> secondRoles = new ArrayList<>();
+		final Role secondRole = new Role();
+		secondRole.setId(Long.valueOf(0L));
+		secondRole.setName(PgCrowdConstants.DEFAULT_ROLE_NAME);
+		secondRoles.add(secondRole);
 		final List<Role> roles = this.roleRepository.findAll();
+		secondRoles.addAll(roles);
 		if (id == null) {
-			return roles;
+			return secondRoles;
 		}
 		final Specification<EmployeeEx> where = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("employeeId"), id);
 		final Specification<EmployeeEx> specification = Specification.where(where);
 		final Optional<EmployeeEx> roledOptional = this.employeeExRepository.findOne(specification);
 		if (roledOptional.isEmpty()) {
-			return roles;
+			return secondRoles;
 		}
-		final List<Role> secondRoles = new ArrayList<>();
 		final Long roleId = roledOptional.get().getRoleId();
 		final List<Role> selectedRole = roles.stream().filter(a -> Objects.equals(a.getId(), roleId))
 				.collect(Collectors.toList());
