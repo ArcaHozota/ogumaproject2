@@ -28,8 +28,6 @@ public final class PgCrowdConstants {
 
 	public static final String ATTRNAME_EMPLOYEEROLES = "employeeRoles";
 
-	public static final String ATTRNAME_EMPLOYEEROLES_BYID = "employeeRolesById";
-
 	public static final String ATTRNAME_PAGE_INFO = "pageInfo";
 
 	public static final String ATTRNAME_PAGE_NUMBER = "pageNum";

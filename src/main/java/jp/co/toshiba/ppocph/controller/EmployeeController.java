@@ -190,7 +190,7 @@ public final class EmployeeController {
 		final ModelAndView modelAndView = new ModelAndView("admin-editinfo");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EDITED_INFO, employee2);
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES_BYID, employeeRolesById);
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, employeeRolesById);
 		return modelAndView;
 	}
 

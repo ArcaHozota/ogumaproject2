@@ -1,7 +1,10 @@
 package jp.co.toshiba.ppocph.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Example;
@@ -20,6 +23,7 @@ import jp.co.toshiba.ppocph.entity.EmployeeEx;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.exception.LoginFailedException;
 import jp.co.toshiba.ppocph.exception.PgCrowdException;
+import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.repository.RoleRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
@@ -44,6 +48,11 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	 * 社員管理リポジトリ
 	 */
 	private final EmployeeRepository employeeRepository;
+
+	/**
+	 * 社員役割連携リポジトリ
+	 */
+	private final EmployeeExRepository employeeExRepository;
 
 	/**
 	 * 役割管理リポジトリ
@@ -80,12 +89,24 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	@Override
 	public List<String> getEmployeeRolesById(final Long id) {
 		final List<Role> roles = this.roleRepository.findAll();
+		final List<String> roleNames = roles.stream().map(Role::getName).collect(Collectors.toList());
 		if (id == null) {
-			return roles.stream().map(Role::getName).collect(Collectors.toList());
+			return roleNames;
 		}
-		final List<Long> roleIds = list.stream().map(EmployeeEx::getRoleId).collect(Collectors.toList());
-		final List<Role> roles = this.roleRepository.findAllById(roleIds);
-		return roles.stream().map(Role::getName).collect(Collectors.toList());
+		final Specification<EmployeeEx> where = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("employeeId"), id);
+		final Specification<EmployeeEx> specification = Specification.where(where);
+		final Optional<EmployeeEx> roledOptional = this.employeeExRepository.findOne(specification);
+		if (roledOptional.isEmpty()) {
+			return roleNames;
+		}
+		final List<String> secondRoles = new ArrayList<>();
+		final Long roleId = roledOptional.get().getRoleId();
+		final List<String> selectedRole = roles.stream().filter(a -> Objects.equals(a.getId(), roleId))
+				.map(Role::getName).collect(Collectors.toList());
+		secondRoles.addAll(selectedRole);
+		secondRoles.addAll(roleNames);
+		return secondRoles.stream().distinct().toList();
 	}
 
 	@Override
