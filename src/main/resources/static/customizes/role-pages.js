@@ -144,7 +144,7 @@ $("#roleInfoSaveBtn").on('click', function() {
 		});
 	}
 });
-$(document).on('click','.edit_btn', function() {
+$(document).on('click', '.edit_btn', function() {
 	formReset("#roleEditModal form");
 	let editId = $(this).attr("editId");
 	$("#roleInfoChangeBtn").attr("editId", editId);
@@ -155,6 +155,34 @@ $(document).on('click','.edit_btn', function() {
 		backdrop: 'static'
 	});
 	editModal.show();
+});
+$("#roleInfoChangeBtn").on('click', function() {
+	let editName = $("#nameEdit").val().trim();
+	if ($(this).attr("ajax-va") === "error") {
+		return false;
+	} else if (editName === "") {
+		showValidationMsg("#nameEdit", "error", "役割名称を空になってはいけません。");
+	} else {
+		$.ajax({
+			url: '/pgcrowd/role/infoupd',
+			type: 'PUT',
+			dataType: 'json',
+			data: JSON.stringify({
+				'id': $(this).attr("editId"),
+				'name': editName
+			}),
+			contentType: 'application/json;charset=UTF-8',
+			success: function(result) {
+				if (result.status === 'SUCCESS') {
+					$("#roleEditModal").modal('hide');
+					toSelectedPg(pageNum, keyword);
+				} else {
+					showValidationMsg("#nameEdit", "error", result.message);
+					$(this).attr("ajax-va", "error");
+				}
+			}
+		});
+	}
 });
 function formReset(element) {
 	$(element)[0].reset();
