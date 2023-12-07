@@ -1,5 +1,7 @@
 package jp.co.toshiba.ppocph.service;
 
+import java.util.List;
+
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.utils.Pagination;
@@ -35,6 +37,14 @@ public interface IEmployeeService {
 	 * @return Employee
 	 */
 	Employee getEmployeeById(Long id);
+
+	/**
+	 * 社員役割連携情報を取得する
+	 *
+	 * @param id 社員ID
+	 * @return List<String>
+	 */
+	List<String> getEmployeeRolesById(Long id);
 
 	/**
 	 * キーワードによって社員情報を取得する

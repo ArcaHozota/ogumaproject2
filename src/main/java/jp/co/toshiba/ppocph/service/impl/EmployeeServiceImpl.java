@@ -1,6 +1,8 @@
 package jp.co.toshiba.ppocph.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -14,9 +16,12 @@ import org.springframework.stereotype.Service;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
+import jp.co.toshiba.ppocph.entity.EmployeeEx;
+import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.exception.LoginFailedException;
 import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
+import jp.co.toshiba.ppocph.repository.RoleRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.PgCrowdUtils;
@@ -39,6 +44,11 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	 * 社員管理リポジトリ
 	 */
 	private final EmployeeRepository employeeRepository;
+
+	/**
+	 * 役割管理リポジトリ
+	 */
+	private final RoleRepository roleRepository;
 
 	@Override
 	public boolean check(final String loginAccount) {
@@ -65,6 +75,17 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		return this.employeeRepository.findById(id).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
+	}
+
+	@Override
+	public List<String> getEmployeeRolesById(final Long id) {
+		final List<Role> roles = this.roleRepository.findAll();
+		if (id == null) {
+			return roles.stream().map(Role::getName).collect(Collectors.toList());
+		}
+		final List<Long> roleIds = list.stream().map(EmployeeEx::getRoleId).collect(Collectors.toList());
+		final List<Role> roles = this.roleRepository.findAllById(roleIds);
+		return roles.stream().map(Role::getName).collect(Collectors.toList());
 	}
 
 	@Override

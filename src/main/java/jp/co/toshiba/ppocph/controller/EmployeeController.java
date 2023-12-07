@@ -1,5 +1,7 @@
 package jp.co.toshiba.ppocph.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -184,9 +186,11 @@ public final class EmployeeController {
 	public ModelAndView toEdition(@RequestParam("editId") final Long id, @RequestParam("userId") final Long userId) {
 		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
 		final Employee employee2 = this.iEmployeeService.getEmployeeById(id);
+		final List<String> employeeRolesById = this.iEmployeeService.getEmployeeRolesById(id);
 		final ModelAndView modelAndView = new ModelAndView("admin-editinfo");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EDITED_INFO, employee2);
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES_BYID, employeeRolesById);
 		return modelAndView;
 	}
 
