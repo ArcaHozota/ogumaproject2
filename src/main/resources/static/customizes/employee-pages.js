@@ -101,25 +101,43 @@ function buildPageNavi(result) {
 }
 $("#loginAccountInput").change(function() {
 	let inputLoginAccount = this.value;
-	$.ajax({
-		url: '/pgcrowd/employee/check',
-		data: 'loginAcct=' + inputLoginAccount,
-		type: 'GET',
-		success: function(result) {
-			if (result.status === 'SUCCESS') {
-				showValidationMsg("#loginAccountInput", "success", "√");
-				$("#saveInfoBtn").attr("ajax-va", "success");
-			} else {
-				showValidationMsg("#loginAccountInput", "error", result.message);
-				$("#saveInfoBtn").attr("ajax-va", "error");
+	if (inputLoginAccount === "") {
+		showValidationMsg("#loginAccountInput", "error", "ログインアカウントを空になってはいけません。");
+		$("#saveInfoBtn").attr("ajax-va", "error");
+	} else {
+		$.ajax({
+			url: '/pgcrowd/employee/check',
+			data: 'loginAcct=' + inputLoginAccount,
+			type: 'GET',
+			success: function(result) {
+				if (result.status === 'SUCCESS') {
+					showValidationMsg("#loginAccountInput", "success", "√");
+					$("#saveInfoBtn").attr("ajax-va", "success");
+				} else {
+					showValidationMsg("#loginAccountInput", "error", result.message);
+					$("#saveInfoBtn").attr("ajax-va", "error");
+				}
 			}
-		}
-	});
+		});
+	}
+});
+$("#usernameInput").change(function() {
+	let inputUsername = this.value;
+	if (inputUsername === "") {
+		showValidationMsg("#usernameInput", "error", "ユーザ名称を空になってはいけません。");
+		$("#saveInfoBtn").attr("ajax-va", "error");
+	} else {
+		showValidationMsg("#usernameInput", "success", "√");
+		$("#saveInfoBtn").attr("ajax-va", "success");
+	}
 });
 $("#passwordInput").change(function() {
 	let inputPassword = this.value;
 	let regularPassword = /^[a-zA-Z-\d]{8,23}$/;
-	if (!regularPassword.test(inputPassword)) {
+	if (inputPassword === "") {
+		showValidationMsg("#passwordInput", "error", "パスワードを空になってはいけません。");
+		$("#saveInfoBtn").attr("ajax-va", "error");
+	} else if (!regularPassword.test(inputPassword)) {
 		showValidationMsg("#passwordInput", "error", "入力したパスワードが8桁から23桁までの英数字にしなければなりません。");
 		$("#saveInfoBtn").attr("ajax-va", "error");
 	} else {
@@ -130,7 +148,10 @@ $("#passwordInput").change(function() {
 $("#emailInput").change(function() {
 	let inputEmail = this.value;
 	let regularEmail = /^^[a-zA-Z-\d._%+-]+@[a-zA-Z-\d.-]+\.[a-zA-Z]{2,}$/;
-	if (!regularEmail.test(inputEmail)) {
+	if (inputEmail === "") {
+		showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
+		$("#saveInfoBtn").attr("ajax-va", "error");
+	} else if (!regularEmail.test(inputEmail)) {
 		showValidationMsg("#emailInput", "error", "入力したメールアドレスが正しくありません。");
 		$("#saveInfoBtn").attr("ajax-va", "error");
 	} else {
