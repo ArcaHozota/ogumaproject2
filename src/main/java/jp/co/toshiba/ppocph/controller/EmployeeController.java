@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
+import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
@@ -186,7 +187,7 @@ public final class EmployeeController {
 	public ModelAndView toEdition(@RequestParam("editId") final Long id, @RequestParam("userId") final Long userId) {
 		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
 		final Employee employee2 = this.iEmployeeService.getEmployeeById(id);
-		final List<String> employeeRolesById = this.iEmployeeService.getEmployeeRolesById(id);
+		final List<Role> employeeRolesById = this.iEmployeeService.getEmployeeRolesById(id);
 		final ModelAndView modelAndView = new ModelAndView("admin-editinfo");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EDITED_INFO, employee2);

@@ -87,26 +87,25 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public List<String> getEmployeeRolesById(final Long id) {
+	public List<Role> getEmployeeRolesById(final Long id) {
 		final List<Role> roles = this.roleRepository.findAll();
-		final List<String> roleNames = roles.stream().map(Role::getName).collect(Collectors.toList());
 		if (id == null) {
-			return roleNames;
+			return roles;
 		}
 		final Specification<EmployeeEx> where = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("employeeId"), id);
 		final Specification<EmployeeEx> specification = Specification.where(where);
 		final Optional<EmployeeEx> roledOptional = this.employeeExRepository.findOne(specification);
 		if (roledOptional.isEmpty()) {
-			return roleNames;
+			return roles;
 		}
-		final List<String> secondRoles = new ArrayList<>();
+		final List<Role> secondRoles = new ArrayList<>();
 		final Long roleId = roledOptional.get().getRoleId();
-		final List<String> selectedRole = roles.stream().filter(a -> Objects.equals(a.getId(), roleId))
-				.map(Role::getName).collect(Collectors.toList());
+		final List<Role> selectedRole = roles.stream().filter(a -> Objects.equals(a.getId(), roleId))
+				.collect(Collectors.toList());
 		secondRoles.addAll(selectedRole);
-		secondRoles.addAll(roleNames);
-		return secondRoles.stream().distinct().toList();
+		secondRoles.addAll(roles);
+		return secondRoles.stream().distinct().collect(Collectors.toList());
 	}
 
 	@Override

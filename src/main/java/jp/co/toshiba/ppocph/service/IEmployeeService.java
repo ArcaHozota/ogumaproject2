@@ -4,6 +4,7 @@ import java.util.List;
 
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
+import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.utils.Pagination;
 
 /**
@@ -44,7 +45,7 @@ public interface IEmployeeService {
 	 * @param id 社員ID
 	 * @return List<String>
 	 */
-	List<String> getEmployeeRolesById(Long id);
+	List<Role> getEmployeeRolesById(Long id);
 
 	/**
 	 * キーワードによって社員情報を取得する
