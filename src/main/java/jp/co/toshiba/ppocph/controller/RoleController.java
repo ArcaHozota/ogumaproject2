@@ -68,7 +68,7 @@ public final class RoleController {
 	 * @param roleId 役割ID
 	 * @return ResultDto<String>
 	 */
-	@DeleteMapping("/remove")
+	@DeleteMapping("/delete")
 	@ResponseBody
 	public ResultDto<String> deleteInfo(@RequestParam("roleId") final Long roleId) {
 		this.iRoleService.removeById(roleId);

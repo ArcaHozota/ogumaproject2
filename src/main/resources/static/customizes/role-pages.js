@@ -195,7 +195,7 @@ $(document).on('click', '.delete_btn', function() {
 	let roleId = $(this).attr("deleteId");
 	if (confirm("この" + roleName + "という役割情報を削除する、よろしいでしょうか。")) {
 		$.ajax({
-			url: '/pgcrowd/role/remove',
+			url: '/pgcrowd/role/delete',
 			data: 'roleId=' + roleId,
 			type: 'DELETE',
 			dataType: 'json',
