@@ -20,13 +20,6 @@ public interface IEmployeeService {
 	boolean check(String loginAccount);
 
 	/**
-	 * 社員情報削除
-	 *
-	 * @param userId 社員ID
-	 */
-	void deleteById(Long userId);
-
-	/**
 	 * ログイン処理
 	 *
 	 * @param account  アカウント
@@ -51,6 +44,13 @@ public interface IEmployeeService {
 	 * @return Pagination<Employee>
 	 */
 	Pagination<Employee> getEmployeesByKeyword(Integer pageNum, String keyword);
+
+	/**
+	 * 社員情報削除
+	 *
+	 * @param userId 社員ID
+	 */
+	void removeById(Long userId);
 
 	/**
 	 * 社員情報追加

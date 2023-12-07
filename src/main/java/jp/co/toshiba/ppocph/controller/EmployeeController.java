@@ -65,7 +65,7 @@ public final class EmployeeController {
 	@DeleteMapping("/delete/{userId}")
 	@ResponseBody
 	public ResultDto<String> deleteInfo(@PathVariable("userId") final Long userId) {
-		this.iEmployeeService.deleteById(userId);
+		this.iEmployeeService.removeById(userId);
 		return ResultDto.successWithoutData();
 	}
 

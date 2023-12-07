@@ -49,13 +49,6 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public void deleteById(final Long userId) {
-		final Employee employee = this.employeeRepository.findById(userId).orElseGet(Employee::new);
-		employee.setStatus(PgCrowdConstants.EMPLOYEE_ABNORMAL_STATUS);
-		this.employeeRepository.saveAndFlush(employee);
-	}
-
-	@Override
 	public Employee getAdminByLoginAccount(final String account, final String password) {
 		final String plainToMD5 = PgCrowdUtils.plainToMD5(password);
 		final Employee employee = new Employee();
@@ -91,6 +84,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
 				.and(Specification.where(where1).or(where2).or(where3));
 		final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
 		return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+	}
+
+	@Override
+	public void removeById(final Long userId) {
+		final Employee employee = this.employeeRepository.findById(userId).orElseGet(Employee::new);
+		employee.setStatus(PgCrowdConstants.EMPLOYEE_ABNORMAL_STATUS);
+		this.employeeRepository.saveAndFlush(employee);
 	}
 
 	@Override

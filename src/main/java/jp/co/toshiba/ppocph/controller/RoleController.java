@@ -70,7 +70,7 @@ public final class RoleController {
 	 */
 	@DeleteMapping("/remove")
 	@ResponseBody
-	public ResultDto<String> delete(@RequestParam("roleId") final Long roleId) {
+	public ResultDto<String> deleteInfo(@RequestParam("roleId") final Long roleId) {
 		this.iRoleService.removeById(roleId);
 		return ResultDto.successWithoutData();
 	}
