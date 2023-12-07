@@ -32,6 +32,13 @@ public interface IRoleService {
 	Pagination<Role> getRolesByKeyword(Integer pageNum, String keyword);
 
 	/**
+	 * 役割IDによって情報を削除する
+	 *
+	 * @param roleId 役割ID
+	 */
+	void removeById(Long roleId);
+
+	/**
 	 * 役割情報追加
 	 *
 	 * @param roleDto 役割情報転送クラス

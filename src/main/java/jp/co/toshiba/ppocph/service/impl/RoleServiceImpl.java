@@ -38,7 +38,7 @@ public class RoleServiceImpl implements IRoleService {
 	@Override
 	public boolean check(final String name) {
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_FLG);
+				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("name"),
 				name);
 		final Specification<Role> specification = Specification.where(where1).and(where2);
@@ -51,7 +51,7 @@ public class RoleServiceImpl implements IRoleService {
 				Sort.by(Direction.ASC, "id"));
 		final String searchStr = "%" + keyword + "%";
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_FLG);
+				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> where2 = StringUtils.isEmpty(keyword) ? null
 				: (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("name"), searchStr);
 		final Specification<Role> specification = Specification.where(where1).and(where2);
@@ -60,11 +60,18 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
+	public void removeById(final Long roleId) {
+		final Role role = this.roleRepository.findById(roleId).orElse(new Role());
+		role.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
+		this.roleRepository.saveAndFlush(role);
+	}
+
+	@Override
 	public void save(final RoleDto roleDto) {
 		final Role role = new Role();
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
 		role.setId(SnowflakeUtils.snowflakeId());
-		role.setDeleteFlg(PgCrowdConstants.DELETE_INITIAL);
+		role.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		this.roleRepository.saveAndFlush(role);
 	}
 

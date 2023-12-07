@@ -2,6 +2,7 @@ package jp.co.toshiba.ppocph.controller;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -58,6 +59,19 @@ public final class RoleController {
 		if (checkDuplicated) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_ROLE_NAME_DUPLICATED);
 		}
+		return ResultDto.successWithoutData();
+	}
+
+	/**
+	 * 役割情報削除
+	 *
+	 * @param roleId 役割ID
+	 * @return ResultDto<String>
+	 */
+	@DeleteMapping("/remove")
+	@ResponseBody
+	public ResultDto<String> delete(@RequestParam("roleId") final Long roleId) {
+		this.iRoleService.removeById(roleId);
 		return ResultDto.successWithoutData();
 	}
 
