@@ -35,4 +35,11 @@ public interface IRoleService {
 	 * @param roleDto 役割情報転送クラス
 	 */
 	void save(RoleDto roleDto);
+
+	/**
+	 * 役割情報更新
+	 *
+	 * @param roleDto 役割情報転送クラス
+	 */
+	void update(RoleDto roleDto);
 }

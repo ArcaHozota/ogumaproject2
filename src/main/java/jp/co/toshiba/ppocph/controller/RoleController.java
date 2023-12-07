@@ -104,4 +104,17 @@ public final class RoleController {
 		this.iRoleService.save(roleDto);
 		return ResultDto.successWithoutData();
 	}
+
+	/**
+	 * 情報更新
+	 *
+	 * @param roleDto 役割情報DTO
+	 * @return ResultDto<String>
+	 */
+	@PostMapping("/infoupd")
+	@ResponseBody
+	public ResultDto<String> updateInfo(@RequestBody final RoleDto roleDto) {
+		this.iRoleService.update(roleDto);
+		return ResultDto.successWithoutData();
+	}
 }

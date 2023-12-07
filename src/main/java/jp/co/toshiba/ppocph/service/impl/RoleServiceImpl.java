@@ -66,4 +66,8 @@ public class RoleServiceImpl implements IRoleService {
 		role.setDeleteFlg(PgCrowdConstants.DELETE_INITIAL);
 		this.roleRepository.saveAndFlush(role);
 	}
+
+	@Override
+	public void update(final RoleDto roleDto) {
+	}
 }
