@@ -92,10 +92,10 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		final Role secondRole = new Role();
 		secondRole.setId(Long.valueOf(0L));
 		secondRole.setName(PgCrowdConstants.DEFAULT_ROLE_NAME);
-		secondRoles.add(secondRole);
 		final List<Role> roles = this.roleRepository.findAll();
-		secondRoles.addAll(roles);
 		if (id == null) {
+			secondRoles.add(secondRole);
+			secondRoles.addAll(roles);
 			return secondRoles;
 		}
 		final Specification<EmployeeEx> where = (root, query, criteriaBuilder) -> criteriaBuilder
@@ -103,6 +103,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		final Specification<EmployeeEx> specification = Specification.where(where);
 		final Optional<EmployeeEx> roledOptional = this.employeeExRepository.findOne(specification);
 		if (roledOptional.isEmpty()) {
+			secondRoles.add(secondRole);
+			secondRoles.addAll(roles);
 			return secondRoles;
 		}
 		final Long roleId = roledOptional.get().getRoleId();
@@ -160,7 +162,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		});
 		final EmployeeEx employeeEx = new EmployeeEx();
 		employeeEx.setEmployeeId(employeeDto.getId());
-		employeeEx.setRoleId(employeeEx.getRoleId());
+		employeeEx.setRoleId(employeeDto.getRoleId());
 		this.employeeExRepository.saveAndFlush(employeeEx);
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		if (StringUtils.isNotEmpty(password)) {
