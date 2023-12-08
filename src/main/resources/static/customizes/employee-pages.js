@@ -297,11 +297,13 @@ $("#editInfoBtn").on('click', function() {
 	let editUsername = $("#usernameEdit").val().trim();
 	let editPassword = $("#passwordEdit").val().trim();
 	let editEmail = $("#emailEdit").val().trim();
+	let editRole = $("#roleEdit option:selected").val();
 	if ($(this).attr("ajax-va") === "error") {
 		return false;
-	} else if (editPassword === "**************************************") {
-		editPassword = null;
 	} else {
+		if (editPassword === "**************************************") {
+			editPassword = null;
+		}
 		$.ajax({
 			url: '/pgcrowd/employee/infoupd',
 			type: 'PUT',
@@ -312,7 +314,7 @@ $("#editInfoBtn").on('click', function() {
 				'username': editUsername,
 				'password': editPassword,
 				'email': editEmail,
-				'roleId': $("#roleEdit option:selected").val()
+				'roleId': editRole
 			}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function() {
