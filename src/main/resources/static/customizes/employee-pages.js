@@ -164,6 +164,7 @@ $("#saveInfoBtn").on('click', function() {
 	let inputUsername = $("#usernameInput").val().trim();
 	let inputPassword = $("#passwordInput").val().trim();
 	let inputEmail = $("#emailInput").val().trim();
+	let inputRole = $("#roleInput").val();
 	if ($(this).attr("ajax-va") === "error") {
 		return false;
 	} else if (inputLoginAccount === "" || inputUsername === "" || inputPassword === "" || inputEmail === "") {
@@ -224,7 +225,8 @@ $("#saveInfoBtn").on('click', function() {
 				'loginAccount': inputLoginAccount,
 				'username': inputUsername,
 				'password': inputPassword,
-				'email': inputEmail
+				'email': inputEmail,
+				'roleId': inputRole
 			}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function() {
