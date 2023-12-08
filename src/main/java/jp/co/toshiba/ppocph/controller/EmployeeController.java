@@ -171,8 +171,10 @@ public final class EmployeeController {
 	@GetMapping("/to/addition")
 	public ModelAndView toAddition(@RequestParam("userId") final Long userId) {
 		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
+		final List<Role> employeeRolesById = this.iEmployeeService.getEmployeeRolesById(null);
 		final ModelAndView modelAndView = new ModelAndView("admin-addinfo");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, employeeRolesById);
 		return modelAndView;
 	}
 

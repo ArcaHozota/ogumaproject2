@@ -176,6 +176,14 @@
 								<input type="email" class="form-control" id="emailInput" placeholder="メールアドレスを入力してください">
 								<span class="form-text" style="font-size: 12px;"></span>
 							</div>
+							<div class="form-group col-md-5">
+								<label for="roleInput">役割</label>
+								<select id="roleInput" class="form-select">
+									<option th:each="item:${employeeRoles}" th:value="${item.getId()}"
+										th:text="${item.getName()}">
+									</option>
+								</select>
+							</div>
 						</form>
 					</div>
 					<div class="card-footer">
