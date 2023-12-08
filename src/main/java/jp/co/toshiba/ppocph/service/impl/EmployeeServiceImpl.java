@@ -92,16 +92,19 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		final Role secondRole = new Role();
 		secondRole.setId(Long.valueOf(0L));
 		secondRole.setName(PgCrowdConstants.DEFAULT_ROLE_NAME);
-		final List<Role> roles = this.roleRepository.findAll();
+		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		final Specification<Role> specification1 = Specification.where(where1);
+		final List<Role> roles = this.roleRepository.findAll(specification1);
 		if (id == null) {
 			secondRoles.add(secondRole);
 			secondRoles.addAll(roles);
 			return secondRoles;
 		}
-		final Specification<EmployeeEx> where = (root, query, criteriaBuilder) -> criteriaBuilder
+		final Specification<EmployeeEx> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("employeeId"), id);
-		final Specification<EmployeeEx> specification = Specification.where(where);
-		final Optional<EmployeeEx> roledOptional = this.employeeExRepository.findOne(specification);
+		final Specification<EmployeeEx> specification2 = Specification.where(where2);
+		final Optional<EmployeeEx> roledOptional = this.employeeExRepository.findOne(specification2);
 		if (roledOptional.isEmpty()) {
 			secondRoles.add(secondRole);
 			secondRoles.addAll(roles);
