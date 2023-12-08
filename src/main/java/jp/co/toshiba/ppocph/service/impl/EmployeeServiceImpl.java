@@ -151,6 +151,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		employee.setPassword(plainToMD5);
 		employee.setStatus(PgCrowdConstants.EMPLOYEE_NORMAL_STATUS);
 		employee.setCreatedTime(LocalDateTime.now());
+		if (!Objects.equals(Long.valueOf(0L), employeeDto.getRoleId())) {
+			final EmployeeEx employeeEx = new EmployeeEx();
+			employeeEx.setEmployeeId(employeeDto.getId());
+			employeeEx.setRoleId(employeeDto.getRoleId());
+			this.employeeExRepository.saveAndFlush(employeeEx);
+		}
 		this.employeeRepository.saveAndFlush(employee);
 	}
 
