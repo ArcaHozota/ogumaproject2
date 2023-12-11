@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.Employee;
+import jp.co.toshiba.ppocph.entity.PgAuth;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.service.IRoleService;
@@ -47,18 +48,6 @@ public final class RoleController {
 	 * 役割サービスインターフェス
 	 */
 	private final IRoleService iRoleService;
-
-	/**
-	 * 権限付与画面初期表示
-	 *
-	 * @return ResultDto<List<PgAuth>>
-	 */
-	@GetMapping("/authlists")
-	@ResponseBody
-	public ResultDto<List<String>> authlists() {
-		final List<String> list = this.iRoleService.getAuthlist();
-		return ResultDto.successWithData(list);
-	}
 
 	/**
 	 * 役割名称重複チェック
@@ -101,9 +90,11 @@ public final class RoleController {
 			@RequestParam("userId") final Long userId, @RequestParam(name = "pageNum") final Integer pageNum) {
 		final Role role = this.iRoleService.getRoleById(roleId);
 		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
+		final List<PgAuth> list = this.iRoleService.getAuthlist();
 		final ModelAndView modelAndView = new ModelAndView("role-auth");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_AUTHORITY_ROLE, role);
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_AUTHORITY_LIST, list);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return modelAndView;
 	}
