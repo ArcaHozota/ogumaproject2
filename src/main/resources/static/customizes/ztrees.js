@@ -16,7 +16,7 @@ $(document).ready(function() {
 						icon: "bi bi-1-circle-fill",
 						nodes: [
 							{
-								text: $(authlist).eq(1).title,
+								text: $(authlist).eq(1).get('title'),
 								icon: "bi bi-2-circle-fill"
 							},
 							{
@@ -48,16 +48,14 @@ $(document).ready(function() {
 						]
 					}
 				];
-				$("#tree").treeview({
-					data: treeData, // 设置树形视图的数据源
-					levels: 2, // 设置树形视图的默认展开层级
-					color: "#000", // 设置树形视图的字体颜色
-					backColor: "#fff", // 设置树形视图的背景颜色
-					onhoverColor: "orange", // 设置树形视图的鼠标悬停颜色
-					borderColor: "red", // 设置树形视图的边框颜色
-					onNodeSelected: function(event, data) { // 设置树形视图的节点选中事件
-						alert("你选择了" + data.text + "节点"); // 弹出提示框，显示选中的节点的文本
-					}
+				// Example: initializing the bstreeview
+				$('#tree').bstreeview({
+					data: data,
+					expandIcon: 'fa fa-angle-down fa-fw',
+					collapseIcon: 'fa fa-angle-right fa-fw',
+					indent: 1.25,
+					parentsMarginLeft: '1.25rem',
+					openNodeLinkOnNewTab: true
 				});
 			}
 		}
