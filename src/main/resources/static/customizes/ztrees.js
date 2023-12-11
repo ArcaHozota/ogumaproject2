@@ -12,37 +12,37 @@ $(document).ready(function() {
 				treeData = [
 					{
 						text: $(authlist).eq(0).title,
-						icon: "glyphicon glyphicon-folder-open",
+						icon: "bi bi-1-circle-fill",
 						nodes: [
 							{
 								text: $(authlist).eq(1).title,
-								icon: "glyphicon glyphicon-file"
+								icon: "bi bi-2-circle-fill"
 							},
 							{
 								text: $(authlist).eq(2).title,
-								icon: "glyphicon glyphicon-file"
+								icon: "bi bi-3-circle-fill"
 							},
 							{
 								text: $(authlist).eq(3).title,
-								icon: "glyphicon glyphicon-file"
+								icon: "bi bi-4-circle-fill"
 							}
 						]
 					},
 					{
 						text: $(authlist).eq(4).title,
-						icon: "glyphicon glyphicon-folder-open",
+						icon: "bi bi-5-circle-fill",
 						nodes: [
 							{
 								text: $(authlist).eq(5).title,
-								icon: "glyphicon glyphicon-file"
+								icon: "bi bi-6-circle-fill"
 							},
 							{
 								text: $(authlist).eq(6).title,
-								icon: "glyphicon glyphicon-file"
+								icon: "bi bi-7-circle-fill"
 							},
 							{
 								text: $(authlist).eq(7).title,
-								icon: "glyphicon glyphicon-file"
+								icon: "bi bi-8-circle-fill"
 							}
 						]
 					}
@@ -53,7 +53,7 @@ $(document).ready(function() {
 					color: "#000", // 设置树形视图的字体颜色
 					backColor: "#fff", // 设置树形视图的背景颜色
 					onhoverColor: "orange", // 设置树形视图的鼠标悬停颜色
-					borderColor: "green", // 设置树形视图的边框颜色
+					borderColor: "red", // 设置树形视图的边框颜色
 					onNodeSelected: function(event, data) { // 设置树形视图的节点选中事件
 						alert("你选择了" + data.text + "节点"); // 弹出提示框，显示选中的节点的文本
 					}
