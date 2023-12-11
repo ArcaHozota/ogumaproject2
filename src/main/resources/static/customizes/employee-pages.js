@@ -32,10 +32,10 @@ function buildCityTable(result) {
 		let idTd = $("<th scope='row' class='text-center' style='width:70px;vertical-align:bottom;'></th>").append(item.id);
 		let usernameTd = $("<td scope='row' class='text-center' style='width:120px;vertical-align:bottom;'></td>").append(item.username);
 		let emailTd = $("<td scope='row' class='text-center' style='width:120px;vertical-align:bottom;'></td>").append(item.email);
-		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
+		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit-btn")
 			.append($("<i class='bi bi-pencil-fill'></i>")).append("編集");
 		editBtn.attr("editId", item.id);
-		let deleteBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
+		let deleteBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete-btn")
 			.append($("<i class='bi bi-trash'></i>")).append("削除");
 		deleteBtn.attr("deleteId", item.id);
 		let btnTd = $("<td class='text-center' style='width:120px;vertical-align:bottom;'></td>").append(editBtn).append(" ").append(deleteBtn);
@@ -236,7 +236,7 @@ $("#saveInfoBtn").on('click', function() {
 		});
 	}
 });
-$(document).on('click', '.delete_btn', function() {
+$(document).on('click', '.delete-btn', function() {
 	let userName = $(this).parents("tr").find("td:eq(0)").text().trim();
 	let userId = $(this).attr("deleteId");
 	if (confirm("この" + userName + "という社員の情報を削除するとよろしいでしょうか。")) {
@@ -250,7 +250,7 @@ $(document).on('click', '.delete_btn', function() {
 		});
 	}
 });
-$(document).on('click', '.edit_btn', function() {
+$(document).on('click', '.edit-btn', function() {
 	let editId = $(this).attr("editId");
 	let userId = $("#userinfoId").text();
 	window.location.replace('/pgcrowd/employee/to/edition?editId=' + editId + '&userId=' + userId);

@@ -31,10 +31,13 @@ function buildCityTable(result) {
 	$.each(index, (index, item) => {
 		let idTd = $("<th scope='row' class='text-center' style='width:70px;vertical-align:bottom;'></th>").append(item.id);
 		let nameTd = $("<td scope='row' class='text-center' style='width:120px;vertical-align:bottom;'></td>").append(item.name);
-		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
+		let fuyoBtn = $("<button></button>").addClass("btn btn-success btn-sm fuyo-btn")
+			.append($("<i class='bi bi-pencil-fill'></i>")).append("権限付与");
+		fuyoBtn.attr("fuyoId", item.id);
+		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit-btn")
 			.append($("<i class='bi bi-pencil-fill'></i>")).append("編集");
 		editBtn.attr("editId", item.id);
-		let deleteBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
+		let deleteBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete-btn")
 			.append($("<i class='bi bi-trash'></i>")).append("削除");
 		deleteBtn.attr("deleteId", item.id);
 		let btnTd = $("<td class='text-center' style='width:120px;vertical-align:bottom;'></td>").append(editBtn).append(" ").append(deleteBtn);
@@ -149,7 +152,7 @@ $("#roleInfoSaveBtn").on('click', function() {
 		});
 	}
 });
-$(document).on('click', '.edit_btn', function() {
+$(document).on('click', '.edit-btn', function() {
 	formReset("#roleEditModal form");
 	let editId = $(this).attr("editId");
 	$("#roleInfoChangeBtn").attr("editId", editId);
@@ -197,7 +200,7 @@ $("#roleInfoChangeBtn").on('click', function() {
 		});
 	}
 });
-$(document).on('click', '.delete_btn', function() {
+$(document).on('click', '.delete-btn', function() {
 	let roleName = $(this).parents("tr").find("td:eq(0)").text().trim();
 	let roleId = $(this).attr("deleteId");
 	if (confirm("この" + roleName + "という役割情報を削除する、よろしいでしょうか。")) {
