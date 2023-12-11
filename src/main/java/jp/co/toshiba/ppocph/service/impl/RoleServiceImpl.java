@@ -70,7 +70,7 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public void removeById(final Long roleId) throws PgCrowdException {
+	public void removeById(final Long roleId) {
 		final Specification<EmployeeEx> where = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("roleId"), roleId);
 		final Specification<EmployeeEx> specification = Specification.where(where);

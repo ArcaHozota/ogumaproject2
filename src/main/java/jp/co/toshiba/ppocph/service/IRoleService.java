@@ -4,7 +4,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.Role;
-import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.utils.Pagination;
 
 /**
@@ -37,7 +36,7 @@ public interface IRoleService {
 	 *
 	 * @param roleId 役割ID
 	 */
-	void removeById(Long roleId) throws PgCrowdException;
+	void removeById(Long roleId);
 
 	/**
 	 * 役割情報追加
