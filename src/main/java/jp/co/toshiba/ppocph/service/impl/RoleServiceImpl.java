@@ -1,5 +1,7 @@
 package jp.co.toshiba.ppocph.service.impl;
 
+import java.util.List;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,7 +12,10 @@ import org.springframework.stereotype.Service;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.RoleDto;
+import jp.co.toshiba.ppocph.entity.EmployeeEx;
 import jp.co.toshiba.ppocph.entity.Role;
+import jp.co.toshiba.ppocph.exception.PgCrowdException;
+import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.RoleRepository;
 import jp.co.toshiba.ppocph.service.IRoleService;
 import jp.co.toshiba.ppocph.utils.Pagination;
@@ -34,6 +39,11 @@ public class RoleServiceImpl implements IRoleService {
 	 * 役割管理リポジトリ
 	 */
 	private final RoleRepository roleRepository;
+
+	/**
+	 * 社員役割連携リポジトリ
+	 */
+	private final EmployeeExRepository employeeExRepository;
 
 	@Override
 	public boolean check(final String name) {
@@ -60,8 +70,17 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public void removeById(final Long roleId) {
-		final Role role = this.roleRepository.findById(roleId).orElse(new Role());
+	public void removeById(final Long roleId) throws PgCrowdException {
+		final Specification<EmployeeEx> where = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("roleId"), roleId);
+		final Specification<EmployeeEx> specification = Specification.where(where);
+		final List<EmployeeEx> list = this.employeeExRepository.findAll(specification);
+		if (!list.isEmpty()) {
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FORBIDDEN);
+		}
+		final Role role = this.roleRepository.findById(roleId).orElseThrow(() -> {
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOTEXISTS);
+		});
 		role.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
 		this.roleRepository.saveAndFlush(role);
 	}
@@ -77,7 +96,9 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public void update(final RoleDto roleDto) throws DataIntegrityViolationException {
-		final Role role = this.roleRepository.findById(roleDto.getId()).orElse(new Role());
+		final Role role = this.roleRepository.findById(roleDto.getId()).orElseThrow(() -> {
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOTEXISTS);
+		});
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
 		this.roleRepository.saveAndFlush(role);
 	}
