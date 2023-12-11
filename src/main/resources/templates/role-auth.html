@@ -154,6 +154,7 @@
 						<h5 class="card-title" style="padding-top: 8px;" th:text="${role.name}">
 							<i class="bi bi-grid-fill"></i>
 						</h5>
+						<input type="hidden" id="pageNumber" th:value="${pageNum}">
 					</div>
 					<div class="card-body">
 						<p th:text="${role.id}" id="roleId" hidden></p>
@@ -171,7 +172,7 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" th:inline="javascript" th:src="@{/static/customizes/ztrees.js}"></script>
+	<script type="text/javascript" th:src="@{/static/customizes/ztrees.js}"></script>
 </body>
 
 </html>
