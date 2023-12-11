@@ -212,7 +212,7 @@ $(document).on('click', '.delete-btn', function() {
 				if (result.status === 'SUCCESS') {
 					toSelectedPg(pageNum, keyword);
 				} else {
-					alert(result.message);
+					layer.msg(result.message);
 				}
 			}
 		});
