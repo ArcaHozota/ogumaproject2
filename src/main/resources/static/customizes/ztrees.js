@@ -12,12 +12,38 @@ $(document).ready(function() {
 				let authlist = result.data;
 				let p1Text;
 				let p2Text;
+				let c1Text;
+				let c2Text;
+				let c3Text;
+				let c4Text;
+				let c5Text;
+				let c6Text;
 				$.each(authlist, (index, item) => {
-					if (index === 0) {
-						p1Text = item.title;
-					}
-					if (index === 4) {
-						p2Text = item.title;
+					switch (index) {
+						case 0:
+							p1Text = item;
+							break;
+						case 1:
+							c1Text = item;
+							break;
+						case 2:
+							c2Text = item;
+							break;
+						case 3:
+							c3Text = item;
+							break;
+						case 4:
+							p2Text = item;
+							break;
+						case 5:
+							c4Text = item;
+							break;
+						case 6:
+							c5Text = item;
+							break;
+						default:
+							c6Text = item;
+							break;
 					}
 				});
 				treeData = [
@@ -26,15 +52,15 @@ $(document).ready(function() {
 						icon: "bi bi-1-circle-fill",
 						nodes: [
 							{
-								text: $(authlist).eq(1),
+								text: c1Text,
 								icon: "bi bi-2-circle-fill"
 							},
 							{
-								text: $(authlist).eq(2),
+								text: c2Text,
 								icon: "bi bi-3-circle-fill"
 							},
 							{
-								text: $(authlist).eq(3),
+								text: c3Text,
 								icon: "bi bi-4-circle-fill"
 							}
 						]
@@ -44,15 +70,15 @@ $(document).ready(function() {
 						icon: "bi bi-5-circle-fill",
 						nodes: [
 							{
-								text: $(authlist).eq(5),
+								text: c4Text,
 								icon: "bi bi-6-circle-fill"
 							},
 							{
-								text: $(authlist).eq(6),
+								text: c5Text,
 								icon: "bi bi-7-circle-fill"
 							},
 							{
-								text: $(authlist).eq(7),
+								text: c6Text,
 								icon: "bi bi-8-circle-fill"
 							}
 						]
