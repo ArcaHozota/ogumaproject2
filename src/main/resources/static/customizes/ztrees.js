@@ -9,40 +9,39 @@ $(document).ready(function() {
 		dataType: 'json',
 		success: function(result) {
 			if (result.status === 'SUCCESS') {
-				let authlist = result.data;
 				treeData = [
 					{
-						text: $(authlist).eq(0).title,
+						text: $(result.data).eq(0).title,
 						icon: "bi bi-1-circle-fill",
 						nodes: [
 							{
-								text: $(authlist).eq(1).get('title'),
+								text: $(result.data).eq(1).title,
 								icon: "bi bi-2-circle-fill"
 							},
 							{
-								text: $(authlist).eq(2).title,
+								text: $(result.data).eq(2).title,
 								icon: "bi bi-3-circle-fill"
 							},
 							{
-								text: $(authlist).eq(3).title,
+								text: $(result.data).eq(3).title,
 								icon: "bi bi-4-circle-fill"
 							}
 						]
 					},
 					{
-						text: $(authlist).eq(4).title,
+						text: $(result.data).eq(4).title,
 						icon: "bi bi-5-circle-fill",
 						nodes: [
 							{
-								text: $(authlist).eq(5).title,
+								text: $(result.data).eq(5).title,
 								icon: "bi bi-6-circle-fill"
 							},
 							{
-								text: $(authlist).eq(6).title,
+								text: $(result.data).eq(6).title,
 								icon: "bi bi-7-circle-fill"
 							},
 							{
-								text: $(authlist).eq(7).title,
+								text: $(result.data).eq(7).title,
 								icon: "bi bi-8-circle-fill"
 							}
 						]
@@ -50,7 +49,7 @@ $(document).ready(function() {
 				];
 				// Example: initializing the bstreeview
 				$('#tree').bstreeview({
-					data: data,
+					data: treeData,
 					expandIcon: 'fa fa-angle-down fa-fw',
 					collapseIcon: 'fa fa-angle-right fa-fw',
 					indent: 1.25,
