@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.EmployeeEx;
+import jp.co.toshiba.ppocph.entity.PgAuth;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
+import jp.co.toshiba.ppocph.repository.PgAuthRepository;
 import jp.co.toshiba.ppocph.repository.RoleRepository;
 import jp.co.toshiba.ppocph.service.IRoleService;
 import jp.co.toshiba.ppocph.utils.Pagination;
@@ -42,6 +44,11 @@ public class RoleServiceImpl implements IRoleService {
 	private final RoleRepository roleRepository;
 
 	/**
+	 * 権限管理リポジトリ
+	 */
+	private final PgAuthRepository pgAuthRepository;
+
+	/**
 	 * 社員役割連携リポジトリ
 	 */
 	private final EmployeeExRepository employeeExRepository;
@@ -54,6 +61,11 @@ public class RoleServiceImpl implements IRoleService {
 				name);
 		final Specification<Role> specification = Specification.where(where1).and(where2);
 		return this.roleRepository.findOne(specification).isPresent();
+	}
+
+	@Override
+	public List<PgAuth> getAuthlist() {
+		return this.pgAuthRepository.findAll();
 	}
 
 	@Override
