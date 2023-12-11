@@ -208,8 +208,12 @@ $(document).on('click', '.delete-btn', function() {
 			url: '/pgcrowd/role/delete/' + roleId,
 			type: 'DELETE',
 			dataType: 'json',
-			success: function() {
-				toSelectedPg(pageNum, keyword);
+			success: function(result) {
+				if (result.status === 'SUCCESS') {
+					toSelectedPg(pageNum, keyword);
+				} else {
+					alert(result.message);
+				}
 			}
 		});
 	}
