@@ -50,6 +50,18 @@ public final class RoleController {
 	private final IRoleService iRoleService;
 
 	/**
+	 * 権限付与画面初期表示
+	 *
+	 * @return ResultDto<List<PgAuth>>
+	 */
+	@GetMapping("/authlists")
+	@ResponseBody
+	public ResultDto<List<PgAuth>> authlists() {
+		final List<PgAuth> list = this.iRoleService.getAuthlist();
+		return ResultDto.successWithData(list);
+	}
+
+	/**
 	 * 役割名称重複チェック
 	 *
 	 * @param name 役割名称
@@ -90,11 +102,9 @@ public final class RoleController {
 			@RequestParam("userId") final Long userId, @RequestParam(name = "pageNum") final Integer pageNum) {
 		final Role role = this.iRoleService.getRoleById(roleId);
 		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
-		final List<PgAuth> list = this.iRoleService.getAuthlist();
 		final ModelAndView modelAndView = new ModelAndView("role-auth");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_AUTHORITY_ROLE, role);
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_AUTHORITY_LIST, list);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return modelAndView;
 	}

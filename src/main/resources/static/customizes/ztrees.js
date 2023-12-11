@@ -10,9 +10,19 @@ $(document).ready(function() {
 		success: function(result) {
 			if (result.status === 'SUCCESS') {
 				let authlist = result.data;
+				let p1Text;
+				let p2Text;
+				$.each(authlist, (index, item) => {
+					if (index === 0) {
+						p1Text = item.title;
+					}
+					if (index === 4) {
+						p2Text = item.title;
+					}
+				});
 				treeData = [
 					{
-						text: $(authlist).eq(0),
+						text: p1Text,
 						icon: "bi bi-1-circle-fill",
 						nodes: [
 							{
@@ -30,7 +40,7 @@ $(document).ready(function() {
 						]
 					},
 					{
-						text: $(authlist).eq(4),
+						text: p2Text,
 						icon: "bi bi-5-circle-fill",
 						nodes: [
 							{
