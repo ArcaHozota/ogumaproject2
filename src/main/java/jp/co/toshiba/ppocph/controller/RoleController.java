@@ -98,13 +98,14 @@ public final class RoleController {
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/authlist")
-	public ModelAndView initialAuthList(@RequestParam("userId") final Long userId,
-			@RequestParam(name = "fuyoId") final Long roleId) {
+	public ModelAndView initialAuthList(@RequestParam(name = "fuyoId") final Long roleId,
+			@RequestParam("userId") final Long userId, @RequestParam(name = "pageNum") final Integer pageNum) {
 		final Role role = this.iRoleService.getRoleById(roleId);
 		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
 		final ModelAndView modelAndView = new ModelAndView("role-auth");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_AUTHORITY_ROLE, role);
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return modelAndView;
 	}
 

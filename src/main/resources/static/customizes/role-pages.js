@@ -221,7 +221,7 @@ $(document).on('click', '.delete-btn', function() {
 $(document).on('click', '.fuyo-btn', function() {
 	let fuyoId = $(this).attr("fuyoId");
 	let userId = $("#userinfoId").text();
-	window.location.replace('/pgcrowd/role/to/authlist?fuyoId=' + fuyoId + '&userId=' + userId);
+	window.location.replace('/pgcrowd/role/to/authlist?fuyoId=' + fuyoId + '&userId=' + userId + '&pageNum=' + pageNum);
 });
 function formReset(element) {
 	$(element)[0].reset();

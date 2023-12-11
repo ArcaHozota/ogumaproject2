@@ -1,4 +1,5 @@
 let treeData;
+let pageNum = /*[[${pageNum}]]*/{};
 $(document).ready(function() {
 	$("#adminKanri").removeClass('collapsed');
 	$("ul", $("#adminKanri")).show('fast');
@@ -61,4 +62,9 @@ $(document).ready(function() {
 			}
 		}
 	});
+});
+$("#toRolePages").on('click', function(e) {
+	e.preventDefault();
+	let userId = $("#userinfoId").text();
+	window.location.replace('/pgcrowd/role/to/pages?pageNum=' + pageNum + '&userId=' + userId);
 });
