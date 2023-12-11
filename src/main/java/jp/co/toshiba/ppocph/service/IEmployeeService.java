@@ -6,6 +6,7 @@ import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.utils.Pagination;
+import jp.co.toshiba.ppocph.utils.ResultDto;
 
 /**
  * 社員サービスインターフェス
@@ -20,7 +21,7 @@ public interface IEmployeeService {
 	 *
 	 * @param loginAccount ログインアカウント
 	 */
-	boolean check(String loginAccount);
+	ResultDto<String> check(String loginAccount);
 
 	/**
 	 * ログイン処理
