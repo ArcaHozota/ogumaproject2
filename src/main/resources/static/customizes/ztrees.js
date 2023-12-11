@@ -11,37 +11,37 @@ $(document).ready(function() {
 				let authlist = result.data;
 				treeData = [
 					{
-						text: authlist.eq(0).name,
+						text: $(authlist).eq(0).title,
 						icon: "glyphicon glyphicon-folder-open",
 						nodes: [
 							{
-								text: authlist.eq(1).name,
+								text: $(authlist).eq(1).title,
 								icon: "glyphicon glyphicon-file"
 							},
 							{
-								text: authlist.eq(2).name,
+								text: $(authlist).eq(2).title,
 								icon: "glyphicon glyphicon-file"
 							},
 							{
-								text: authlist.eq(3).name,
+								text: $(authlist).eq(3).title,
 								icon: "glyphicon glyphicon-file"
 							}
 						]
 					},
 					{
-						text: authlist.eq(4).name,
+						text: $(authlist).eq(4).title,
 						icon: "glyphicon glyphicon-folder-open",
 						nodes: [
 							{
-								text: authlist.eq(5).name,
+								text: $(authlist).eq(5).title,
 								icon: "glyphicon glyphicon-file"
 							},
 							{
-								text: authlist.eq(6).name,
+								text: $(authlist).eq(6).title,
 								icon: "glyphicon glyphicon-file"
 							},
 							{
-								text: authlist.eq(7).name,
+								text: $(authlist).eq(7).title,
 								icon: "glyphicon glyphicon-file"
 							}
 						]
