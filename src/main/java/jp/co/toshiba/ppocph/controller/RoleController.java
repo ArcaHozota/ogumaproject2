@@ -76,7 +76,7 @@ public final class RoleController {
 		try {
 			this.iRoleService.removeById(roleId);
 		} catch (final PgCrowdException e) {
-			ResultDto.failed(e.getMessage());
+			ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_FORBIDDEN);
 		}
 		return ResultDto.successWithoutData();
 	}
