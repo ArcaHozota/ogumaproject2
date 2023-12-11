@@ -84,14 +84,17 @@ $(document).ready(function() {
 						]
 					}
 				];
-				// Example: initializing the bstreeview
-				$('#tree').bstreeview({
+				$("#tree").treeview({
 					data: treeData,
-					expandIcon: 'fa fa-angle-down fa-fw',
-					collapseIcon: 'fa fa-angle-right fa-fw',
-					indent: 1.25,
-					parentsMarginLeft: '1.25rem',
-					openNodeLinkOnNewTab: true
+					levels: 2,
+					color: '#000',
+					backColor: '#fff',
+					onhoverColor: 'orange',
+					borderColor: 'green',
+					showCheckbox: true,
+					onNodeSelected: function(event, data) {
+						alert("你选择了" + data.text + "节点");
+					}
 				});
 			}
 		}
