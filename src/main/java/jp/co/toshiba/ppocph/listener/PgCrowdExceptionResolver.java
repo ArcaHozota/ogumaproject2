@@ -39,38 +39,43 @@ public final class PgCrowdExceptionResolver {
 	 */
 	private ModelAndView commonResolveException(final Exception exception, final HttpServletRequest request,
 			final HttpServletResponse response, final String viewName) throws IOException {
-		// 1.判断当前请求是“普通请求”还是“Ajax 请求”
+		// 1.リクエストが「通常のリクエスト」であるか「AJAXリクエスト」であるかを判断する。
 		final boolean ajaxOrNot = PgCrowdUtils.discernRequestType(request);
-		// 2.如果是Ajax 请求
+		// 2.AJAXリクエストの場合。
 		if (ajaxOrNot) {
-			// 3.从当前异常对象中获取异常信息
+			// 3.例外オブジェクトから例外情報を取得する。
 			final String message = exception.getMessage();
-			// 4.创建ResultEntity
+			// 4.ResultDtoオブジェクトを作成する。
 			final ResultDto<Object> resultEntity = ResultDto.failed(message);
-			// 5.创建Gson 对象
+			// 5.GSONオブジェクトを作成する。
 			final Gson gson = new Gson();
-			// 6.将resultEntity 转化为JSON 字符串
+			// 6.JSONストリングに変換する。
 			final String json = gson.toJson(resultEntity);
-			// 7.把当前JSON 字符串作为当前请求的响应体数据返回给浏览器
-			// ①获取Writer 对象
+			// 7.PrintWriterオブジェクトを取得する。
 			final PrintWriter writer = response.getWriter();
-			// ②写入数据
+			// 8.JSONデータをライトしてNULLを返却する。
 			writer.write(json);
-			// 8.返回null，不给SpringMVC 提供ModelAndView 对象
-			// 这样SpringMVC 就知道不需要框架解析视图来提供响应，而是程序员自己提供了响应
 			return null;
 		}
-		// 9.创建ModelAndView 对象
+		// 9.ModelAndViewオブジェクトを作成する。
 		final ModelAndView modelAndView = new ModelAndView();
-		// 10.设置目标视图名称
+		// 10.ターゲットビューの名称を設定する。
 		modelAndView.setViewName(viewName);
-		// 11.将Exception 对象存入模型
+		// 11.例外オブジェクトをモデルに保存する。
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EXCEPTION, exception);
-		// 12.返回ModelAndView 对象
+		// 12.ModelAndViewオブジェクトを返却する。
 		return modelAndView;
 	}
 
-	// 表示捕获到LoginFailedException 类型的异常对象由当前方法处理
+	/**
+	 * ログイン失敗例外を処理する
+	 *
+	 * @param exception 例外名
+	 * @param request   リクエスト
+	 * @param response  リスポンス
+	 * @return ModelAndView モデルビューオブジェクト
+	 * @throws IOException
+	 */
 	@ExceptionHandler(value = LoginFailedException.class)
 	public ModelAndView resolveLoginFailedException(final LoginFailedException exception,
 			final HttpServletRequest request, final HttpServletResponse response) throws IOException {
@@ -79,6 +84,15 @@ public final class PgCrowdExceptionResolver {
 		return this.commonResolveException(exception, request, response, viewName);
 	}
 
+	/**
+	 * 業務ロジック例外を処理する
+	 *
+	 * @param exception 例外名
+	 * @param request   リクエスト
+	 * @param response  リスポンス
+	 * @return ModelAndView モデルビューオブジェクト
+	 * @throws IOException
+	 */
 	@ExceptionHandler(value = PgCrowdException.class)
 	public ModelAndView resolvePgCrowdException(final Exception exception, final HttpServletRequest request,
 			final HttpServletResponse response) throws IOException {
