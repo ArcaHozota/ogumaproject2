@@ -1,7 +1,6 @@
 package jp.co.toshiba.ppocph.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -80,11 +79,9 @@ public class RoleServiceImpl implements IRoleService {
 		if (!list.isEmpty()) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_FORBIDDEN);
 		}
-		final Optional<Role> findById = this.roleRepository.findById(roleId);
-		if (findById.isEmpty()) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOTEXISTS);
-		}
-		final Role role = findById.get();
+		final Role role = this.roleRepository.findById(roleId).orElseThrow(() -> {
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOTEXISTS);
+		});
 		role.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
 		this.roleRepository.saveAndFlush(role);
 		return ResultDto.successWithoutData();

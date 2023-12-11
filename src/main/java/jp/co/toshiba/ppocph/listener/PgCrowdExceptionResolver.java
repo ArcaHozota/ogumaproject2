@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.exception.LoginFailedException;
+import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.utils.PgCrowdUtils;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 
@@ -39,9 +40,9 @@ public final class PgCrowdExceptionResolver {
 	private ModelAndView commonResolveException(final Exception exception, final HttpServletRequest request,
 			final HttpServletResponse response, final String viewName) throws IOException {
 		// 1.判断当前请求是“普通请求”还是“Ajax 请求”
-		final boolean ajaxorNot = PgCrowdUtils.discernRequestType(request);
+		final boolean ajaxOrNot = PgCrowdUtils.discernRequestType(request);
 		// 2.如果是Ajax 请求
-		if (ajaxorNot) {
+		if (ajaxOrNot) {
 			// 3.从当前异常对象中获取异常信息
 			final String message = exception.getMessage();
 			// 4.创建ResultEntity
@@ -69,21 +70,20 @@ public final class PgCrowdExceptionResolver {
 		return modelAndView;
 	}
 
-	// 表示捕获到其它Exception 类型的异常对象由当前方法处理
-	@ExceptionHandler(value = Exception.class)
-	public ModelAndView resolveException(final Exception exception, final HttpServletRequest request,
-			final HttpServletResponse response) throws IOException {
-		// 現在の例外に対応するページを指定する
-		final String viewName = "system-error";
-		return this.commonResolveException(exception, request, response, viewName);
-	}
-
 	// 表示捕获到LoginFailedException 类型的异常对象由当前方法处理
 	@ExceptionHandler(value = LoginFailedException.class)
 	public ModelAndView resolveLoginFailedException(final LoginFailedException exception,
 			final HttpServletRequest request, final HttpServletResponse response) throws IOException {
 		// 現在の例外に対応するページを指定する
 		final String viewName = "admin-login";
+		return this.commonResolveException(exception, request, response, viewName);
+	}
+
+	@ExceptionHandler(value = PgCrowdException.class)
+	public ModelAndView resolvePgCrowdException(final Exception exception, final HttpServletRequest request,
+			final HttpServletResponse response) throws IOException {
+		// 現在の例外に対応するページを指定する
+		final String viewName = "system-error";
 		return this.commonResolveException(exception, request, response, viewName);
 	}
 }
