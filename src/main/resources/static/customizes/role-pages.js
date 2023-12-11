@@ -218,6 +218,11 @@ $(document).on('click', '.delete-btn', function() {
 		});
 	}
 });
+$(document).on('click', '.fuyo-btn', function() {
+	let fuyoId = $(this).attr("fuyoId");
+	let userId = $("#userinfoId").text();
+	window.location.replace('/pgcrowd/role/to/authlist?fuyoId=' + fuyoId + '&userId=' + userId);
+});
 function formReset(element) {
 	$(element)[0].reset();
 	$(element).find(".form-control").removeClass("is-valid is-invalid");

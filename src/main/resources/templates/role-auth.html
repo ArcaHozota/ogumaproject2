@@ -147,13 +147,15 @@
 						<li class="breadcrumb-item active" aria-current="page">権限付与</li>
 					</ol>
 				</nav>
-				<div class="card border-primary mb-3">
-					<div class="card-header text-bg-primary mb-3">
-						<h5 class="card-title" style="padding-top: 8px;" th:text="${roleName}">
-							<i class="bi bi-grid-fill"></i> 
+				<div class="card border-danger mb-3">
+					<div class="card-header text-bg-danger mb-3">
+						<h5 class="card-title" style="padding-top: 8px;" th:text="${role.name}">
+							<i class="bi bi-grid-fill"></i>
 						</h5>
 					</div>
 					<div class="card-body">
+						<p th:text="${role.id}" id="roleId" hidden></p>
+						<div id="tree"></div>
 					</div>
 					<div class="card-footer">
 						<button type="button" class="btn btn-info my-2 my-sm-0" id="authSaveBtn">
@@ -167,7 +169,7 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" th:src="@{/static/customizes/role-pages.js}"></script>
+	<script type="text/javascript" th:src="@{/static/customizes/ztrees.js}"></script>
 </body>
 
 </html>

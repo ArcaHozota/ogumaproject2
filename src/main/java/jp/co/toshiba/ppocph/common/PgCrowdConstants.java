@@ -32,6 +32,8 @@ public final class PgCrowdConstants {
 
 	public static final String ATTRNAME_PAGE_NUMBER = "pageNum";
 
+	public static final String ATTRNAME_AUTHORITY_ROLE = "role";
+
 	public static final String LOGIC_DELETE_FLG = "removed";
 
 	public static final String LOGIC_DELETE_INITIAL = "visible";
