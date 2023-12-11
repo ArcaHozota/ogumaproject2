@@ -1,5 +1,7 @@
 package jp.co.toshiba.ppocph.controller;
 
+import java.util.List;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,6 +49,21 @@ public final class RoleController {
 	private final IRoleService iRoleService;
 
 	/**
+	 * 権限付与画面初期表示
+	 *
+	 * @return ResultDto<List<PgAuth>>
+	 */
+	@GetMapping("/to/authlists")
+	public ResultDto<List<PgAuth>> authlists() {
+		final Role role = this.iRoleService.getRoleById(roleId);
+		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
+		final ModelAndView modelAndView = new ModelAndView("role-auth");
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_AUTHORITY_ROLE, role);
+		return ResultDto.successWithData(list);
+	}
+
+	/**
 	 * 役割名称重複チェック
 	 *
 	 * @param name 役割名称
@@ -73,6 +90,24 @@ public final class RoleController {
 	@ResponseBody
 	public ResultDto<String> deleteInfo(@PathVariable("roleId") final Long roleId) {
 		return this.iRoleService.removeById(roleId);
+	}
+
+	/**
+	 * 権限付与画面遷移
+	 *
+	 * @param roleId 役割ID
+	 * @param userId ユーザID
+	 * @return ModelAndView
+	 */
+	@GetMapping("/to/authlist")
+	public ModelAndView initialAuthList(@RequestParam("userId") final Long userId,
+			@RequestParam(name = "fuyoId") final Long roleId) {
+		final Role role = this.iRoleService.getRoleById(roleId);
+		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
+		final ModelAndView modelAndView = new ModelAndView("role-auth");
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_AUTHORITY_ROLE, role);
+		return modelAndView;
 	}
 
 	/**

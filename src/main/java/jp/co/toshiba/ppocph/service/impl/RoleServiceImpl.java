@@ -57,6 +57,13 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
+	public Role getRoleById(final Long roleId) {
+		return this.roleRepository.findById(roleId).orElseThrow(() -> {
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOTEXISTS);
+		});
+	}
+
+	@Override
 	public Pagination<Role> getRolesByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));

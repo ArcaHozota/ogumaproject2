@@ -24,6 +24,14 @@ public interface IRoleService {
 	boolean check(String name);
 
 	/**
+	 * IDによって役割情報を取得する
+	 *
+	 * @param roleId 役割ID
+	 * @return Role
+	 */
+	Role getRoleById(Long roleId);
+
+	/**
 	 * キーワードによって役割情報を取得する
 	 *
 	 * @param pageNum ページ数
