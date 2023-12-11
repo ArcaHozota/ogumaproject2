@@ -17,6 +17,7 @@ import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.entity.Role;
+import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.service.IRoleService;
 import jp.co.toshiba.ppocph.utils.Pagination;
@@ -72,7 +73,11 @@ public final class RoleController {
 	@DeleteMapping("/delete/{roleId}")
 	@ResponseBody
 	public ResultDto<String> deleteInfo(@PathVariable("roleId") final Long roleId) {
-		this.iRoleService.removeById(roleId);
+		try {
+			this.iRoleService.removeById(roleId);
+		} catch (final PgCrowdException e) {
+			ResultDto.failed(e.getMessage());
+		}
 		return ResultDto.successWithoutData();
 	}
 
