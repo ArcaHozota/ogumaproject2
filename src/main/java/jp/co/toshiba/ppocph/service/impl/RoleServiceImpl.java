@@ -1,6 +1,7 @@
 package jp.co.toshiba.ppocph.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.RoleRepository;
 import jp.co.toshiba.ppocph.service.IRoleService;
 import jp.co.toshiba.ppocph.utils.Pagination;
+import jp.co.toshiba.ppocph.utils.ResultDto;
 import jp.co.toshiba.ppocph.utils.SecondBeanUtils;
 import jp.co.toshiba.ppocph.utils.SnowflakeUtils;
 import jp.co.toshiba.ppocph.utils.StringUtils;
@@ -70,19 +72,22 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public void removeById(final Long roleId) {
+	public ResultDto<String> removeById(final Long roleId) {
 		final Specification<EmployeeEx> where = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("roleId"), roleId);
 		final Specification<EmployeeEx> specification = Specification.where(where);
 		final List<EmployeeEx> list = this.employeeExRepository.findAll(specification);
 		if (!list.isEmpty()) {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FORBIDDEN);
+			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_FORBIDDEN);
 		}
-		final Role role = this.roleRepository.findById(roleId).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOTEXISTS);
-		});
+		final Optional<Role> findById = this.roleRepository.findById(roleId);
+		if (findById.isEmpty()) {
+			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOTEXISTS);
+		}
+		final Role role = findById.get();
 		role.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
 		this.roleRepository.saveAndFlush(role);
+		return ResultDto.successWithoutData();
 	}
 
 	@Override

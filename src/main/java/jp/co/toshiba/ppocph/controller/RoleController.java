@@ -72,8 +72,7 @@ public final class RoleController {
 	@DeleteMapping("/delete/{roleId}")
 	@ResponseBody
 	public ResultDto<String> deleteInfo(@PathVariable("roleId") final Long roleId) {
-		this.iRoleService.removeById(roleId);
-		return ResultDto.successWithoutData();
+		return this.iRoleService.removeById(roleId);
 	}
 
 	/**

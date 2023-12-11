@@ -5,6 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.utils.Pagination;
+import jp.co.toshiba.ppocph.utils.ResultDto;
 
 /**
  * 役割サービスインターフェス
@@ -35,8 +36,9 @@ public interface IRoleService {
 	 * 役割IDによって情報を削除する
 	 *
 	 * @param roleId 役割ID
+	 * @return ResultDto<String>
 	 */
-	void removeById(Long roleId);
+	ResultDto<String> removeById(Long roleId);
 
 	/**
 	 * 役割情報追加
