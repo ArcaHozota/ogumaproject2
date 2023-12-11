@@ -2,7 +2,6 @@ package jp.co.toshiba.ppocph.controller;
 
 import java.util.List;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,11 +69,7 @@ public final class RoleController {
 	@ResponseBody
 	public ResultDto<String> checkDuplicated(
 			@RequestParam(name = "name", defaultValue = StringUtils.EMPTY_STRING) final String name) {
-		final boolean checkDuplicated = this.iRoleService.check(name);
-		if (checkDuplicated) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_ROLE_NAME_DUPLICATED);
-		}
-		return ResultDto.successWithoutData();
+		return this.iRoleService.check(name);
 	}
 
 	/**
@@ -163,11 +158,6 @@ public final class RoleController {
 	@PutMapping("/infoupd")
 	@ResponseBody
 	public ResultDto<String> updateInfo(@RequestBody final RoleDto roleDto) {
-		try {
-			this.iRoleService.update(roleDto);
-			return ResultDto.successWithoutData();
-		} catch (final DataIntegrityViolationException e) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_ROLE_NAME_DUPLICATED);
-		}
+		return this.iRoleService.update(roleDto);
 	}
 }

@@ -55,13 +55,15 @@ public class RoleServiceImpl implements IRoleService {
 	private final EmployeeExRepository employeeExRepository;
 
 	@Override
-	public boolean check(final String name) {
+	public ResultDto<String> check(final String name) {
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("name"),
 				name);
 		final Specification<Role> specification = Specification.where(where1).and(where2);
-		return this.roleRepository.findOne(specification).isPresent();
+		return this.roleRepository.findOne(specification).isPresent()
+				? ResultDto.failed(PgCrowdConstants.MESSAGE_ROLE_NAME_DUPLICATED)
+				: ResultDto.successWithoutData();
 	}
 
 	@Override
@@ -117,11 +119,16 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public void update(final RoleDto roleDto) throws DataIntegrityViolationException {
+	public ResultDto<String> update(final RoleDto roleDto) {
 		final Role role = this.roleRepository.findById(roleDto.getId()).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOTEXISTS);
 		});
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
-		this.roleRepository.saveAndFlush(role);
+		try {
+			this.roleRepository.saveAndFlush(role);
+		} catch (final DataIntegrityViolationException e) {
+			return ResultDto.failed(PgCrowdConstants.MESSAGE_ROLE_NAME_DUPLICATED);
+		}
+		return ResultDto.successWithoutData();
 	}
 }
