@@ -36,7 +36,7 @@ function buildCityTable(result) {
 			.append($("<i class='bi bi-pencil-fill'></i>")).append("編集");
 		editBtn.attr("editId", item.id);
 		let deleteBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete-btn")
-			.append($("<i class='bi bi-trash'></i>")).append("削除");
+			.append($("<i class='bi bi-trash-fill'></i>")).append("削除");
 		deleteBtn.attr("deleteId", item.id);
 		let btnTd = $("<td class='text-center' style='width:120px;vertical-align:bottom;'></td>").append(editBtn).append(" ").append(deleteBtn);
 		$("<tr></tr>").append(idTd).append(usernameTd).append(emailTd).append(btnTd).appendTo("#tableBody");
