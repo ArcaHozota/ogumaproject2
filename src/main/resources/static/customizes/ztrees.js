@@ -9,39 +9,40 @@ $(document).ready(function() {
 		dataType: 'json',
 		success: function(result) {
 			if (result.status === 'SUCCESS') {
+				let authlist = result.data;
 				treeData = [
 					{
-						text: $(result.data).eq(0).title,
+						text: $(authlist).eq(0),
 						icon: "bi bi-1-circle-fill",
 						nodes: [
 							{
-								text: $(result.data).eq(1).title,
+								text: $(authlist).eq(1),
 								icon: "bi bi-2-circle-fill"
 							},
 							{
-								text: $(result.data).eq(2).title,
+								text: $(authlist).eq(2),
 								icon: "bi bi-3-circle-fill"
 							},
 							{
-								text: $(result.data).eq(3).title,
+								text: $(authlist).eq(3),
 								icon: "bi bi-4-circle-fill"
 							}
 						]
 					},
 					{
-						text: $(result.data).eq(4).title,
+						text: $(authlist).eq(4),
 						icon: "bi bi-5-circle-fill",
 						nodes: [
 							{
-								text: $(result.data).eq(5).title,
+								text: $(authlist).eq(5),
 								icon: "bi bi-6-circle-fill"
 							},
 							{
-								text: $(result.data).eq(6).title,
+								text: $(authlist).eq(6),
 								icon: "bi bi-7-circle-fill"
 							},
 							{
-								text: $(result.data).eq(7).title,
+								text: $(authlist).eq(7),
 								icon: "bi bi-8-circle-fill"
 							}
 						]
