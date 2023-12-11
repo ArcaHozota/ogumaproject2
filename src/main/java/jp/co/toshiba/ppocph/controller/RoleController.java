@@ -54,7 +54,7 @@ public final class RoleController {
 	 *
 	 * @return ResultDto<List<PgAuth>>
 	 */
-	@GetMapping("/role/authlists")
+	@GetMapping("/authlists")
 	public ResultDto<List<PgAuth>> authlists() {
 		final List<PgAuth> list = this.iRoleService.getAuthlist();
 		return ResultDto.successWithData(list);
