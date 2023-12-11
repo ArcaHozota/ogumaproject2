@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import jp.co.toshiba.ppocph.dto.RoleDto;
-import jp.co.toshiba.ppocph.entity.PgAuth;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
@@ -31,7 +30,7 @@ public interface IRoleService {
 	 *
 	 * @return List<PgAuth>
 	 */
-	List<PgAuth> getAuthlist();
+	List<String> getAuthlist();
 
 	/**
 	 * IDによって役割情報を取得する
