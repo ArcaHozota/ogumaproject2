@@ -260,14 +260,14 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 	$.fn.zTree.init($("#authTree"), setting, authlist);
 	let zTreeObj = $.fn.zTree.getZTreeObj("authTree");
 	zTreeObj.expandAll(true);
-	/*ajaxReturn = $.ajax({
+	ajaxReturn = $.ajax({
 		url: '/pgcrowd/role/getAssigned',
 		data: 'fuyoId=' + fuyoId,
 		type: 'GET',
 		dataType: 'json',
 		async: false
 	});
-	let authIdList = ajaxReturn.responseJSON.data;*/
+	let authIdList = ajaxReturn.responseJSON.data;
 });
 function formReset(element) {
 	$(element)[0].reset();

@@ -86,6 +86,18 @@ public final class RoleController {
 	}
 
 	/**
+	 * 付与された権限を表示する
+	 *
+	 * @return ResultDto<List<Long>>
+	 */
+	@GetMapping("/getAssigned")
+	@ResponseBody
+	public ResultDto<List<Long>> getAssignedAuth(@RequestParam("fuyoId") final Long roleId) {
+		final List<Long> authIds = this.iRoleService.getAuthIdListByRoleId(roleId);
+		return ResultDto.successWithData(authIds);
+	}
+
+	/**
 	 * 権限付与画面遷移
 	 *
 	 * @param roleId 役割ID

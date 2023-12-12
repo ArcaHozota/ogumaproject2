@@ -1,5 +1,6 @@
 package jp.co.toshiba.ppocph.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -63,6 +64,11 @@ public class RoleServiceImpl implements IRoleService {
 		return this.roleRepository.findOne(specification).isPresent()
 				? ResultDto.failed(PgCrowdConstants.MESSAGE_ROLE_NAME_DUPLICATED)
 				: ResultDto.successWithoutData();
+	}
+
+	@Override
+	public List<Long> getAuthIdListByRoleId(final Long roleId) {
+		return new ArrayList<>();
 	}
 
 	@Override

@@ -25,6 +25,14 @@ public interface IRoleService {
 	ResultDto<String> check(String name);
 
 	/**
+	 * 付与された権限を表示する
+	 *
+	 * @param roleId 役割ID
+	 * @return List<Long>
+	 */
+	List<Long> getAuthIdListByRoleId(Long roleId);
+
+	/**
 	 * 権限リストを取得する
 	 *
 	 * @return List<PgAuth>
