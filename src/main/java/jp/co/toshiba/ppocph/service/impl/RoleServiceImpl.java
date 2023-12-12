@@ -78,6 +78,11 @@ public class RoleServiceImpl implements IRoleService {
 	@Override
 	public ResultDto<String> doAssignment(final Map<String, List<Long>> paramMap) {
 		final Long roleId = paramMap.get("roleId").get(0);
+		final Specification<RoleEx> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("roleId"),
+				roleId);
+		final Specification<RoleEx> specification = Specification.where(where);
+		final List<RoleEx> findAll = this.roleExRepository.findAll(specification);
+		this.roleExRepository.deleteAll(findAll);
 		final List<Long> authIds = paramMap.get("authIdArray");
 		final List<RoleEx> list = authIds.stream().map(item -> {
 			final RoleEx roleEx = new RoleEx();
