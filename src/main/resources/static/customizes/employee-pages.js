@@ -236,7 +236,7 @@ $("#saveInfoBtn").on('click', function() {
 		});
 	}
 });
-$(document).on('click', '.delete-btn', function() {
+$("#tableBody").on('click', '.delete-btn', function() {
 	let userName = $(this).parents("tr").find("td:eq(0)").text().trim();
 	let userId = $(this).attr("deleteId");
 	if (confirm("この" + userName + "という社員の情報を削除するとよろしいでしょうか。")) {
@@ -250,7 +250,7 @@ $(document).on('click', '.delete-btn', function() {
 		});
 	}
 });
-$(document).on('click', '.edit-btn', function() {
+$("#tableBody").on('click', '.edit-btn', function() {
 	let editId = $(this).attr("editId");
 	let userId = $("#userinfoId").text();
 	window.location.replace('/pgcrowd/employee/to/edition?editId=' + editId + '&userId=' + userId);

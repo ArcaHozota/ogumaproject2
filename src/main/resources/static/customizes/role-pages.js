@@ -152,7 +152,7 @@ $("#roleInfoSaveBtn").on('click', function() {
 		});
 	}
 });
-$(document).on('click', '.edit-btn', function() {
+$("#tableBody").on('click', '.edit-btn', function() {
 	formReset("#roleEditModal form");
 	let editId = $(this).attr("editId");
 	$("#roleInfoChangeBtn").attr("editId", editId);
@@ -200,7 +200,7 @@ $("#roleInfoChangeBtn").on('click', function() {
 		});
 	}
 });
-$(document).on('click', '.delete-btn', function() {
+$("#tableBody").on('click', '.delete-btn', function() {
 	let roleName = $(this).parents("tr").find("td:eq(0)").text().trim();
 	let roleId = $(this).attr("deleteId");
 	if (confirm("この" + roleName + "という役割情報を削除する、よろしいでしょうか。")) {
@@ -218,7 +218,7 @@ $(document).on('click', '.delete-btn', function() {
 		});
 	}
 });
-$(document).on('click', '.fuyo-btn', function() {
+$("#tableBody").on('click', '.fuyo-btn', function() {
 	let fuyoId = $(this).attr("fuyoId");
 	let userId = $("#userinfoId").text();
 	window.location.replace('/pgcrowd/role/to/authlist?fuyoId=' + fuyoId + '&userId=' + userId + '&pageNum=' + pageNum);
