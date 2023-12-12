@@ -220,8 +220,31 @@ $("#tableBody").on('click', '.delete-btn', function() {
 });
 $("#tableBody").on('click', '.fuyo-btn', function() {
 	let fuyoId = $(this).attr("fuyoId");
-	let userId = $("#userinfoId").text();
-	window.location.replace('/pgcrowd/role/to/authlist?fuyoId=' + fuyoId + '&userId=' + userId + '&pageNum=' + pageNum);
+	$("#authChangeBtn").attr("fuyoId", fuyoId);
+	let authModal = new bootstrap.Modal($("#authEditModal"), {
+		backdrop: 'static'
+	});
+	authModal.show();
+	$.ajax({
+		url: '/pgcrowd/role/authlists',
+		type: 'GET',
+		dataType: 'json',
+		success: function(result) {
+			if (result.status === 'SUCCESS') {
+				let authlist = result.data;
+				let setting = {
+					'data': {
+						'simpleData': {
+							'enable': true
+						}
+					}
+				};
+				$.fn.zTree.init($("#authTree"), setting, authlist);
+			} else {
+				layer.msg('リクエスト処理異常!' + result.message);
+			}
+		}
+	});
 });
 function formReset(element) {
 	$(element)[0].reset();

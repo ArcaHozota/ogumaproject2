@@ -11,6 +11,7 @@
 	<link rel="stylesheet" th:href="@{/static/bootstrap/css/bootstrap.min.css}">
 	<link rel="stylesheet" th:href="@{/static/css/font-awesome.min.css}">
 	<link rel="stylesheet" th:href="@{/static/css/main.css}">
+	<link rel="stylesheet" th:href="@{/static/ztree/zTreeStyle.css}">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 	<link rel="shortcut icon" type="image/x-icon" th:href="@{/static/favicon.ico}">
 	<style>
@@ -27,6 +28,7 @@
 	<script type="text/javascript" th:src="@{/static/bootstrap/js/bootstrap.bundle.min.js}"></script>
 	<script type="text/javascript" th:src="@{/static/script/docs.min.js}"></script>
 	<script type="text/javascript" th:src="@{/static/layer/layer.js}"></script>
+	<script type="text/javascript" th:src="@{/static/ztree/jquery.ztree.all.js}"></script>
 	<script type="text/javascript" th:src="@{/static/customizes/mainmenu.js}"></script>
 </head>
 
@@ -228,6 +230,22 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">閉じる</button>
 					<button type="button" class="btn btn-info" id="roleInfoChangeBtn">変更</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="authEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="roleName"></h4>
+				</div>
+				<div class="modal-body">
+					<ul id="authTree" class="ztree"></ul>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">閉じる</button>
+					<button type="button" class="btn btn-primary" id="authChangeBtn">変更</button>
 				</div>
 			</div>
 		</div>
