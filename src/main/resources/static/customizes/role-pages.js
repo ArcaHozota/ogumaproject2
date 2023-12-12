@@ -237,7 +237,15 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 				let setting = {
 					'data': {
 						'simpleData': {
-							'enable': true
+							'enable': true,
+							'pIdKey': 'categoryId'
+						},
+						'key': {
+							'name': 'title'
+						},
+						'check': {
+							'enbale': true,
+							'chkStyle': 'radio'
 						}
 					}
 				};
@@ -247,6 +255,8 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 			}
 		}
 	});
+	let zTreeObj = $.fn.zTree.getZTreeObj("authTree");
+	zTreeObj.expandAll(true);
 });
 function formReset(element) {
 	$(element)[0].reset();
