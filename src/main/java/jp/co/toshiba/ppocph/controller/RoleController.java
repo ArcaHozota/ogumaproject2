@@ -87,9 +87,10 @@ public final class RoleController {
 	}
 
 	/**
-	 * 権限付与画面初期表示
+	 * 権限付与実行
 	 *
-	 * @return ResultDto<List<PgAuth>>
+	 * @param paramMap パラメータ
+	 * @return ResultDto<String>
 	 */
 	@PutMapping("/do/assignment")
 	@ResponseBody
