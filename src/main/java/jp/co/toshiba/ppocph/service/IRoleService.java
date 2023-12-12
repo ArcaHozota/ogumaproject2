@@ -31,7 +31,7 @@ public interface IRoleService {
 	 * @param paramMap パラメータ
 	 * @return ResultDto<String>
 	 */
-	ResultDto<String> doAssignment(Map<String, Long> paramMap);
+	ResultDto<String> doAssignment(Map<String, List<Long>> paramMap);
 
 	/**
 	 * 付与された権限を表示する

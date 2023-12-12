@@ -76,7 +76,7 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public ResultDto<String> doAssignment(final Map<String, Long> paramMap) {
+	public ResultDto<String> doAssignment(final Map<String, List<Long>> paramMap) {
 		return null;
 	}
 

@@ -93,7 +93,7 @@ public final class RoleController {
 	 */
 	@PutMapping("/do/assignment")
 	@ResponseBody
-	public ResultDto<String> doAssignment(@RequestBody final Map<String, Long> paramMap) {
+	public ResultDto<String> doAssignment(@RequestBody final Map<String, List<Long>> paramMap) {
 		return this.iRoleService.doAssignment(paramMap);
 	}
 
