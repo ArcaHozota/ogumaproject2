@@ -274,6 +274,36 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 		zTreeObj.checkNode(treeNode, true, true);
 	}
 });
+$("#authChangeBtn").on('click', function() {
+	let fuyoId = $(this).attr("fuyoId");
+	let authIdArray = [];
+	let zTreeObj = $.fn.zTree.getZTreeObj("authTree");
+	let checkedNodes = zTreeObj.getCheckedNodes();
+	for (const element of checkedNodes) {
+		let checkedNode = element;
+		let authId = checkedNode.id;
+		authIdArray.push(authId);
+	}
+	let requestBody = {
+		'authIdArray': authIdArray,
+		'roleId': [fuyoId]
+	};
+	requestBody = JSON.stringify(requestBody);
+	$.ajax({
+		url: '/pgcrowd/role/do/assignment',
+		data: requestBody,
+		type: 'PUT',
+		dataType: 'json',
+		success: function(result) {
+			$("#authEditModal").modal('hide');
+			if (result.status === 'SUCCESS') {
+				layer.msg('権限付与成功！');
+			} else {
+				layer.msg(result.message);
+			}
+		}
+	});
+});
 function formReset(element) {
 	$(element)[0].reset();
 	$(element).find(".form-control").removeClass("is-valid is-invalid");

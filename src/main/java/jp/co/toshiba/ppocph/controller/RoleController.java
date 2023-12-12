@@ -1,6 +1,7 @@
 package jp.co.toshiba.ppocph.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -86,6 +87,17 @@ public final class RoleController {
 	}
 
 	/**
+	 * 権限付与画面初期表示
+	 *
+	 * @return ResultDto<List<PgAuth>>
+	 */
+	@PutMapping("/do/assignment")
+	@ResponseBody
+	public ResultDto<String> doAssignment(@RequestBody final Map<String, Long> paramMap) {
+		return this.iRoleService.doAssignment(paramMap);
+	}
+
+	/**
 	 * 付与された権限を表示する
 	 *
 	 * @return ResultDto<List<Long>>
@@ -95,25 +107,6 @@ public final class RoleController {
 	public ResultDto<List<Long>> getAssignedAuth(@RequestParam("fuyoId") final Long roleId) {
 		final List<Long> authIds = this.iRoleService.getAuthIdListByRoleId(roleId);
 		return ResultDto.successWithData(authIds);
-	}
-
-	/**
-	 * 権限付与画面遷移
-	 *
-	 * @param roleId 役割ID
-	 * @param userId ユーザID
-	 * @return ModelAndView
-	 */
-	@GetMapping("/to/authlist")
-	public ModelAndView initialAuthList(@RequestParam(name = "fuyoId") final Long roleId,
-			@RequestParam("userId") final Long userId, @RequestParam(name = "pageNum") final Integer pageNum) {
-		final Role role = this.iRoleService.getRoleById(roleId);
-		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
-		final ModelAndView modelAndView = new ModelAndView("role-auth");
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_AUTHORITY_ROLE, role);
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
-		return modelAndView;
 	}
 
 	/**

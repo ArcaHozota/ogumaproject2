@@ -1,6 +1,7 @@
 package jp.co.toshiba.ppocph.service;
 
 import java.util.List;
+import java.util.Map;
 
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.PgAuth;
@@ -23,6 +24,14 @@ public interface IRoleService {
 	 * @return true:重複する; false: 重複しない;
 	 */
 	ResultDto<String> check(String name);
+
+	/**
+	 * 権限を付与する
+	 *
+	 * @param paramMap パラメータ
+	 * @return ResultDto<String>
+	 */
+	ResultDto<String> doAssignment(Map<String, Long> paramMap);
 
 	/**
 	 * 付与された権限を表示する

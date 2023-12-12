@@ -2,6 +2,7 @@ package jp.co.toshiba.ppocph.service.impl;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -72,6 +73,11 @@ public class RoleServiceImpl implements IRoleService {
 		return this.roleRepository.findOne(specification).isPresent()
 				? ResultDto.failed(PgCrowdConstants.MESSAGE_ROLE_NAME_DUPLICATED)
 				: ResultDto.successWithoutData();
+	}
+
+	@Override
+	public ResultDto<String> doAssignment(final Map<String, Long> paramMap) {
+		return null;
 	}
 
 	@Override
