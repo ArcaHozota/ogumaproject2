@@ -52,6 +52,8 @@ public final class PgCrowdConstants {
 
 	public static final String MESSAGE_STRING_FORBIDDEN = "役割は利用されています、削除できません。";
 
+	public static final String MESSAGE_STRING_FORBIDDEN2 = "権限付与にエラーが発生しました。";
+
 	public static final String MESSAGE_STRING_DUPLICATED = "ログインアカウントがすでに存在します。";
 
 	public static final String MESSAGE_ROLE_NAME_DUPLICATED = "役割名称がすでに存在します。";
