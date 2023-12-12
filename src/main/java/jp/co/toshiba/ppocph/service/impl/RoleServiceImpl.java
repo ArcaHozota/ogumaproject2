@@ -1,5 +1,6 @@
 package jp.co.toshiba.ppocph.service.impl;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,7 +85,8 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public List<PgAuth> getAuthlist() {
-		return this.pgAuthRepository.findAll();
+		return this.pgAuthRepository.findAll().stream().sorted(Comparator.comparing(PgAuth::getId))
+				.collect(Collectors.toList());
 	}
 
 	@Override
