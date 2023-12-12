@@ -288,11 +288,11 @@ $("#authChangeBtn").on('click', function() {
 		'authIdArray': authIdArray,
 		'roleId': [fuyoId]
 	};
-	requestBody = JSON.stringify(requestBody);
 	$.ajax({
 		url: '/pgcrowd/role/do/assignment',
-		data: requestBody,
+		data: JSON.stringify(requestBody),
 		type: 'PUT',
+		contentType: 'application/json;charset=UTF-8',
 		dataType: 'json',
 		success: function(result) {
 			$("#authEditModal").modal('hide');
