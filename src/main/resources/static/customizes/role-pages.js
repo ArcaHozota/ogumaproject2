@@ -221,6 +221,8 @@ $("#tableBody").on('click', '.delete-btn', function() {
 $("#tableBody").on('click', '.fuyo-btn', function() {
 	let fuyoId = $(this).attr("fuyoId");
 	$("#authChangeBtn").attr("fuyoId", fuyoId);
+	let nameVal = $(this).parent().parent().find("td:eq(0)").text();
+	$("#roleName").text(nameVal);
 	let authModal = new bootstrap.Modal($("#authEditModal"), {
 		backdrop: 'static'
 	});
