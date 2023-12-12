@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.Employee;
+import jp.co.toshiba.ppocph.entity.PgAuth;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.service.IRoleService;
@@ -54,8 +55,8 @@ public final class RoleController {
 	 */
 	@GetMapping("/authlists")
 	@ResponseBody
-	public ResultDto<List<String>> authlists() {
-		final List<String> list = this.iRoleService.getAuthlist();
+	public ResultDto<List<PgAuth>> authlists() {
+		final List<PgAuth> list = this.iRoleService.getAuthlist();
 		return ResultDto.successWithData(list);
 	}
 

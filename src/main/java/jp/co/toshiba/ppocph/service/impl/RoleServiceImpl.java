@@ -1,7 +1,6 @@
 package jp.co.toshiba.ppocph.service.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -67,8 +66,8 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public List<String> getAuthlist() {
-		return this.pgAuthRepository.findAll().stream().map(PgAuth::getTitle).collect(Collectors.toList());
+	public List<PgAuth> getAuthlist() {
+		return this.pgAuthRepository.findAll();
 	}
 
 	@Override
