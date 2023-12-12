@@ -268,6 +268,11 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 		async: false
 	});
 	let authIdList = ajaxReturn.responseJSON.data;
+	for (const element of authIdList) {
+		let authId = element;
+		let treeNode = zTreeObj.getNodeByParam('id', authId);
+		zTreeObj.checkNode(treeNode, true, true);
+	}
 });
 function formReset(element) {
 	$(element)[0].reset();
