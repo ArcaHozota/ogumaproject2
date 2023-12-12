@@ -254,6 +254,13 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 				'Y': 'ps',
 				'N': 'ps'
 			}
+		}, callback: {
+			'onNodeCreated': function(event, treeId, treeNode) { // 设置节点创建时的回调函数
+				if (treeNode.isParent) { // 判断是否为父节点
+					let icoObj = $("#" + treeNode.tId + "_ico"); // 获取图标元素
+					icoObj.css("background", "url(img/folder.png) no-repeat"); // 修改图标样式
+				}
+			}
 		}
 	};
 	let authlist = ajaxReturn.responseJSON.data;
