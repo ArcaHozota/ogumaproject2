@@ -1,7 +1,7 @@
 package jp.co.toshiba.ppocph.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -16,9 +16,11 @@ import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.EmployeeEx;
 import jp.co.toshiba.ppocph.entity.PgAuth;
 import jp.co.toshiba.ppocph.entity.Role;
+import jp.co.toshiba.ppocph.entity.RoleEx;
 import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.PgAuthRepository;
+import jp.co.toshiba.ppocph.repository.RoleExRepository;
 import jp.co.toshiba.ppocph.repository.RoleRepository;
 import jp.co.toshiba.ppocph.service.IRoleService;
 import jp.co.toshiba.ppocph.utils.Pagination;
@@ -54,6 +56,11 @@ public class RoleServiceImpl implements IRoleService {
 	 */
 	private final EmployeeExRepository employeeExRepository;
 
+	/**
+	 * 役割権限連携リポジトリ
+	 */
+	private final RoleExRepository roleExRepository;
+
 	@Override
 	public ResultDto<String> check(final String name) {
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
@@ -68,7 +75,11 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public List<Long> getAuthIdListByRoleId(final Long roleId) {
-		return new ArrayList<>();
+		final Specification<RoleEx> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("roleId"),
+				roleId);
+		final Specification<RoleEx> specification = Specification.where(where);
+		return this.roleExRepository.findAll(specification).stream().map(RoleEx::getAuthId)
+				.collect(Collectors.toList());
 	}
 
 	@Override
