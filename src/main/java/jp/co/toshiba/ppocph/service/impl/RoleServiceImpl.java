@@ -3,6 +3,7 @@ package jp.co.toshiba.ppocph.service.impl;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -84,12 +85,13 @@ public class RoleServiceImpl implements IRoleService {
 		final List<RoleEx> findAll = this.roleExRepository.findAll(specification);
 		this.roleExRepository.deleteAll(findAll);
 		final List<Long> authIds = paramMap.get("authIdArray");
-		final List<RoleEx> list = authIds.stream().map(item -> {
-			final RoleEx roleEx = new RoleEx();
-			roleEx.setAuthId(item);
-			roleEx.setRoleId(roleId);
-			return roleEx;
-		}).collect(Collectors.toList());
+		final List<RoleEx> list = authIds.stream().filter(a -> !(Objects.equals(a, 1L) || Objects.equals(a, 5L)))
+				.map(item -> {
+					final RoleEx roleEx = new RoleEx();
+					roleEx.setAuthId(item);
+					roleEx.setRoleId(roleId);
+					return roleEx;
+				}).collect(Collectors.toList());
 		try {
 			this.roleExRepository.saveAllAndFlush(list);
 		} catch (final Exception e) {
