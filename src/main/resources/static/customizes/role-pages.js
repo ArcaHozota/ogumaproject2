@@ -242,11 +242,11 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 						},
 						'key': {
 							'name': 'title'
-						},
-						'check': {
-							'enbale': true,
-							'chkStyle': 'radio'
 						}
+					},
+					'check': {
+						'enable': true,
+						'chkStyle': 'radio'
 					}
 				};
 				$.fn.zTree.init($("#authTree"), setting, authlist);
