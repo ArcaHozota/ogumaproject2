@@ -227,36 +227,47 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 		backdrop: 'static'
 	});
 	authModal.show();
-	$.ajax({
+	let ajaxReturn = $.ajax({
 		url: '/pgcrowd/role/authlists',
 		type: 'GET',
 		dataType: 'json',
-		success: function(result) {
-			if (result.status === 'SUCCESS') {
-				let authlist = result.data;
-				let setting = {
-					'data': {
-						'simpleData': {
-							'enable': true,
-							'pIdKey': 'categoryId'
-						},
-						'key': {
-							'name': 'title'
-						}
-					},
-					'check': {
-						'enable': true,
-						'chkStyle': 'radio'
-					}
-				};
-				$.fn.zTree.init($("#authTree"), setting, authlist);
-			} else {
-				layer.msg('リクエスト処理異常!' + result.message);
+		async: false
+	});
+	if (ajaxReturn.status !== 200) {
+		layer.msg('リクエスト処理異常。' + ajaxReturn.statusText);
+		return;
+	}
+	let setting = {
+		'data': {
+			'simpleData': {
+				'enable': true,
+				'pIdKey': 'categoryId'
+			},
+			'key': {
+				'name': 'title'
+			}
+		},
+		'check': {
+			'enable': true,
+			'chkStyle': 'checkbox',
+			'chkboxType': {
+				'Y': 'ps',
+				'N': 'ps'
 			}
 		}
-	});
+	};
+	let authlist = ajaxReturn.responseJSON.data;
+	$.fn.zTree.init($("#authTree"), setting, authlist);
 	let zTreeObj = $.fn.zTree.getZTreeObj("authTree");
 	zTreeObj.expandAll(true);
+	/*ajaxReturn = $.ajax({
+		url: '/pgcrowd/role/getAssigned',
+		data: 'fuyoId=' + fuyoId,
+		type: 'GET',
+		dataType: 'json',
+		async: false
+	});
+	let authIdList = ajaxReturn.responseJSON.data;*/
 });
 function formReset(element) {
 	$(element)[0].reset();
