@@ -77,7 +77,20 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public ResultDto<String> doAssignment(final Map<String, List<Long>> paramMap) {
-		return null;
+		final Long roleId = paramMap.get("roleId").get(0);
+		final List<Long> authIds = paramMap.get("authIdArray");
+		final List<RoleEx> list = authIds.stream().map(item -> {
+			final RoleEx roleEx = new RoleEx();
+			roleEx.setAuthId(item);
+			roleEx.setRoleId(roleId);
+			return roleEx;
+		}).collect(Collectors.toList());
+		try {
+			this.roleExRepository.saveAllAndFlush(list);
+		} catch (final Exception e) {
+			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_FORBIDDEN2);
+		}
+		return ResultDto.successWithoutData();
 	}
 
 	@Override
