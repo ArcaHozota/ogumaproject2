@@ -174,10 +174,18 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		final Employee employee = this.employeeRepository.findById(employeeDto.getId()).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
-		final EmployeeEx employeeEx = new EmployeeEx();
-		employeeEx.setEmployeeId(employeeDto.getId());
-		employeeEx.setRoleId(employeeDto.getRoleId());
-		this.employeeExRepository.saveAndFlush(employeeEx);
+		final Specification<EmployeeEx> where = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("employeeId"), employeeDto.getId());
+		final Specification<EmployeeEx> specification = Specification.where(where);
+		this.employeeExRepository.findOne(specification).ifPresentOrElse(value -> {
+			value.setRoleId(employeeDto.getRoleId());
+			this.employeeExRepository.saveAndFlush(value);
+		}, () -> {
+			final EmployeeEx employeeEx = new EmployeeEx();
+			employeeEx.setEmployeeId(employeeDto.getId());
+			employeeEx.setRoleId(employeeDto.getRoleId());
+			this.employeeExRepository.saveAndFlush(employeeEx);
+		});
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		if (StringUtils.isNotEmpty(password)) {
 			final String plainToMD5 = PgCrowdUtils.plainToMD5(password);
