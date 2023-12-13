@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.SecurityAdmin;
@@ -29,6 +30,7 @@ import lombok.RequiredArgsConstructor;
  * @author ArkamaHozota
  * @since 6.07
  */
+@Component
 @RequiredArgsConstructor
 public final class PgCrowdUserDetailsService implements UserDetailsService {
 

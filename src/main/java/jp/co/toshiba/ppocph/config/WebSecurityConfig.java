@@ -29,6 +29,9 @@ import jp.co.toshiba.ppocph.listener.PgCrowdUserDetailsService;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+	/**
+	 * ログインサービス
+	 */
 	@Resource
 	private PgCrowdUserDetailsService pgCrowdUserDetailsService;
 
