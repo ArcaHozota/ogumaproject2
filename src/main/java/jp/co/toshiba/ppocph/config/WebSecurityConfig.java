@@ -34,7 +34,7 @@ public class WebSecurityConfig {
 	@Bean
 	protected DaoAuthenticationProvider daoAuthenticationProvider() {
 		final DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(new PgCrowdUserDetailsService(null, null, null, null));
+		provider.setUserDetailsService(new PgCrowdUserDetailsService());
 		provider.setPasswordEncoder(new BCryptPasswordEncoder());
 		return provider;
 	}
