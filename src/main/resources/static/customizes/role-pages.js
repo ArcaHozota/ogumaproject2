@@ -255,38 +255,7 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 				'N': 'ps'
 			}
 		}, callback: {
-			'onNodeCreated': function(event, treeId, treeNode) { // 设置节点创建时的回调函数
-				let iconObj = $("#" + treeNode.tId + "_ico"); // 获取图标元素
-				iconObj.removeClass("button ico_docu ico_open");
-				iconObj.append("<i class='bi'></i>"); // 添加bootstrap图标的基础类名
-				let iconObjectId = iconObj.attr("id");
-				switch (iconObjectId) {
-					case 'authTree_1_ico':
-						iconObj.find("i").addClass("bi-person-circle");
-						break;
-					case 'authTree_2_ico':
-						iconObj.find("i").addClass("bi-person-dash");
-						break;
-					case 'authTree_3_ico':
-						iconObj.find("i").addClass("bi-person-check");
-						break;
-					case 'authTree_4_ico':
-						iconObj.find("i").addClass("bi-person-add");
-						break;
-					case 'authTree_5_ico':
-						iconObj.find("i").addClass("bi-person-badge-fill");
-						break;
-					case 'authTree_6_ico':
-						iconObj.find("i").addClass("bi-person-fill-dash");
-						break;
-					case 'authTree_7_ico':
-						iconObj.find("i").addClass("bi-person-fill-check");
-						break;
-					default:
-						iconObj.find("i").addClass("bi-person-fill-add");
-						break;
-				}
-			}
+			'onNodeCreated': zTreeOnNodeCreated
 		}
 	};
 	let authlist = ajaxReturn.responseJSON.data;
@@ -352,5 +321,37 @@ function showValidationMsg(element, status, msg) {
 	} else if (status === "error") {
 		$(element).addClass("is-invalid");
 		$(element).next("span").addClass("invalid-feedback").text(msg);
+	}
+}
+function zTreeOnNodeCreated(event, treeId, treeNode) { // 设置节点创建时的回调函数
+	let iconObj = $("#" + treeNode.tId + "_ico"); // 获取图标元素
+	iconObj.removeClass("button ico_docu ico_open ico_close");
+	iconObj.append("<i class='bi'></i>"); // 添加bootstrap图标的基础类名
+	let iconObjectId = iconObj.attr("id");
+	switch (iconObjectId) {
+		case 'authTree_1_ico':
+			iconObj.find("i").addClass("bi-person-circle");
+			break;
+		case 'authTree_2_ico':
+			iconObj.find("i").addClass("bi-person-dash");
+			break;
+		case 'authTree_3_ico':
+			iconObj.find("i").addClass("bi-person-check");
+			break;
+		case 'authTree_4_ico':
+			iconObj.find("i").addClass("bi-person-add");
+			break;
+		case 'authTree_5_ico':
+			iconObj.find("i").addClass("bi-person-badge-fill");
+			break;
+		case 'authTree_6_ico':
+			iconObj.find("i").addClass("bi-person-fill-dash");
+			break;
+		case 'authTree_7_ico':
+			iconObj.find("i").addClass("bi-person-fill-check");
+			break;
+		default:
+			iconObj.find("i").addClass("bi-person-fill-add");
+			break;
 	}
 }
