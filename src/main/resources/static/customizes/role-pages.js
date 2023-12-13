@@ -256,9 +256,33 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 			}
 		}, callback: {
 			'onNodeCreated': function(event, treeId, treeNode) { // 设置节点创建时的回调函数
-				if (treeNode.isParent) { // 判断是否为父节点
-					let icoObj = $("#" + treeNode.tId + "_ico"); // 获取图标元素
-					icoObj.css("background", "url(img/folder.png) no-repeat"); // 修改图标样式
+				let icoObj = $("#" + treeNode.tId + "_ico"); // 获取图标元素
+				icoObj.addClass("bi"); // 添加bootstrap图标的基础类名
+				switch (treeId) {
+					case 1:
+						icoObj.addClass("bi-person-circle");
+						break;
+					case 2:
+						icoObj.addClass("bi-person-dash");
+						break;
+					case 3:
+						icoObj.addClass("bi-person-check");
+						break;
+					case 4:
+						icoObj.addClass("bi-person-add");
+						break;
+					case 5:
+						icoObj.addClass("bi-person-badge-fill");
+						break;
+					case 6:
+						icoObj.addClass("bi-person-fill-dash");
+						break;
+					case 7:
+						icoObj.addClass("bi-person-fill-check");
+						break;
+					default:
+						icoObj.addClass("bi-person-fill-add");
+						break;
 				}
 			}
 		}
@@ -291,13 +315,12 @@ $("#authChangeBtn").on('click', function() {
 		let authId = checkedNode.id;
 		authIdArray.push(authId);
 	}
-	let requestBody = {
-		'authIdArray': authIdArray,
-		'roleId': [fuyoId]
-	};
 	$.ajax({
 		url: '/pgcrowd/role/do/assignment',
-		data: JSON.stringify(requestBody),
+		data: JSON.stringify({
+			'authIdArray': authIdArray,
+			'roleId': [fuyoId]
+		}),
 		type: 'PUT',
 		contentType: 'application/json;charset=UTF-8',
 		dataType: 'json',
