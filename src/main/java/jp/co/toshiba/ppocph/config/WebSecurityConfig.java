@@ -8,6 +8,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import jp.co.toshiba.ppocph.common.PgCrowdConstants;
+import jp.co.toshiba.ppocph.exception.PgCrowdException;
+
 /**
  * SpringSecurity配置クラス
  *
@@ -20,12 +23,23 @@ public class WebSecurityConfig {
 
 	@Bean
 	protected SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
-		final AntPathRequestMatcher[] pathMatchers = { new AntPathRequestMatcher("/static/**", "GET"),
-				new AntPathRequestMatcher("/pgcrowd/employee/do/login", "POST") };
-		http.authorizeHttpRequests(
-				authorize -> authorize.requestMatchers(pathMatchers).permitAll().anyRequest().authenticated())
-				.formLogin(formLogin -> formLogin.loginPage("/pgcrowd/employee/login").permitAll())
-				.rememberMe(Customizer.withDefaults());
+		final AntPathRequestMatcher[] pathMatchers = { new AntPathRequestMatcher("/static/**", "GET") };
+		http.authorizeHttpRequests(authorize -> {
+			authorize.requestMatchers(pathMatchers).permitAll().anyRequest().authenticated();
+			try {
+				authorize.and().csrf().disable();
+			} catch (final Exception e) {
+				e.printStackTrace();
+			}
+		}).formLogin(formLogin -> {
+			formLogin.loginPage("/pgcrowd/employee/login").loginProcessingUrl("/pgcrowd/employee/do/login").permitAll()
+					.usernameParameter("loginAcct").passwordParameter("userPswd");
+			try {
+				formLogin.and().logout().logoutUrl("/logout").logoutSuccessUrl("/pgcrowd/employee/login");
+			} catch (final Exception e) {
+				throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATALERROR);
+			}
+		}).rememberMe(Customizer.withDefaults());
 		return http.build();
 	}
 
