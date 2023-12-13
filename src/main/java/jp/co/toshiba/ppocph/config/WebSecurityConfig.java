@@ -28,8 +28,8 @@ import jp.co.toshiba.ppocph.listener.PgCrowdUserDetailsService;
 public class WebSecurityConfig {
 
 	@Bean
-	protected AuthenticationManager authenticationManager(final AuthenticationManagerBuilder auth) throws Exception {
-		return auth.authenticationProvider(this.getDaoAuthenticationProvider()).build();
+	protected AuthenticationManager authenticationManager(final AuthenticationManagerBuilder auth) {
+		return auth.authenticationProvider(this.getDaoAuthenticationProvider()).getObject();
 	}
 
 	@Bean
