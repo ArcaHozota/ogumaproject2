@@ -9,7 +9,7 @@ import jp.co.toshiba.ppocph.entity.Employee;
 import lombok.EqualsAndHashCode;
 
 /**
- * User拡張クラス
+ * User拡張クラス(SpringSecurity関連)
  *
  * @author ArkamaHozota
  * @since 6.05
