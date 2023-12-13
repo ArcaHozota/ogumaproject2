@@ -20,15 +20,11 @@ public class WebSecurityConfig {
 
 	@Bean
 	protected SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
-		final AntPathRequestMatcher[] pathMatchers = { new AntPathRequestMatcher("/pgcrowd/employee/login"),
-				new AntPathRequestMatcher("/bootstrap/**", "GET"), new AntPathRequestMatcher("/css/**", "GET"),
-				new AntPathRequestMatcher("/customizes/**", "GET"), new AntPathRequestMatcher("/fonts/**", "GET"),
-				new AntPathRequestMatcher("/jquery/**", "GET"), new AntPathRequestMatcher("/layer/**", "GET"),
-				new AntPathRequestMatcher("/script/**", "GET"), new AntPathRequestMatcher("/treeview/**", "GET"),
-				new AntPathRequestMatcher("/ztree/**", "GET") };
+		final AntPathRequestMatcher[] pathMatchers = { new AntPathRequestMatcher("/static/**", "GET"),
+				new AntPathRequestMatcher("/pgcrowd/employee/do/login", "POST") };
 		http.authorizeHttpRequests(
 				authorize -> authorize.requestMatchers(pathMatchers).permitAll().anyRequest().authenticated())
-				.formLogin(formLogin -> formLogin.loginPage("/pgcrowd/employee/do/login").permitAll())
+				.formLogin(formLogin -> formLogin.loginPage("/pgcrowd/employee/login").permitAll())
 				.rememberMe(Customizer.withDefaults());
 		return http.build();
 	}
