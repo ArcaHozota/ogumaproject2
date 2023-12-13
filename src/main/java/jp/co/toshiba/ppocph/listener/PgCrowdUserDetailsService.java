@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.annotation.Resource;
-
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,6 +21,7 @@ import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.repository.PgAuthRepository;
 import jp.co.toshiba.ppocph.repository.RoleExRepository;
+import lombok.RequiredArgsConstructor;
 
 /**
  * ログインコントローラ(SpringSecurity関連)
@@ -30,31 +29,28 @@ import jp.co.toshiba.ppocph.repository.RoleExRepository;
  * @author ArkamaHozota
  * @since 6.07
  */
+@RequiredArgsConstructor
 public final class PgCrowdUserDetailsService implements UserDetailsService {
 
 	/**
 	 * 社員管理リポジトリ
 	 */
-	@Resource
-	private EmployeeRepository employeeRepository;
+	private final EmployeeRepository employeeRepository;
 
 	/**
 	 * 社員役割連携リポジトリ
 	 */
-	@Resource
-	private EmployeeExRepository employeeExRepository;
+	private final EmployeeExRepository employeeExRepository;
 
 	/**
 	 * 役割権限連携リポジトリ
 	 */
-	@Resource
-	private RoleExRepository roleExRepository;
+	private final RoleExRepository roleExRepository;
 
 	/**
 	 * 権限管理リポジトリ
 	 */
-	@Resource
-	private PgAuthRepository pgAuthRepository;
+	private final PgAuthRepository pgAuthRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
