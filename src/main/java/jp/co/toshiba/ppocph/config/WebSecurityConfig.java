@@ -8,6 +8,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -45,7 +46,7 @@ public class WebSecurityConfig {
 		http.authorizeHttpRequests(authorize -> {
 			authorize.requestMatchers(pathMatchers).permitAll().anyRequest().authenticated();
 			try {
-				authorize.and().csrf().disable();
+				authorize.and().csrf(CsrfConfigurer::disable);
 			} catch (final Exception e) {
 				e.printStackTrace();
 			}
@@ -53,7 +54,8 @@ public class WebSecurityConfig {
 			formLogin.loginPage("/pgcrowd/employee/login").loginProcessingUrl("/pgcrowd/employee/do/login").permitAll()
 					.usernameParameter("loginAcct").passwordParameter("userPswd");
 			try {
-				formLogin.and().logout().logoutUrl("/logout").logoutSuccessUrl("/pgcrowd/employee/login");
+				formLogin.and()
+						.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/pgcrowd/employee/login"));
 			} catch (final Exception e) {
 				throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATALERROR);
 			}
