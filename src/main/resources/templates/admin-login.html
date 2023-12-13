@@ -32,6 +32,7 @@
 				</h2>
 			</div>
 			<h6 th:text="${exception} eq null ? '' : ${exception.message}"></h6>
+			<h6 th:text="${SPRING_SECURITY_LAST_EXCEPTION.message}"></h6>
 			<div class="input-group mb-3"> <span class="input-group-text"><span class="bi bi-people"></span></span>
 				<input type="text" name="loginAcct" class="form-control" id="inputSuccess" placeholder="アカウント名を入力してください"
 					autofocus>
