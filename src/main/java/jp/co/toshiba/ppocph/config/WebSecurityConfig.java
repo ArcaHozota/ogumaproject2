@@ -1,7 +1,5 @@
 package jp.co.toshiba.ppocph.config;
 
-import javax.annotation.Resource;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,9 +26,6 @@ import jp.co.toshiba.ppocph.listener.PgCrowdUserDetailsService;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-	@Resource
-	private PgCrowdUserDetailsService pgCrowdUserDetailsService;
-
 	@Bean
 	protected AuthenticationManager authenticationManager(final AuthenticationManagerBuilder auth) throws Exception {
 		return auth.authenticationProvider(this.daoAuthenticationProvider()).build();
@@ -39,7 +34,7 @@ public class WebSecurityConfig {
 	@Bean
 	protected DaoAuthenticationProvider daoAuthenticationProvider() {
 		final DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(this.pgCrowdUserDetailsService);
+		provider.setUserDetailsService(new PgCrowdUserDetailsService(null, null, null, null));
 		provider.setPasswordEncoder(new BCryptPasswordEncoder());
 		return provider;
 	}
