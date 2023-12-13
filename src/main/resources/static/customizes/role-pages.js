@@ -257,27 +257,29 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 		}, callback: {
 			'onNodeCreated': function(event, treeId, treeNode) { // 设置节点创建时的回调函数
 				let iconObj = $("#" + treeNode.tId + "_ico"); // 获取图标元素
+				iconObj.removeClass("button ico_docu ico_open");
 				iconObj.append("<i class='bi'></i>"); // 添加bootstrap图标的基础类名
-				switch (treeId) {
-					case 1:
+				let iconObjectId = iconObj.attr("id");
+				switch (iconObjectId) {
+					case 'authTree_1_ico':
 						iconObj.find("i").addClass("bi-person-circle");
 						break;
-					case 2:
+					case 'authTree_2_ico':
 						iconObj.find("i").addClass("bi-person-dash");
 						break;
-					case 3:
+					case 'authTree_3_ico':
 						iconObj.find("i").addClass("bi-person-check");
 						break;
-					case 4:
+					case 'authTree_4_ico':
 						iconObj.find("i").addClass("bi-person-add");
 						break;
-					case 5:
+					case 'authTree_5_ico':
 						iconObj.find("i").addClass("bi-person-badge-fill");
 						break;
-					case 6:
+					case 'authTree_6_ico':
 						iconObj.find("i").addClass("bi-person-fill-dash");
 						break;
-					case 7:
+					case 'authTree_7_ico':
 						iconObj.find("i").addClass("bi-person-fill-check");
 						break;
 					default:
