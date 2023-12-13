@@ -29,7 +29,15 @@ public class WebSecurityConfig {
 
 	@Bean
 	protected AuthenticationManager authenticationManager(final AuthenticationManagerBuilder auth) {
-		return auth.authenticationProvider(this.getDaoAuthenticationProvider()).getObject();
+		return auth.authenticationProvider(this.daoAuthenticationProvider()).getObject();
+	}
+
+	@Bean
+	protected DaoAuthenticationProvider daoAuthenticationProvider() {
+		final DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setUserDetailsService(new PgCrowdUserDetailsService());
+		provider.setPasswordEncoder(new BCryptPasswordEncoder());
+		return provider;
 	}
 
 	@Bean
@@ -53,12 +61,5 @@ public class WebSecurityConfig {
 			}
 		}).httpBasic(Customizer.withDefaults());
 		return http.build();
-	}
-
-	private DaoAuthenticationProvider getDaoAuthenticationProvider() {
-		final DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(new PgCrowdUserDetailsService());
-		provider.setPasswordEncoder(new BCryptPasswordEncoder());
-		return provider;
 	}
 }
