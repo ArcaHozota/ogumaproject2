@@ -22,7 +22,6 @@ import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.repository.PgAuthRepository;
 import jp.co.toshiba.ppocph.repository.RoleExRepository;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -32,7 +31,7 @@ import lombok.RequiredArgsConstructor;
  * @since 6.07
  */
 @Component
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor
 public final class PgCrowdUserDetailsService implements UserDetailsService {
 
 	/**
