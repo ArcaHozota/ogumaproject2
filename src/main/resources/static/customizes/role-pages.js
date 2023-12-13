@@ -256,32 +256,32 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 			}
 		}, callback: {
 			'onNodeCreated': function(event, treeId, treeNode) { // 设置节点创建时的回调函数
-				let icoObj = $("#" + treeNode.tId + "_ico"); // 获取图标元素
-				icoObj.addClass("bi"); // 添加bootstrap图标的基础类名
+				let iconObj = $("#" + treeNode.tId + "_ico"); // 获取图标元素
+				iconObj.append("<i class='bi'></i>"); // 添加bootstrap图标的基础类名
 				switch (treeId) {
 					case 1:
-						icoObj.addClass("bi-person-circle");
+						iconObj.find("i").addClass("bi-person-circle");
 						break;
 					case 2:
-						icoObj.addClass("bi-person-dash");
+						iconObj.find("i").addClass("bi-person-dash");
 						break;
 					case 3:
-						icoObj.addClass("bi-person-check");
+						iconObj.find("i").addClass("bi-person-check");
 						break;
 					case 4:
-						icoObj.addClass("bi-person-add");
+						iconObj.find("i").addClass("bi-person-add");
 						break;
 					case 5:
-						icoObj.addClass("bi-person-badge-fill");
+						iconObj.find("i").addClass("bi-person-badge-fill");
 						break;
 					case 6:
-						icoObj.addClass("bi-person-fill-dash");
+						iconObj.find("i").addClass("bi-person-fill-dash");
 						break;
 					case 7:
-						icoObj.addClass("bi-person-fill-check");
+						iconObj.find("i").addClass("bi-person-fill-check");
 						break;
 					default:
-						icoObj.addClass("bi-person-fill-add");
+						iconObj.find("i").addClass("bi-person-fill-add");
 						break;
 				}
 			}
