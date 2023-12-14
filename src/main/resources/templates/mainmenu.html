@@ -45,8 +45,7 @@
 					<li class="nav-item dropdown"> <a id="userinfo"
 							class="nav-link dropdown-toggle btn btn-success me-2" href="#" role="button"
 							data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 13.34px;">
-							<i class="bi bi-person-fill" th:text="${principal.originalAdmin.username}"></i></a>
-						<p th:text="${employee.id}" id="userinfoId" hidden></p>
+							<i class="bi bi-person-fill" th:text="${#authentication.originalAdmin.username}"></i></a>
 						<ul class="dropdown-menu dropdown-menu-end" role="menu">
 							<li><a class="dropdown-item" href="#"><i class="bi bi-gear-wide-connected"></i> 個人設定</a>
 							</li>

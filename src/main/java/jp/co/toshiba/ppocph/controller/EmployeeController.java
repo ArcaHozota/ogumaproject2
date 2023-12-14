@@ -191,19 +191,19 @@ public final class EmployeeController {
 		return modelAndView;
 	}
 
-	/**
-	 * メインメニューへの移動
-	 *
-	 * @param userId ユーザID
-	 * @return ModelAndView
-	 */
-	@GetMapping("/to/mainmenu")
-	public ModelAndView toMainmenu(@RequestParam("userId") final Long userId) {
-		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
-		final ModelAndView modelAndView = new ModelAndView("mainmenu");
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
-		return modelAndView;
-	}
+//	/**
+//	 * メインメニューへの移動
+//	 *
+//	 * @param userId ユーザID
+//	 * @return ModelAndView
+//	 */
+//	@GetMapping("/to/mainmenu")
+//	public ModelAndView toMainmenu(@RequestParam("userId") final Long userId) {
+//		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
+//		final ModelAndView modelAndView = new ModelAndView("mainmenu");
+//		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
+//		return modelAndView;
+//	}
 
 	/**
 	 * 情報更新
