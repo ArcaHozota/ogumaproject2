@@ -25,8 +25,7 @@ $(function() {
 	});
 	$("#toAdmin").on('click', function(e) {
 		e.preventDefault();
-		let userId = $("#userinfoId").text();
-		window.location.replace('/pgcrowd/employee/to/pages?pageNum=1&userId=' + userId);
+		window.location.replace('/pgcrowd/employee/to/pages?pageNum=1');
 	});
 	$("#toRole").on('click', function(e) {
 		e.preventDefault();

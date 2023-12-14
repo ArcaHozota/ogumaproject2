@@ -105,11 +105,8 @@ public final class EmployeeController {
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/pages")
-	public ModelAndView initialPages(@RequestParam("userId") final Long userId,
-			@RequestParam(name = "pageNum") final Integer pageNum) {
-		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
+	public ModelAndView initialPages(@RequestParam(name = "pageNum") final Integer pageNum) {
 		final ModelAndView modelAndView = new ModelAndView("admin-pages");
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return modelAndView;
 	}
