@@ -252,8 +252,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 });
 $("#tableBody").on('click', '.edit-btn', function() {
 	let editId = $(this).attr("editId");
-	let userId = $("#userinfoId").text();
-	window.location.replace('/pgcrowd/employee/to/edition?editId=' + editId + '&userId=' + userId);
+	window.location.replace('/pgcrowd/employee/to/edition?editId=' + editId);
 });
 $("#usernameEdit").change(function() {
 	let editUsername = this.value;

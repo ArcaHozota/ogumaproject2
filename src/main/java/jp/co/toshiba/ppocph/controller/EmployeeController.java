@@ -172,18 +172,15 @@ public final class EmployeeController {
 	/**
 	 * 情報更新初期表示
 	 *
-	 * @param id     社員ID
-	 * @param userId ユーザID
+	 * @param id 社員ID
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/edition")
-	public ModelAndView toEdition(@RequestParam("editId") final Long id, @RequestParam("userId") final Long userId) {
-		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
-		final Employee employee2 = this.iEmployeeService.getEmployeeById(id);
+	public ModelAndView toEdition(@RequestParam("editId") final Long id) {
+		final Employee employee = this.iEmployeeService.getEmployeeById(id);
 		final List<Role> employeeRolesById = this.iEmployeeService.getEmployeeRolesById(id);
 		final ModelAndView modelAndView = new ModelAndView("admin-editinfo");
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EDITED_INFO, employee2);
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EDITED_INFO, employee);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, employeeRolesById);
 		return modelAndView;
 	}
