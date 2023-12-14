@@ -106,10 +106,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 			secondRoles.addAll(roles);
 			return secondRoles;
 		}
-		final Specification<EmployeeEx> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("employeeId"), id);
-		final Specification<EmployeeEx> specification2 = Specification.where(where2);
-		final Optional<EmployeeEx> roledOptional = this.employeeExRepository.findOne(specification2);
+		final Optional<EmployeeEx> roledOptional = this.employeeExRepository.findById(id);
 		if (roledOptional.isEmpty()) {
 			secondRoles.add(secondRole);
 			secondRoles.addAll(roles);
@@ -177,10 +174,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
 		if (!Objects.equals(employeeDto.getRoleId(), 0L)) {
-			final Specification<EmployeeEx> where = (root, query, criteriaBuilder) -> criteriaBuilder
-					.equal(root.get("employeeId"), employeeDto.getId());
-			final Specification<EmployeeEx> specification = Specification.where(where);
-			this.employeeExRepository.findOne(specification).ifPresentOrElse(value -> {
+			this.employeeExRepository.findById(employeeDto.getId()).ifPresentOrElse(value -> {
 				value.setRoleId(employeeDto.getRoleId());
 				this.employeeExRepository.saveAndFlush(value);
 			}, () -> {
