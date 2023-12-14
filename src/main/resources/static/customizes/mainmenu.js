@@ -15,13 +15,11 @@ $(function() {
 	});
 	$("#toMainmenu").on('click', function(e) {
 		e.preventDefault();
-		let userId = $("#userinfoId").text();
-		window.location.replace('/pgcrowd/employee/to/mainmenu?userId=' + userId);
+		window.location.replace('/pgcrowd/employee/to/mainmenu');
 	});
 	$("#toMainmenu2").on('click', function(e) {
 		e.preventDefault();
-		let userId = $("#userinfoId").text();
-		window.location.replace('/pgcrowd/employee/to/mainmenu?userId=' + userId);
+		window.location.replace('/pgcrowd/employee/to/mainmenu');
 	});
 	$("#toAdmin").on('click', function(e) {
 		e.preventDefault();
@@ -34,12 +32,6 @@ $(function() {
 	});
 	$("#toPages").on('click', function(e) {
 		e.preventDefault();
-		let userId = $("#userinfoId").text();
-		window.location.replace('/pgcrowd/employee/to/pages?pageNum=1&userId=' + userId);
-	});
-	$("#addInfoBtn").on('click', function(e) {
-		e.preventDefault();
-		let userId = $("#userinfoId").text();
-		window.location.replace('/pgcrowd/employee/to/addition?userId=' + userId);
+		window.location.replace('/pgcrowd/employee/to/pages?pageNum=1');
 	});
 });

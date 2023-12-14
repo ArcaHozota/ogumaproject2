@@ -236,6 +236,10 @@ $("#saveInfoBtn").on('click', function() {
 		});
 	}
 });
+$("#addInfoBtn").on('click', function(e) {
+	e.preventDefault();
+	window.location.replace('/pgcrowd/employee/to/addition');
+});
 $("#tableBody").on('click', '.delete-btn', function() {
 	let userName = $(this).parents("tr").find("td:eq(0)").text().trim();
 	let userId = $(this).attr("deleteId");
