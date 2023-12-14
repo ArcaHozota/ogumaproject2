@@ -62,17 +62,14 @@ public final class PgCrowdUserDetailsService implements UserDetailsService {
 		final Employee employee = this.employeeRepository.findOne(specification1).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
-		final Specification<EmployeeEx> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("employeeId"), employee.getId());
-		final Specification<EmployeeEx> specification2 = Specification.where(where2);
-		final Optional<EmployeeEx> roleOptional = this.employeeExRepository.findOne(specification2);
+		final Optional<EmployeeEx> roleOptional = this.employeeExRepository.findById(employee.getId());
 		if (roleOptional.isEmpty()) {
 			return null;
 		}
-		final Specification<RoleEx> where3 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("roleId"),
+		final Specification<RoleEx> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("roleId"),
 				roleOptional.get().getRoleId());
-		final Specification<RoleEx> specification3 = Specification.where(where3);
-		final List<Long> authIds = this.roleExRepository.findAll(specification3).stream().map(RoleEx::getAuthId)
+		final Specification<RoleEx> specification2 = Specification.where(where2);
+		final List<Long> authIds = this.roleExRepository.findAll(specification2).stream().map(RoleEx::getAuthId)
 				.collect(Collectors.toList());
 		if (authIds.isEmpty()) {
 			return null;
