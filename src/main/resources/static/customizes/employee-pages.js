@@ -230,8 +230,8 @@ $("#saveInfoBtn").on('click', function() {
 			}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function() {
-				layer.msg('追加処理成功');
 				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + pageNum);
+				layer.msg('追加処理成功');
 			}
 		});
 	}
@@ -249,8 +249,8 @@ $("#tableBody").on('click', '.delete-btn', function() {
 			type: 'DELETE',
 			dataType: 'json',
 			success: function() {
-				layer.msg('削除済み');
 				toSelectedPg(pageNum, keyword);
+				layer.msg('削除済み');
 			}
 		});
 	}
@@ -324,8 +324,8 @@ $("#editInfoBtn").on('click', function() {
 			}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function() {
-				layer.msg('更新済み');
 				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + pageNum);
+				layer.msg('更新済み');
 			}
 		});
 	}
