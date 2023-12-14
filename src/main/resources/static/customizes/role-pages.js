@@ -147,6 +147,7 @@ $("#roleInfoSaveBtn").on('click', function() {
 			contentType: 'application/json;charset=UTF-8',
 			success: function() {
 				$("#roleAddModal").modal('hide');
+				layer.msg('追加処理成功');
 				toSelectedPg(pageNum, keyword);
 			}
 		});
@@ -191,6 +192,7 @@ $("#roleInfoChangeBtn").on('click', function() {
 			success: function(result) {
 				if (result.status === 'SUCCESS') {
 					$("#roleEditModal").modal('hide');
+					layer.msg('更新済み');
 					toSelectedPg(pageNum, keyword);
 				} else {
 					showValidationMsg("#nameEdit", "error", result.message);
@@ -210,6 +212,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 			dataType: 'json',
 			success: function(result) {
 				if (result.status === 'SUCCESS') {
+					layer.msg('削除済み');
 					toSelectedPg(pageNum, keyword);
 				} else {
 					layer.msg(result.message);

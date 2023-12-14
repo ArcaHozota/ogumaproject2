@@ -230,8 +230,8 @@ $("#saveInfoBtn").on('click', function() {
 			}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function() {
-				let userId = $("#userinfoId").text();
-				window.location.replace('/pgcrowd/employee/to/pages?pageNum=120000&userId=' + userId);
+				layer.msg('追加処理成功');
+				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + pageNum);
 			}
 		});
 	}
@@ -249,6 +249,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 			type: 'DELETE',
 			dataType: 'json',
 			success: function() {
+				layer.msg('削除済み');
 				toSelectedPg(pageNum, keyword);
 			}
 		});
@@ -323,8 +324,8 @@ $("#editInfoBtn").on('click', function() {
 			}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function() {
-				let userId = $("#userinfoId").text();
-				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + pageNum + '&userId=' + userId);
+				layer.msg('更新済み');
+				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + pageNum);
 			}
 		});
 	}
