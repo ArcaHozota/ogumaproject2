@@ -29,7 +29,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	protected void addResourceHandlers(final ResourceHandlerRegistry registry) {
-		log.info(PgCrowdConstants.MSG002);
+		WebMvcConfiguration.log.info(PgCrowdConstants.MSG002);
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
 	}
 
@@ -41,6 +41,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 	@Override
 	public void addViewControllers(final ViewControllerRegistry registry) {
 		registry.addViewController("/pgcrowd/employee/login").setViewName("admin-login");
+		registry.addViewController("/pgcrowd/to/mainmenu").setViewName("mainmenu");
 	}
 
 	/**
@@ -50,7 +51,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	protected void extendMessageConverters(final List<HttpMessageConverter<?>> converters) {
-		log.info(PgCrowdConstants.MSG001);
+		WebMvcConfiguration.log.info(PgCrowdConstants.MSG001);
 		// 創建消息轉換器對象；
 		final MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
 		// 設置對象轉換器，底層使用Jackson將Java對象轉為JSON；

@@ -59,8 +59,9 @@ public class WebSecurityConfig {
 				e.printStackTrace();
 			}
 		}).formLogin(formLogin -> {
-			formLogin.loginPage("/pgcrowd/employee/login").loginProcessingUrl("/pgcrowd/employee/do/login").permitAll()
-					.usernameParameter("loginAcct").passwordParameter("userPswd");
+			formLogin.loginPage("/pgcrowd/employee/login").loginProcessingUrl("/pgcrowd/employee/do/login")
+					.defaultSuccessUrl("/pgcrowd/to/mainmenu").permitAll().usernameParameter("loginAcct")
+					.passwordParameter("userPswd");
 			try {
 				formLogin.and()
 						.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/pgcrowd/employee/login"));
