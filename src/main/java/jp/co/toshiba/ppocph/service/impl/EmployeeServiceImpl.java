@@ -14,6 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
 import org.springframework.stereotype.Service;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
@@ -152,14 +154,15 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	@Override
 	public void save(final EmployeeDto employeeDto) {
 		final Long saibanId = this.employeeRepository.saiban();
-		final String plainToMD5 = PgCrowdUtils.plainToMD5(employeeDto.getPassword());
+		final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(BCryptVersion.$2A, 7);
+		final String password = encoder.encode(employeeDto.getPassword());
 		final Employee employee = new Employee();
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setId(saibanId);
-		employee.setPassword(plainToMD5);
+		employee.setPassword(password);
 		employee.setStatus(PgCrowdConstants.EMPLOYEE_NORMAL_STATUS);
 		employee.setCreatedTime(LocalDateTime.now());
-		if ((employeeDto.getRoleId() != null) && !Objects.equals(Long.valueOf(0L), employeeDto.getRoleId())) {
+		if (employeeDto.getRoleId() != null && !Objects.equals(Long.valueOf(0L), employeeDto.getRoleId())) {
 			final EmployeeEx employeeEx = new EmployeeEx();
 			employeeEx.setEmployeeId(employeeDto.getId());
 			employeeEx.setRoleId(employeeDto.getRoleId());
@@ -170,26 +173,28 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public void update(final EmployeeDto employeeDto) {
-		final String password = employeeDto.getPassword();
 		final Employee employee = this.employeeRepository.findById(employeeDto.getId()).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
-		final Specification<EmployeeEx> where = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("employeeId"), employeeDto.getId());
-		final Specification<EmployeeEx> specification = Specification.where(where);
-		this.employeeExRepository.findOne(specification).ifPresentOrElse(value -> {
-			value.setRoleId(employeeDto.getRoleId());
-			this.employeeExRepository.saveAndFlush(value);
-		}, () -> {
-			final EmployeeEx employeeEx = new EmployeeEx();
-			employeeEx.setEmployeeId(employeeDto.getId());
-			employeeEx.setRoleId(employeeDto.getRoleId());
-			this.employeeExRepository.saveAndFlush(employeeEx);
-		});
+		if (!Objects.equals(employeeDto.getRoleId(), 0L)) {
+			final Specification<EmployeeEx> where = (root, query, criteriaBuilder) -> criteriaBuilder
+					.equal(root.get("employeeId"), employeeDto.getId());
+			final Specification<EmployeeEx> specification = Specification.where(where);
+			this.employeeExRepository.findOne(specification).ifPresentOrElse(value -> {
+				value.setRoleId(employeeDto.getRoleId());
+				this.employeeExRepository.saveAndFlush(value);
+			}, () -> {
+				final EmployeeEx employeeEx = new EmployeeEx();
+				employeeEx.setEmployeeId(employeeDto.getId());
+				employeeEx.setRoleId(employeeDto.getRoleId());
+				this.employeeExRepository.saveAndFlush(employeeEx);
+			});
+		}
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
-		if (StringUtils.isNotEmpty(password)) {
-			final String plainToMD5 = PgCrowdUtils.plainToMD5(password);
-			employee.setPassword(plainToMD5);
+		if (StringUtils.isNotEmpty(employeeDto.getPassword())) {
+			final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(BCryptVersion.$2A, 7);
+			final String encoded = encoder.encode(employeeDto.getPassword());
+			employee.setPassword(encoded);
 		}
 		this.employeeRepository.saveAndFlush(employee);
 	}
