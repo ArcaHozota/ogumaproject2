@@ -2,8 +2,6 @@ package jp.co.toshiba.ppocph.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,36 +66,36 @@ public final class EmployeeController {
 		return ResultDto.successWithoutData();
 	}
 
-	/**
-	 * ログイン処理
-	 *
-	 * @param account  アカウント
-	 * @param password パスワード
-	 * @return ModelAndView
-	 */
-	@PostMapping("/do/login")
-	public ModelAndView doLogin(@RequestParam("loginAcct") final String account,
-			@RequestParam("userPswd") final String password) {
-		// EmployeeServiceメソッドを呼び出して、ログインチェックを実行します。このメソッドがEmployeeオブジェクトを返すことができれば、ログインは成功です。アカウントとパスワードが間違っている場合は、例外がスローされます。
-		final Employee employee = this.iEmployeeService.getAdminByLoginAccount(account, password);
-		// 成功したログインによって返された管理オブジェクトをセッションドメインに保存します。
-		final ModelAndView modelAndView = new ModelAndView("mainmenu");
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
-		return modelAndView;
-	}
+//	/**
+//	 * ログイン処理
+//	 *
+//	 * @param account  アカウント
+//	 * @param password パスワード
+//	 * @return ModelAndView
+//	 */
+//	@PostMapping("/do/login")
+//	public ModelAndView doLogin(@RequestParam("loginAcct") final String account,
+//			@RequestParam("userPswd") final String password) {
+//		// EmployeeServiceメソッドを呼び出して、ログインチェックを実行します。このメソッドがEmployeeオブジェクトを返すことができれば、ログインは成功です。アカウントとパスワードが間違っている場合は、例外がスローされます。
+//		final Employee employee = this.iEmployeeService.getAdminByLoginAccount(account, password);
+//		// 成功したログインによって返された管理オブジェクトをセッションドメインに保存します。
+//		final ModelAndView modelAndView = new ModelAndView("mainmenu");
+//		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
+//		return modelAndView;
+//	}
 
-	/**
-	 * ログアウト処理
-	 *
-	 * @param session セッション
-	 * @return String
-	 */
-	@PostMapping("/logout")
-	public String doLogout(final HttpSession session) {
-		// セッションを無効化する
-		session.invalidate();
-		return "redirect:/pgcrowd/employee/login";
-	}
+//	/**
+//	 * ログアウト処理
+//	 *
+//	 * @param session セッション
+//	 * @return String
+//	 */
+//	@PostMapping("/logout")
+//	public String doLogout(final HttpSession session) {
+//		// セッションを無効化する
+//		session.invalidate();
+//		return "redirect:/pgcrowd/employee/login";
+//	}
 
 	/**
 	 * 社員情報初期表示
