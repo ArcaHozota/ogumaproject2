@@ -17,10 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.RoleDto;
-import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.entity.PgAuth;
 import jp.co.toshiba.ppocph.entity.Role;
-import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.service.IRoleService;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
@@ -40,17 +38,12 @@ import lombok.RequiredArgsConstructor;
 public final class RoleController {
 
 	/**
-	 * 社員サービスインターフェス
-	 */
-	private final IEmployeeService iEmployeeService;
-
-	/**
 	 * 役割サービスインターフェス
 	 */
 	private final IRoleService iRoleService;
 
 	/**
-	 * 権限付与画面初期表示
+	 * 権限付与モダルを初期表示する
 	 *
 	 * @return ResultDto<List<PgAuth>>
 	 */
@@ -118,11 +111,8 @@ public final class RoleController {
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/pages")
-	public ModelAndView initialPages(@RequestParam("userId") final Long userId,
-			@RequestParam(name = "pageNum") final Integer pageNum) {
-		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
+	public ModelAndView initialPages(@RequestParam(name = "pageNum") final Integer pageNum) {
 		final ModelAndView modelAndView = new ModelAndView("role-pages");
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_LOGIN_ADMIN, employee);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return modelAndView;
 	}

@@ -27,8 +27,7 @@ $(function() {
 	});
 	$("#toRole").on('click', function(e) {
 		e.preventDefault();
-		let userId = $("#userinfoId").text();
-		window.location.replace('/pgcrowd/role/to/pages?pageNum=1&userId=' + userId);
+		window.location.replace('/pgcrowd/role/to/pages?pageNum=1');
 	});
 	$("#toPages").on('click', function(e) {
 		e.preventDefault();
