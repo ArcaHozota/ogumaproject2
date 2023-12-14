@@ -63,8 +63,8 @@ public class WebSecurityConfig {
 					.defaultSuccessUrl("/pgcrowd/to/mainmenu").permitAll().usernameParameter("loginAcct")
 					.passwordParameter("userPswd");
 			try {
-				formLogin.and()
-						.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/pgcrowd/employee/login"));
+				formLogin.and().logout(logout -> logout.logoutUrl("/pgcrowd/employee/logout")
+						.logoutSuccessUrl("/pgcrowd/employee/login"));
 			} catch (final Exception e) {
 				throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATALERROR);
 			}
