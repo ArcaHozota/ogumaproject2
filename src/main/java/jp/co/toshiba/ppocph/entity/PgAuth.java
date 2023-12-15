@@ -50,9 +50,4 @@ public final class PgAuth implements Serializable {
 	 * 親ディレクトリID
 	 */
 	private Long categoryId;
-
-	/**
-	 * アイコン
-	 */
-	private String icon;
 }
