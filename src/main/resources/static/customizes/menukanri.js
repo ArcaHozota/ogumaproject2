@@ -14,7 +14,7 @@ $(document).ready(function() {
 				},
 				{
 					text: "社員情報一覧",
-					icon: "bi bi-person-check-fill"
+					icon: "bi bi-person-vcard"
 				}
 			]
 		},
