@@ -15,11 +15,11 @@ $(function() {
 	});
 	$("#toMainmenu").on('click', function(e) {
 		e.preventDefault();
-		window.location.replace('/pgcrowd/employee/to/mainmenu');
+		window.location.replace('/pgcrowd/to/mainmenu');
 	});
 	$("#toMainmenu2").on('click', function(e) {
 		e.preventDefault();
-		window.location.replace('/pgcrowd/employee/to/mainmenu');
+		window.location.replace('/pgcrowd/to/mainmenu');
 	});
 	$("#toAdmin").on('click', function(e) {
 		e.preventDefault();
@@ -28,6 +28,10 @@ $(function() {
 	$("#toRole").on('click', function(e) {
 		e.preventDefault();
 		window.location.replace('/pgcrowd/role/to/pages?pageNum=1');
+	});
+	$("#toMenu").on('click', function(e) {
+		e.preventDefault();
+		window.location.replace('/pgcrowd/menu/initial');
 	});
 	$("#toPages").on('click', function(e) {
 		e.preventDefault();
