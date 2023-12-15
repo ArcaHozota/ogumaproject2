@@ -6,6 +6,7 @@ $(document).ready(function() {
 		{
 			text: "社員管理",
 			icon: "bi bi-person-circle",
+			expanded: true,
 			nodes: [
 				{
 					text: "社員情報追加",
@@ -20,6 +21,7 @@ $(document).ready(function() {
 		{
 			text: "役割管理",
 			icon: "bi bi-person-badge-fill",
+			expanded: true,
 			nodes: [
 				{
 					text: "役割情報一覧",
@@ -36,4 +38,18 @@ $(document).ready(function() {
 		parentsMarginLeft: '1.25rem',
 		openNodeLinkOnNewTab: true
 	});
+});
+$("#treeView").on('click', '.list-group-item', function() {
+	let titleName = $(this).text();
+	switch (titleName) {
+		case "社員情報追加":
+			window.location.replace("/pgcrowd/employee/to/addition");
+			break;
+		case "社員情報一覧":
+			window.location.replace("/pgcrowd/employee/to/pages?pageNum=1");
+			break;
+		case "役割情報一覧":
+			window.location.replace("/pgcrowd/role/to/pages?pageNum=1");
+			break;
+	}
 });
