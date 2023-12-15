@@ -40,7 +40,7 @@ $(document).ready(function() {
 	});
 });
 $("#treeView").on('click', '.list-group-item', function() {
-	let titleName = $(this).text;
+	let titleName = $(this).text();
 	switch (titleName) {
 		case "社員情報追加":
 			window.location.replace("/pgcrowd/employee/to/addition");
