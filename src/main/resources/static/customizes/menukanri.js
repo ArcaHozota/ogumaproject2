@@ -13,7 +13,7 @@ $(document).ready(function() {
 				},
 				{
 					text: "社員情報一覧",
-					icon: "bi bi-person-check"
+					icon: "bi bi-person-check-fill"
 				}
 			]
 		},
@@ -23,7 +23,7 @@ $(document).ready(function() {
 			nodes: [
 				{
 					text: "役割情報一覧",
-					icon: "bi bi-person-vcard"
+					icon: "bi bi-person-vcard-fill"
 				}
 			]
 		}
