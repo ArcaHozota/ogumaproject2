@@ -14,11 +14,11 @@ public final class PgCrowdConstants {
 
 	public static final Integer DEFAULT_PAGE_SIZE = 7;
 
-	public static final String MSG001 = "拡張メッセージコンバーターの設置は完了しました。";
+	public static final String MESSAGE_SPRING_MVCCONVERTOR = "拡張メッセージコンバーターの設置は完了しました。";
 
-	public static final String MSG002 = "静的リソースのマッピングが開始しました。";
+	public static final String MESSAGE_SPRING_MAPPER = "静的リソースのマッピングが開始しました。";
 
-	public static final String MSG003 = "アプリは正常に起動しました。";
+	public static final String MESSAGE_SPRING_APPLICATION = "アプリは正常に起動しました。";
 
 	public static final String ATTRNAME_EXCEPTION = "exception";
 
@@ -61,4 +61,6 @@ public final class PgCrowdConstants {
 	public static final String MESSAGE_ROLE_NAME_DUPLICATED = "役割名称がすでに存在します。";
 
 	public static final String DEFAULT_ROLE_NAME = "---------------------------";
+
+	public static final String MESSAGE_SPRING_SECURITY = "スプリングセキュリティ作動中。";
 }

@@ -19,6 +19,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.listener.PgCrowdUserDetailsService;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * SpringSecurity配置クラス
@@ -26,6 +27,7 @@ import jp.co.toshiba.ppocph.listener.PgCrowdUserDetailsService;
  * @author ArkamaHozota
  * @since 5.99
  */
+@Log4j2
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -70,6 +72,7 @@ public class WebSecurityConfig {
 				throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATALERROR);
 			}
 		}).httpBasic(Customizer.withDefaults());
+		log.info(PgCrowdConstants.MESSAGE_SPRING_SECURITY);
 		return http.build();
 	}
 }

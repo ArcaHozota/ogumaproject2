@@ -19,6 +19,6 @@ import lombok.extern.log4j.Log4j2;
 public class PgCrowdApplication {
 	public static void main(final String[] args) {
 		SpringApplication.run(PgCrowdApplication.class, args);
-		log.info(PgCrowdConstants.MSG003);
+		log.info(PgCrowdConstants.MESSAGE_SPRING_APPLICATION);
 	}
 }

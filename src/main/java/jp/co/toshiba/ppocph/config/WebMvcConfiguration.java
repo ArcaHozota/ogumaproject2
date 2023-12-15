@@ -29,7 +29,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	protected void addResourceHandlers(final ResourceHandlerRegistry registry) {
-		WebMvcConfiguration.log.info(PgCrowdConstants.MSG002);
+		log.info(PgCrowdConstants.MESSAGE_SPRING_MAPPER);
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
 	}
 
@@ -52,12 +52,12 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	protected void extendMessageConverters(final List<HttpMessageConverter<?>> converters) {
-		WebMvcConfiguration.log.info(PgCrowdConstants.MSG001);
-		// 創建消息轉換器對象；
+		log.info(PgCrowdConstants.MESSAGE_SPRING_MVCCONVERTOR);
+		// メッセージコンバータオブジェクトを作成する。
 		final MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-		// 設置對象轉換器，底層使用Jackson將Java對象轉為JSON；
+		// オブジェクトコンバータを設定し、Jacksonを使用してJavaオブジェクトをJSONに変換する。
 		messageConverter.setObjectMapper(new JacksonObjectMapper());
-		// 將上述消息轉換器追加到SpringMVC框架的轉換器容器中；
+		// 上記のメッセージコンバータをSpringMVCフレームワークのコンバータコンテナに追加する。
 		converters.add(0, messageConverter);
 	}
 }
