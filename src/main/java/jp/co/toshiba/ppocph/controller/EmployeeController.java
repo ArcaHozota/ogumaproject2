@@ -19,6 +19,7 @@ import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
+import jp.co.toshiba.ppocph.service.IRoleService;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 import jp.co.toshiba.ppocph.utils.StringUtils;
@@ -40,6 +41,11 @@ public final class EmployeeController {
 	 * 社員サービスインターフェス
 	 */
 	private final IEmployeeService iEmployeeService;
+
+	/**
+	 * 役割サービスインターフェス
+	 */
+	private final IRoleService iRoleService;
 
 	/**
 	 * ログインアカウントを重複するかどうかを確認する
@@ -161,7 +167,7 @@ public final class EmployeeController {
 	 */
 	@GetMapping("/to/addition")
 	public ModelAndView toAddition() {
-		final List<Role> employeeRolesById = this.iEmployeeService.getEmployeeRolesById(null);
+		final List<Role> employeeRolesById = this.iRoleService.getEmployeeRolesById(null);
 		final ModelAndView modelAndView = new ModelAndView("admin-addinfo");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, employeeRolesById);
 		return modelAndView;
@@ -176,7 +182,7 @@ public final class EmployeeController {
 	@GetMapping("/to/edition")
 	public ModelAndView toEdition(@RequestParam("editId") final Long id) {
 		final Employee employee = this.iEmployeeService.getEmployeeById(id);
-		final List<Role> employeeRolesById = this.iEmployeeService.getEmployeeRolesById(id);
+		final List<Role> employeeRolesById = this.iRoleService.getEmployeeRolesById(id);
 		final ModelAndView modelAndView = new ModelAndView("admin-editinfo");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EDITED_INFO, employee);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, employeeRolesById);

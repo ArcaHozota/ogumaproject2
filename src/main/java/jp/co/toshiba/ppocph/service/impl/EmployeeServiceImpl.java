@@ -1,11 +1,7 @@
 package jp.co.toshiba.ppocph.service.impl;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -22,15 +18,11 @@ import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.entity.EmployeeEx;
-import jp.co.toshiba.ppocph.entity.Role;
-import jp.co.toshiba.ppocph.exception.LoginFailedException;
 import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
-import jp.co.toshiba.ppocph.repository.RoleRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.utils.Pagination;
-import jp.co.toshiba.ppocph.utils.PgCrowdUtils;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 import jp.co.toshiba.ppocph.utils.SecondBeanUtils;
 import jp.co.toshiba.ppocph.utils.StringUtils;
@@ -57,11 +49,6 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	 */
 	private final EmployeeExRepository employeeExRepository;
 
-	/**
-	 * 役割管理リポジトリ
-	 */
-	private final RoleRepository roleRepository;
-
 	@Override
 	public ResultDto<String> check(final String loginAccount) {
 		final Employee employee = new Employee();
@@ -73,51 +60,10 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public Employee getAdminByLoginAccount(final String account, final String password) {
-		final String plainToMD5 = PgCrowdUtils.plainToMD5(password);
-		final Employee employee = new Employee();
-		employee.setLoginAccount(account);
-		employee.setPassword(plainToMD5);
-		final Example<Employee> example = Example.of(employee, ExampleMatcher.matchingAll());
-		return this.employeeRepository.findOne(example).orElseThrow(() -> {
-			throw new LoginFailedException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
-		});
-	}
-
-	@Override
 	public Employee getEmployeeById(final Long id) {
 		return this.employeeRepository.findById(id).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
-	}
-
-	@Override
-	public List<Role> getEmployeeRolesById(final Long id) {
-		final List<Role> secondRoles = new ArrayList<>();
-		final Role secondRole = new Role();
-		secondRole.setId(0L);
-		secondRole.setName(PgCrowdConstants.DEFAULT_ROLE_NAME);
-		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
-		final Specification<Role> specification1 = Specification.where(where1);
-		final List<Role> roles = this.roleRepository.findAll(specification1);
-		if (id == null) {
-			secondRoles.add(secondRole);
-			secondRoles.addAll(roles);
-			return secondRoles;
-		}
-		final Optional<EmployeeEx> roledOptional = this.employeeExRepository.findById(id);
-		if (roledOptional.isEmpty()) {
-			secondRoles.add(secondRole);
-			secondRoles.addAll(roles);
-			return secondRoles;
-		}
-		final Long roleId = roledOptional.get().getRoleId();
-		final List<Role> selectedRole = roles.stream().filter(a -> Objects.equals(a.getId(), roleId))
-				.collect(Collectors.toList());
-		secondRoles.addAll(selectedRole);
-		secondRoles.addAll(roles);
-		return secondRoles.stream().distinct().collect(Collectors.toList());
 	}
 
 	@Override
@@ -159,7 +105,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		employee.setPassword(password);
 		employee.setStatus(PgCrowdConstants.EMPLOYEE_NORMAL_STATUS);
 		employee.setCreatedTime(LocalDateTime.now());
-		if (employeeDto.getRoleId() != null && !Objects.equals(Long.valueOf(0L), employeeDto.getRoleId())) {
+		if ((employeeDto.getRoleId() != null) && !Objects.equals(Long.valueOf(0L), employeeDto.getRoleId())) {
 			final EmployeeEx employeeEx = new EmployeeEx();
 			employeeEx.setEmployeeId(employeeDto.getId());
 			employeeEx.setRoleId(employeeDto.getRoleId());

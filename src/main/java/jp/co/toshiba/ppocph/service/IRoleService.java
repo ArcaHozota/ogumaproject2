@@ -49,6 +49,14 @@ public interface IRoleService {
 	List<PgAuth> getAuthlist();
 
 	/**
+	 * 社員役割連携情報を取得する
+	 *
+	 * @param id 社員ID
+	 * @return List<String>
+	 */
+	List<Role> getEmployeeRolesById(Long id);
+
+	/**
 	 * IDによって役割情報を取得する
 	 *
 	 * @param roleId 役割ID

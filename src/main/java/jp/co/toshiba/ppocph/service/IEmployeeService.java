@@ -1,10 +1,7 @@
 package jp.co.toshiba.ppocph.service;
 
-import java.util.List;
-
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
-import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 
@@ -24,29 +21,12 @@ public interface IEmployeeService {
 	ResultDto<String> check(String loginAccount);
 
 	/**
-	 * ログイン処理
-	 *
-	 * @param account  アカウント
-	 * @param password パスワード
-	 * @return Employee
-	 */
-	Employee getAdminByLoginAccount(String account, String password);
-
-	/**
 	 * IDによって社員情報を取得する
 	 *
 	 * @param id 社員ID
 	 * @return Employee
 	 */
 	Employee getEmployeeById(Long id);
-
-	/**
-	 * 社員役割連携情報を取得する
-	 *
-	 * @param id 社員ID
-	 * @return List<String>
-	 */
-	List<Role> getEmployeeRolesById(Long id);
 
 	/**
 	 * キーワードによって社員情報を取得する
