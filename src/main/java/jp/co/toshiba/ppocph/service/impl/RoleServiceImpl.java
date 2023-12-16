@@ -127,17 +127,16 @@ public class RoleServiceImpl implements IRoleService {
 				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> specification1 = Specification.where(where1);
 		final List<Role> roles = this.roleRepository.findAll(specification1);
+		secondRoles.add(secondRole);
+		secondRoles.addAll(roles);
 		if (id == null) {
-			secondRoles.add(secondRole);
-			secondRoles.addAll(roles);
 			return secondRoles;
 		}
 		final Optional<EmployeeEx> roledOptional = this.employeeExRepository.findById(id);
 		if (roledOptional.isEmpty()) {
-			secondRoles.add(secondRole);
-			secondRoles.addAll(roles);
 			return secondRoles;
 		}
+		secondRoles.clear();
 		final Long roleId = roledOptional.get().getRoleId();
 		final List<Role> selectedRole = roles.stream().filter(a -> Objects.equals(a.getId(), roleId))
 				.collect(Collectors.toList());
