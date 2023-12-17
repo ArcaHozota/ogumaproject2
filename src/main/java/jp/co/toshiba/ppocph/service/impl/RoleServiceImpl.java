@@ -45,6 +45,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class RoleServiceImpl implements IRoleService {
 
+	private static final String DELETE_FLG = "deleteFlg";
+
+	private static final String ROLE_ID = "roleId";
+
+	private static final String ROLE_NAME = "name";
+
 	/**
 	 * 役割管理リポジトリ
 	 */
@@ -67,9 +73,9 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public ResultDto<String> check(final String name) {
-		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
-		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("name"),
+		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
+				PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_NAME),
 				name);
 		final Specification<Role> specification = Specification.where(where1).and(where2);
 		return this.roleRepository.findOne(specification).isPresent()
@@ -79,8 +85,8 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public ResultDto<String> doAssignment(final Map<String, List<Long>> paramMap) {
-		final Long roleId = paramMap.get("roleId").get(0);
-		final Specification<RoleEx> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("roleId"),
+		final Long roleId = paramMap.get(ROLE_ID).get(0);
+		final Specification<RoleEx> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_ID),
 				roleId);
 		final Specification<RoleEx> specification = Specification.where(where);
 		final List<RoleEx> findAll = this.roleExRepository.findAll(specification);
@@ -103,7 +109,7 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public List<Long> getAuthIdListByRoleId(final Long roleId) {
-		final Specification<RoleEx> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("roleId"),
+		final Specification<RoleEx> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_ID),
 				roleId);
 		final Specification<RoleEx> specification = Specification.where(where);
 		return this.roleExRepository.findAll(specification).stream().map(RoleEx::getAuthId).toList();
@@ -120,8 +126,8 @@ public class RoleServiceImpl implements IRoleService {
 		final Role secondRole = new Role();
 		secondRole.setId(0L);
 		secondRole.setName(PgCrowdConstants.DEFAULT_ROLE_NAME);
-		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
+				PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> specification1 = Specification.where(where1);
 		final List<Role> roles = this.roleRepository.findAll(specification1);
 		secondRoles.add(secondRole);
@@ -153,10 +159,10 @@ public class RoleServiceImpl implements IRoleService {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		final String searchStr = "%" + keyword + "%";
-		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
+				PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> where2 = StringUtils.isEmpty(keyword) ? null
-				: (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("name"), searchStr);
+				: (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(ROLE_NAME), searchStr);
 		final Specification<Role> specification = Specification.where(where1).and(where2);
 		final Page<Role> pages = this.roleRepository.findAll(specification, pageRequest);
 		return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
@@ -165,7 +171,7 @@ public class RoleServiceImpl implements IRoleService {
 	@Override
 	public ResultDto<String> removeById(final Long roleId) {
 		final Specification<EmployeeEx> where = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("roleId"), roleId);
+				.equal(root.get(ROLE_ID), roleId);
 		final Specification<EmployeeEx> specification = Specification.where(where);
 		final List<EmployeeEx> list = this.employeeExRepository.findAll(specification);
 		if (!list.isEmpty()) {
