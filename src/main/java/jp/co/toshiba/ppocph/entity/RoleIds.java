@@ -15,7 +15,13 @@ public final class RoleIds implements Serializable {
 
 	private static final long serialVersionUID = -297785511370318383L;
 
+	/**
+	 * 権限ID
+	 */
 	private Long roleId;
 
+	/**
+	 * 役割ID
+	 */
 	private Long authId;
 }

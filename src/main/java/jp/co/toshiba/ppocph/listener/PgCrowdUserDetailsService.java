@@ -21,6 +21,7 @@ import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.repository.PgAuthRepository;
 import jp.co.toshiba.ppocph.repository.RoleExRepository;
 import jp.co.toshiba.ppocph.utils.StringUtils;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -30,7 +31,7 @@ import lombok.RequiredArgsConstructor;
  * @since 6.07
  */
 @Component
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PgCrowdUserDetailsService implements UserDetailsService {
 
 	/**
@@ -77,5 +78,4 @@ public final class PgCrowdUserDetailsService implements UserDetailsService {
 				.map(item -> new SimpleGrantedAuthority(item.getName())).collect(Collectors.toList());
 		return new SecurityAdmin(employee, authorities);
 	}
-
 }
