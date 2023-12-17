@@ -12,16 +12,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.SecurityAdmin;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.entity.EmployeeEx;
 import jp.co.toshiba.ppocph.entity.RoleEx;
-import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.repository.PgAuthRepository;
 import jp.co.toshiba.ppocph.repository.RoleExRepository;
+import jp.co.toshiba.ppocph.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -60,11 +59,11 @@ public final class PgCrowdUserDetailsService implements UserDetailsService {
 				.equal(root.get("loginAccount"), username);
 		final Specification<Employee> specification1 = Specification.where(where1);
 		final Employee employee = this.employeeRepository.findOne(specification1).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
+			throw new UsernameNotFoundException(StringUtils.EMPTY_STRING);
 		});
 		final Optional<EmployeeEx> roleOptional = this.employeeExRepository.findById(employee.getId());
 		if (roleOptional.isEmpty()) {
-			return null;
+			throw new UsernameNotFoundException(StringUtils.EMPTY_STRING);
 		}
 		final Specification<RoleEx> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("roleId"),
 				roleOptional.get().getRoleId());
@@ -72,7 +71,7 @@ public final class PgCrowdUserDetailsService implements UserDetailsService {
 		final List<Long> authIds = this.roleExRepository.findAll(specification2).stream().map(RoleEx::getAuthId)
 				.collect(Collectors.toList());
 		if (authIds.isEmpty()) {
-			return null;
+			throw new UsernameNotFoundException(StringUtils.EMPTY_STRING);
 		}
 		final List<GrantedAuthority> authorities = this.pgAuthRepository.findAllById(authIds).stream()
 				.map(item -> new SimpleGrantedAuthority(item.getName())).collect(Collectors.toList());
