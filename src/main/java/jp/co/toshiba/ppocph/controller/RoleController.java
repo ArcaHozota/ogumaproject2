@@ -3,7 +3,6 @@ package jp.co.toshiba.ppocph.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.PgAuth;
@@ -30,7 +29,7 @@ import lombok.RequiredArgsConstructor;
  * @author ArkamaHozota
  * @since 4.44
  */
-@Controller
+@RestController
 @RequestMapping("/pgcrowd/role")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RoleController {
@@ -46,7 +45,6 @@ public final class RoleController {
 	 * @return ResultDto<List<PgAuth>>
 	 */
 	@GetMapping("/authlists")
-	@ResponseBody
 	public ResultDto<List<PgAuth>> authlists() {
 		final List<PgAuth> list = this.iRoleService.getAuthlist();
 		return ResultDto.successWithData(list);
@@ -59,7 +57,6 @@ public final class RoleController {
 	 * @return ResultDto<String>
 	 */
 	@GetMapping("/checkname")
-	@ResponseBody
 	public ResultDto<String> checkDuplicated(
 			@RequestParam(name = "name", defaultValue = StringUtils.EMPTY_STRING) final String name) {
 		return this.iRoleService.check(name);
@@ -72,7 +69,6 @@ public final class RoleController {
 	 * @return ResultDto<String>
 	 */
 	@DeleteMapping("/delete/{roleId}")
-	@ResponseBody
 	public ResultDto<String> deleteInfo(@PathVariable("roleId") final Long roleId) {
 		return this.iRoleService.removeById(roleId);
 	}
@@ -84,7 +80,6 @@ public final class RoleController {
 	 * @return ResultDto<String>
 	 */
 	@PutMapping("/do/assignment")
-	@ResponseBody
 	public ResultDto<String> doAssignment(@RequestBody final Map<String, List<Long>> paramMap) {
 		return this.iRoleService.doAssignment(paramMap);
 	}
@@ -95,7 +90,6 @@ public final class RoleController {
 	 * @return ResultDto<List<Long>>
 	 */
 	@GetMapping("/getAssigned")
-	@ResponseBody
 	public ResultDto<List<Long>> getAssignedAuth(@RequestParam("fuyoId") final Long roleId) {
 		final List<Long> authIds = this.iRoleService.getAuthIdListByRoleId(roleId);
 		return ResultDto.successWithData(authIds);
@@ -109,7 +103,6 @@ public final class RoleController {
 	 * @return ResultDto<Pagination<Role>>
 	 */
 	@GetMapping("/pagination")
-	@ResponseBody
 	public ResultDto<Pagination<Role>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
 			@RequestParam(name = "keyword", defaultValue = StringUtils.EMPTY_STRING) final String keyword) {
@@ -124,7 +117,6 @@ public final class RoleController {
 	 * @return ResultDto<String>
 	 */
 	@PostMapping("/infosave")
-	@ResponseBody
 	public ResultDto<String> saveInfo(@RequestBody final RoleDto roleDto) {
 		this.iRoleService.save(roleDto);
 		return ResultDto.successWithoutData();
@@ -137,7 +129,6 @@ public final class RoleController {
 	 * @return ResultDto<String>
 	 */
 	@PutMapping("/infoupd")
-	@ResponseBody
 	public ResultDto<String> updateInfo(@RequestBody final RoleDto roleDto) {
 		return this.iRoleService.update(roleDto);
 	}
