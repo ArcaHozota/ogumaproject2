@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.PgAuth;
 import jp.co.toshiba.ppocph.entity.Role;
@@ -101,20 +99,6 @@ public final class RoleController {
 	public ResultDto<List<Long>> getAssignedAuth(@RequestParam("fuyoId") final Long roleId) {
 		final List<Long> authIds = this.iRoleService.getAuthIdListByRoleId(roleId);
 		return ResultDto.successWithData(authIds);
-	}
-
-	/**
-	 * 役割情報初期表示
-	 *
-	 * @param userId  ユーザID
-	 * @param pageNum ページナンバー
-	 * @return ModelAndView
-	 */
-	@GetMapping("/to/pages")
-	public ModelAndView initialPages(@RequestParam(name = "pageNum") final Integer pageNum) {
-		final ModelAndView modelAndView = new ModelAndView("role-pages");
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
-		return modelAndView;
 	}
 
 	/**

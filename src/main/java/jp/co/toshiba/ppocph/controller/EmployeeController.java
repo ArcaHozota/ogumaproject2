@@ -73,20 +73,6 @@ public final class EmployeeController {
 	}
 
 	/**
-	 * 社員情報初期表示
-	 *
-	 * @param userId  ユーザID
-	 * @param pageNum ページナンバー
-	 * @return ModelAndView
-	 */
-	@GetMapping("/to/pages")
-	public ModelAndView initialPages(@RequestParam(name = "pageNum") final Integer pageNum) {
-		final ModelAndView modelAndView = new ModelAndView("admin-pages");
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
-		return modelAndView;
-	}
-
-	/**
 	 * キーワードによってページング検索
 	 *
 	 * @param pageNum ページ数
