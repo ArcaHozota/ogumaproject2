@@ -12,11 +12,9 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import jakarta.annotation.Resource;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
-import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.listener.PgCrowdUserDetailsService;
 import lombok.extern.log4j.Log4j2;
 
@@ -51,27 +49,18 @@ public class WebSecurityConfig {
 	}
 
 	@Bean
-	protected SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
-		final AntPathRequestMatcher[] pathMatchers = { new AntPathRequestMatcher("/static/**", "GET") };
-		http.authorizeHttpRequests(authorize -> {
-			authorize.requestMatchers(pathMatchers).permitAll().anyRequest().authenticated();
-			try {
-				authorize.and().csrf(CsrfConfigurer::disable);
-			} catch (final Exception e) {
-				e.printStackTrace();
-			}
-		}).formLogin(formLogin -> {
-			formLogin.loginPage("/pgcrowd/employee/login").loginProcessingUrl("/pgcrowd/employee/do/login")
-					.defaultSuccessUrl("/pgcrowd/to/mainmenu").permitAll().usernameParameter("loginAcct")
-					.passwordParameter("userPswd");
-			try {
-				formLogin.and().logout(logout -> logout.logoutUrl("/pgcrowd/employee/logout")
-						.logoutSuccessUrl("/pgcrowd/employee/login"));
-			} catch (final Exception e) {
-				throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATALERROR);
-			}
-		}).httpBasic(Customizer.withDefaults());
+	protected SecurityFilterChain filterChain(final HttpSecurity httpSecurity) throws Exception {
+		httpSecurity
+				.authorizeHttpRequests(
+						authorize -> authorize.requestMatchers("/static/**").permitAll().anyRequest().authenticated())
+				.csrf(CsrfConfigurer::disable)
+				.formLogin(formLogin -> formLogin.loginPage("/pgcrowd/employee/login")
+						.loginProcessingUrl("/pgcrowd/employee/do/login").defaultSuccessUrl("/pgcrowd/to/mainmenu")
+						.permitAll().usernameParameter("loginAcct").passwordParameter("userPswd"))
+				.logout(logout -> logout.logoutUrl("/pgcrowd/employee/logout")
+						.logoutSuccessUrl("/pgcrowd/employee/login"))
+				.httpBasic(Customizer.withDefaults());
 		log.info(PgCrowdConstants.MESSAGE_SPRING_SECURITY);
-		return http.build();
+		return httpSecurity.build();
 	}
 }
