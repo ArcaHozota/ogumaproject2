@@ -4,8 +4,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import javax.servlet.http.HttpServletRequest;
-
+import jakarta.servlet.http.HttpServletRequest;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import lombok.AccessLevel;
@@ -31,10 +30,10 @@ public final class PgCrowdUtils {
 		final String acceptInformation = request.getHeader("Accept");
 		final String xRequestInformation = request.getHeader("X-Requested-With");
 		// 判断して返却する
-		return ((acceptInformation != null) && (acceptInformation.length() > 0)
-				&& acceptInformation.contains("application/json"))
-				|| ((xRequestInformation != null) && (xRequestInformation.length() > 0)
-						&& "XMLHttpRequest".equals(xRequestInformation));
+		return acceptInformation != null && acceptInformation.length() > 0
+				&& acceptInformation.contains("application/json")
+				|| xRequestInformation != null && xRequestInformation.length() > 0
+						&& "XMLHttpRequest".equals(xRequestInformation);
 	}
 
 	/**
@@ -45,7 +44,7 @@ public final class PgCrowdUtils {
 	 */
 	public static String plainToMD5(final String source) {
 		// 1.ソースが有効かどうかを判断する
-		if ((source == null) || (source.length() == 0)) {
+		if (source == null || source.length() == 0) {
 			// 2.有効な文字列でない場合は例外をスローする
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_INVALIDATE);
 		}
