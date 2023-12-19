@@ -16,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import jakarta.annotation.Resource;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.listener.PgCrowdUserDetailsService;
+import jp.co.toshiba.ppocph.utils.PgCrowdUtils;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -53,7 +54,12 @@ public class WebSecurityConfig {
 		httpSecurity
 				.authorizeHttpRequests(
 						authorize -> authorize.requestMatchers("/static/**").permitAll().anyRequest().authenticated())
-				.csrf(CsrfConfigurer::disable)
+				.csrf(CsrfConfigurer::disable).exceptionHandling(
+						handling -> handling.authenticationEntryPoint((request, response, authenticationException) -> {
+							final ResponseLoginDto responseResult = new ResponseLoginDto(403,
+									authenticationException.getMessage());
+							PgCrowdUtils.renderString(response, responseResult);
+						}))
 				.formLogin(formLogin -> formLogin.loginPage("/pgcrowd/employee/login")
 						.loginProcessingUrl("/pgcrowd/employee/do/login").defaultSuccessUrl("/pgcrowd/to/mainmenu")
 						.permitAll().usernameParameter("loginAcct").passwordParameter("userPswd"))

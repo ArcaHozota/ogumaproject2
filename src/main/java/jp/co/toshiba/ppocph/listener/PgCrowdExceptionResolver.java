@@ -1,13 +1,12 @@
 package jp.co.toshiba.ppocph.listener;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
+import com.alibaba.fastjson2.JSON;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -47,13 +46,11 @@ public final class PgCrowdExceptionResolver {
 			// 4.ResultDtoオブジェクトを作成する。
 			final ResultDto<Object> resultEntity = ResultDto.failed(message);
 			// 5.GSONオブジェクトを作成する。
-			final Gson gson = new Gson();
 			// 6.JSONストリングに変換する。
-			final String json = gson.toJson(resultEntity);
+			final String json = JSON.toJSONString(resultEntity);
 			// 7.PrintWriterオブジェクトを取得する。
-			final PrintWriter writer = response.getWriter();
 			// 8.JSONデータをライトしてNULLを返却する。
-			writer.write(json);
+			response.getWriter().write(json);
 			return null;
 		}
 		// 9.ModelAndViewオブジェクトを作成する。
