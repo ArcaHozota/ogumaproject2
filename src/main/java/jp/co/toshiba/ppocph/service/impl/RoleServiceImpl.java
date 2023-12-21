@@ -158,13 +158,23 @@ public class RoleServiceImpl implements IRoleService {
 	public Pagination<Role> getRolesByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
-		final String searchStr = "%" + keyword + "%";
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
 				PgCrowdConstants.LOGIC_DELETE_INITIAL);
-		final Specification<Role> where2 = StringUtils.isEmpty(keyword) ? null
-				: (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(ROLE_NAME), searchStr);
-		final Specification<Role> specification = Specification.where(where1).and(where2);
-		final Page<Role> pages = this.roleRepository.findAll(specification, pageRequest);
+		final Specification<Role> specification = Specification.where(where1);
+		if (StringUtils.isEmpty(keyword)) {
+			final Page<Role> pages = this.roleRepository.findAll(specification, pageRequest);
+			return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum,
+					PgCrowdConstants.DEFAULT_PAGE_SIZE);
+		}
+		final String searchStr = "%" + keyword + "%";
+		if (StringUtils.isDigital(keyword)) {
+			final Page<Role> byIdLike = this.roleRepository.findByIdLike(searchStr, pageRequest);
+			return Pagination.of(byIdLike.getContent(), byIdLike.getTotalElements(), pageNum,
+					PgCrowdConstants.DEFAULT_PAGE_SIZE);
+		}
+		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(ROLE_NAME),
+				searchStr);
+		final Page<Role> pages = this.roleRepository.findAll(specification.and(where2), pageRequest);
 		return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
 
