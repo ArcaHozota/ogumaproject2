@@ -25,6 +25,6 @@ public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificat
 	 * @return Page<Role>
 	 */
 	@Query(value = "select ac.id, ac.name, ac.delete_flg from role as ac where "
-			+ "ac.delete_flg = 'approved' and cast(ac.id as varchar) like :idLike", nativeQuery = true)
+			+ "ac.delete_flg = 'approved' and cast(ac.id as varchar) like concat('%', :idLike, '%')", nativeQuery = true)
 	Page<Role> findByIdLike(@Param("idLike") String keyword, Pageable pageable);
 }
