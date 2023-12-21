@@ -171,7 +171,7 @@ public class RoleServiceImpl implements IRoleService {
 			return Pagination.of(byIdLike.getContent(), byIdLike.getTotalElements(), pageNum,
 					PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
-		final String searchStr = "%" + keyword + "%";
+		final String searchStr = StringUtils.getDetailKeyword(keyword);
 		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(ROLE_NAME),
 				searchStr);
 		final Page<Role> pages = this.roleRepository.findAll(specification.and(where2), pageRequest);

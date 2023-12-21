@@ -227,6 +227,22 @@ public final class StringUtils {
 	}
 
 	/**
+	 * ファジークエリ用の検索文を取得する
+	 *
+	 * @param keyword 検索文
+	 * @return ファジークエリ
+	 */
+	public static String getDetailKeyword(final String keyword) {
+		final StringBuilder builder = new StringBuilder();
+		builder.append("%");
+		for (final char aChar : keyword.toCharArray()) {
+			final String charAt = String.valueOf(aChar);
+			builder.append(charAt).append("%");
+		}
+		return builder.toString();
+	}
+
+	/**
 	 * 該当文字列はすべて半角かどうかを判断する
 	 *
 	 * @param hankakuString 文字列
@@ -275,7 +291,7 @@ public final class StringUtils {
 	 * @return true: 空, false: 空ではない
 	 */
 	public static boolean isEmpty(@Nullable final String str) {
-		return (str == null) || str.isEmpty() || str.isBlank();
+		return str == null || str.isEmpty() || str.isBlank();
 	}
 
 	/**
@@ -286,10 +302,10 @@ public final class StringUtils {
 	 * @return true: イコール, false: イコールしない
 	 */
 	public static boolean isEqual(@Nullable final String str1, @Nullable final String str2) {
-		if ((str1 == null) && (str2 == null)) {
+		if (str1 == null && str2 == null) {
 			return true;
 		}
-		if ((str1 == null) || (str2 == null) || (str1.length() != str2.length())) {
+		if (str1 == null || str2 == null || str1.length() != str2.length()) {
 			return false;
 		}
 		return str1.trim().equals(str2.trim());

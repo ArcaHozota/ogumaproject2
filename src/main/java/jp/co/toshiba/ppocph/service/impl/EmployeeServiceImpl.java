@@ -70,17 +70,23 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	public Pagination<Employee> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
-		final String searchStr = "%" + keyword + "%";
 		final Specification<Employee> status = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("status"), PgCrowdConstants.EMPLOYEE_NORMAL_STATUS);
-		final Specification<Employee> where1 = StringUtils.isEmpty(keyword) ? null
-				: (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("loginAccount"), searchStr);
-		final Specification<Employee> where2 = StringUtils.isEmpty(keyword) ? null
-				: (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("username"), searchStr);
-		final Specification<Employee> where3 = StringUtils.isEmpty(keyword) ? null
-				: (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("email"), searchStr);
+		if (StringUtils.isEmpty(keyword)) {
+			final Specification<Employee> specification = Specification.where(status);
+			final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
+			return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum,
+					PgCrowdConstants.DEFAULT_PAGE_SIZE);
+		}
+		final String searchStr = StringUtils.getDetailKeyword(keyword);
+		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.like(root.get("loginAccount"), searchStr);
+		final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.like(root.get("username"), searchStr);
+		final Specification<Employee> where3 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("email"),
+				searchStr);
 		final Specification<Employee> specification = Specification.where(status)
-				.and(Specification.where(where1).or(where2).or(where3));
+				.and(Specification.anyOf(where1, where2, where3));
 		final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
 		return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
@@ -105,7 +111,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		employee.setPassword(password);
 		employee.setStatus(PgCrowdConstants.EMPLOYEE_NORMAL_STATUS);
 		employee.setCreatedTime(LocalDateTime.now());
-		if ((employeeDto.getRoleId() != null) && !Objects.equals(Long.valueOf(0L), employeeDto.getRoleId())) {
+		if (employeeDto.getRoleId() != null && !Objects.equals(Long.valueOf(0L), employeeDto.getRoleId())) {
 			final EmployeeEx employeeEx = new EmployeeEx();
 			employeeEx.setEmployeeId(employeeDto.getId());
 			employeeEx.setRoleId(employeeDto.getRoleId());
