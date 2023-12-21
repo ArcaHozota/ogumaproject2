@@ -5,7 +5,6 @@ import java.io.Serializable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +23,6 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Table(name = "role")
-@NamedQuery(name = "Role.findByIdLike", query = "select ac from Role as ac where ac.deleteFlg = 'approved' and ac.id like:idLike")
 public final class Role implements Serializable {
 
 	private static final long serialVersionUID = 4360593022825424340L;
