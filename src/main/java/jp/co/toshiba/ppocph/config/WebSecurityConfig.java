@@ -8,10 +8,10 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import jakarta.annotation.Resource;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
@@ -54,7 +54,7 @@ public class WebSecurityConfig {
 		httpSecurity
 				.authorizeHttpRequests(
 						authorize -> authorize.requestMatchers("/static/**").permitAll().anyRequest().authenticated())
-				.csrf(CsrfConfigurer::disable).exceptionHandling(
+				.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository())).exceptionHandling(
 						handling -> handling.authenticationEntryPoint((request, response, authenticationException) -> {
 							final ResponseLoginDto responseResult = new ResponseLoginDto(403,
 									authenticationException.getMessage());
