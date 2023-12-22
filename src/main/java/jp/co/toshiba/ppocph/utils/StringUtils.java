@@ -245,12 +245,12 @@ public final class StringUtils {
 	/**
 	 * 該当文字列はすべて半角かどうかを判断する
 	 *
-	 * @param hankakuString 文字列
+	 * @param hankaku 文字列
 	 * @return true: すべて半角文字列, false: 全角文字も含める
 	 */
-	public static boolean isAllHankaku(final String hankakuString) {
+	public static boolean isAllHankaku(final String hankaku) {
 		final List<String> zenkakuList = new ArrayList<>(HALF_FULL_CONVERTOR.keySet());
-		for (final char aChar : hankakuString.toCharArray()) {
+		for (final char aChar : hankaku.toCharArray()) {
 			if (zenkakuList.contains(String.valueOf(aChar))) {
 				return false;
 			}
@@ -261,12 +261,12 @@ public final class StringUtils {
 	/**
 	 * 該当文字列はすべて全角かどうかを判断する
 	 *
-	 * @param zenkakuString 文字列
+	 * @param zenkaku 文字列
 	 * @return true: すべて全角文字列, false: 半角文字も含める
 	 */
-	public static boolean isAllZenkaku(final String zenkakuString) {
+	public static boolean isAllZenkaku(final String zenkaku) {
 		final List<String> hankakuList = new ArrayList<>(HALF_FULL_CONVERTOR.values());
-		for (final char aChar : zenkakuString.toCharArray()) {
+		for (final char aChar : zenkaku.toCharArray()) {
 			if (hankakuList.contains(String.valueOf(aChar))) {
 				return false;
 			}
@@ -281,6 +281,9 @@ public final class StringUtils {
 	 * @return true: すべて数字, false: 文字も含める
 	 */
 	public static boolean isDigital(@Nullable final String string) {
+		if (StringUtils.isEmpty(string)) {
+			return false;
+		}
 		return Pattern.compile("\\d*").matcher(string).matches();
 	}
 
@@ -344,8 +347,8 @@ public final class StringUtils {
 		}
 		final StringBuilder builder = new StringBuilder();
 		final List<String> zenkakuList = new ArrayList<>(HALF_FULL_CONVERTOR.keySet());
-		for (int i = 0; i < zenkaku.length(); i++) {
-			final String charAtString = String.valueOf(zenkaku.charAt(i));
+		for (final char charAt : zenkaku.toCharArray()) {
+			final String charAtString = String.valueOf(charAt);
 			if (zenkakuList.contains(charAtString)) {
 				builder.append(HALF_FULL_CONVERTOR.get(charAtString));
 			} else {
@@ -367,8 +370,8 @@ public final class StringUtils {
 		}
 		final StringBuilder builder = new StringBuilder();
 		final List<String> hankakuList = new ArrayList<>(HALF_FULL_CONVERTOR.values());
-		for (int i = 0; i < hankaku.length(); i++) {
-			final String charAtString = String.valueOf(hankaku.charAt(i));
+		for (final char charAt : hankaku.toCharArray()) {
+			final String charAtString = String.valueOf(charAt);
 			if (hankakuList.contains(charAtString)) {
 				builder.append(HALF_FULL_CONVERTOR.inverseBidiMap().get(charAtString));
 			} else {
