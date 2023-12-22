@@ -71,7 +71,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		final Specification<Employee> status = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("status"), PgCrowdConstants.EMPLOYEE_NORMAL_STATUS);
+				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		if (StringUtils.isEmpty(keyword)) {
 			final Specification<Employee> specification = Specification.where(status);
 			final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
@@ -96,7 +96,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		final Employee employee = this.employeeRepository.findById(userId).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
-		employee.setStatus(PgCrowdConstants.EMPLOYEE_ABNORMAL_STATUS);
+		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
 		this.employeeRepository.saveAndFlush(employee);
 	}
 
@@ -109,7 +109,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setId(saibanId);
 		employee.setPassword(password);
-		employee.setStatus(PgCrowdConstants.EMPLOYEE_NORMAL_STATUS);
+		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		employee.setCreatedTime(LocalDateTime.now());
 		if (employeeDto.getRoleId() != null && !Objects.equals(Long.valueOf(0L), employeeDto.getRoleId())) {
 			final EmployeeEx employeeEx = new EmployeeEx();

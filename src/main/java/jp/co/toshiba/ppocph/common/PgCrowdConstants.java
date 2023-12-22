@@ -38,10 +38,6 @@ public final class PgCrowdConstants {
 
 	public static final String LOGIC_DELETE_INITIAL = "visible";
 
-	public static final String EMPLOYEE_ABNORMAL_STATUS = "rejected";
-
-	public static final String EMPLOYEE_NORMAL_STATUS = "approved";
-
 	public static final String MESSAGE_STRING_INVALIDATE = "Invalid password string";
 
 	public static final String MESSAGE_STRING_NOTLOGIN = "ログインしてください";
