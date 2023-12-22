@@ -111,13 +111,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		employee.setPassword(password);
 		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		employee.setCreatedTime(LocalDateTime.now());
+		this.employeeRepository.saveAndFlush(employee);
 		if (employeeDto.getRoleId() != null && !Objects.equals(Long.valueOf(0L), employeeDto.getRoleId())) {
 			final EmployeeEx employeeEx = new EmployeeEx();
-			employeeEx.setEmployeeId(employeeDto.getId());
+			employeeEx.setEmployeeId(employee.getId());
 			employeeEx.setRoleId(employeeDto.getRoleId());
 			this.employeeExRepository.saveAndFlush(employeeEx);
 		}
-		this.employeeRepository.saveAndFlush(employee);
 	}
 
 	@Override
