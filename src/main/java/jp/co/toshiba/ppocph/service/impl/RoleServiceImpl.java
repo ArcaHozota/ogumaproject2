@@ -167,7 +167,8 @@ public class RoleServiceImpl implements IRoleService {
 					PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
 		if (StringUtils.isDigital(keyword)) {
-			final Page<Role> byIdLike = this.roleRepository.findByIdLike(keyword, pageRequest);
+			final Page<Role> byIdLike = this.roleRepository.findByIdLike(keyword, PgCrowdConstants.LOGIC_DELETE_INITIAL,
+					pageRequest);
 			return Pagination.of(byIdLike.getContent(), byIdLike.getTotalElements(), pageNum,
 					PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
