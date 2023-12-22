@@ -216,6 +216,8 @@ $("#saveInfoBtn").on('click', function() {
 			showValidationMsg("#emailInput", "error", "メールアドレスを空になってはいけません。");
 		}
 	} else {
+		let header = $('meta[name=_csrf_header]').attr('content');
+		let token = $('meta[name=_csrf_token]').attr('content');
 		$.ajax({
 			url: '/pgcrowd/employee/infosave',
 			type: 'POST',
@@ -227,9 +229,12 @@ $("#saveInfoBtn").on('click', function() {
 				'email': inputEmail,
 				'roleId': inputRole
 			}),
+			headers: {
+				[header]: token
+			},
 			contentType: 'application/json;charset=UTF-8',
 			success: function() {
-				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + pageNum);
+				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + totalRecords);
 			}
 		});
 	}
@@ -241,11 +246,16 @@ $("#addInfoBtn").on('click', function(e) {
 $("#tableBody").on('click', '.delete-btn', function() {
 	let userName = $(this).parents("tr").find("td:eq(0)").text().trim();
 	let userId = $(this).attr("deleteId");
+	let header = $('meta[name=_csrf_header]').attr('content');
+	let token = $('meta[name=_csrf_token]').attr('content');
 	if (confirm("この" + userName + "という社員の情報を削除するとよろしいでしょうか。")) {
 		$.ajax({
 			url: '/pgcrowd/employee/delete/' + userId,
 			type: 'DELETE',
 			dataType: 'json',
+			headers: {
+				[header]: token
+			},
 			success: function() {
 				layer.msg('削除済み');
 				toSelectedPg(pageNum, keyword);
@@ -308,6 +318,8 @@ $("#editInfoBtn").on('click', function() {
 		if (editPassword === "**************************************") {
 			editPassword = null;
 		}
+		let header = $('meta[name=_csrf_header]').attr('content');
+		let token = $('meta[name=_csrf_token]').attr('content');
 		$.ajax({
 			url: '/pgcrowd/employee/infoupd',
 			type: 'PUT',
@@ -320,6 +332,9 @@ $("#editInfoBtn").on('click', function() {
 				'email': editEmail,
 				'roleId': editRole
 			}),
+			headers: {
+				[header]: token
+			},
 			contentType: 'application/json;charset=UTF-8',
 			success: function() {
 				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + pageNum);
