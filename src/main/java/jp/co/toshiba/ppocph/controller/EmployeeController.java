@@ -2,6 +2,7 @@ package jp.co.toshiba.ppocph.controller;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +35,8 @@ import lombok.RequiredArgsConstructor;
  */
 @Controller
 @RequestMapping("/pgcrowd/employee")
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class EmployeeController {
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
+public class EmployeeController {
 
 	/**
 	 * 社員サービスインターフェス
@@ -67,6 +68,7 @@ public final class EmployeeController {
 	 */
 	@DeleteMapping("/delete/{userId}")
 	@ResponseBody
+	@PreAuthorize("hasAuthority('employee%delete')")
 	public ResultDto<String> deleteInfo(@PathVariable("userId") final Long userId) {
 		this.iEmployeeService.removeById(userId);
 		return ResultDto.successWithoutData();
@@ -81,6 +83,7 @@ public final class EmployeeController {
 	 */
 	@GetMapping("/pagination")
 	@ResponseBody
+	@PreAuthorize("hasAuthority('employee%retrieve')")
 	public ResultDto<Pagination<Employee>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
 			@RequestParam(name = "keyword", defaultValue = StringUtils.EMPTY_STRING) final String keyword) {
@@ -121,6 +124,7 @@ public final class EmployeeController {
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/addition")
+	@PreAuthorize("hasAuthority('employee%addition')")
 	public ModelAndView toAddition() {
 		final List<Role> employeeRolesById = this.iRoleService.getEmployeeRolesById(null);
 		final ModelAndView modelAndView = new ModelAndView("admin-addinfo");
@@ -135,6 +139,7 @@ public final class EmployeeController {
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/edition")
+	@PreAuthorize("hasAuthority('employee%addition')")
 	public ModelAndView toEdition(@RequestParam("editId") final Long id) {
 		final Employee employee = this.iEmployeeService.getEmployeeById(id);
 		final List<Role> employeeRolesById = this.iRoleService.getEmployeeRolesById(id);
