@@ -56,12 +56,18 @@ public class WebSecurityConfig {
 		httpSecurity
 				.authorizeHttpRequests(
 						authorize -> authorize.requestMatchers("/static/**").permitAll().anyRequest().authenticated())
-				.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository())).exceptionHandling(
-						handling -> handling.authenticationEntryPoint((request, response, authenticationException) -> {
-							final ResponseLoginDto responseResult = new ResponseLoginDto(403,
-									authenticationException.getMessage());
-							PgCrowdUtils.renderString(response, responseResult);
-						}))
+				.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository())).exceptionHandling(handling -> {
+					handling.authenticationEntryPoint((request, response, authenticationException) -> {
+						final ResponseLoginDto responseResult = new ResponseLoginDto(401,
+								authenticationException.getMessage());
+						PgCrowdUtils.renderString(response, responseResult);
+					});
+					handling.accessDeniedHandler((request, response, accessDeniedException) -> {
+						final ResponseLoginDto responseResult = new ResponseLoginDto(403,
+								PgCrowdConstants.MESSAGE_SPRINGSECURITY_REQUIREDAUTH);
+						PgCrowdUtils.renderString(response, responseResult);
+					});
+				})
 				.formLogin(formLogin -> formLogin.loginPage("/pgcrowd/employee/login")
 						.loginProcessingUrl("/pgcrowd/employee/do/login").defaultSuccessUrl("/pgcrowd/to/mainmenu")
 						.permitAll().usernameParameter("loginAcct").passwordParameter("userPswd"))
