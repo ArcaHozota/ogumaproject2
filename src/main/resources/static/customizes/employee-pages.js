@@ -21,6 +21,9 @@ function toSelectedPg(pageNum, keyword) {
 			buildTableBody(result);
 			buildPageInfos(result);
 			buildPageNavi(result);
+		},
+		error: function(result) {
+			layer.msg(result.message);
 		}
 	});
 }
@@ -235,6 +238,9 @@ $("#saveInfoBtn").on('click', function() {
 			contentType: 'application/json;charset=UTF-8',
 			success: function() {
 				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + totalRecords);
+			},
+			error: function(result) {
+				layer.msg(result.message);
 			}
 		});
 	}
@@ -259,6 +265,9 @@ $("#tableBody").on('click', '.delete-btn', function() {
 			success: function() {
 				layer.msg('削除済み');
 				toSelectedPg(pageNum, keyword);
+			},
+			error: function(result) {
+				layer.msg(result.message);
 			}
 		});
 	}
@@ -338,6 +347,9 @@ $("#editInfoBtn").on('click', function() {
 			contentType: 'application/json;charset=UTF-8',
 			success: function() {
 				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + pageNum);
+			},
+			error: function(result) {
+				layer.msg(result.message);
 			}
 		});
 	}
