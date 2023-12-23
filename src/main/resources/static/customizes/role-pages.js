@@ -22,7 +22,7 @@ function toSelectedPg(pageNum, keyword) {
 			buildPageInfos(result);
 			buildPageNavi(result);
 		}
-	})
+	});
 }
 function buildTableBody(result) {
 	$("#tableBody").empty();
