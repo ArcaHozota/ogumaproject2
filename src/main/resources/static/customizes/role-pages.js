@@ -23,7 +23,7 @@ function toSelectedPg(pageNum, keyword) {
 			buildPageNavi(result);
 		},
 		error: function(result) {
-			layer.msg(result.message);
+			layer.msg(result.responseJSON.message);
 		}
 	});
 }
@@ -158,7 +158,7 @@ $("#roleInfoSaveBtn").on('click', function() {
 				toSelectedPg(pageNum, keyword);
 			},
 			error: function(result) {
-				layer.msg(result.message);
+				layer.msg(result.responseJSON.message);
 			}
 		});
 	}
@@ -215,7 +215,7 @@ $("#roleInfoChangeBtn").on('click', function() {
 				}
 			},
 			error: function(result) {
-				layer.msg(result.message);
+				layer.msg(result.responseJSON.message);
 			}
 		});
 	}
@@ -242,7 +242,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 				}
 			},
 			error: function(result) {
-				layer.msg(result.message);
+				layer.msg(result.responseJSON.message);
 			}
 		});
 	}
