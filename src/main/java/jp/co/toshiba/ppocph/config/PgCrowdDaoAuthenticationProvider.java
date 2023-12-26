@@ -33,7 +33,7 @@ public final class PgCrowdDaoAuthenticationProvider extends DaoAuthenticationPro
 			this.logger.debug("Failed to authenticate since password does not match stored value");
 			throw new BadCredentialsException(
 					this.messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials",
-							PgCrowdConstants.MESSAGE_SPRINGSECURITY_REQUIREDAUTH));
+							PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR4));
 		}
 	}
 }
