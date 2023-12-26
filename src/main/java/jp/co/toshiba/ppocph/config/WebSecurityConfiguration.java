@@ -15,7 +15,6 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import jakarta.annotation.Resource;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
-import jp.co.toshiba.ppocph.listener.PgCrowdAccessDeniedHandler;
 import jp.co.toshiba.ppocph.listener.PgCrowdUserDetailsService;
 import jp.co.toshiba.ppocph.utils.PgCrowdUtils;
 import lombok.extern.log4j.Log4j2;
@@ -37,12 +36,6 @@ public class WebSecurityConfiguration {
 	 */
 	@Resource
 	private PgCrowdUserDetailsService pgCrowdUserDetailsService;
-
-	/**
-	 * 権限検査サービス
-	 */
-	@Resource
-	private PgCrowdAccessDeniedHandler pgCrowdAccessDeniedHandler;
 
 	@Bean
 	protected AuthenticationManager authenticationManager(final AuthenticationManagerBuilder auth) {
@@ -68,7 +61,11 @@ public class WebSecurityConfiguration {
 								authenticationException.getMessage());
 						PgCrowdUtils.renderString(response, responseResult);
 					});
-					handling.accessDeniedHandler(this.pgCrowdAccessDeniedHandler);
+					handling.accessDeniedHandler((request, response, accessDeniedException) -> {
+						final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.FORBIDDEN.value(),
+								PgCrowdConstants.MESSAGE_SPRINGSECURITY_REQUIREDAUTH);
+						PgCrowdUtils.renderString(response, responseResult);
+					});
 				})
 				.formLogin(formLogin -> formLogin.loginPage("/pgcrowd/employee/login")
 						.loginProcessingUrl("/pgcrowd/employee/do/login").defaultSuccessUrl("/pgcrowd/to/mainmenu")
