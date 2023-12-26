@@ -6,9 +6,9 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import jakarta.annotation.Resource;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
-import jp.co.toshiba.ppocph.listener.PgCrowdUserDetailsService;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * ログイン認証サービス
@@ -16,21 +16,8 @@ import jp.co.toshiba.ppocph.listener.PgCrowdUserDetailsService;
  * @author ArkamaHozota
  * @since 6.96
  */
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public final class PgCrowdDaoAuthenticationProvider extends DaoAuthenticationProvider {
-
-	/**
-	 * ログインサービス
-	 */
-	@Resource
-	private PgCrowdUserDetailsService pgCrowdUserDetailsService;
-
-	/**
-	 * コンストラクタ
-	 */
-	protected PgCrowdDaoAuthenticationProvider() {
-		this.setUserDetailsService(this.pgCrowdUserDetailsService);
-		this.setPasswordEncoder(new PgCrowdPasswordEncoder());
-	}
 
 	@Override
 	protected void additionalAuthenticationChecks(final UserDetails userDetails,
