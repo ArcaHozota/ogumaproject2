@@ -125,7 +125,7 @@ public class EmployeeController {
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/addition")
-	@PreAuthorize("hasAuthority('employee%retrieve')")
+	@PreAuthorize("hasAuthority('employee%addition')")
 	public ModelAndView toAddition() {
 		final List<Role> employeeRolesById = this.iRoleService.getEmployeeRolesById(null);
 		final ModelAndView modelAndView = new ModelAndView("admin-addinfo");
@@ -140,7 +140,7 @@ public class EmployeeController {
 	 * @return ModelAndView
 	 */
 	@GetMapping("/to/edition")
-	@PreAuthorize("hasAuthority('employee%retrieve')")
+	@PreAuthorize("hasAuthority('employee%addition')")
 	public ModelAndView toEdition(@RequestParam("editId") final Long id) {
 		final Employee employee = this.iEmployeeService.getEmployeeById(id);
 		final List<Role> employeeRolesById = this.iRoleService.getEmployeeRolesById(id);
