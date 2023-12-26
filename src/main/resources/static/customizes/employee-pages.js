@@ -23,7 +23,7 @@ function toSelectedPg(pageNum, keyword) {
 			buildPageNavi(result);
 		},
 		error: function(result) {
-			layer.msg(result.message);
+			layer.msg(result.responseJSON.message);
 		}
 	});
 }
@@ -240,7 +240,7 @@ $("#saveInfoBtn").on('click', function() {
 				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + totalRecords);
 			},
 			error: function(result) {
-				layer.msg(result.message);
+				layer.msg(result.responseJSON.message);
 			}
 		});
 	}
@@ -267,7 +267,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 				toSelectedPg(pageNum, keyword);
 			},
 			error: function(result) {
-				layer.msg(result.message);
+				layer.msg(result.responseJSON.message);
 			}
 		});
 	}
@@ -349,7 +349,7 @@ $("#editInfoBtn").on('click', function() {
 				window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + pageNum);
 			},
 			error: function(result) {
-				layer.msg(result.message);
+				layer.msg(result.responseJSON.message);
 			}
 		});
 	}
