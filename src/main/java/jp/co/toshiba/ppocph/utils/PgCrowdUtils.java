@@ -1,9 +1,6 @@
 package jp.co.toshiba.ppocph.utils;
 
 import java.io.IOException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import org.springframework.http.MediaType;
 
@@ -11,9 +8,7 @@ import com.alibaba.fastjson2.JSON;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.config.ResponseLoginDto;
-import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -44,46 +39,16 @@ public final class PgCrowdUtils {
 	}
 
 	/**
-	 * 平文文字列をMD5暗号化する
-	 *
-	 * @param source 文字列
-	 * @return String
-	 */
-	public static String plainToMD5(final String source) {
-		// 1.ソースが有効かどうかを判断する
-		if (source == null || source.length() == 0) {
-			// 2.有効な文字列でない場合は例外をスローする
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_INVALIDATE);
-		}
-		try {
-			// 3.MessageDigestオブジェクトを取得する
-			final MessageDigest messageDigest = MessageDigest.getInstance("md5");
-			// 4.平文文字列に対応するバイト配列を取得する
-			final byte[] input = source.getBytes();
-			// 5.暗号化を実行する
-			final byte[] output = messageDigest.digest(input);
-			// 6.BigIntegerオブジェクトを作成する
-			final int signum = 1;
-			final BigInteger bigInteger = new BigInteger(signum, output);
-			// 7.BigIntegerの値を16進数に従って文字列に変換する
-			final int radix = 16;
-			return bigInteger.toString(radix).toUpperCase();
-		} catch (final NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		return StringUtils.EMPTY_STRING;
-	}
-
-	/**
 	 * 文字列をクライアントにレンダリングする
 	 *
 	 * @param response リスポンス
 	 * @param string   ストリング
 	 */
+	@SuppressWarnings("deprecation")
 	public static void renderString(final HttpServletResponse response, final ResponseLoginDto aResult) {
 		try {
 			response.setStatus(aResult.getCode());
-			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+			response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 			response.getWriter().print(JSON.toJSONString(aResult));
 		} catch (final IOException e) {
 			// do nothing
