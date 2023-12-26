@@ -4,6 +4,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+/**
+ * パスワードエンコーダ
+ *
+ * @author ArkamaHozota
+ * @since 6.94
+ */
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public final class PgCrowdPasswordEncoder implements PasswordEncoder {
 
 	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(BCryptVersion.$2A, 7);

@@ -10,8 +10,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
@@ -55,7 +53,7 @@ public class WebSecurityConfiguration {
 	protected DaoAuthenticationProvider daoAuthenticationProvider() {
 		final DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 		provider.setUserDetailsService(this.pgCrowdUserDetailsService);
-		provider.setPasswordEncoder(new BCryptPasswordEncoder(BCryptVersion.$2A, 7));
+		provider.setPasswordEncoder(new PgCrowdPasswordEncoder());
 		return provider;
 	}
 
