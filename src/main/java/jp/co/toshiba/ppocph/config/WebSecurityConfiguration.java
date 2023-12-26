@@ -32,7 +32,7 @@ import lombok.extern.log4j.Log4j2;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class WebSecurityConfig {
+public class WebSecurityConfiguration {
 
 	/**
 	 * ログインサービス
