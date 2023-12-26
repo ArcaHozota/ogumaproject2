@@ -334,7 +334,7 @@ $("#authChangeBtn").on('click', function() {
 			layer.msg('権限付与成功！');
 		},
 		error: function(result) {
-			layer.msg(result.message);
+			layer.msg(result.responseJSON.message);
 		}
 	});
 });
