@@ -247,7 +247,17 @@ $("#saveInfoBtn").on('click', function() {
 });
 $("#addInfoBtn").on('click', function(e) {
 	e.preventDefault();
-	window.location.replace('/pgcrowd/employee/to/addition');
+	$.ajax({
+		url: '/pgcrowd/employee/to/addition',
+		type: 'GET',
+		dataType: 'json',
+		success: function() {
+			window.location.replace('/pgcrowd/employee/to/addition');
+		},
+		error: function(result) {
+			layer.msg(result.responseJSON.message);
+		}
+	});
 });
 $("#tableBody").on('click', '.delete-btn', function() {
 	let userName = $(this).parents("tr").find("td:eq(0)").text().trim();
@@ -274,7 +284,17 @@ $("#tableBody").on('click', '.delete-btn', function() {
 });
 $("#tableBody").on('click', '.edit-btn', function() {
 	let editId = $(this).attr("editId");
-	window.location.replace('/pgcrowd/employee/to/edition?editId=' + editId);
+	$.ajax({
+		url: '/pgcrowd/employee/to/edition?editId=1',
+		type: 'GET',
+		dataType: 'json',
+		success: function() {
+			window.location.replace('/pgcrowd/employee/to/edition?editId=' + editId);
+		},
+		error: function(result) {
+			layer.msg(result.responseJSON.message);
+		}
+	});
 });
 $("#usernameEdit").change(function() {
 	let editUsername = this.value;
