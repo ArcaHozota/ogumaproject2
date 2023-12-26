@@ -28,7 +28,7 @@ public class PgCrowdAccessDeniedHandler implements AccessDeniedHandler {
 	public void handle(final HttpServletRequest request, final HttpServletResponse response,
 			final AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		final JSONObject json = new JSONObject();
-		json.put("403", PgCrowdConstants.MESSAGE_SPRINGSECURITY_REQUIREDAUTH);
+		json.put(String.valueOf(HttpStatus.FORBIDDEN.value()), PgCrowdConstants.MESSAGE_SPRINGSECURITY_REQUIREDAUTH);
 		response.setStatus(HttpStatus.FORBIDDEN.value());
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 		response.getWriter().print(json.toString());
