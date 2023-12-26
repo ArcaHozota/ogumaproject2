@@ -2,6 +2,8 @@ package jp.co.toshiba.ppocph.config;
 
 import java.io.Serializable;
 
+import org.springframework.http.HttpStatus;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,7 +33,7 @@ public class ResponseLoginDto implements Serializable {
 	 * コンストラクタ
 	 */
 	ResponseLoginDto() {
-		this.code = 200;
+		this.code = HttpStatus.OK.value();
 	}
 
 	/**

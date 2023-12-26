@@ -2,6 +2,7 @@ package jp.co.toshiba.ppocph.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -65,7 +66,7 @@ public class WebSecurityConfig {
 						authorize -> authorize.requestMatchers("/static/**").permitAll().anyRequest().authenticated())
 				.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository())).exceptionHandling(handling -> {
 					handling.authenticationEntryPoint((request, response, authenticationException) -> {
-						final ResponseLoginDto responseResult = new ResponseLoginDto(401,
+						final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.UNAUTHORIZED.value(),
 								authenticationException.getMessage());
 						PgCrowdUtils.renderString(response, responseResult);
 					});
