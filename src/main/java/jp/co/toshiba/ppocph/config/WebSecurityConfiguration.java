@@ -16,7 +16,6 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import jakarta.annotation.Resource;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.listener.PgCrowdAccessDeniedHandler;
-import jp.co.toshiba.ppocph.listener.PgCrowdUserDetailsService;
 import jp.co.toshiba.ppocph.utils.PgCrowdUtils;
 import lombok.extern.log4j.Log4j2;
 
@@ -33,12 +32,6 @@ import lombok.extern.log4j.Log4j2;
 public class WebSecurityConfiguration {
 
 	/**
-	 * ログインサービス
-	 */
-	@Resource
-	private PgCrowdUserDetailsService pgCrowdUserDetailsService;
-
-	/**
 	 * 権限検査サービス
 	 */
 	@Resource
@@ -51,10 +44,7 @@ public class WebSecurityConfiguration {
 
 	@Bean
 	protected DaoAuthenticationProvider daoAuthenticationProvider() {
-		final DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(this.pgCrowdUserDetailsService);
-		provider.setPasswordEncoder(new PgCrowdPasswordEncoder());
-		return provider;
+		return new PgCrowdDaoAuthenticationProvider();
 	}
 
 	@Bean
