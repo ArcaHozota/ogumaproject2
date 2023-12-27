@@ -16,8 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.common.PgCrowdURIConstants;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
+import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.Employee;
-import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.service.IRoleService;
 import jp.co.toshiba.ppocph.utils.Pagination;
@@ -80,10 +80,10 @@ public final class EmployeeController {
 	 */
 	@GetMapping(PgCrowdURIConstants.EMPLOYEE_PAGINATION)
 	@ResponseBody
-	public ResultDto<Pagination<Employee>> pagination(
+	public ResultDto<Pagination<EmployeeDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
 			@RequestParam(name = "keyword", defaultValue = StringUtils.EMPTY_STRING) final String keyword) {
-		final Pagination<Employee> employees = this.iEmployeeService.getEmployeesByKeyword(pageNum, keyword);
+		final Pagination<EmployeeDto> employees = this.iEmployeeService.getEmployeesByKeyword(pageNum, keyword);
 		return ResultDto.successWithData(employees);
 	}
 
@@ -95,8 +95,8 @@ public final class EmployeeController {
 	 */
 	@GetMapping(PgCrowdURIConstants.EMPLOYEE_RESTORE)
 	@ResponseBody
-	public ResultDto<Employee> restoreInfo(@RequestParam("userId") final Long userId) {
-		final Employee employee = this.iEmployeeService.getEmployeeById(userId);
+	public ResultDto<EmployeeDto> restoreInfo(@RequestParam("userId") final Long userId) {
+		final EmployeeDto employee = this.iEmployeeService.getEmployeeById(userId);
 		return ResultDto.successWithData(employee);
 	}
 
@@ -121,7 +121,7 @@ public final class EmployeeController {
 	 */
 	@GetMapping(PgCrowdURIConstants.EMPLOYEE_ADDITION)
 	public ModelAndView toAddition() {
-		final List<Role> employeeRolesById = this.iRoleService.getEmployeeRolesById(null);
+		final List<RoleDto> employeeRolesById = this.iRoleService.getEmployeeRolesById(null);
 		final ModelAndView modelAndView = new ModelAndView("admin-addinfo");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, employeeRolesById);
 		return modelAndView;
@@ -136,7 +136,7 @@ public final class EmployeeController {
 	@GetMapping(PgCrowdURIConstants.EMPLOYEE_EDITION)
 	public ModelAndView toEdition(@RequestParam("editId") final Long id) {
 		final Employee employee = this.iEmployeeService.getEmployeeById(id);
-		final List<Role> employeeRolesById = this.iRoleService.getEmployeeRolesById(id);
+		final List<RoleDto> employeeRolesById = this.iRoleService.getEmployeeRolesById(id);
 		final ModelAndView modelAndView = new ModelAndView("admin-editinfo");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EDITED_INFO, employee);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, employeeRolesById);

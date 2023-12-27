@@ -1,7 +1,6 @@
 package jp.co.toshiba.ppocph.service;
 
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
-import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 
@@ -26,7 +25,7 @@ public interface IEmployeeService {
 	 * @param id 社員ID
 	 * @return Employee
 	 */
-	Employee getEmployeeById(Long id);
+	EmployeeDto getEmployeeById(Long id);
 
 	/**
 	 * キーワードによって社員情報を取得する
@@ -35,7 +34,7 @@ public interface IEmployeeService {
 	 * @param keyword キーワード
 	 * @return Pagination<Employee>
 	 */
-	Pagination<Employee> getEmployeesByKeyword(Integer pageNum, String keyword);
+	Pagination<EmployeeDto> getEmployeesByKeyword(Integer pageNum, String keyword);
 
 	/**
 	 * 社員情報削除

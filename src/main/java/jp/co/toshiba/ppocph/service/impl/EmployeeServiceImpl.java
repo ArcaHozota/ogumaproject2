@@ -1,6 +1,7 @@
 package jp.co.toshiba.ppocph.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.domain.Example;
@@ -60,14 +61,16 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public Employee getEmployeeById(final Long id) {
-		return this.employeeRepository.findById(id).orElseThrow(() -> {
+	public EmployeeDto getEmployeeById(final Long id) {
+		final Employee employee = this.employeeRepository.findById(id).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
+		return new EmployeeDto(employee.getId(), employee.getLoginAccount(), employee.getUsername(),
+				employee.getPassword(), employee.getEmail(), null);
 	}
 
 	@Override
-	public Pagination<Employee> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
+	public Pagination<EmployeeDto> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		final Specification<Employee> status = (root, query, criteriaBuilder) -> criteriaBuilder
@@ -75,8 +78,9 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		if (StringUtils.isEmpty(keyword)) {
 			final Specification<Employee> specification = Specification.where(status);
 			final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
-			return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum,
-					PgCrowdConstants.DEFAULT_PAGE_SIZE);
+			final List<EmployeeDto> employeeDtos = pages.stream().map(item -> new EmployeeDto(item.getId(),
+					item.getLoginAccount(), item.getUsername(), item.getPassword(), item.getEmail(), null)).toList();
+			return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = StringUtils.getDetailKeyword(keyword);
 		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
@@ -88,7 +92,9 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final Specification<Employee> specification = Specification.where(status)
 				.and(Specification.anyOf(where1, where2, where3));
 		final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
-		return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+		final List<EmployeeDto> employeeDtos = pages.stream().map(item -> new EmployeeDto(item.getId(),
+				item.getLoginAccount(), item.getUsername(), item.getPassword(), item.getEmail(), null)).toList();
+		return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
 
 	@Override
