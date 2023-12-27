@@ -2,8 +2,6 @@ package jp.co.toshiba.ppocph.utils;
 
 import java.io.IOException;
 
-import org.springframework.http.MediaType;
-
 import com.alibaba.fastjson2.JSON;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,11 +42,10 @@ public final class PgCrowdUtils {
 	 * @param response リスポンス
 	 * @param string   ストリング
 	 */
-	@SuppressWarnings("deprecation")
 	public static void renderString(final HttpServletResponse response, final ResponseLoginDto aResult) {
 		try {
 			response.setStatus(aResult.getCode());
-			response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().print(JSON.toJSONString(aResult));
 		} catch (final IOException e) {
 			// do nothing
