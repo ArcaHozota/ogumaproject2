@@ -16,6 +16,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public final class PgCrowdPasswordEncoder implements PasswordEncoder {
 
+	/**
+	 * エンコーダ
+	 */
 	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(BCryptVersion.$2A, 7);
 
 	@Override
