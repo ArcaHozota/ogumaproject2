@@ -121,17 +121,16 @@ public final class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public List<Role> getEmployeeRolesById(final Long id) {
-		final List<Role> secondRoles = new ArrayList<>();
-		final Role secondRole = new Role();
-		secondRole.setId(0L);
-		secondRole.setName(PgCrowdConstants.DEFAULT_ROLE_NAME);
+	public List<RoleDto> getEmployeeRolesById(final Long id) {
+		final List<RoleDto> secondRoles = new ArrayList<>();
+		final RoleDto secondRole = new RoleDto(0L, PgCrowdConstants.DEFAULT_ROLE_NAME);
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
 				PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> specification1 = Specification.where(where1);
-		final List<Role> roles = this.roleRepository.findAll(specification1);
+		final List<RoleDto> roleDtos = this.roleRepository.findAll(specification1).stream()
+				.map(item -> new RoleDto(item.getId(), item.getName())).toList();
 		secondRoles.add(secondRole);
-		secondRoles.addAll(roles);
+		secondRoles.addAll(roleDtos);
 		if (id == null) {
 			return secondRoles;
 		}
@@ -141,21 +140,14 @@ public final class RoleServiceImpl implements IRoleService {
 		}
 		secondRoles.clear();
 		final Long roleId = roledOptional.get().getRoleId();
-		final List<Role> selectedRole = roles.stream().filter(a -> Objects.equals(a.getId(), roleId)).toList();
+		final List<RoleDto> selectedRole = roleDtos.stream().filter(a -> Objects.equals(a.id(), roleId)).toList();
 		secondRoles.addAll(selectedRole);
-		secondRoles.addAll(roles);
+		secondRoles.addAll(roleDtos);
 		return secondRoles.stream().distinct().toList();
 	}
 
 	@Override
-	public Role getRoleById(final Long roleId) {
-		return this.roleRepository.findById(roleId).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOTEXISTS);
-		});
-	}
-
-	@Override
-	public Pagination<Role> getRolesByKeyword(final Integer pageNum, final String keyword) {
+	public Pagination<RoleDto> getRolesByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
@@ -163,20 +155,23 @@ public final class RoleServiceImpl implements IRoleService {
 		final Specification<Role> specification = Specification.where(where1);
 		if (StringUtils.isEmpty(keyword)) {
 			final Page<Role> pages = this.roleRepository.findAll(specification, pageRequest);
-			return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum,
-					PgCrowdConstants.DEFAULT_PAGE_SIZE);
+			final List<RoleDto> roleDtos = pages.stream().map(item -> new RoleDto(item.getId(), item.getName()))
+					.toList();
+			return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
 		if (StringUtils.isDigital(keyword)) {
 			final Page<Role> byIdLike = this.roleRepository.findByIdLike(keyword, PgCrowdConstants.LOGIC_DELETE_INITIAL,
 					pageRequest);
-			return Pagination.of(byIdLike.getContent(), byIdLike.getTotalElements(), pageNum,
-					PgCrowdConstants.DEFAULT_PAGE_SIZE);
+			final List<RoleDto> roleDtos = byIdLike.stream().map(item -> new RoleDto(item.getId(), item.getName()))
+					.toList();
+			return Pagination.of(roleDtos, byIdLike.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = StringUtils.getDetailKeyword(keyword);
 		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(ROLE_NAME),
 				searchStr);
 		final Page<Role> pages = this.roleRepository.findAll(specification.and(where2), pageRequest);
-		return Pagination.of(pages.getContent(), pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+		final List<RoleDto> roleDtos = pages.stream().map(item -> new RoleDto(item.getId(), item.getName())).toList();
+		return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
 
 	@Override

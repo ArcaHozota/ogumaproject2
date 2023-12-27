@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import jp.co.toshiba.ppocph.common.PgCrowdURIConstants;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.PgAuth;
-import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.service.IRoleService;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
@@ -102,10 +101,10 @@ public final class RoleController {
 	 * @return ResultDto<Pagination<Role>>
 	 */
 	@GetMapping(PgCrowdURIConstants.ROLE_PAGINATION)
-	public ResultDto<Pagination<Role>> pagination(
+	public ResultDto<Pagination<RoleDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
 			@RequestParam(name = "keyword", defaultValue = StringUtils.EMPTY_STRING) final String keyword) {
-		final Pagination<Role> roles = this.iRoleService.getRolesByKeyword(pageNum, keyword);
+		final Pagination<RoleDto> roles = this.iRoleService.getRolesByKeyword(pageNum, keyword);
 		return ResultDto.successWithData(roles);
 	}
 

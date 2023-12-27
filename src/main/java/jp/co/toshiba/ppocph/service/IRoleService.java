@@ -5,7 +5,6 @@ import java.util.Map;
 
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.PgAuth;
-import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 
@@ -54,15 +53,7 @@ public interface IRoleService {
 	 * @param id 社員ID
 	 * @return List<String>
 	 */
-	List<Role> getEmployeeRolesById(Long id);
-
-	/**
-	 * IDによって役割情報を取得する
-	 *
-	 * @param roleId 役割ID
-	 * @return Role
-	 */
-	Role getRoleById(Long roleId);
+	List<RoleDto> getEmployeeRolesById(Long id);
 
 	/**
 	 * キーワードによって役割情報を取得する
@@ -71,7 +62,7 @@ public interface IRoleService {
 	 * @param keyword キーワード
 	 * @return Pagination<Role>
 	 */
-	Pagination<Role> getRolesByKeyword(Integer pageNum, String keyword);
+	Pagination<RoleDto> getRolesByKeyword(Integer pageNum, String keyword);
 
 	/**
 	 * 役割IDによって情報を削除する
