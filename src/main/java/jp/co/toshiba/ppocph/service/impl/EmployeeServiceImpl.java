@@ -37,7 +37,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class EmployeeServiceImpl implements IEmployeeService {
+public final class EmployeeServiceImpl implements IEmployeeService {
 
 	/**
 	 * 社員管理リポジトリ

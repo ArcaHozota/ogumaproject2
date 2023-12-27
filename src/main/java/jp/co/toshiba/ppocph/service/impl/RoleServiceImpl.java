@@ -43,7 +43,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class RoleServiceImpl implements IRoleService {
+public final class RoleServiceImpl implements IRoleService {
 
 	private static final String DELETE_FLG = "deleteFlg";
 
@@ -207,7 +207,7 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public ResultDto<String> update(final RoleDto roleDto) {
-		final Role role = this.roleRepository.findById(roleDto.getId()).orElseThrow(() -> {
+		final Role role = this.roleRepository.findById(roleDto.id()).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOTEXISTS);
 		});
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
