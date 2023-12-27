@@ -104,7 +104,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	public void save(final EmployeeDto employeeDto) {
 		final Long saibanId = this.employeeRepository.saiban();
 		final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(BCryptVersion.$2A, 7);
-		final String password = encoder.encode(employeeDto.getPassword());
+		final String password = encoder.encode(employeeDto.password());
 		final Employee employee = new Employee();
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setId(saibanId);
@@ -112,34 +112,34 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		employee.setCreatedTime(LocalDateTime.now());
 		this.employeeRepository.saveAndFlush(employee);
-		if (employeeDto.getRoleId() != null && !Objects.equals(Long.valueOf(0L), employeeDto.getRoleId())) {
+		if (employeeDto.roleId() != null && !Objects.equals(Long.valueOf(0L), employeeDto.roleId())) {
 			final EmployeeEx employeeEx = new EmployeeEx();
 			employeeEx.setEmployeeId(employee.getId());
-			employeeEx.setRoleId(employeeDto.getRoleId());
+			employeeEx.setRoleId(employeeDto.roleId());
 			this.employeeExRepository.saveAndFlush(employeeEx);
 		}
 	}
 
 	@Override
 	public void update(final EmployeeDto employeeDto) {
-		final Employee employee = this.employeeRepository.findById(employeeDto.getId()).orElseThrow(() -> {
+		final Employee employee = this.employeeRepository.findById(employeeDto.id()).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
-		if (!Objects.equals(employeeDto.getRoleId(), 0L)) {
-			this.employeeExRepository.findById(employeeDto.getId()).ifPresentOrElse(value -> {
-				value.setRoleId(employeeDto.getRoleId());
+		if (!Objects.equals(employeeDto.roleId(), 0L)) {
+			this.employeeExRepository.findById(employeeDto.id()).ifPresentOrElse(value -> {
+				value.setRoleId(employeeDto.roleId());
 				this.employeeExRepository.saveAndFlush(value);
 			}, () -> {
 				final EmployeeEx employeeEx = new EmployeeEx();
-				employeeEx.setEmployeeId(employeeDto.getId());
-				employeeEx.setRoleId(employeeDto.getRoleId());
+				employeeEx.setEmployeeId(employeeDto.id());
+				employeeEx.setRoleId(employeeDto.roleId());
 				this.employeeExRepository.saveAndFlush(employeeEx);
 			});
 		}
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
-		if (StringUtils.isNotEmpty(employeeDto.getPassword())) {
+		if (StringUtils.isNotEmpty(employeeDto.password())) {
 			final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(BCryptVersion.$2A, 7);
-			final String encoded = encoder.encode(employeeDto.getPassword());
+			final String encoded = encoder.encode(employeeDto.password());
 			employee.setPassword(encoded);
 		}
 		this.employeeRepository.saveAndFlush(employee);
