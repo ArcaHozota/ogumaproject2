@@ -28,6 +28,8 @@ public final class PgCrowdURIConstants {
 
 	public static final String EMPLOYEE_RESTORE = "/pgcrowd/employee/inforestore";
 
+	public static final String EMPLOYEE_TOPAGES = "/pgcrowd/employee/to/pages";
+
 	public static final String ROLE_PAGINATION = "/pgcrowd/role/pagination";
 
 	public static final String ROLE_INSERT = "/pgcrowd/role/infosave";
@@ -43,4 +45,6 @@ public final class PgCrowdURIConstants {
 	public static final String ROLE_ASSIGNMENT = "/pgcrowd/role/do/assignment";
 
 	public static final String ROLE_AUTHLIST = "/pgcrowd/role/authlists";
+
+	public static final String ROLE_TOPAGES = "/pgcrowd/role/to/pages";
 }

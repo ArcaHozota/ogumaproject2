@@ -53,12 +53,14 @@ public class WebSecurityConfiguration {
 	protected SecurityFilterChain filterChain(final HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 				.authorizeHttpRequests(authorize -> authorize.requestMatchers("/static/**").permitAll()
-						.requestMatchers(PgCrowdURIConstants.EMPLOYEE_PAGINATION).hasAuthority("employee%retrieve")
+						.requestMatchers(PgCrowdURIConstants.EMPLOYEE_TOPAGES, PgCrowdURIConstants.EMPLOYEE_PAGINATION)
+						.hasAuthority("employee%retrieve")
 						.requestMatchers(PgCrowdURIConstants.EMPLOYEE_ADDITION, PgCrowdURIConstants.EMPLOYEE_EDITION,
 								PgCrowdURIConstants.EMPLOYEE_INSERT, PgCrowdURIConstants.EMPLOYEE_UPDATE)
 						.hasAuthority("employee%edition").requestMatchers(PgCrowdURIConstants.EMPLOYEE_DELETE)
 						.hasAuthority("employee%delete")
-						.requestMatchers(PgCrowdURIConstants.ROLE_PAGINATION, PgCrowdURIConstants.ROLE_GETASSIGNED)
+						.requestMatchers(PgCrowdURIConstants.ROLE_TOPAGES, PgCrowdURIConstants.ROLE_PAGINATION,
+								PgCrowdURIConstants.ROLE_GETASSIGNED)
 						.hasAuthority("role%retrieve")
 						.requestMatchers(PgCrowdURIConstants.ROLE_INSERT, PgCrowdURIConstants.ROLE_UPDATE)
 						.hasAuthority("role%edition")
