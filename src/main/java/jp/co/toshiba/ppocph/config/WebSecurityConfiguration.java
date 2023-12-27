@@ -14,6 +14,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import jakarta.annotation.Resource;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
+import jp.co.toshiba.ppocph.common.PgCrowdURIConstants;
 import jp.co.toshiba.ppocph.listener.PgCrowdUserDetailsService;
 import jp.co.toshiba.ppocph.utils.PgCrowdUtils;
 import lombok.extern.log4j.Log4j2;
@@ -51,8 +52,18 @@ public class WebSecurityConfiguration {
 	@Bean
 	protected SecurityFilterChain filterChain(final HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
-				.authorizeHttpRequests(
-						authorize -> authorize.requestMatchers("/static/**").permitAll().anyRequest().authenticated())
+				.authorizeHttpRequests(authorize -> authorize.requestMatchers("/static/**").permitAll()
+						.requestMatchers(PgCrowdURIConstants.EMPLOYEE_PAGINATION).hasAuthority("employee%retrieve")
+						.requestMatchers(PgCrowdURIConstants.EMPLOYEE_ADDITION, PgCrowdURIConstants.EMPLOYEE_EDITION,
+								PgCrowdURIConstants.EMPLOYEE_INSERT, PgCrowdURIConstants.EMPLOYEE_UPDATE)
+						.hasAuthority("employee%addition").requestMatchers(PgCrowdURIConstants.EMPLOYEE_DELETE)
+						.hasAuthority("employee%delete").requestMatchers(PgCrowdURIConstants.ROLE_PAGINATION)
+						.hasAuthority("role%retrieve")
+						.requestMatchers(PgCrowdURIConstants.ROLE_GETASSIGNED, PgCrowdURIConstants.ROLE_INSERT,
+								PgCrowdURIConstants.ROLE_UPDATE)
+						.hasAuthority("role%addition")
+						.requestMatchers(PgCrowdURIConstants.ROLE_ASSIGNMENT, PgCrowdURIConstants.ROLE_DELETE)
+						.hasAuthority("role%delete").anyRequest().authenticated())
 				.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository())).exceptionHandling(handling -> {
 					handling.authenticationEntryPoint((request, response, authenticationException) -> {
 						final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.UNAUTHORIZED.value(),
