@@ -17,7 +17,6 @@ import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.common.PgCrowdURIConstants;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.dto.RoleDto;
-import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.service.IRoleService;
 import jp.co.toshiba.ppocph.utils.Pagination;
@@ -135,7 +134,7 @@ public final class EmployeeController {
 	 */
 	@GetMapping(PgCrowdURIConstants.EMPLOYEE_EDITION)
 	public ModelAndView toEdition(@RequestParam("editId") final Long id) {
-		final Employee employee = this.iEmployeeService.getEmployeeById(id);
+		final EmployeeDto employee = this.iEmployeeService.getEmployeeById(id);
 		final List<RoleDto> employeeRolesById = this.iRoleService.getEmployeeRolesById(id);
 		final ModelAndView modelAndView = new ModelAndView("admin-editinfo");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EDITED_INFO, employee);
