@@ -38,7 +38,9 @@ public final class PgCrowdURIConstants {
 
 	public static final String ROLE_CHECK = "/pgcrowd/role/check";
 
+	public static final String ROLE_GETASSIGNED = "/pgcrowd/role/getAssigned";
+
 	public static final String ROLE_ASSIGNMENT = "/pgcrowd/role/do/assignment";
 
-	public static final String ROLE_AUTHLIST = "/pgcrowd/employee/authlists";
+	public static final String ROLE_AUTHLIST = "/pgcrowd/role/authlists";
 }
