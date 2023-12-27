@@ -15,7 +15,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class ResponseLoginDto implements Serializable {
+public final class ResponseLoginDto implements Serializable {
 
 	private static final long serialVersionUID = -7552597224614068953L;
 
