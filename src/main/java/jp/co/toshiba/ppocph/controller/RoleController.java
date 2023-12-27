@@ -29,8 +29,8 @@ import lombok.RequiredArgsConstructor;
  * @since 4.44
  */
 @RestController
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-public class RoleController {
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+public final class RoleController {
 
 	/**
 	 * 役割サービスインターフェス

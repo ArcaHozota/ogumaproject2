@@ -33,7 +33,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Controller
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class EmployeeController {
+public final class EmployeeController {
 
 	/**
 	 * 社員サービスインターフェス
