@@ -57,10 +57,10 @@ public class WebSecurityConfiguration {
 						.requestMatchers(PgCrowdURIConstants.EMPLOYEE_ADDITION, PgCrowdURIConstants.EMPLOYEE_EDITION,
 								PgCrowdURIConstants.EMPLOYEE_INSERT, PgCrowdURIConstants.EMPLOYEE_UPDATE)
 						.hasAuthority("employee%addition").requestMatchers(PgCrowdURIConstants.EMPLOYEE_DELETE)
-						.hasAuthority("employee%delete").requestMatchers(PgCrowdURIConstants.ROLE_PAGINATION)
+						.hasAuthority("employee%delete")
+						.requestMatchers(PgCrowdURIConstants.ROLE_PAGINATION, PgCrowdURIConstants.ROLE_GETASSIGNED)
 						.hasAuthority("role%retrieve")
-						.requestMatchers(PgCrowdURIConstants.ROLE_GETASSIGNED, PgCrowdURIConstants.ROLE_INSERT,
-								PgCrowdURIConstants.ROLE_UPDATE)
+						.requestMatchers(PgCrowdURIConstants.ROLE_INSERT, PgCrowdURIConstants.ROLE_UPDATE)
 						.hasAuthority("role%addition")
 						.requestMatchers(PgCrowdURIConstants.ROLE_ASSIGNMENT, PgCrowdURIConstants.ROLE_DELETE)
 						.hasAuthority("role%delete").anyRequest().authenticated())
