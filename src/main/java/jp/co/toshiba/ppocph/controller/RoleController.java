@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import jp.co.toshiba.ppocph.common.PgCrowdURIConstants;
+import jp.co.toshiba.ppocph.common.PgCrowdURLConstants;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.PgAuth;
 import jp.co.toshiba.ppocph.service.IRoleService;
@@ -42,7 +42,7 @@ public final class RoleController {
 	 *
 	 * @return ResultDto<List<PgAuth>>
 	 */
-	@GetMapping(PgCrowdURIConstants.ROLE_AUTHLIST)
+	@GetMapping(PgCrowdURLConstants.ROLE_AUTHLIST)
 	public ResultDto<List<PgAuth>> authlists() {
 		final List<PgAuth> list = this.iRoleService.getAuthlist();
 		return ResultDto.successWithData(list);
@@ -54,7 +54,7 @@ public final class RoleController {
 	 * @param name 役割名称
 	 * @return ResultDto<String>
 	 */
-	@GetMapping(PgCrowdURIConstants.ROLE_CHECK)
+	@GetMapping(PgCrowdURLConstants.ROLE_CHECK)
 	public ResultDto<String> checkDuplicated(
 			@RequestParam(name = "name", defaultValue = StringUtils.EMPTY_STRING) final String name) {
 		return this.iRoleService.check(name);
@@ -66,7 +66,7 @@ public final class RoleController {
 	 * @param roleId 役割ID
 	 * @return ResultDto<String>
 	 */
-	@DeleteMapping(PgCrowdURIConstants.ROLE_DELETE)
+	@DeleteMapping(PgCrowdURLConstants.ROLE_DELETE)
 	public ResultDto<String> deleteInfo(@PathVariable("roleId") final Long roleId) {
 		return this.iRoleService.removeById(roleId);
 	}
@@ -77,7 +77,7 @@ public final class RoleController {
 	 * @param paramMap パラメータ
 	 * @return ResultDto<String>
 	 */
-	@PutMapping(PgCrowdURIConstants.ROLE_ASSIGNMENT)
+	@PutMapping(PgCrowdURLConstants.ROLE_ASSIGNMENT)
 	public ResultDto<String> doAssignment(@RequestBody final Map<String, List<Long>> paramMap) {
 		return this.iRoleService.doAssignment(paramMap);
 	}
@@ -87,7 +87,7 @@ public final class RoleController {
 	 *
 	 * @return ResultDto<List<Long>>
 	 */
-	@GetMapping(PgCrowdURIConstants.ROLE_GETASSIGNED)
+	@GetMapping(PgCrowdURLConstants.ROLE_GETASSIGNED)
 	public ResultDto<List<Long>> getAssignedAuth(@RequestParam("fuyoId") final Long roleId) {
 		final List<Long> authIds = this.iRoleService.getAuthIdListByRoleId(roleId);
 		return ResultDto.successWithData(authIds);
@@ -100,7 +100,7 @@ public final class RoleController {
 	 * @param keyword キーワード
 	 * @return ResultDto<Pagination<Role>>
 	 */
-	@GetMapping(PgCrowdURIConstants.ROLE_PAGINATION)
+	@GetMapping(PgCrowdURLConstants.ROLE_PAGINATION)
 	public ResultDto<Pagination<RoleDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
 			@RequestParam(name = "keyword", defaultValue = StringUtils.EMPTY_STRING) final String keyword) {
@@ -114,7 +114,7 @@ public final class RoleController {
 	 * @param roleDto 役割情報DTO
 	 * @return ResultDto<String>
 	 */
-	@PostMapping(PgCrowdURIConstants.ROLE_INSERT)
+	@PostMapping(PgCrowdURLConstants.ROLE_INSERT)
 	public ResultDto<String> saveInfo(@RequestBody final RoleDto roleDto) {
 		this.iRoleService.save(roleDto);
 		return ResultDto.successWithoutData();
@@ -126,7 +126,7 @@ public final class RoleController {
 	 * @param roleDto 役割情報DTO
 	 * @return ResultDto<String>
 	 */
-	@PutMapping(PgCrowdURIConstants.ROLE_UPDATE)
+	@PutMapping(PgCrowdURLConstants.ROLE_UPDATE)
 	public ResultDto<String> updateInfo(@RequestBody final RoleDto roleDto) {
 		return this.iRoleService.update(roleDto);
 	}

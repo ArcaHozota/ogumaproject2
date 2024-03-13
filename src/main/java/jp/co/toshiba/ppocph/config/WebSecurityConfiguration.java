@@ -14,7 +14,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import jakarta.annotation.Resource;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
-import jp.co.toshiba.ppocph.common.PgCrowdURIConstants;
+import jp.co.toshiba.ppocph.common.PgCrowdURLConstants;
 import jp.co.toshiba.ppocph.listener.PgCrowdUserDetailsService;
 import jp.co.toshiba.ppocph.utils.PgCrowdUtils;
 import lombok.extern.log4j.Log4j2;
@@ -53,18 +53,18 @@ public class WebSecurityConfiguration {
 	protected SecurityFilterChain filterChain(final HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 				.authorizeHttpRequests(authorize -> authorize.requestMatchers("/static/**").permitAll()
-						.requestMatchers(PgCrowdURIConstants.EMPLOYEE_TOPAGES, PgCrowdURIConstants.EMPLOYEE_PAGINATION)
+						.requestMatchers(PgCrowdURLConstants.EMPLOYEE_TOPAGES, PgCrowdURLConstants.EMPLOYEE_PAGINATION)
 						.hasAuthority("employee%retrieve")
-						.requestMatchers(PgCrowdURIConstants.EMPLOYEE_ADDITION, PgCrowdURIConstants.EMPLOYEE_EDITION,
-								PgCrowdURIConstants.EMPLOYEE_INSERT, PgCrowdURIConstants.EMPLOYEE_UPDATE)
-						.hasAuthority("employee%edition").requestMatchers(PgCrowdURIConstants.EMPLOYEE_DELETE)
+						.requestMatchers(PgCrowdURLConstants.EMPLOYEE_ADDITION, PgCrowdURLConstants.EMPLOYEE_EDITION,
+								PgCrowdURLConstants.EMPLOYEE_INSERT, PgCrowdURLConstants.EMPLOYEE_UPDATE)
+						.hasAuthority("employee%edition").requestMatchers(PgCrowdURLConstants.EMPLOYEE_DELETE)
 						.hasAuthority("employee%delete")
-						.requestMatchers(PgCrowdURIConstants.ROLE_TOPAGES, PgCrowdURIConstants.ROLE_PAGINATION,
-								PgCrowdURIConstants.ROLE_GETASSIGNED)
+						.requestMatchers(PgCrowdURLConstants.ROLE_TOPAGES, PgCrowdURLConstants.ROLE_PAGINATION,
+								PgCrowdURLConstants.ROLE_GETASSIGNED)
 						.hasAuthority("role%retrieve")
-						.requestMatchers(PgCrowdURIConstants.ROLE_INSERT, PgCrowdURIConstants.ROLE_UPDATE)
+						.requestMatchers(PgCrowdURLConstants.ROLE_INSERT, PgCrowdURLConstants.ROLE_UPDATE)
 						.hasAuthority("role%edition")
-						.requestMatchers(PgCrowdURIConstants.ROLE_ASSIGNMENT, PgCrowdURIConstants.ROLE_DELETE)
+						.requestMatchers(PgCrowdURLConstants.ROLE_ASSIGNMENT, PgCrowdURLConstants.ROLE_DELETE)
 						.hasAuthority("role%delete").anyRequest().authenticated())
 				.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository())).exceptionHandling(handling -> {
 					handling.authenticationEntryPoint((request, response, authenticationException) -> {

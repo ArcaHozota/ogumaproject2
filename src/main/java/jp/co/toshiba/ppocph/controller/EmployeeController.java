@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
-import jp.co.toshiba.ppocph.common.PgCrowdURIConstants;
+import jp.co.toshiba.ppocph.common.PgCrowdURLConstants;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
@@ -51,7 +51,7 @@ public final class EmployeeController {
 	 * @param loginAccount ログインアカウント
 	 * @return ResultDto<String>
 	 */
-	@GetMapping(PgCrowdURIConstants.EMPLOYEE_CHECK)
+	@GetMapping(PgCrowdURLConstants.EMPLOYEE_CHECK)
 	@ResponseBody
 	public ResultDto<String> checkDuplicated(@RequestParam("loginAcct") final String loginAccount) {
 		return this.iEmployeeService.check(loginAccount);
@@ -63,7 +63,7 @@ public final class EmployeeController {
 	 * @param userId 社員ID
 	 * @return ResultDto<String>
 	 */
-	@DeleteMapping(PgCrowdURIConstants.EMPLOYEE_DELETE)
+	@DeleteMapping(PgCrowdURLConstants.EMPLOYEE_DELETE)
 	@ResponseBody
 	public ResultDto<String> deleteInfo(@PathVariable("userId") final Long userId) {
 		this.iEmployeeService.removeById(userId);
@@ -77,7 +77,7 @@ public final class EmployeeController {
 	 * @param keyword キーワード
 	 * @return ResultDto<Pagination<Employee>>
 	 */
-	@GetMapping(PgCrowdURIConstants.EMPLOYEE_PAGINATION)
+	@GetMapping(PgCrowdURLConstants.EMPLOYEE_PAGINATION)
 	@ResponseBody
 	public ResultDto<Pagination<EmployeeDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
@@ -92,7 +92,7 @@ public final class EmployeeController {
 	 * @param loginAccount ログインアカウント
 	 * @return ResultDto<String>
 	 */
-	@GetMapping(PgCrowdURIConstants.EMPLOYEE_RESTORE)
+	@GetMapping(PgCrowdURLConstants.EMPLOYEE_RESTORE)
 	@ResponseBody
 	public ResultDto<EmployeeDto> restoreInfo(@RequestParam("userId") final Long userId) {
 		final EmployeeDto employee = this.iEmployeeService.getEmployeeById(userId);
@@ -105,7 +105,7 @@ public final class EmployeeController {
 	 * @param employeeDto 社員情報DTO
 	 * @return ResultDto<String>
 	 */
-	@PostMapping(PgCrowdURIConstants.EMPLOYEE_INSERT)
+	@PostMapping(PgCrowdURLConstants.EMPLOYEE_INSERT)
 	@ResponseBody
 	public ResultDto<String> saveInfo(@RequestBody final EmployeeDto employeeDto) {
 		this.iEmployeeService.save(employeeDto);
@@ -118,7 +118,7 @@ public final class EmployeeController {
 	 * @param userId ユーザID
 	 * @return ModelAndView
 	 */
-	@GetMapping(PgCrowdURIConstants.EMPLOYEE_ADDITION)
+	@GetMapping(PgCrowdURLConstants.EMPLOYEE_ADDITION)
 	public ModelAndView toAddition() {
 		final List<RoleDto> employeeRolesById = this.iRoleService.getEmployeeRolesById(null);
 		final ModelAndView modelAndView = new ModelAndView("admin-addinfo");
@@ -132,7 +132,7 @@ public final class EmployeeController {
 	 * @param id 社員ID
 	 * @return ModelAndView
 	 */
-	@GetMapping(PgCrowdURIConstants.EMPLOYEE_EDITION)
+	@GetMapping(PgCrowdURLConstants.EMPLOYEE_EDITION)
 	public ModelAndView toEdition(@RequestParam("editId") final Long id) {
 		final EmployeeDto employee = this.iEmployeeService.getEmployeeById(id);
 		final List<RoleDto> employeeRolesById = this.iRoleService.getEmployeeRolesById(id);
@@ -148,7 +148,7 @@ public final class EmployeeController {
 	 * @param employeeDto 社員情報DTO
 	 * @return ResultDto<String>
 	 */
-	@PutMapping(PgCrowdURIConstants.EMPLOYEE_UPDATE)
+	@PutMapping(PgCrowdURLConstants.EMPLOYEE_UPDATE)
 	@ResponseBody
 	public ResultDto<String> updateInfo(@RequestBody final EmployeeDto employeeDto) {
 		this.iEmployeeService.update(employeeDto);
