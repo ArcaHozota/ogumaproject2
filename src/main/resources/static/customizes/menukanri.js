@@ -1,6 +1,5 @@
 $(document).ready(function() {
-	$("#adminKanri").removeClass('collapsed');
-	$("ul", $("#adminKanri")).show('fast');
+	$("#toMenu").css('color', '#7F0020');
 	let treeData = [
 		{
 			text: "社員管理",
@@ -8,10 +7,12 @@ $(document).ready(function() {
 			expanded: true,
 			nodes: [
 				{
+					id: "employeeAddTree",
 					text: "社員情報追加",
 					icon: "bi bi-person-fill-add"
 				},
 				{
+					id: "employeeQueryTree",
 					text: "社員情報一覧",
 					icon: "bi bi-person-vcard"
 				}
@@ -23,8 +24,31 @@ $(document).ready(function() {
 			expanded: true,
 			nodes: [
 				{
+					id: "roleQueryTree",
 					text: "役割情報一覧",
 					icon: "bi bi-person-vcard-fill"
+				}
+			]
+		},
+		{
+			text: "分類管理",
+			icon: "bi bi-list",
+			expanded: true,
+			nodes: [
+				{
+					id: "districtQueryTree",
+					text: "地域一覧",
+					icon: "bi bi-globe-americas"
+				},
+				{
+					id: "cityQueryTree",
+					text: "都市一覧",
+					icon: "bi bi-building-fill-check"
+				},
+				{
+					id: "stationQueryTree",
+					text: "駅一覧",
+					icon: "bi bi-buildings-fill"
 				}
 			]
 		}
@@ -37,20 +61,28 @@ $(document).ready(function() {
 		parentsMarginLeft: '1.25rem',
 		openNodeLinkOnNewTab: true
 	});
-});
-$("#treeView").on('click', '.list-group-item', function() {
-	let url;
-	let titleName = $(this).text();
-	switch (titleName) {
-		case "社員情報追加":
-			url = '/pgcrowd/employee/to/addition';
-			break;
-		case "社員情報一覧":
-			url = '/pgcrowd/employee/to/pages?pageNum=1';
-			break;
-		case "役割情報一覧":
-			url = '/pgcrowd/role/to/pages?pageNum=1';
-			break;
-	}
-	checkPermissionAndTransfer(url);
+	$("#employeeAddTree").on('click', function() {
+		let url = '/pgcrowd/employee/to/addition';
+		checkPermissionAndTransfer(url);
+	});
+	$("#employeeQueryTree").on('click', function() {
+		let url = '/pgcrowd/employee/to/pages?pageNum=1';
+		checkPermissionAndTransfer(url);
+	});
+	$("#roleQueryTree").on('click', function() {
+		let url = '/pgcrowd/role/to/pages?pageNum=1';
+		checkPermissionAndTransfer(url);
+	});
+	$("#districtQueryTree").on('click', function() {
+		let url = '/pgcrowd/category/to/districtPages';
+		checkPermissionAndTransfer(url);
+	});
+	$("#cityQueryTree").on('click', function() {
+		let url = '/pgcrowd/category/to/cityPages';
+		checkPermissionAndTransfer(url);
+	});
+	$("#stationQueryTree").on('click', function() {
+		let url = '/pgcrowd/category/to/stationPages';
+		checkPermissionAndTransfer(url);
+	});
 });

@@ -6,76 +6,12 @@
 	<div th:replace="~{commons::navibar}"></div>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-3 col-md-2 sidebar">
-				<div class="tree">
-					<ul style="padding-left: 0px;" class="list-group">
-						<li class="list-group-item list-group-item-action collapsed">
-							<a href="#" id="toMainmenu">
-								<i class="bi bi-speedometer"></i> コントロールパネル
-							</a>
-						</li>
-						<li class="list-group-item list-group-item-action collapsed" id="adminKanri">
-							<span><i class="bi bi-bank"></i> 権限管理</span>
-							<ul style="margin-top: 10px; display: none;">
-								<li style="height: 30px;">
-									<a href="user.html" id="toAdmin">
-										<i class="bi bi-people-fill"></i> ユーザメンテナンス
-									</a>
-								</li>
-								<li style="height: 30px;">
-									<a style="color: darkred;" href="role.html" id="toRole">
-										<i class="bi bi-list-check"></i> 役割メンテナンス
-									</a>
-								</li>
-								<li style="height: 30px;">
-									<a href="permission.html" id="toMenu">
-										<i class="bi bi-menu-down"></i> メニューメンテナンス
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="list-group-item list-group-item-action collapsed"><span><i
-									class="glyphicon glyphicon-ok"></i>事業レビュー<span class="badge"
-									style="float: right">3</span>
-								<ul style="margin-top: 10px; display: none;">
-									<li style="height: 30px;"><a href="auth_cert.html"><i
-												class="glyphicon glyphicon-check"></i>実名認証の見直し</a></li>
-									<li style="height: 30px;"><a href="auth_adv.html"><i
-												class="glyphicon glyphicon-check"></i>広告レビュー</a></li>
-									<li style="height: 30px;"><a href="auth_project.html"><i
-												class="glyphicon glyphicon-check"></i>プロジェクトのレビュー</a></li>
-								</ul>
-						</li>
-						<li class="list-group-item list-group-item-action collapsed"><span><i
-									class="glyphicon glyphicon-th-large"></i>ビジネス管理<span class="badge"
-									style="float: right">7</span></span>
-							<ul style="margin-top: 10px; display: none;">
-								<li style="height: 30px;"><a href="cert.html"><i
-											class="glyphicon glyphicon-picture"></i>資格維持</a></li>
-								<li style="height: 30px;"><a href="type.html"><i
-											class="glyphicon glyphicon-equalizer"></i>分類管理</a></li>
-								<li style="height: 30px;"><a href="process.html"><i
-											class="glyphicon glyphicon-random"></i>プロセス管理</a></li>
-								<li style="height: 30px;"><a href="advertisement.html"><i
-											class="glyphicon glyphicon-hdd"></i>広告管理</a></li>
-								<li style="height: 30px;"><a href="message.html"><i
-											class="glyphicon glyphicon-comment"></i>メッセージテンプレート</a></li>
-								<li style="height: 30px;"><a href="project_type.html"><i
-											class="glyphicon glyphicon-list"></i>セクションの種類</a></li>
-								<li style="height: 30px;"><a href="tag.html"><i
-											class="glyphicon glyphicon-tags"></i>プロジェクトタグ</a></li>
-							</ul>
-						</li>
-						<li class="list-group-item list-group-item-action collapsed"><a href="param.html"><i
-									class="glyphicon glyphicon-list-alt"></i>パラメータ管理</a></li>
-					</ul>
-				</div>
-			</div>
+			<div th:insert="~{commons::sidebar}"></div>
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-				<div class="card border-warning mb-3">
-					<div class="card-header text-bg-warning mb-3">
+				<div class="card border-naples mb-3">
+					<div class="card-header text-bg-naples mb-3">
 						<h5 class="card-title" style="padding-top: 8px;">
-							<i class="bi bi-grid-fill"></i> 役割メンテナンス
+							<i class="fa-solid fa-bars-staggered"></i> 役割メンテナンス
 						</h5>
 					</div>
 					<div class="card-body">
@@ -84,18 +20,18 @@
 								<div class="input-group col-md-5">
 									<input id="keywordInput" class="form-control" type="text"
 										placeholder="検索条件を入力してください">
-									<button id="searchBtn2" class="btn btn-secondary my-2 my-sm-0" type="button">
+									<button id="searchBtn2" class="btn btn-danger my-2 my-sm-0" type="button">
 										<i class="bi bi-search"></i> 検索
 									</button>
 								</div>
 							</form>
-							<div class="col-md-2 offset-md-5">
+							<div class="col-md-2 offset-md-4">
 								<button class="btn btn-warning my-2 my-sm-0" id="addRoleBtn">
-									<i class="bi bi-person-plus-fill"></i> 情報追加
+									<i class="fa-solid fa-id-badge"></i> 役割情報追加
 								</button>
 							</div>
 						</div>
-						<table class="table table-sm">
+						<table class="table table-sm table-hover">
 							<caption style="font-size: 10px;">役割情報一覧</caption>
 							<thead>
 								<tr class="table-warning">
@@ -125,7 +61,7 @@
 					<form class="form-horizontal">
 						<div class="form-group row">
 							<label for="nameInput" class="col-sm-3 col-form-label text-end">役割名</label>
-							<div class="col-sm-9">
+							<div class="col-sm-9" style="height: 60px;">
 								<input type="text" class="form-control" id="nameInput" placeholder="役割の名称">
 								<span class="form-text" style="font-size: 12px;"></span>
 							</div>
@@ -133,8 +69,12 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-					<button type="button" class="btn btn-primary" id="roleInfoSaveBtn">保存</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+						<i class="fa-solid fa-xmark"></i> 閉じる
+					</button>
+					<button type="button" class="btn btn-primary" id="roleInfoSaveBtn">
+						<i class="fa-solid fa-inbox"></i> 保存
+					</button>
 				</div>
 			</div>
 		</div>
@@ -143,19 +83,13 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">役割情報更新</h4>
+					<h4 class="modal-title">役割情報変更</h4>
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal">
 						<div class="form-group row">
-							<label for="idEdit" class="col-sm-3 col-form-label text-end">役割ID</label>
-							<div class="col-sm-9">
-								<p class="form-control" id="idEdit"></p>
-							</div>
-						</div>
-						<div class="form-group row">
 							<label for="nameEdit" class="col-sm-3 col-form-label text-end">役割名</label>
-							<div class="col-sm-9">
+							<div class="col-sm-9" style="height: 60px;">
 								<input type="text" class="form-control" id="nameEdit" placeholder="役割の名称">
 								<span class="form-text" style="font-size: 12px;"></span>
 							</div>
@@ -163,8 +97,12 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">閉じる</button>
-					<button type="button" class="btn btn-info" id="roleInfoChangeBtn">変更</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+						<i class="fa-solid fa-xmark"></i> 閉じる
+					</button>
+					<button type="button" class="btn btn-success" id="roleInfoChangeBtn">
+						<i class="fa-solid fa-leaf"></i> 更新
+					</button>
 				</div>
 			</div>
 		</div>
@@ -179,8 +117,12 @@
 					<ul id="authTree" class="ztree"></ul>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">閉じる</button>
-					<button type="button" class="btn btn-primary" id="authChangeBtn">変更</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+						<i class="fa-solid fa-xmark"></i> 閉じる
+					</button>
+					<button type="button" class="btn btn-success" id="authChangeBtn">
+						<i class="fa-solid fa-signature"></i> 変更
+					</button>
 				</div>
 			</div>
 		</div>

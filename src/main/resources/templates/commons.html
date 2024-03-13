@@ -6,16 +6,18 @@
 	<title>PGアプリケーション</title>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
-	<meta name="_csrf_token" th:content="${_csrf.token}" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf_token" th:content="${_csrf.token}">
 	<link rel="stylesheet" th:href="@{/static/bootstrap/css/bootstrap.min.css}">
 	<link rel="stylesheet" th:href="@{/static/css/font-awesome.min.css}">
 	<link rel="stylesheet" th:href="@{/static/css/login.css}">
 	<link rel="stylesheet" th:href="@{/static/css/main.css}">
 	<link rel="stylesheet" th:href="@{/static/ztree/metroStyle.css}">
 	<link rel="stylesheet" th:href="@{/static/treeview/css/bstreeview.css}">
+	<link rel="stylesheet" th:href="@{/static/css/customize.css}">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<link rel="shortcut icon" type="image/x-icon" th:href="@{/static/favicon.ico}">
 	<style>
 		.tree li {
@@ -28,12 +30,14 @@
 		}
 	</style>
 	<script type="text/javascript" th:src="@{/static/jquery/jquery-3.7.1.min.js}"></script>
+	<script type="text/javascript" th:src="@{/static/jquery/docs.min.js}"></script>
 	<script type="text/javascript" th:src="@{/static/bootstrap/js/bootstrap.bundle.min.js}"></script>
-	<script type="text/javascript" th:src="@{/static/script/docs.min.js}"></script>
+	<script type="text/javascript" th:src="@{/static/bootstrap/js/bootbox.all.min.js}"></script>
 	<script type="text/javascript" th:src="@{/static/layer/layer.js}"></script>
 	<script type="text/javascript" th:src="@{/static/ztree/jquery.ztree.all.js}"></script>
 	<script type="text/javascript" th:src="@{/static/treeview/js/bstreeview.js}"></script>
-	<script type="text/javascript" th:src="@{/static/customizes/mainmenu.js}"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script type="text/javascript" th:src="@{/static/customizes/commons.js}"></script>
 </head>
 
 <body>
@@ -51,32 +55,50 @@
 						</button>
 					</div>
 					<ul class="navbar-nav mb-2 mb-lg-0 d-flex" id="dropdown-info">
-						<li class="nav-item dropdown"> <a id="userinfo"
-								class="nav-link dropdown-toggle btn btn-success me-2" href="#" role="button"
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle btn btn-success me-2" href="#" role="button"
 								data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 13.34px;">
-								<i class="bi bi-person-fill"
+								<i class="fa-solid fa-user-circle"
 									th:text="${#authentication.getPrincipal().getOriginalAdmin().getUsername()}"></i></a>
 							<ul class="dropdown-menu dropdown-menu-end" role="menu">
-								<li><a class="dropdown-item" href="#"><i class="bi bi-gear-wide-connected"></i> 個人設定</a>
+								<li>
+									<a class="dropdown-item" href="#" id="toPersonal">
+										<i class="bi bi-gear-wide-connected"></i> 個人設定
+										<p th:text="${#authentication.getPrincipal().getOriginalAdmin().getId()}"
+											hidden />
+									</a>
 								</li>
-								<li><a class="dropdown-item" href="#"><i class="bi bi-chat-dots"></i> メッセージ</a></li>
+								<li>
+									<a class="dropdown-item" href="#">
+										<i class="bi bi-chat-dots"></i> メッセージ
+									</a>
+								</li>
 								<li>
 									<hr class="dropdown-divider">
 								</li>
-								<li><a id="logoutLink" class="dropdown-item" href="#"><i
-											class="bi bi-box-arrow-right"></i>
-										ログアウト</a></li>
+								<li>
+									<a id="logoutLink" class="dropdown-item" href="#">
+										<i class="fa-solid fa-right-from-bracket"></i> ログアウト
+									</a>
+								</li>
 								<form id="logoutForm" method="post" th:action="@{/pgcrowd/employee/logout}"
 									style="display:none;"></form>
 							</ul>
 						</li>
 					</ul>
-					<div class="d-flex"> <button id="button-help" type="button" class="btn btn-danger me-2"> <i
-								class="bi bi-info-circle"></i></button>
+					<div class="d-flex">
+						<button id="logoutBtn" type="button" class="btn btn-danger me-2">
+							<i class="fa-brands fa-ideal"></i>
+						</button>
 					</div>
 				</div>
 			</div>
 		</nav>
+	</div>
+	<div th:fragment="sidebar" th:remove="tag">
+		<div class="col-sm-3 col-md-2 sidebar">
+			<div class="tree" id="mainmenuTree"></div>
+		</div>
 	</div>
 </body>
 
