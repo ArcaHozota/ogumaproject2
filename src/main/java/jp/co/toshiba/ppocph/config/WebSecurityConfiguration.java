@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -53,18 +52,20 @@ public class WebSecurityConfiguration {
 	protected SecurityFilterChain filterChain(final HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 				.authorizeHttpRequests(authorize -> authorize.requestMatchers("/static/**").permitAll()
-						.requestMatchers(PgCrowdURLConstants.EMPLOYEE_TOPAGES, PgCrowdURLConstants.EMPLOYEE_PAGINATION)
+						.requestMatchers(PgCrowdURLConstants.URL_EMPLOYEE_TO_PAGES,
+								PgCrowdURLConstants.URL_EMPLOYEE_PAGINATION)
 						.hasAuthority("employee%retrieve")
-						.requestMatchers(PgCrowdURLConstants.EMPLOYEE_ADDITION, PgCrowdURLConstants.EMPLOYEE_EDITION,
-								PgCrowdURLConstants.EMPLOYEE_INSERT, PgCrowdURLConstants.EMPLOYEE_UPDATE)
-						.hasAuthority("employee%edition").requestMatchers(PgCrowdURLConstants.EMPLOYEE_DELETE)
+						.requestMatchers(PgCrowdURLConstants.URL_EMPLOYEE_ADDITION,
+								PgCrowdURLConstants.URL_EMPLOYEE_EDITION, PgCrowdURLConstants.URL_EMPLOYEE_INSERT,
+								PgCrowdURLConstants.URL_EMPLOYEE_UPDATE)
+						.hasAuthority("employee%edition").requestMatchers(PgCrowdURLConstants.URL_EMPLOYEE_DELETE)
 						.hasAuthority("employee%delete")
-						.requestMatchers(PgCrowdURLConstants.ROLE_TOPAGES, PgCrowdURLConstants.ROLE_PAGINATION,
-								PgCrowdURLConstants.ROLE_GETASSIGNED)
+						.requestMatchers(PgCrowdURLConstants.URL_ROLE_TO_PAGES, PgCrowdURLConstants.URL_ROLE_PAGINATION,
+								PgCrowdURLConstants.URL_ROLE_GET_ASSIGNED)
 						.hasAuthority("role%retrieve")
-						.requestMatchers(PgCrowdURLConstants.ROLE_INSERT, PgCrowdURLConstants.ROLE_UPDATE)
+						.requestMatchers(PgCrowdURLConstants.URL_ROLE_INSERT, PgCrowdURLConstants.URL_ROLE_UPDATE)
 						.hasAuthority("role%edition")
-						.requestMatchers(PgCrowdURLConstants.ROLE_ASSIGNMENT, PgCrowdURLConstants.ROLE_DELETE)
+						.requestMatchers(PgCrowdURLConstants.URL_ROLE_ASSIGNMENT, PgCrowdURLConstants.URL_ROLE_DELETE)
 						.hasAuthority("role%delete").anyRequest().authenticated())
 				.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository())).exceptionHandling(handling -> {
 					handling.authenticationEntryPoint((request, response, authenticationException) -> {
@@ -83,7 +84,7 @@ public class WebSecurityConfiguration {
 						.permitAll().usernameParameter("loginAcct").passwordParameter("userPswd"))
 				.logout(logout -> logout.logoutUrl("/pgcrowd/employee/logout")
 						.logoutSuccessUrl("/pgcrowd/employee/login"))
-				.httpBasic(Customizer.withDefaults());
+				.rememberMe(remember -> remember.key("pgcrowd").tokenValiditySeconds(1320));
 		log.info(PgCrowdConstants.MESSAGE_SPRING_SECURITY);
 		return httpSecurity.build();
 	}
