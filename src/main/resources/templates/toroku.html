@@ -28,6 +28,10 @@
 			display: none;
 		}
 
+		.container .login-box {
+			height: 550px;
+		}
+
 		.input-box .icon #eyeIcons {
 			position: absolute;
 			cursor: pointer;
@@ -60,6 +64,9 @@
 					<input type="date" name="dateOfBirth" id="dateOfBirth" required>
 				</div>
 				<button type="submit">Sign up</button>
+				<div class="register-link">
+					<a th:href="@{/pgcrowd/employee/login}">Already has an account? Login!</a>
+				</div>
 			</form>
 		</div>
 	</div>
