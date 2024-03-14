@@ -60,7 +60,8 @@ public class WebSecurityConfiguration {
 				.requestMatchers(PgCrowdURLConstants.URL_ROLE_TO_PAGES, PgCrowdURLConstants.URL_ROLE_PAGINATION,
 						PgCrowdURLConstants.URL_ROLE_GET_ASSIGNED)
 				.hasAuthority("role%retrieve")
-				.requestMatchers(PgCrowdURLConstants.URL_ROLE_INSERT, PgCrowdURLConstants.URL_ROLE_UPDATE)
+				.requestMatchers(PgCrowdURLConstants.URL_ROLE_INSERT, PgCrowdURLConstants.URL_ROLE_UPDATE,
+						PgCrowdURLConstants.URL_ROLE_AUTHLIST)
 				.hasAuthority("role%edition")
 				.requestMatchers(PgCrowdURLConstants.URL_ROLE_ASSIGNMENT, PgCrowdURLConstants.URL_ROLE_DELETE)
 				.hasAuthority("role%delete").anyRequest().authenticated())
