@@ -161,7 +161,6 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 	let authModal = new bootstrap.Modal($("#authEditModal"), {
 		backdrop: 'static'
 	});
-	authModal.show();
 	let ajaxReturn = $.ajax({
 		url: '/pgcrowd/role/authlists',
 		type: 'GET',
@@ -172,6 +171,7 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 		layer.msg(ajaxResult.responseJSON.message);
 		return;
 	}
+	authModal.show();
 	let setting = {
 		'data': {
 			'simpleData': {
@@ -245,10 +245,10 @@ function authPutSuccessFunction(result) {
 		layer.msg(result.message);
 	}
 }
-function zTreeOnNodeCreated(event, treeId, treeNode) { // 设置节点创建时的回调函数
-	let iconObj = $("#" + treeNode.tId + "_ico"); // 获取图标元素
+function zTreeOnNodeCreated(event, treeId, treeNode) {
+	let iconObj = $("#" + treeNode.tId + "_ico");
 	iconObj.removeClass("button ico_docu ico_open ico_close");
-	iconObj.append("<i class='bi'></i>"); // 添加bootstrap图标的基础类名
+	iconObj.append("<i class='bi'></i>");
 	let iconObjectId = Number(iconObj.attr("id").substring(9, 10));
 	if ($.isNumeric(iconObj.attr("id").substring(10, 11))) {
 		iconObjectId = Number(iconObj.attr("id").substring(9, 11));

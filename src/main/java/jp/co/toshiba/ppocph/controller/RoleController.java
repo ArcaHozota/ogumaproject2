@@ -63,7 +63,7 @@ public final class RoleController {
 	/**
 	 * 編集権限チェックする
 	 *
-	 * @return ResultDto<List<PgAuth>>
+	 * @return ResultDto<String>
 	 */
 	@GetMapping(PgCrowdURLConstants.URL_ROLE_CHECK_EDITION)
 	public ResultDto<String> checkEdition() {
