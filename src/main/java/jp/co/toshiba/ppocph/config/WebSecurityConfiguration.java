@@ -61,7 +61,7 @@ public class WebSecurityConfiguration {
 						PgCrowdURLConstants.URL_ROLE_GET_ASSIGNED)
 				.hasAuthority("role%retrieve")
 				.requestMatchers(PgCrowdURLConstants.URL_ROLE_INSERT, PgCrowdURLConstants.URL_ROLE_UPDATE,
-						PgCrowdURLConstants.URL_ROLE_AUTHLIST)
+						PgCrowdURLConstants.URL_ROLE_AUTHLIST, PgCrowdURLConstants.URL_ROLE_CHECK_EDITION)
 				.hasAuthority("role%edition")
 				.requestMatchers(PgCrowdURLConstants.URL_ROLE_ASSIGNMENT, PgCrowdURLConstants.URL_ROLE_DELETE)
 				.hasAuthority("role%delete").anyRequest().authenticated())
