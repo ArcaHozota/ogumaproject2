@@ -1,8 +1,8 @@
 package jp.co.toshiba.ppocph.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -63,7 +63,7 @@ public final class Employee implements Serializable {
 	 * 作成時間
 	 */
 	@Column(nullable = false)
-	private Date dateOfBirth;
+	private LocalDate dateOfBirth;
 
 	/**
 	 * 作成時間

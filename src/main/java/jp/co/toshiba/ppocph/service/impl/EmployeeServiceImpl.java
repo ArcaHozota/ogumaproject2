@@ -1,9 +1,8 @@
 package jp.co.toshiba.ppocph.service.impl;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
@@ -62,7 +61,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	/**
 	 * 日時フォマーター
 	 */
-	private final DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	@Override
 	public ResultDto<String> check(final String loginAccount) {
@@ -80,8 +79,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		return new EmployeeDto(employee.getId(), employee.getLoginAccount(), employee.getUsername(),
-				employee.getPassword(), employee.getEmail(), this.dateFormatter.format(employee.getDateOfBirth()),
-				null);
+				employee.getPassword(), employee.getEmail(), this.formatter.format(employee.getDateOfBirth()), null);
 	}
 
 	@Override
@@ -95,8 +93,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
 			final List<EmployeeDto> employeeDtos = pages.stream()
 					.map(item -> new EmployeeDto(item.getId(), item.getLoginAccount(), item.getUsername(),
-							item.getPassword(), item.getEmail(), this.dateFormatter.format(item.getDateOfBirth()),
-							null))
+							item.getPassword(), item.getEmail(), this.formatter.format(item.getDateOfBirth()), null))
 					.toList();
 			return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
@@ -112,7 +109,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
 		final List<EmployeeDto> employeeDtos = pages.stream()
 				.map(item -> new EmployeeDto(item.getId(), item.getLoginAccount(), item.getUsername(),
-						item.getPassword(), item.getEmail(), this.dateFormatter.format(item.getDateOfBirth()), null))
+						item.getPassword(), item.getEmail(), this.formatter.format(item.getDateOfBirth()), null))
 				.toList();
 		return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
@@ -135,11 +132,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setPassword(password);
 		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		employee.setCreatedTime(LocalDateTime.now());
-		try {
-			employee.setDateOfBirth(this.dateFormatter.parse(employeeDto.dateOfBirth()));
-		} catch (final ParseException e) {
-			e.printStackTrace();
-		}
+		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
 		this.employeeRepository.saveAndFlush(employee);
 		if ((employeeDto.roleId() != null) && !Objects.equals(Long.valueOf(0L), employeeDto.roleId())) {
 			final EmployeeRole employeeEx = new EmployeeRole();
@@ -162,11 +155,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		if (StringUtils.isNotEmpty(employeeDto.password())) {
 			employee.setPassword(this.encoder.encode(employeeDto.password()));
 		}
-		try {
-			employee.setDateOfBirth(this.dateFormatter.parse(employeeDto.dateOfBirth()));
-		} catch (final ParseException e) {
-			e.printStackTrace();
-		}
+		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
 		if (originalEntity.equals(employee) && Objects.equals(employeeRole.getRoleId(), employeeDto.roleId())) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
 		}
