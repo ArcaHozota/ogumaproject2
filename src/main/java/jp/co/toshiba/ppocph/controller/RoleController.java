@@ -61,6 +61,16 @@ public final class RoleController {
 	}
 
 	/**
+	 * 編集権限チェックする
+	 *
+	 * @return ResultDto<List<PgAuth>>
+	 */
+	@GetMapping(PgCrowdURLConstants.URL_ROLE_CHECK_EDITION)
+	public ResultDto<String> checkEdition() {
+		return ResultDto.successWithoutData();
+	}
+
+	/**
 	 * 役割情報削除
 	 *
 	 * @param roleId 役割ID
