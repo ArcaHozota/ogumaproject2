@@ -2,9 +2,9 @@ package jp.co.toshiba.ppocph.entity;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,31 +12,30 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 役割権限連携エンティティ
+ * 社員役割連携エンティティ
  *
  * @author ArkamaHozota
- * @since 5.76
+ * @since 5.00
  */
 @Entity
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-@Table(name = "role_auth")
-@IdClass(RoleIds.class)
-public final class RoleEx implements Serializable {
+@Table(name = "employee_role")
+public final class EmployeeRole implements Serializable {
 
-	private static final long serialVersionUID = 4995165208601855074L;
+	private static final long serialVersionUID = 8049959021603519067L;
 
 	/**
-	 * 権限ID
+	 * 社員ID
 	 */
 	@Id
-	private Long authId;
+	private Long employeeId;
 
 	/**
 	 * 役割ID
 	 */
-	@Id
+	@Column(nullable = false)
 	private Long roleId;
 }

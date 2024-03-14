@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.entity.Employee;
-import jp.co.toshiba.ppocph.entity.EmployeeEx;
-import jp.co.toshiba.ppocph.entity.RoleEx;
+import jp.co.toshiba.ppocph.entity.EmployeeRole;
+import jp.co.toshiba.ppocph.entity.RoleAuth;
 import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.repository.PgAuthRepository;
@@ -64,14 +64,14 @@ public final class PgCrowdUserDetailsService implements UserDetailsService {
 		final Employee employee = this.employeeRepository.findOne(specification1).orElseThrow(() -> {
 			throw new DisabledException(PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR1);
 		});
-		final Optional<EmployeeEx> roleOptional = this.employeeExRepository.findById(employee.getId());
+		final Optional<EmployeeRole> roleOptional = this.employeeExRepository.findById(employee.getId());
 		if (roleOptional.isEmpty()) {
 			throw new InsufficientAuthenticationException(PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR2);
 		}
-		final Specification<RoleEx> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("roleId"),
+		final Specification<RoleAuth> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("roleId"),
 				roleOptional.get().getRoleId());
-		final Specification<RoleEx> specification2 = Specification.where(where2);
-		final List<Long> authIds = this.roleExRepository.findAll(specification2).stream().map(RoleEx::getAuthId)
+		final Specification<RoleAuth> specification2 = Specification.where(where2);
+		final List<Long> authIds = this.roleExRepository.findAll(specification2).stream().map(RoleAuth::getAuthId)
 				.toList();
 		if (authIds.isEmpty()) {
 			throw new AuthenticationCredentialsNotFoundException(PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR3);

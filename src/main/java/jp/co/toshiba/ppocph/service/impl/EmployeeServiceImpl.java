@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
-import jp.co.toshiba.ppocph.entity.EmployeeEx;
+import jp.co.toshiba.ppocph.entity.EmployeeRole;
 import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
@@ -26,6 +26,7 @@ import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 import jp.co.toshiba.ppocph.utils.SecondBeanUtils;
+import jp.co.toshiba.ppocph.utils.SnowflakeUtils;
 import jp.co.toshiba.ppocph.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -108,18 +109,17 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public void save(final EmployeeDto employeeDto) {
-		final Long saibanId = this.employeeRepository.saiban();
 		final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(BCryptVersion.$2A, 7);
 		final String password = encoder.encode(employeeDto.password());
 		final Employee employee = new Employee();
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
-		employee.setId(saibanId);
+		employee.setId(SnowflakeUtils.snowflakeId());
 		employee.setPassword(password);
 		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		employee.setCreatedTime(LocalDateTime.now());
 		this.employeeRepository.saveAndFlush(employee);
-		if (employeeDto.roleId() != null && !Objects.equals(Long.valueOf(0L), employeeDto.roleId())) {
-			final EmployeeEx employeeEx = new EmployeeEx();
+		if ((employeeDto.roleId() != null) && !Objects.equals(Long.valueOf(0L), employeeDto.roleId())) {
+			final EmployeeRole employeeEx = new EmployeeRole();
 			employeeEx.setEmployeeId(employee.getId());
 			employeeEx.setRoleId(employeeDto.roleId());
 			this.employeeExRepository.saveAndFlush(employeeEx);
@@ -136,7 +136,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 				value.setRoleId(employeeDto.roleId());
 				this.employeeExRepository.saveAndFlush(value);
 			}, () -> {
-				final EmployeeEx employeeEx = new EmployeeEx();
+				final EmployeeRole employeeEx = new EmployeeRole();
 				employeeEx.setEmployeeId(employeeDto.id());
 				employeeEx.setRoleId(employeeDto.roleId());
 				this.employeeExRepository.saveAndFlush(employeeEx);

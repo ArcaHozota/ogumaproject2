@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.RoleDto;
-import jp.co.toshiba.ppocph.entity.EmployeeEx;
+import jp.co.toshiba.ppocph.entity.EmployeeRole;
 import jp.co.toshiba.ppocph.entity.PgAuth;
 import jp.co.toshiba.ppocph.entity.Role;
-import jp.co.toshiba.ppocph.entity.RoleEx;
+import jp.co.toshiba.ppocph.entity.RoleAuth;
 import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.PgAuthRepository;
@@ -86,15 +86,15 @@ public final class RoleServiceImpl implements IRoleService {
 	@Override
 	public ResultDto<String> doAssignment(final Map<String, List<Long>> paramMap) {
 		final Long roleId = paramMap.get(ROLE_ID).get(0);
-		final Specification<RoleEx> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_ID),
+		final Specification<RoleAuth> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_ID),
 				roleId);
-		final Specification<RoleEx> specification = Specification.where(where);
-		final List<RoleEx> findAll = this.roleExRepository.findAll(specification);
+		final Specification<RoleAuth> specification = Specification.where(where);
+		final List<RoleAuth> findAll = this.roleExRepository.findAll(specification);
 		this.roleExRepository.deleteAll(findAll);
 		final List<Long> authIds = paramMap.get("authIdArray");
-		final List<RoleEx> list = authIds.stream().filter(a -> (!Objects.equals(a, 1L) && !Objects.equals(a, 5L)))
+		final List<RoleAuth> list = authIds.stream().filter(a -> (!Objects.equals(a, 1L) && !Objects.equals(a, 5L)))
 				.map(item -> {
-					final RoleEx roleEx = new RoleEx();
+					final RoleAuth roleEx = new RoleAuth();
 					roleEx.setAuthId(item);
 					roleEx.setRoleId(roleId);
 					return roleEx;
@@ -109,10 +109,10 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public List<Long> getAuthIdListByRoleId(final Long roleId) {
-		final Specification<RoleEx> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_ID),
+		final Specification<RoleAuth> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_ID),
 				roleId);
-		final Specification<RoleEx> specification = Specification.where(where);
-		return this.roleExRepository.findAll(specification).stream().map(RoleEx::getAuthId).toList();
+		final Specification<RoleAuth> specification = Specification.where(where);
+		return this.roleExRepository.findAll(specification).stream().map(RoleAuth::getAuthId).toList();
 	}
 
 	@Override
@@ -134,7 +134,7 @@ public final class RoleServiceImpl implements IRoleService {
 		if (id == null) {
 			return secondRoles;
 		}
-		final Optional<EmployeeEx> roledOptional = this.employeeExRepository.findById(id);
+		final Optional<EmployeeRole> roledOptional = this.employeeExRepository.findById(id);
 		if (roledOptional.isEmpty()) {
 			return secondRoles;
 		}
@@ -176,10 +176,10 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public ResultDto<String> removeById(final Long roleId) {
-		final Specification<EmployeeEx> where = (root, query, criteriaBuilder) -> criteriaBuilder
+		final Specification<EmployeeRole> where = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get(ROLE_ID), roleId);
-		final Specification<EmployeeEx> specification = Specification.where(where);
-		final List<EmployeeEx> list = this.employeeExRepository.findAll(specification);
+		final Specification<EmployeeRole> specification = Specification.where(where);
+		final List<EmployeeRole> list = this.employeeExRepository.findAll(specification);
 		if (!list.isEmpty()) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_FORBIDDEN);
 		}

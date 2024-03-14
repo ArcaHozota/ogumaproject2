@@ -1,12 +1,12 @@
 package jp.co.toshiba.ppocph.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,6 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Table(name = "employee")
-@NamedQuery(name = "Employee.saiban", query = "select count(em.id) + 1 from Employee as em")
 public final class Employee implements Serializable {
 
 	private static final long serialVersionUID = -7478708453453699683L;
@@ -59,6 +58,12 @@ public final class Employee implements Serializable {
 	 */
 	@Column(nullable = false)
 	private String email;
+
+	/**
+	 * 作成時間
+	 */
+	@Column(nullable = false)
+	private Date dateOfBirth;
 
 	/**
 	 * 作成時間
