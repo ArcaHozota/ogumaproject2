@@ -118,7 +118,7 @@ public final class EmployeeController {
 	 * @param userId ユーザID
 	 * @return ModelAndView
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_ADDITION)
+	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_TO_ADDITION)
 	public ModelAndView toAddition() {
 		final List<RoleDto> employeeRolesById = this.iRoleService.getEmployeeRolesById(null);
 		final ModelAndView modelAndView = new ModelAndView("admin-addinfo");
@@ -132,7 +132,7 @@ public final class EmployeeController {
 	 * @param id 社員ID
 	 * @return ModelAndView
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_EDITION)
+	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_TO_EDITION)
 	public ModelAndView toEdition(@RequestParam("editId") final Long id) {
 		final EmployeeDto employee = this.iEmployeeService.getEmployeeById(id);
 		final List<RoleDto> employeeRolesById = this.iRoleService.getEmployeeRolesById(id);
