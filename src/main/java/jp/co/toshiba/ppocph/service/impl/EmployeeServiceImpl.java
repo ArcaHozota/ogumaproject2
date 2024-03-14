@@ -156,9 +156,8 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		});
 		final Employee originalEntity = new Employee();
 		SecondBeanUtils.copyNullableProperties(employee, originalEntity);
-		final EmployeeRole employeeRole = this.employeeExRepository.findById(employeeDto.id()).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
-		});
+		final EmployeeRole employeeRole = this.employeeExRepository.findById(employeeDto.id())
+				.orElseGet(EmployeeRole::new);
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setPassword(this.encoder.encode(employeeDto.password()));
 		try {

@@ -18,9 +18,9 @@ public final class PgCrowdURLConstants {
 
 	public static final String URL_EMPLOYEE_DELETE = "/pgcrowd/employee/delete/{userId}";
 
-	public static final String URL_EMPLOYEE_ADDITION = "/pgcrowd/employee/to/addition";
+	public static final String URL_EMPLOYEE_TO_ADDITION = "/pgcrowd/employee/to/addition";
 
-	public static final String URL_EMPLOYEE_EDITION = "/pgcrowd/employee/to/edition";
+	public static final String URL_EMPLOYEE_TO_EDITION = "/pgcrowd/employee/to/edition";
 
 	public static final String URL_EMPLOYEE_INSERT = "/pgcrowd/employee/infosave";
 
