@@ -1,6 +1,7 @@
 package jp.co.toshiba.ppocph.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -85,20 +86,25 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public ResultDto<String> doAssignment(final Map<String, List<Long>> paramMap) {
+		final Long[] idArray = { 1L, 5L, 9L, 12L };
 		final Long roleId = paramMap.get(ROLE_ID).get(0);
 		final Specification<RoleAuth> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_ID),
 				roleId);
 		final Specification<RoleAuth> specification = Specification.where(where);
-		final List<RoleAuth> findAll = this.roleExRepository.findAll(specification);
-		this.roleExRepository.deleteAll(findAll);
-		final List<Long> authIds = paramMap.get("authIdArray");
-		final List<RoleAuth> list = authIds.stream().filter(a -> (!Objects.equals(a, 1L) && !Objects.equals(a, 5L)))
-				.map(item -> {
-					final RoleAuth roleEx = new RoleAuth();
-					roleEx.setAuthId(item);
-					roleEx.setRoleId(roleId);
-					return roleEx;
-				}).toList();
+		final List<RoleAuth> list1 = this.roleExRepository.findAll(specification);
+		final List<Long> list2 = list1.stream().map(RoleAuth::getAuthId).sorted().toList();
+		final List<Long> authIds = paramMap.get("authIdArray").stream().filter(a -> !Arrays.asList(idArray).contains(a))
+				.sorted().toList();
+		if (list2.equals(authIds)) {
+			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
+		}
+		this.roleExRepository.deleteAll(list1);
+		final List<RoleAuth> list = authIds.stream().map(item -> {
+			final RoleAuth roleEx = new RoleAuth();
+			roleEx.setAuthId(item);
+			roleEx.setRoleId(roleId);
+			return roleEx;
+		}).toList();
 		try {
 			this.roleExRepository.saveAllAndFlush(list);
 		} catch (final Exception e) {
@@ -205,7 +211,12 @@ public final class RoleServiceImpl implements IRoleService {
 		final Role role = this.roleRepository.findById(roleDto.id()).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOTEXISTS);
 		});
+		final Role originalEntity = new Role();
+		SecondBeanUtils.copyNullableProperties(role, originalEntity);
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
+		if (originalEntity.equals(role)) {
+			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
+		}
 		try {
 			this.roleRepository.saveAndFlush(role);
 		} catch (final DataIntegrityViolationException e) {
