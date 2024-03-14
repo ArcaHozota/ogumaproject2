@@ -16,7 +16,7 @@ public final class PgCrowdURLConstants {
 
 	public static final String URL_EMPLOYEE_CHECK = "/pgcrowd/employee/check";
 
-	public static final String URL_EMPLOYEE_DELETE = "/pgcrowd/employee/delete/{userId}";
+	public static final String URL_EMPLOYEE_DELETE = "/pgcrowd/employee/delete/**";
 
 	public static final String URL_EMPLOYEE_TO_ADDITION = "/pgcrowd/employee/to/addition";
 
@@ -47,4 +47,6 @@ public final class PgCrowdURLConstants {
 	public static final String URL_ROLE_AUTHLIST = "/pgcrowd/role/authlists";
 
 	public static final String URL_ROLE_TO_PAGES = "/pgcrowd/role/to/pages";
+
+	public static final String URL_ROLE_CHECK_EDITION = "/pgcrowd/role/checkEdition";
 }
