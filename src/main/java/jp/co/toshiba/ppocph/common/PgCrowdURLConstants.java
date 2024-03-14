@@ -49,4 +49,10 @@ public final class PgCrowdURLConstants {
 	public static final String URL_ROLE_TO_PAGES = "/pgcrowd/role/to/pages";
 
 	public static final String URL_ROLE_CHECK_EDITION = "/pgcrowd/role/checkEdition";
+
+	public static final String URL_STATIC_RESOURCE = "/static/**";
+
+	public static final String URL_TO_SIGN_UP = "/pgcrowd/to/signup";
+
+	public static final String URL_DO_SIGN_UP = "/pgcrowd/do/signup";
 }

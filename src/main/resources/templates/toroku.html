@@ -28,10 +28,18 @@
 			display: none;
 		}
 
+		.input-box .icon {
+			position: absolute;
+			left: 8px;
+			color: #fff;
+			font-size: 18px;
+			line-height: 50px;
+		}
+
 		.input-box .icon #eyeIcons {
 			position: absolute;
 			cursor: pointer;
-			right: 30px;
+			right: 12px;
 			color: #fff;
 			font-size: 18px;
 			line-height: 50px;
@@ -43,13 +51,17 @@
 			<form th:action="@{/pgcrowd/employee/do/signup}" th:method="post" class="form-signin" role="form">
 				<h2>Sign Up</h2>
 				<div class="input-box">
-					<span class="icon"><i class="fa-solid fa-envelope"></i></span>
-					<input type="text" name="loginAcct" id="account" placeholder="Email or Account" required>
+					<span class="icon"><i class="fa-solid fa-envelope" id="envelopeIcn"></i></span>
+					<input type="text" name="loginAcct" id="emailAddress" placeholder="メールアドレスを入力してください" required>
 				</div>
 				<div class="input-box">
-					<span class="icon"><i class="fa-solid fa-lock"></i></span>
+					<span class="icon"><i class="fa-solid fa-key" id="passwordkeyIcn1"></i></span>
 					<span class="icon"><i class="fa-solid fa-eye" id="eyeIcons"></i></span>
-					<input type="password" name="userPswd" id="passwordIpt" placeholder="Password" required>
+					<input type="password" name="userPswd" id="passwordIpt1" placeholder="パスワードを入力してください" required>
+				</div>
+				<div class="input-box">
+					<span class="icon"><i class="fa-solid fa-key" id="passwordkeyIcn2"></i></span>
+					<input type="password" name="userPswd" id="passwordIpt2" placeholder="もう一度入力してください" required>
 				</div>
 				<button type="submit">Sign up</button>
 			</form>

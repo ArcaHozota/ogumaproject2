@@ -50,21 +50,27 @@ public class WebSecurityConfiguration {
 
 	@Bean
 	protected SecurityFilterChain filterChain(final HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.authorizeHttpRequests(authorize -> authorize.requestMatchers("/static/**").permitAll()
-				.requestMatchers(PgCrowdURLConstants.URL_EMPLOYEE_TO_PAGES, PgCrowdURLConstants.URL_EMPLOYEE_PAGINATION,
-						PgCrowdURLConstants.URL_EMPLOYEE_TO_EDITION, PgCrowdURLConstants.URL_EMPLOYEE_UPDATE)
-				.hasAuthority("employee%retrieve")
-				.requestMatchers(PgCrowdURLConstants.URL_EMPLOYEE_TO_ADDITION, PgCrowdURLConstants.URL_EMPLOYEE_INSERT)
-				.hasAuthority("employee%edition").requestMatchers(PgCrowdURLConstants.URL_EMPLOYEE_DELETE)
-				.hasAuthority("employee%delete")
-				.requestMatchers(PgCrowdURLConstants.URL_ROLE_TO_PAGES, PgCrowdURLConstants.URL_ROLE_PAGINATION,
-						PgCrowdURLConstants.URL_ROLE_GET_ASSIGNED)
-				.hasAuthority("role%retrieve")
-				.requestMatchers(PgCrowdURLConstants.URL_ROLE_INSERT, PgCrowdURLConstants.URL_ROLE_UPDATE,
-						PgCrowdURLConstants.URL_ROLE_AUTHLIST, PgCrowdURLConstants.URL_ROLE_CHECK_EDITION)
-				.hasAuthority("role%edition")
-				.requestMatchers(PgCrowdURLConstants.URL_ROLE_ASSIGNMENT, PgCrowdURLConstants.URL_ROLE_DELETE)
-				.hasAuthority("role%delete").anyRequest().authenticated())
+		httpSecurity
+				.authorizeHttpRequests(authorize -> authorize
+						.requestMatchers(PgCrowdURLConstants.URL_STATIC_RESOURCE, PgCrowdURLConstants.URL_DO_SIGN_UP,
+								PgCrowdURLConstants.URL_TO_SIGN_UP)
+						.permitAll()
+						.requestMatchers(PgCrowdURLConstants.URL_EMPLOYEE_TO_PAGES,
+								PgCrowdURLConstants.URL_EMPLOYEE_PAGINATION,
+								PgCrowdURLConstants.URL_EMPLOYEE_TO_EDITION, PgCrowdURLConstants.URL_EMPLOYEE_UPDATE)
+						.hasAuthority("employee%retrieve")
+						.requestMatchers(PgCrowdURLConstants.URL_EMPLOYEE_TO_ADDITION,
+								PgCrowdURLConstants.URL_EMPLOYEE_INSERT)
+						.hasAuthority("employee%edition").requestMatchers(PgCrowdURLConstants.URL_EMPLOYEE_DELETE)
+						.hasAuthority("employee%delete")
+						.requestMatchers(PgCrowdURLConstants.URL_ROLE_TO_PAGES, PgCrowdURLConstants.URL_ROLE_PAGINATION,
+								PgCrowdURLConstants.URL_ROLE_GET_ASSIGNED)
+						.hasAuthority("role%retrieve")
+						.requestMatchers(PgCrowdURLConstants.URL_ROLE_INSERT, PgCrowdURLConstants.URL_ROLE_UPDATE,
+								PgCrowdURLConstants.URL_ROLE_AUTHLIST, PgCrowdURLConstants.URL_ROLE_CHECK_EDITION)
+						.hasAuthority("role%edition")
+						.requestMatchers(PgCrowdURLConstants.URL_ROLE_ASSIGNMENT, PgCrowdURLConstants.URL_ROLE_DELETE)
+						.hasAuthority("role%delete").anyRequest().authenticated())
 				.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository())).exceptionHandling(handling -> {
 					handling.authenticationEntryPoint((request, response, authenticationException) -> {
 						final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.UNAUTHORIZED.value(),
