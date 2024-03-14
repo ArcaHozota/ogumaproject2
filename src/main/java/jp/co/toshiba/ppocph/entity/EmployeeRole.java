@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Table(name = "employee_role")
+@EqualsAndHashCode(callSuper = false)
 public final class EmployeeRole implements Serializable {
 
 	private static final long serialVersionUID = 8049959021603519067L;
