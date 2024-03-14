@@ -159,7 +159,9 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final EmployeeRole employeeRole = this.employeeExRepository.findById(employeeDto.id())
 				.orElseGet(EmployeeRole::new);
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
-		employee.setPassword(this.encoder.encode(employeeDto.password()));
+		if (StringUtils.isNotEmpty(employeeDto.password())) {
+			employee.setPassword(this.encoder.encode(employeeDto.password()));
+		}
 		try {
 			employee.setDateOfBirth(this.dateFormatter.parse(employeeDto.dateOfBirth()));
 		} catch (final ParseException e) {

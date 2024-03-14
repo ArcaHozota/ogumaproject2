@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$("#toCategory").css('color', '#7F0020');
+	$("#toCategory").css('color', '#006400');
 	let treeData = [
 		{
 			text: "分類管理",
