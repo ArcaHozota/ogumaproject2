@@ -28,18 +28,10 @@
 			display: none;
 		}
 
-		.input-box .icon {
-			position: absolute;
-			left: 8px;
-			color: #fff;
-			font-size: 18px;
-			line-height: 50px;
-		}
-
 		.input-box .icon #eyeIcons {
 			position: absolute;
 			cursor: pointer;
-			right: 12px;
+			right: 30px;
 			color: #fff;
 			font-size: 18px;
 			line-height: 50px;
@@ -51,17 +43,21 @@
 			<form th:action="@{/pgcrowd/employee/do/signup}" th:method="post" class="form-signin" role="form">
 				<h2>Sign Up</h2>
 				<div class="input-box">
-					<span class="icon"><i class="fa-solid fa-envelope" id="envelopeIcn"></i></span>
-					<input type="text" name="loginAcct" id="emailAddress" placeholder="メールアドレスを入力してください" required>
+					<span class="icon"><i class="fa-solid fa-envelope"></i></span>
+					<input type="text" name="loginAcct" id="emailAddress" placeholder="Email address" required>
 				</div>
 				<div class="input-box">
 					<span class="icon"><i class="fa-solid fa-key" id="passwordkeyIcn1"></i></span>
 					<span class="icon"><i class="fa-solid fa-eye" id="eyeIcons"></i></span>
-					<input type="password" name="userPswd" id="passwordIpt1" placeholder="パスワードを入力してください" required>
+					<input type="password" name="userPswd" id="passwordIpt1" placeholder="Password" required>
 				</div>
 				<div class="input-box">
 					<span class="icon"><i class="fa-solid fa-key" id="passwordkeyIcn2"></i></span>
-					<input type="password" name="userPswd" id="passwordIpt2" placeholder="もう一度入力してください" required>
+					<input type="password" name="userPswd" id="passwordIpt2" placeholder="Re-enter password" required>
+				</div>
+				<div class="input-box">
+					<span class="icon"><i class="fa-solid fa-calendar"></i></span>
+					<input type="date" name="dateOfBirth" id="dateOfBirth" required>
 				</div>
 				<button type="submit">Sign up</button>
 			</form>
@@ -72,12 +68,14 @@
 			let flag = 0;
 			$("#eyeIcons").on('click', function () {
 				if (flag === 0) {
-					$("#passwordIpt").attr('type', 'text');
+					$("#passwordIpt1").attr('type', 'text');
+					$("#passwordIpt2").attr('type', 'text');
 					$(this).removeClass('fa-eye');
 					$(this).addClass('fa-eye-slash');
 					flag = 1;
 				} else {
-					$("#passwordIpt").attr('type', 'password');
+					$("#passwordIpt1").attr('type', 'password');
+					$("#passwordIpt2").attr('type', 'password');
 					$(this).removeClass('fa-eye-slash');
 					$(this).addClass('fa-eye');
 					flag = 0;
