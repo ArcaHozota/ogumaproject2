@@ -24,7 +24,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Table(name = "role_auth")
-@IdClass(RoleIds.class)
+@IdClass(RoleAuthIds.class)
 @EqualsAndHashCode(callSuper = false)
 public final class RoleAuth implements Serializable {
 

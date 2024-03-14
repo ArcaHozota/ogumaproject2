@@ -11,7 +11,7 @@ import lombok.Data;
  * @since 5.76
  */
 @Data
-public final class RoleIds implements Serializable {
+public final class RoleAuthIds implements Serializable {
 
 	private static final long serialVersionUID = -297785511370318383L;
 

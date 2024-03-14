@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import jp.co.toshiba.ppocph.entity.RoleAuth;
+import jp.co.toshiba.ppocph.entity.RoleAuthIds;
 
 /**
  * 役割権限連携リポジトリ
@@ -11,5 +12,5 @@ import jp.co.toshiba.ppocph.entity.RoleAuth;
  * @author ArkamaHozota
  * @since 5.77
  */
-public interface RoleExRepository extends JpaRepository<RoleAuth, Long>, JpaSpecificationExecutor<RoleAuth> {
+public interface RoleExRepository extends JpaRepository<RoleAuth, RoleAuthIds>, JpaSpecificationExecutor<RoleAuth> {
 }
