@@ -75,7 +75,7 @@ public class WebSecurityConfiguration {
 					});
 					handling.accessDeniedHandler((request, response, accessDeniedException) -> {
 						final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.FORBIDDEN.value(),
-								PgCrowdConstants.MESSAGE_SPRINGSECURITY_REQUIREDAUTH);
+								PgCrowdConstants.MESSAGE_SPRINGSECURITY_REQUIRED_AUTH);
 						PgCrowdUtils.renderString(response, responseResult);
 					});
 				})

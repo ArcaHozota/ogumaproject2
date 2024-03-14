@@ -31,6 +31,8 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 	protected void addResourceHandlers(final ResourceHandlerRegistry registry) {
 		log.info(PgCrowdConstants.MESSAGE_SPRING_MAPPER);
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+		registry.addResourceHandler("/pgcrowd/category/static/image/flags/**")
+				.addResourceLocations("classpath:/static/image/flags/");
 	}
 
 	/**
@@ -45,6 +47,9 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 		registry.addViewController("/pgcrowd/menu/initial").setViewName("menukanri");
 		registry.addViewController("/pgcrowd/employee/to/pages").setViewName("admin-pages");
 		registry.addViewController("/pgcrowd/role/to/pages").setViewName("role-pages");
+		registry.addViewController("/pgcrowd/category/initial").setViewName("categorykanri");
+		registry.addViewController("/pgcrowd/category/to/districtPages").setViewName("district-pages");
+		registry.addViewController("/pgcrowd/category/to/cityPages").setViewName("city-pages");
 	}
 
 	/**

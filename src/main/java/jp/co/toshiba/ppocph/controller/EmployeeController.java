@@ -151,7 +151,6 @@ public final class EmployeeController {
 	@PutMapping(PgCrowdURLConstants.URL_EMPLOYEE_UPDATE)
 	@ResponseBody
 	public ResultDto<String> updateInfo(@RequestBody final EmployeeDto employeeDto) {
-		this.iEmployeeService.update(employeeDto);
-		return ResultDto.successWithoutData();
+		return this.iEmployeeService.update(employeeDto);
 	}
 }

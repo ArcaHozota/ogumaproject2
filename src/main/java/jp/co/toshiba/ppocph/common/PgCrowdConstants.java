@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PgCrowdConstants {
 
-	public static final Integer DEFAULT_PAGE_SIZE = 7;
+	public static final Integer DEFAULT_PAGE_SIZE = 5;
 
 	public static final String MESSAGE_SPRING_MVCCONVERTOR = "拡張メッセージコンバーターの設置は完了しました。";
 
@@ -34,13 +34,15 @@ public final class PgCrowdConstants {
 
 	public static final String ATTRNAME_AUTHORITY_ROLE = "role";
 
-	public static final String LOGIC_DELETE_FLG = "removed";
+	public static final String LOGIC_DELETE_FLG = "rejected";
 
-	public static final String LOGIC_DELETE_INITIAL = "visible";
+	public static final String LOGIC_DELETE_INITIAL = "approved";
 
 	public static final String MESSAGE_STRING_INVALIDATE = "Invalid password string";
 
 	public static final String MESSAGE_STRING_NOTLOGIN = "ログインしてください";
+
+	public static final String MESSAGE_STRING_NOCHANGE = "変更なし";
 
 	public static final String MESSAGE_STRING_PROHIBITED = "ユーザは存在しません、もう一度やり直してください";
 
@@ -50,13 +52,15 @@ public final class PgCrowdConstants {
 
 	public static final String MESSAGE_STRING_FORBIDDEN2 = "権限付与にエラーが発生しました。";
 
-	public static final String MESSAGE_STRING_FATALERROR = "システムエラーが発生しました。";
+	public static final String MESSAGE_STRING_FATAL_ERROR = "システムエラーが発生しました。";
 
 	public static final String MESSAGE_STRING_DUPLICATED = "ログインアカウントがすでに存在します。";
 
 	public static final String MESSAGE_ROLE_NAME_DUPLICATED = "役割名称がすでに存在します。";
 
-	public static final String MESSAGE_SPRINGSECURITY_REQUIREDAUTH = "当ユーザの相応的な権限がないのでリクエスト拒否。";
+	public static final String MESSAGE_CITY_NAME_DUPLICATED = "都市名称がすでに存在します。";
+
+	public static final String MESSAGE_SPRINGSECURITY_REQUIRED_AUTH = "当ユーザの相応的な権限がないのでリクエスト拒否。";
 
 	public static final String MESSAGE_SPRINGSECURITY_LOGINERROR1 = "当ユーザは存在しません。もう一度やり直してください。";
 

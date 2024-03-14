@@ -6,5 +6,6 @@ package jp.co.toshiba.ppocph.dto;
  * @author ArkamaHozota
  * @since 3.57
  */
-public record EmployeeDto(Long id, String loginAccount, String username, String password, String email, Long roleId) {
+public record EmployeeDto(Long id, String loginAccount, String username, String password, String email,
+		String dateOfBirth, Long roleId) {
 }

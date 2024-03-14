@@ -1,5 +1,8 @@
 package jp.co.toshiba.ppocph.service.impl;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -11,11 +14,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
+import jp.co.toshiba.ppocph.config.PgCrowdPasswordEncoder;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.entity.EmployeeRole;
@@ -51,6 +54,16 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	 */
 	private final EmployeeExRepository employeeExRepository;
 
+	/**
+	 * エンコーダ
+	 */
+	private final PasswordEncoder encoder = new PgCrowdPasswordEncoder();
+
+	/**
+	 * 日時フォマーター
+	 */
+	private final DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
 	@Override
 	public ResultDto<String> check(final String loginAccount) {
 		final Employee employee = new Employee();
@@ -64,10 +77,11 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	@Override
 	public EmployeeDto getEmployeeById(final Long id) {
 		final Employee employee = this.employeeRepository.findById(id).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		return new EmployeeDto(employee.getId(), employee.getLoginAccount(), employee.getUsername(),
-				employee.getPassword(), employee.getEmail(), null);
+				employee.getPassword(), employee.getEmail(), this.dateFormatter.format(employee.getDateOfBirth()),
+				null);
 	}
 
 	@Override
@@ -79,8 +93,11 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		if (StringUtils.isEmpty(keyword)) {
 			final Specification<Employee> specification = Specification.where(status);
 			final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
-			final List<EmployeeDto> employeeDtos = pages.stream().map(item -> new EmployeeDto(item.getId(),
-					item.getLoginAccount(), item.getUsername(), item.getPassword(), item.getEmail(), null)).toList();
+			final List<EmployeeDto> employeeDtos = pages.stream()
+					.map(item -> new EmployeeDto(item.getId(), item.getLoginAccount(), item.getUsername(),
+							item.getPassword(), item.getEmail(), this.dateFormatter.format(item.getDateOfBirth()),
+							null))
+					.toList();
 			return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = StringUtils.getDetailKeyword(keyword);
@@ -93,8 +110,10 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final Specification<Employee> specification = Specification.where(status)
 				.and(Specification.anyOf(where1, where2, where3));
 		final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
-		final List<EmployeeDto> employeeDtos = pages.stream().map(item -> new EmployeeDto(item.getId(),
-				item.getLoginAccount(), item.getUsername(), item.getPassword(), item.getEmail(), null)).toList();
+		final List<EmployeeDto> employeeDtos = pages.stream()
+				.map(item -> new EmployeeDto(item.getId(), item.getLoginAccount(), item.getUsername(),
+						item.getPassword(), item.getEmail(), this.dateFormatter.format(item.getDateOfBirth()), null))
+				.toList();
 		return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
 
@@ -109,14 +128,18 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public void save(final EmployeeDto employeeDto) {
-		final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(BCryptVersion.$2A, 7);
-		final String password = encoder.encode(employeeDto.password());
+		final String password = this.encoder.encode(employeeDto.password());
 		final Employee employee = new Employee();
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setId(SnowflakeUtils.snowflakeId());
 		employee.setPassword(password);
 		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		employee.setCreatedTime(LocalDateTime.now());
+		try {
+			employee.setDateOfBirth(this.dateFormatter.parse(employeeDto.dateOfBirth()));
+		} catch (final ParseException e) {
+			e.printStackTrace();
+		}
 		this.employeeRepository.saveAndFlush(employee);
 		if ((employeeDto.roleId() != null) && !Objects.equals(Long.valueOf(0L), employeeDto.roleId())) {
 			final EmployeeRole employeeEx = new EmployeeRole();
@@ -127,27 +150,26 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public void update(final EmployeeDto employeeDto) {
+	public ResultDto<String> update(final EmployeeDto employeeDto) {
 		final Employee employee = this.employeeRepository.findById(employeeDto.id()).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
-		if (!Objects.equals(employeeDto.roleId(), 0L)) {
-			this.employeeExRepository.findById(employeeDto.id()).ifPresentOrElse(value -> {
-				value.setRoleId(employeeDto.roleId());
-				this.employeeExRepository.saveAndFlush(value);
-			}, () -> {
-				final EmployeeRole employeeEx = new EmployeeRole();
-				employeeEx.setEmployeeId(employeeDto.id());
-				employeeEx.setRoleId(employeeDto.roleId());
-				this.employeeExRepository.saveAndFlush(employeeEx);
-			});
-		}
+		final Employee originalEntity = new Employee();
+		SecondBeanUtils.copyNullableProperties(employee, originalEntity);
+		final EmployeeRole employeeRole = this.employeeExRepository.findById(employeeDto.id()).orElseThrow(() -> {
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+		});
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
-		if (StringUtils.isNotEmpty(employeeDto.password())) {
-			final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(BCryptVersion.$2A, 7);
-			final String encoded = encoder.encode(employeeDto.password());
-			employee.setPassword(encoded);
+		employee.setPassword(this.encoder.encode(employeeDto.password()));
+		try {
+			employee.setDateOfBirth(this.dateFormatter.parse(employeeDto.dateOfBirth()));
+		} catch (final ParseException e) {
+			e.printStackTrace();
+		}
+		if (originalEntity.equals(employee) && Objects.equals(employeeRole.getRoleId(), employeeDto.roleId())) {
+			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
 		}
 		this.employeeRepository.saveAndFlush(employee);
+		return ResultDto.successWithoutData();
 	}
 }
