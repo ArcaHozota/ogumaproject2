@@ -55,7 +55,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	/**
 	 * Randomナンバー
 	 */
-	private final Random random = new Random();
+	private static final Random RANDOM = new Random();
 
 	/**
 	 * 社員管理リポジトリ
@@ -178,9 +178,9 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final char[] cr1 = stry.toCharArray();
 		final char[] cr2 = stry.toLowerCase().toCharArray();
 		final StringBuilder builder = new StringBuilder();
-		builder.append(cr1[this.random.nextInt(cr1.length)]);
+		builder.append(cr1[EmployeeServiceImpl.RANDOM.nextInt(cr1.length)]);
 		for (int i = 0; i < 7; i++) {
-			builder.append(cr2[this.random.nextInt(cr2.length)]);
+			builder.append(cr2[EmployeeServiceImpl.RANDOM.nextInt(cr2.length)]);
 		}
 		return builder.toString();
 	}
