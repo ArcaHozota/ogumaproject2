@@ -37,3 +37,22 @@ $(document).ready(function() {
 		$("#accountIpt").text(email);
 	}
 });
+$("#torokuBtn").on('click', function() {
+	let signupData = JSON.stringify({
+		'email': $("#emailIpt").val(),
+		'password': $("#passwordIpt1").val(),
+		'dateOfBirth': $("#dateOfBirthIpt").val()
+	});
+	let header = $('meta[name=_csrf_header]').attr('content');
+	let token = $('meta[name=_csrf_token]').attr('content');
+	$.ajax({
+		url: '/pgcrowd/do/signup',
+		type: 'POST',
+		data: signupData,
+		headers: {
+			[header]: token
+		},
+		dataType: 'json',
+		contentType: 'application/json;charset=UTF-8'
+	});
+});

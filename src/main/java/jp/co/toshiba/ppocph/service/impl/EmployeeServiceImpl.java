@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -42,6 +44,11 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EmployeeServiceImpl implements IEmployeeService {
+
+	/**
+	 * Randomナンバー
+	 */
+	private final Random random = new Random();
 
 	/**
 	 * 社員管理リポジトリ
@@ -114,6 +121,18 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
 
+	private String getRandomStr() {
+		final String stry = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		final char[] cr1 = stry.toCharArray();
+		final char[] cr2 = stry.toLowerCase().toCharArray();
+		final StringBuilder builder = new StringBuilder();
+		builder.append(cr1[this.random.nextInt(cr1.length)]);
+		for (int i = 0; i < 7; i++) {
+			builder.append(cr2[this.random.nextInt(cr2.length)]);
+		}
+		return builder.toString();
+	}
+
 	@Override
 	public void removeById(final Long userId) {
 		final Employee employee = this.employeeRepository.findById(userId).orElseThrow(() -> {
@@ -140,6 +159,28 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			employeeEx.setRoleId(employeeDto.roleId());
 			this.employeeExRepository.saveAndFlush(employeeEx);
 		}
+	}
+
+	@Override
+	public Boolean toroku(final EmployeeDto employeeDto) {
+		final Specification<Employee> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("email"),
+				employeeDto.email());
+		final Specification<Employee> specification = Specification.where(where);
+		final Optional<Employee> findOne = this.employeeRepository.findOne(specification);
+		if (findOne.isPresent()) {
+			return Boolean.FALSE;
+		}
+		final String password = this.encoder.encode(employeeDto.password());
+		final Employee employee = new Employee();
+		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
+		employee.setId(SnowflakeUtils.snowflakeId());
+		employee.setLoginAccount(this.getRandomStr());
+		employee.setPassword(password);
+		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		employee.setCreatedTime(LocalDateTime.now());
+		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
+		this.employeeRepository.saveAndFlush(employee);
+		return Boolean.TRUE;
 	}
 
 	@Override

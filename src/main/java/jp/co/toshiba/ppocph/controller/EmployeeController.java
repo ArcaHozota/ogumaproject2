@@ -143,6 +143,18 @@ public final class EmployeeController {
 	}
 
 	/**
+	 * 社員登録
+	 *
+	 * @param employeeDto 社員情報DTO
+	 * @return ResultDto<String>
+	 */
+	@PostMapping(PgCrowdURLConstants.URL_DO_SIGN_UP)
+	public ModelAndView toroku(@RequestBody final EmployeeDto employeeDto) {
+		this.iEmployeeService.toroku(employeeDto);
+		return null;
+	}
+
+	/**
 	 * 情報更新
 	 *
 	 * @param employeeDto 社員情報DTO

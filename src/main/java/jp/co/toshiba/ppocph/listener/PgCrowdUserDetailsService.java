@@ -60,7 +60,9 @@ public final class PgCrowdUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("loginAccount"), username);
-		final Specification<Employee> specification1 = Specification.where(where1);
+		final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("email"), username);
+		final Specification<Employee> specification1 = Specification.where(where1).or(where2);
 		final Employee employee = this.employeeRepository.findOne(specification1).orElseThrow(() -> {
 			throw new DisabledException(PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR1);
 		});
@@ -68,9 +70,9 @@ public final class PgCrowdUserDetailsService implements UserDetailsService {
 		if (roleOptional.isEmpty()) {
 			throw new InsufficientAuthenticationException(PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR2);
 		}
-		final Specification<RoleAuth> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("roleId"),
-				roleOptional.get().getRoleId());
-		final Specification<RoleAuth> specification2 = Specification.where(where2);
+		final Specification<RoleAuth> where3 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("roleId"), roleOptional.get().getRoleId());
+		final Specification<RoleAuth> specification2 = Specification.where(where3);
 		final List<Long> authIds = this.roleExRepository.findAll(specification2).stream().map(RoleAuth::getAuthId)
 				.toList();
 		if (authIds.isEmpty()) {

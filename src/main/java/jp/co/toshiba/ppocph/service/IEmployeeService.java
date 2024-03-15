@@ -51,6 +51,14 @@ public interface IEmployeeService {
 	void save(EmployeeDto employeeDto);
 
 	/**
+	 * 社員登録
+	 *
+	 * @param employeeDto 社員情報DTO
+	 * @return Boolean
+	 */
+	Boolean toroku(EmployeeDto employeeDto);
+
+	/**
 	 * 社員情報行更新
 	 *
 	 * @param employeeDto 社員情報転送クラス
