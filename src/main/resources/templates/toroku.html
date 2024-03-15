@@ -32,7 +32,7 @@
 			height: 550px;
 		}
 
-		.input-box .icon #eyeIcons {
+		.input-box .icon #eyeIcons2 {
 			position: absolute;
 			cursor: pointer;
 			right: 30px;
@@ -48,11 +48,11 @@
 				<h2>Sign Up</h2>
 				<div class="input-box">
 					<span class="icon"><i class="fa-solid fa-envelope"></i></span>
-					<input type="text" name="loginAcct" id="emailAddress" placeholder="Email address" required>
+					<input type="text" name="loginAcct" id="emailIpt" placeholder="Email address" required>
 				</div>
 				<div class="input-box">
 					<span class="icon"><i class="fa-solid fa-key" id="passwordkeyIcn1"></i></span>
-					<span class="icon"><i class="fa-solid fa-eye" id="eyeIcons"></i></span>
+					<span class="icon"><i class="fa-solid fa-eye" id="eyeIcons2"></i></span>
 					<input type="password" name="userPswd" id="passwordIpt1" placeholder="Password" required>
 				</div>
 				<div class="input-box">
@@ -61,7 +61,7 @@
 				</div>
 				<div class="input-box">
 					<span class="icon"><i class="fa-solid fa-calendar"></i></span>
-					<input type="date" name="dateOfBirth" id="dateOfBirth" required>
+					<input type="date" name="dateOfBirth" id="dateOfBirthIpt" required>
 				</div>
 				<button type="submit">Sign up</button>
 				<div class="register-link">
@@ -70,26 +70,7 @@
 			</form>
 		</div>
 	</div>
-	<script type="text/javascript">
-		$(document).ready(function () {
-			let flag = 0;
-			$("#eyeIcons").on('click', function () {
-				if (flag === 0) {
-					$("#passwordIpt1").attr('type', 'text');
-					$("#passwordIpt2").attr('type', 'text');
-					$(this).removeClass('fa-eye');
-					$(this).addClass('fa-eye-slash');
-					flag = 1;
-				} else {
-					$("#passwordIpt1").attr('type', 'password');
-					$("#passwordIpt2").attr('type', 'password');
-					$(this).removeClass('fa-eye-slash');
-					$(this).addClass('fa-eye');
-					flag = 0;
-				}
-			});
-		});
-	</script>
+	<script type="text/javascript" th:src="@{/static/customizes/logintoroku.js}"></script>
 </body>
 
 </html>
