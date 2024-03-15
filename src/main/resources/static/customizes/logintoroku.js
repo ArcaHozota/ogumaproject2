@@ -42,15 +42,21 @@ $(document).ready(function() {
 	}
 });
 $("#torokuBtn").on('click', function() {
+	let password01 = $("#passwordIpt1").val();
+	let password02 = $("#passwordIpt2").val();
+	if (password01 !== password02) {
+		layer.msg('入力したパスワードが不一致です。');
+		return;
+	}
 	let signupData = JSON.stringify({
 		'email': $("#emailIpt").val(),
-		'password': $("#passwordIpt1").val(),
+		'password': password01,
 		'dateOfBirth': $("#dateOfBirthIpt").val()
 	});
 	let header = $('meta[name=_csrf_header]').attr('content');
 	let token = $('meta[name=_csrf_token]').attr('content');
 	$.ajax({
-		url: '/pgcrowd/do/signup',
+		url: '/pgcrowd/employee/do/signup',
 		type: 'POST',
 		data: signupData,
 		headers: {

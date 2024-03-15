@@ -54,5 +54,5 @@ public final class PgCrowdURLConstants {
 
 	public static final String URL_TO_SIGN_UP = "/pgcrowd/to/signup";
 
-	public static final String URL_DO_SIGN_UP = "/pgcrowd/do/signup";
+	public static final String URL_DO_SIGN_UP = "/pgcrowd/employee/do/signup";
 }
