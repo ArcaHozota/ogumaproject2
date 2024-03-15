@@ -63,4 +63,12 @@ public final class PgCrowdURLConstants {
 	public static final String URL_LOG_OUT = "/pgcrowd/employee/logout";
 
 	public static final String URL_TO_MAINMENU = "/pgcrowd/to/mainmenu";
+
+	public static final String URL_MENU_INITIAL = "/pgcrowd/menu/initial";
+
+	public static final String URL_CATEGORY_INITIAL = "/pgcrowd/category/initial";
+
+	public static final String URL_TO_DISTRICT_PAGES = "/pgcrowd/category/to/districtPages";
+
+	public static final String URL_TO_CITY_PAGES = "/pgcrowd/category/to/cityPages";
 }

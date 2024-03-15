@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
+import jp.co.toshiba.ppocph.common.PgCrowdURLConstants;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -42,15 +43,15 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	public void addViewControllers(final ViewControllerRegistry registry) {
-		registry.addViewController("/pgcrowd/to/signup").setViewName("toroku");
-		registry.addViewController("/pgcrowd/employee/login").setViewName("admin-login");
-		registry.addViewController("/pgcrowd/to/mainmenu").setViewName("mainmenu");
-		registry.addViewController("/pgcrowd/menu/initial").setViewName("menukanri");
-		registry.addViewController("/pgcrowd/employee/to/pages").setViewName("admin-pages");
-		registry.addViewController("/pgcrowd/role/to/pages").setViewName("role-pages");
-		registry.addViewController("/pgcrowd/category/initial").setViewName("categorykanri");
-		registry.addViewController("/pgcrowd/category/to/districtPages").setViewName("district-pages");
-		registry.addViewController("/pgcrowd/category/to/cityPages").setViewName("city-pages");
+		registry.addViewController(PgCrowdURLConstants.URL_TO_SIGN_UP).setViewName("toroku");
+		registry.addViewController(PgCrowdURLConstants.URL_TO_LOGIN).setViewName("admin-login");
+		registry.addViewController(PgCrowdURLConstants.URL_TO_MAINMENU).setViewName("mainmenu");
+		registry.addViewController(PgCrowdURLConstants.URL_MENU_INITIAL).setViewName("menukanri");
+		registry.addViewController(PgCrowdURLConstants.URL_EMPLOYEE_TO_PAGES).setViewName("admin-pages");
+		registry.addViewController(PgCrowdURLConstants.URL_ROLE_TO_PAGES).setViewName("role-pages");
+		registry.addViewController(PgCrowdURLConstants.URL_CATEGORY_INITIAL).setViewName("categorykanri");
+		registry.addViewController(PgCrowdURLConstants.URL_TO_DISTRICT_PAGES).setViewName("district-pages");
+		registry.addViewController(PgCrowdURLConstants.URL_TO_CITY_PAGES).setViewName("city-pages");
 	}
 
 	/**
