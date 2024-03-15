@@ -28,9 +28,13 @@ $(document).ready(function() {
 			flag = 0;
 		}
 	});
-	let message = $("#errorMsg").text();
-	if (message !== '') {
-		layer.msg(message);
+	let message1 = $("#errorMsg").text();
+	if (message1 !== '') {
+		layer.msg(message1);
+	}
+	let message2 = $("#torokuMsg").text();
+	if (message2 !== '') {
+		layer.msg(message2);
 	}
 	let email = $("#emailAddress").text();
 	if (email !== '') {

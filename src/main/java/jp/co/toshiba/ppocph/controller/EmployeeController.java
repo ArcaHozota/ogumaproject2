@@ -150,8 +150,15 @@ public final class EmployeeController {
 	 */
 	@PostMapping(PgCrowdURLConstants.URL_DO_SIGN_UP)
 	public ModelAndView toroku(@RequestBody final EmployeeDto employeeDto) {
-		this.iEmployeeService.toroku(employeeDto);
-		return null;
+		final Boolean toroku = this.iEmployeeService.toroku(employeeDto);
+		final ModelAndView mAndView = new ModelAndView("admin-login");
+		if (Boolean.FALSE.equals(toroku)) {
+			mAndView.addObject("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_FAILURE);
+		} else {
+			mAndView.addObject("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_SUCCESS);
+		}
+		mAndView.addObject("registeredEmail", employeeDto.email());
+		return mAndView;
 	}
 
 	/**

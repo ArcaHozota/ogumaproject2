@@ -73,4 +73,8 @@ public final class PgCrowdConstants {
 	public static final String DEFAULT_ROLE_NAME = "---------------------------";
 
 	public static final String MESSAGE_SPRING_SECURITY = "スプリングセキュリティ作動中。";
+
+	public static final String MESSAGE_TOROKU_SUCCESS = "登録成功しました！メールとパスワードでログインしてください。";
+
+	public static final String MESSAGE_TOROKU_FAILURE = "当メールは既に登録されまして直接ログインしてください。";
 }
