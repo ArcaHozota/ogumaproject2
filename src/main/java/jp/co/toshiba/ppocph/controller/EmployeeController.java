@@ -148,7 +148,7 @@ public final class EmployeeController {
 	 * @param employeeDto 社員情報DTO
 	 * @return ResultDto<String>
 	 */
-	@PostMapping(PgCrowdURLConstants.URL_EMPLOYEE_SIGN_UP)
+	@PostMapping(PgCrowdURLConstants.URL_DO_SIGN_UP)
 	public ModelAndView toroku(@RequestParam("email") final String email,
 			@RequestParam("password") final String password, @RequestParam("dateOfBirth") final String dateOfBirth) {
 		final EmployeeDto employeeDto = new EmployeeDto(null, null, null, password, email, dateOfBirth, null);

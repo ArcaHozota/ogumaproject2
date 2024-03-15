@@ -53,7 +53,7 @@ public class WebSecurityConfiguration {
 		httpSecurity
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers(PgCrowdURLConstants.URL_STATIC_RESOURCE, PgCrowdURLConstants.URL_TO_SIGN_UP,
-								PgCrowdURLConstants.URL_EMPLOYEE_SIGN_UP)
+								PgCrowdURLConstants.URL_DO_SIGN_UP)
 						.permitAll()
 						.requestMatchers(PgCrowdURLConstants.URL_EMPLOYEE_TO_PAGES,
 								PgCrowdURLConstants.URL_EMPLOYEE_PAGINATION,
@@ -83,12 +83,14 @@ public class WebSecurityConfiguration {
 						PgCrowdUtils.renderString(response, responseResult);
 					});
 				})
-				.formLogin(formLogin -> formLogin.loginPage("/pgcrowd/employee/login")
-						.loginProcessingUrl("/pgcrowd/employee/do/login").defaultSuccessUrl("/pgcrowd/to/mainmenu")
-						.permitAll().usernameParameter("loginAcct").passwordParameter("userPswd"))
-				.logout(logout -> logout.logoutUrl("/pgcrowd/employee/logout")
-						.logoutSuccessUrl("/pgcrowd/employee/login"))
-				.rememberMe(remember -> remember.key("pgcrowd").tokenValiditySeconds(1320));
+				.formLogin(formLogin -> formLogin.loginPage(PgCrowdURLConstants.URL_TO_LOGIN)
+						.loginProcessingUrl(PgCrowdURLConstants.URL_DO_LOGIN)
+						.defaultSuccessUrl(PgCrowdURLConstants.URL_TO_MAINMENU).permitAll()
+						.usernameParameter("loginAcct").passwordParameter("userPswd"))
+				.logout(logout -> logout.logoutUrl(PgCrowdURLConstants.URL_LOG_OUT)
+						.logoutSuccessUrl(PgCrowdURLConstants.URL_TO_LOGIN))
+				.rememberMe(
+						remember -> remember.key(PgCrowdConstants.DEFAULT_PROJECT_TOKEN).tokenValiditySeconds(1320));
 		log.info(PgCrowdConstants.MESSAGE_SPRING_SECURITY);
 		return httpSecurity.build();
 	}

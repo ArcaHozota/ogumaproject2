@@ -52,7 +52,15 @@ public final class PgCrowdURLConstants {
 
 	public static final String URL_STATIC_RESOURCE = "/static/**";
 
-	public static final String URL_TO_SIGN_UP = "/pgcrowd/to/signup";
+	public static final String URL_TO_SIGN_UP = "/pgcrowd/employee/to/signup";
 
-	public static final String URL_EMPLOYEE_SIGN_UP = "/pgcrowd/employee/toroku";
+	public static final String URL_DO_SIGN_UP = "/pgcrowd/employee/toroku";
+
+	public static final String URL_TO_LOGIN = "/pgcrowd/employee/login";
+
+	public static final String URL_DO_LOGIN = "/pgcrowd/employee/do/login";
+
+	public static final String URL_LOG_OUT = "/pgcrowd/employee/logout";
+
+	public static final String URL_TO_MAINMENU = "/pgcrowd/to/mainmenu";
 }
