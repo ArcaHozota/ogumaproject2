@@ -38,7 +38,7 @@ $(document).ready(function() {
 	}
 	let email = $("#emailAddress").text();
 	if (email !== '') {
-		$("#accountIpt").text(email);
+		$("#accountIpt").val(email);
 	}
 });
 $("#torokuBtn").on('click', function() {
