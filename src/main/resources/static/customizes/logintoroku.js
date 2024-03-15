@@ -48,21 +48,5 @@ $("#torokuBtn").on('click', function() {
 		layer.msg('入力したパスワードが不一致です。');
 		return;
 	}
-	let signupData = JSON.stringify({
-		'email': $("#emailIpt").val(),
-		'password': password01,
-		'dateOfBirth': $("#dateOfBirthIpt").val()
-	});
-	let header = $('meta[name=_csrf_header]').attr('content');
-	let token = $('meta[name=_csrf_token]').attr('content');
-	$.ajax({
-		url: '/pgcrowd/employee/do/signup',
-		type: 'POST',
-		data: signupData,
-		headers: {
-			[header]: token
-		},
-		dataType: 'json',
-		contentType: 'application/json;charset=UTF-8'
-	});
+	$("#torokuForm").submit();
 });
