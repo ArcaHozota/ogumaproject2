@@ -42,6 +42,13 @@ $(document).ready(function() {
 	}
 });
 $("#torokuBtn").on('click', function() {
+	let inputArrays = ["#emailIpt", "#passwordIpt1", "#passwordIpt2", "#dateOfBirthIpt"];
+	for (const element of inputArrays) {
+		if ($(element).val().trim() === "") {
+			layer.msg('入力しなかった情報があります。');
+			return;
+		}
+	}
 	let password01 = $("#passwordIpt1").val();
 	let password02 = $("#passwordIpt2").val();
 	if (password01 !== password02) {
