@@ -148,7 +148,7 @@ public final class EmployeeController {
 	 * @param employeeDto 社員情報DTO
 	 * @return ResultDto<String>
 	 */
-	@PostMapping(PgCrowdURLConstants.URL_DO_SIGN_UP)
+	@PostMapping(PgCrowdURLConstants.URL_EMPLOYEE_SIGN_UP)
 	public ModelAndView toroku(@RequestBody final EmployeeDto employeeDto) {
 		final Boolean toroku = this.iEmployeeService.toroku(employeeDto);
 		final ModelAndView mAndView = new ModelAndView("admin-login");

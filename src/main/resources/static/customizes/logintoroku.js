@@ -46,7 +46,7 @@ $("#torokuBtn").on('click', function() {
 	let password02 = $("#passwordIpt2").val();
 	if (password01 !== password02) {
 		layer.msg('入力したパスワードが不一致です。');
-		return;
+	} else {
+		$("#torokuForm").submit();
 	}
-	$("#torokuForm").submit();
 });
