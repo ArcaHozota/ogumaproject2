@@ -1,7 +1,5 @@
 /* Google Font */
-@import
-	url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap")
-	;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
 
 /* General CSS */
 * {
@@ -58,8 +56,9 @@ h2 {
 	transition: .5s
 }
 
-input:focus ~ label, input:valid ~ label {
-	top: -5px;
+input:focus~label,
+input:valid~label {
+	top: -12px;
 }
 
 .inputbox input {
@@ -73,7 +72,7 @@ input:focus ~ label, input:valid ~ label {
 	color: #fff;
 }
 
-.input-box ion-icon {
+.inputbox ion-icon {
 	position: absolute;
 	right: 8px;
 	color: #fff;
