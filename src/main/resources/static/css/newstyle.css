@@ -85,19 +85,21 @@ input:valid~label {
 	font-size: .9em;
 	color: #fff;
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 }
 
 .forget label input {
 	margin-right: 3px;
 }
 
-.forget label a {
+.forget a {
 	color: #fff;
+	right: 8px;
 	text-decoration: none;
 }
 
-.forget label a:hover {
+.forget a:hover {
+	color: #81d8d0;
 	text-decoration: underline;
 }
 
@@ -106,6 +108,7 @@ button {
 	height: 40px;
 	border-radius: 40px;
 	background: #fff;
+	color: #006400;
 	border: none;
 	outline: none;
 	cursor: pointer;
