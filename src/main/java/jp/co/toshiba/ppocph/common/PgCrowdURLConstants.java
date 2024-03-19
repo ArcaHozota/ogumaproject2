@@ -70,5 +70,9 @@ public final class PgCrowdURLConstants {
 
 	public static final String URL_TO_DISTRICT_PAGES = "/pgcrowd/category/to/districtPages";
 
+	public static final String URL_DISTRICT_PAGINATION = "/pgcrowd/district/pagination";
+
+	public static final String URL_DISTRICT_UPDATE = "/pgcrowd/district/infoupd";
+
 	public static final String URL_TO_CITY_PAGES = "/pgcrowd/category/to/cityPages";
 }

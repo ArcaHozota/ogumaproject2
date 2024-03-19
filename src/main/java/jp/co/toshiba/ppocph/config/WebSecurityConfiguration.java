@@ -70,7 +70,9 @@ public class WebSecurityConfiguration {
 								PgCrowdURLConstants.URL_ROLE_AUTHLIST, PgCrowdURLConstants.URL_ROLE_CHECK_EDITION)
 						.hasAuthority("role%edition")
 						.requestMatchers(PgCrowdURLConstants.URL_ROLE_ASSIGNMENT, PgCrowdURLConstants.URL_ROLE_DELETE)
-						.hasAuthority("role%delete").anyRequest().authenticated())
+						.hasAuthority("role%delete").requestMatchers(PgCrowdURLConstants.URL_DISTRICT_PAGINATION)
+						.hasAuthority("district%retrieve").requestMatchers(PgCrowdURLConstants.URL_DISTRICT_UPDATE)
+						.hasAuthority("district%edition").anyRequest().authenticated())
 				.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository())).exceptionHandling(handling -> {
 					handling.authenticationEntryPoint((request, response, authenticationException) -> {
 						final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.UNAUTHORIZED.value(),
