@@ -99,7 +99,7 @@ public final class RoleController {
 	 */
 	@GetMapping(PgCrowdURLConstants.URL_ROLE_GET_ASSIGNED)
 	public ResultDto<List<Long>> getAssignedAuth(@RequestParam("fuyoId") final Long roleId) {
-		final List<Long> authIds = this.iRoleService.getAuthIdListByRoleId(roleId);
+		final List<Long> authIds = this.iRoleService.getAuthIdsById(roleId);
 		return ResultDto.successWithData(authIds);
 	}
 

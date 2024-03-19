@@ -114,9 +114,9 @@ public final class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public List<Long> getAuthIdListByRoleId(final Long roleId) {
+	public List<Long> getAuthIdsById(final Long id) {
 		final Specification<RoleAuth> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_ID),
-				roleId);
+				id);
 		final Specification<RoleAuth> specification = Specification.where(where);
 		return this.roleExRepository.findAll(specification).stream().map(RoleAuth::getAuthId).toList();
 	}
@@ -127,7 +127,15 @@ public final class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public List<RoleDto> getEmployeeRolesById(final Long id) {
+	public RoleDto getRoleById(final Long id) {
+		final Role role = this.roleRepository.findById(id).orElseThrow(() -> {
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOT_EXISTS);
+		});
+		return new RoleDto(role.getId(), role.getName());
+	}
+
+	@Override
+	public List<RoleDto> getRolesByEmployeeId(final Long employeeId) {
 		final List<RoleDto> secondRoles = new ArrayList<>();
 		final RoleDto secondRole = new RoleDto(0L, PgCrowdConstants.DEFAULT_ROLE_NAME);
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
@@ -137,10 +145,10 @@ public final class RoleServiceImpl implements IRoleService {
 				.map(item -> new RoleDto(item.getId(), item.getName())).toList();
 		secondRoles.add(secondRole);
 		secondRoles.addAll(roleDtos);
-		if (id == null) {
+		if (employeeId == null) {
 			return secondRoles;
 		}
-		final Optional<EmployeeRole> roledOptional = this.employeeExRepository.findById(id);
+		final Optional<EmployeeRole> roledOptional = this.employeeExRepository.findById(employeeId);
 		if (roledOptional.isEmpty()) {
 			return secondRoles;
 		}
@@ -181,16 +189,16 @@ public final class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public ResultDto<String> removeById(final Long roleId) {
+	public ResultDto<String> removeById(final Long id) {
 		final Specification<EmployeeRole> where = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get(ROLE_ID), roleId);
+				.equal(root.get(ROLE_ID), id);
 		final Specification<EmployeeRole> specification = Specification.where(where);
 		final List<EmployeeRole> list = this.employeeExRepository.findAll(specification);
 		if (!list.isEmpty()) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_FORBIDDEN);
 		}
-		final Role role = this.roleRepository.findById(roleId).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOTEXISTS);
+		final Role role = this.roleRepository.findById(id).orElseThrow(() -> {
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		role.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
 		this.roleRepository.saveAndFlush(role);
@@ -209,7 +217,7 @@ public final class RoleServiceImpl implements IRoleService {
 	@Override
 	public ResultDto<String> update(final RoleDto roleDto) {
 		final Role role = this.roleRepository.findById(roleDto.id()).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOTEXISTS);
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOT_EXISTS);
 		});
 		final Role originalEntity = new Role();
 		SecondBeanUtils.copyNullableProperties(role, originalEntity);

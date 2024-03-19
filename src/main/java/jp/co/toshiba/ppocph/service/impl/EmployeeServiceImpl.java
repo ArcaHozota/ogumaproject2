@@ -125,8 +125,10 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final Employee employee = this.employeeRepository.findById(id).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
+		final EmployeeRole employeeRole = this.employeeExRepository.findById(id).orElseGet(EmployeeRole::new);
 		return new EmployeeDto(employee.getId(), employee.getLoginAccount(), employee.getUsername(),
-				employee.getPassword(), employee.getEmail(), this.formatter.format(employee.getDateOfBirth()), null);
+				employee.getPassword(), employee.getEmail(), this.formatter.format(employee.getDateOfBirth()),
+				employeeRole.getRoleId());
 	}
 
 	@Override

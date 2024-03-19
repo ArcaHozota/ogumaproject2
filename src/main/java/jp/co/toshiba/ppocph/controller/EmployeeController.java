@@ -121,7 +121,7 @@ public final class EmployeeController {
 	 */
 	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_TO_ADDITION)
 	public ModelAndView toAddition() {
-		final List<RoleDto> employeeRolesById = this.iRoleService.getEmployeeRolesById(null);
+		final List<RoleDto> employeeRolesById = this.iRoleService.getRolesByEmployeeId(null);
 		final ModelAndView modelAndView = new ModelAndView("admin-addinfo");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, employeeRolesById);
 		return modelAndView;
@@ -134,12 +134,20 @@ public final class EmployeeController {
 	 * @return ModelAndView
 	 */
 	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_TO_EDITION)
-	public ModelAndView toEdition(@RequestParam("editId") final Long id) {
+	public ModelAndView toEdition(@RequestParam("editId") final Long id, @RequestParam("userId") final Long userId) {
+		final Boolean checkEdition = this.iEmployeeService.checkEdition(userId);
 		final EmployeeDto employee = this.iEmployeeService.getEmployeeById(id);
-		final List<RoleDto> employeeRolesById = this.iRoleService.getEmployeeRolesById(id);
+		if (Boolean.FALSE.equals(checkEdition)) {
+			final ModelAndView modelAndView = new ModelAndView("admin-editinfo2");
+			final RoleDto roleDto = this.iRoleService.getRoleById(employee.roleId());
+			modelAndView.addObject(PgCrowdConstants.ATTRNAME_EDITED_INFO, employee);
+			modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, roleDto);
+			return modelAndView;
+		}
 		final ModelAndView modelAndView = new ModelAndView("admin-editinfo");
+		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(id);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EDITED_INFO, employee);
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, employeeRolesById);
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, roleDtos);
 		return modelAndView;
 	}
 

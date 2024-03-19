@@ -35,10 +35,10 @@ public interface IRoleService {
 	/**
 	 * 付与された権限を表示する
 	 *
-	 * @param roleId 役割ID
+	 * @param id 役割ID
 	 * @return List<Long>
 	 */
-	List<Long> getAuthIdListByRoleId(Long roleId);
+	List<Long> getAuthIdsById(Long id);
 
 	/**
 	 * 権限リストを取得する
@@ -48,12 +48,20 @@ public interface IRoleService {
 	List<PgAuth> getAuthlist();
 
 	/**
+	 * IDによって役割情報を検索する
+	 *
+	 * @param id 役割ID
+	 * @return RoleDto
+	 */
+	RoleDto getRoleById(Long id);
+
+	/**
 	 * 社員役割連携情報を取得する
 	 *
-	 * @param id 社員ID
+	 * @param employeeId 社員ID
 	 * @return List<String>
 	 */
-	List<RoleDto> getEmployeeRolesById(Long id);
+	List<RoleDto> getRolesByEmployeeId(Long employeeId);
 
 	/**
 	 * キーワードによって役割情報を取得する
@@ -67,10 +75,10 @@ public interface IRoleService {
 	/**
 	 * 役割IDによって情報を削除する
 	 *
-	 * @param roleId 役割ID
+	 * @param id 役割ID
 	 * @return ResultDto<String>
 	 */
-	ResultDto<String> removeById(Long roleId);
+	ResultDto<String> removeById(Long id);
 
 	/**
 	 * 役割情報追加
