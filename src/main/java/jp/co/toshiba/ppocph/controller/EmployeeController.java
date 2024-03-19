@@ -161,7 +161,7 @@ public final class EmployeeController {
 	public ModelAndView toroku(@RequestParam("email") final String email,
 			@RequestParam("password") final String password, @RequestParam("dateOfBirth") final String dateOfBirth) {
 		final EmployeeDto employeeDto = new EmployeeDto(null, null, null, password, email, dateOfBirth, null);
-		final Boolean toroku = this.iEmployeeService.toroku(employeeDto);
+		final Boolean toroku = this.iEmployeeService.register(employeeDto);
 		final ModelAndView mAndView = new ModelAndView("admin-login");
 		if (Boolean.FALSE.equals(toroku)) {
 			mAndView.addObject("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_FAILURE);

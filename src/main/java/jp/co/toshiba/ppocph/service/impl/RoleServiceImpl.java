@@ -122,7 +122,7 @@ public final class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public List<PgAuth> getAuthlist() {
+	public List<PgAuth> getAuthList() {
 		return this.pgAuthRepository.findAll().stream().sorted(Comparator.comparing(PgAuth::getId)).toList();
 	}
 

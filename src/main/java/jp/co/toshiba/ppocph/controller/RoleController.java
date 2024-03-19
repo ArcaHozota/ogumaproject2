@@ -44,7 +44,7 @@ public final class RoleController {
 	 */
 	@GetMapping(PgCrowdURLConstants.URL_ROLE_AUTHLIST)
 	public ResultDto<List<PgAuth>> authlists() {
-		final List<PgAuth> list = this.iRoleService.getAuthlist();
+		final List<PgAuth> list = this.iRoleService.getAuthList();
 		return ResultDto.successWithData(list);
 	}
 

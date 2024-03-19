@@ -45,7 +45,7 @@ public interface IRoleService {
 	 *
 	 * @return List<PgAuth>
 	 */
-	List<PgAuth> getAuthlist();
+	List<PgAuth> getAuthList();
 
 	/**
 	 * IDによって役割情報を検索する

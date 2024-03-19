@@ -216,7 +216,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public Boolean toroku(final EmployeeDto employeeDto) {
+	public Boolean register(final EmployeeDto employeeDto) {
 		final Specification<Employee> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("email"),
 				employeeDto.email());
 		final Specification<Employee> specification = Specification.where(where);
