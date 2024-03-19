@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.EmployeeRole;
-import jp.co.toshiba.ppocph.entity.PgAuth;
+import jp.co.toshiba.ppocph.entity.Authority;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.entity.RoleAuth;
 import jp.co.toshiba.ppocph.exception.PgCrowdException;
@@ -122,8 +122,8 @@ public final class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public List<PgAuth> getAuthList() {
-		return this.pgAuthRepository.findAll().stream().sorted(Comparator.comparing(PgAuth::getId)).toList();
+	public List<Authority> getAuthList() {
+		return this.pgAuthRepository.findAll().stream().sorted(Comparator.comparing(Authority::getId)).toList();
 	}
 
 	@Override

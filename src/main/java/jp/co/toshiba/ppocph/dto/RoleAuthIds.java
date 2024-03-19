@@ -1,4 +1,4 @@
-package jp.co.toshiba.ppocph.entity;
+package jp.co.toshiba.ppocph.dto;
 
 import java.io.Serializable;
 

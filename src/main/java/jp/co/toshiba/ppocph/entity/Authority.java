@@ -25,7 +25,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Table(name = "auth")
 @EqualsAndHashCode(callSuper = false)
-public final class PgAuth implements Serializable {
+public final class Authority implements Serializable {
 
 	private static final long serialVersionUID = -1152271767975364197L;
 

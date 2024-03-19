@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jp.co.toshiba.ppocph.common.PgCrowdURLConstants;
 import jp.co.toshiba.ppocph.dto.RoleDto;
-import jp.co.toshiba.ppocph.entity.PgAuth;
+import jp.co.toshiba.ppocph.entity.Authority;
 import jp.co.toshiba.ppocph.service.IRoleService;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
@@ -43,8 +43,8 @@ public final class RoleController {
 	 * @return ResultDto<List<PgAuth>>
 	 */
 	@GetMapping(PgCrowdURLConstants.URL_ROLE_AUTHLIST)
-	public ResultDto<List<PgAuth>> authlists() {
-		final List<PgAuth> list = this.iRoleService.getAuthList();
+	public ResultDto<List<Authority>> authlists() {
+		final List<Authority> list = this.iRoleService.getAuthList();
 		return ResultDto.successWithData(list);
 	}
 
