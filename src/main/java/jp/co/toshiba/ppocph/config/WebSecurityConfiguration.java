@@ -1,5 +1,7 @@
 package jp.co.toshiba.ppocph.config;
 
+import java.util.UUID;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -91,8 +93,8 @@ public class WebSecurityConfiguration {
 						.usernameParameter("loginAcct").passwordParameter("userPswd"))
 				.logout(logout -> logout.logoutUrl(PgCrowdURLConstants.URL_LOG_OUT)
 						.logoutSuccessUrl(PgCrowdURLConstants.URL_TO_LOGIN))
-				.rememberMe(
-						remember -> remember.key(PgCrowdConstants.DEFAULT_PROJECT_TOKEN).tokenValiditySeconds(1320));
+				.rememberMe(remember -> remember.key(UUID.fromString(PgCrowdConstants.DEFAULT_PROJECT_TOKEN).toString())
+						.tokenValiditySeconds(PgCrowdConstants.DEFAULT_TOKEN_EXPIRED));
 		log.info(PgCrowdConstants.MESSAGE_SPRING_SECURITY);
 		return httpSecurity.build();
 	}

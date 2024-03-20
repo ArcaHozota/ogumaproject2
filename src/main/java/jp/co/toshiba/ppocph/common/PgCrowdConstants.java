@@ -14,6 +14,8 @@ public final class PgCrowdConstants {
 
 	public static final Integer DEFAULT_PAGE_SIZE = 5;
 
+	public static final Integer DEFAULT_TOKEN_EXPIRED = 1320;
+
 	public static final String MESSAGE_SPRING_MVCCONVERTOR = "拡張メッセージコンバーターの設置は完了しました。";
 
 	public static final String MESSAGE_SPRING_MAPPER = "静的リソースのマッピングが開始しました。";
