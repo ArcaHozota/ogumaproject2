@@ -2,6 +2,7 @@ package jp.co.toshiba.ppocph.service;
 
 import jp.co.toshiba.ppocph.dto.DistrictDto;
 import jp.co.toshiba.ppocph.utils.Pagination;
+import jp.co.toshiba.ppocph.utils.ResultDto;
 
 /**
  * 地域サービスインターフェス
@@ -19,4 +20,12 @@ public interface IDistrictService {
 	 * @return Pagination<DistrictDto>
 	 */
 	Pagination<DistrictDto> getDistrictsByKeyword(Integer pageNum, String keyword);
+
+	/**
+	 * 地域情報更新
+	 *
+	 * @param districtDto 地域情報転送クラス
+	 * @return ResultDto<String>
+	 */
+	ResultDto<String> update(DistrictDto districtDto);
 }
