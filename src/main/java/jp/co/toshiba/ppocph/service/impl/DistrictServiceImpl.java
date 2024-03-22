@@ -33,7 +33,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class DistrictServiceImpl implements IDistrictService {
+public final class DistrictServiceImpl implements IDistrictService {
 
 	/**
 	 * 地域管理リポジトリ
