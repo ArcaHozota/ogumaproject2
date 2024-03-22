@@ -24,7 +24,7 @@ public interface DistrictRepository extends JpaRepository<District, Long>, JpaSp
 	 * @param pageable ページング検索
 	 * @return Page<District>
 	 */
-	@Query(value = "select * from districts as ds inner join cities as cy on cy.districtId = ds.id "
-			+ "where ds.delete_flg= 'approved' and (ds.name like:name or ds.chiho like:name or cy.name like:name)", nativeQuery = true)
+	@Query(value = "select ds from District as ds inner join City as cy on cy.districtId = ds.id "
+			+ "where ds.deleteFlg= 'approved' and (ds.name like :name or ds.chiho like :name or cy.name like :name)")
 	Page<District> findByShutoLike(@Param("name") String name, Pageable pageable);
 }

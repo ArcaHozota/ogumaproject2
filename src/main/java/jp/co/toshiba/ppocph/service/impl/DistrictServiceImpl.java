@@ -41,7 +41,7 @@ public class DistrictServiceImpl implements IDistrictService {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		final Specification<District> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("delete_flg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		final Specification<District> specification = Specification.where(where1);
 		if (StringUtils.isEmpty(keyword)) {
 			final Page<District> pages = this.districtRepository.findAll(specification, pageRequest);
