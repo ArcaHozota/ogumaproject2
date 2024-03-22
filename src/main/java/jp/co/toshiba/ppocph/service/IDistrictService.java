@@ -1,5 +1,7 @@
 package jp.co.toshiba.ppocph.service;
 
+import java.util.List;
+
 import jp.co.toshiba.ppocph.dto.DistrictDto;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
@@ -11,6 +13,8 @@ import jp.co.toshiba.ppocph.utils.ResultDto;
  * @since 7.81
  */
 public interface IDistrictService {
+
+	List<DistrictDto> getDistrictList(String districtId);
 
 	/**
 	 * キーワードによって地域情報を取得する

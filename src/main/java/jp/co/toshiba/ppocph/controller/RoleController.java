@@ -61,7 +61,7 @@ public final class RoleController {
 	}
 
 	/**
-	 * 編集権限チェックする
+	 * 編集権限チェック
 	 *
 	 * @return ResultDto<String>
 	 */

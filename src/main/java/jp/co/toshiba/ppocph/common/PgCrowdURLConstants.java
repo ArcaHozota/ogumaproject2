@@ -74,5 +74,7 @@ public final class PgCrowdURLConstants {
 
 	public static final String URL_DISTRICT_UPDATE = "/pgcrowd/district/infoupd";
 
+	public static final String URL_DISTRICT_CHECK_EDITION = "/pgcrowd/district/checkEdition";
+
 	public static final String URL_TO_CITY_PAGES = "/pgcrowd/category/to/cityPages";
 }

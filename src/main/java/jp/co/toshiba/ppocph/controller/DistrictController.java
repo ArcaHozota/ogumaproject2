@@ -30,6 +30,16 @@ public final class DistrictController {
 	private final IDistrictService iDistrictService;
 
 	/**
+	 * 編集権限チェック
+	 *
+	 * @return ResultDto<String>
+	 */
+	@GetMapping(PgCrowdURLConstants.URL_DISTRICT_CHECK_EDITION)
+	public ResultDto<String> checkEdition() {
+		return ResultDto.successWithoutData();
+	}
+
+	/**
 	 * キーワードによってページング検索
 	 *
 	 * @param pageNum ページ数
