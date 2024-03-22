@@ -74,8 +74,6 @@ public final class PgCrowdConstants {
 
 	public static final String DEFAULT_ROLE_NAME = "---------------------------";
 
-	public static final String DEFAULT_PROJECT_TOKEN = "pgcrowd";
-
 	public static final String MESSAGE_SPRING_SECURITY = "スプリングセキュリティ作動中。";
 
 	public static final String MESSAGE_TOROKU_SUCCESS = "登録成功しました！メールとパスワードでログインしてください。";

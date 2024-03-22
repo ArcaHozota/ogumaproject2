@@ -93,7 +93,7 @@ public class WebSecurityConfiguration {
 						.usernameParameter("loginAcct").passwordParameter("userPswd"))
 				.logout(logout -> logout.logoutUrl(PgCrowdURLConstants.URL_LOG_OUT)
 						.logoutSuccessUrl(PgCrowdURLConstants.URL_TO_LOGIN))
-				.rememberMe(remember -> remember.key(UUID.fromString(PgCrowdConstants.DEFAULT_PROJECT_TOKEN).toString())
+				.rememberMe(remember -> remember.key(UUID.randomUUID().toString())
 						.tokenValiditySeconds(PgCrowdConstants.DEFAULT_TOKEN_EXPIRED));
 		log.info(PgCrowdConstants.MESSAGE_SPRING_SECURITY);
 		return httpSecurity.build();
