@@ -18,7 +18,7 @@ import lombok.ToString;
  * 都市エンティティ
  *
  * @author ArkamaHozota
- * @since 7.80
+ * @since 7.84
  */
 @Entity
 @Getter

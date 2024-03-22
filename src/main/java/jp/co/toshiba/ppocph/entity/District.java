@@ -1,10 +1,14 @@
 package jp.co.toshiba.ppocph.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -63,4 +67,10 @@ public class District implements Serializable {
 	 */
 	@Column(nullable = false)
 	private String deleteFlg;
+
+	/**
+	 * 地域都市関連
+	 */
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<City> cities;
 }

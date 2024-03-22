@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jp.co.toshiba.ppocph.common.PgCrowdURLConstants;
-import jp.co.toshiba.ppocph.dto.RoleDto;
+import jp.co.toshiba.ppocph.dto.DistrictDto;
 import jp.co.toshiba.ppocph.service.IDistrictService;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
@@ -36,7 +36,7 @@ public final class DistrictController {
 	 * @return ResultDto<Pagination<Role>>
 	 */
 	@GetMapping(PgCrowdURLConstants.URL_DISTRICT_PAGINATION)
-	public ResultDto<Pagination<RoleDto>> pagination(
+	public ResultDto<Pagination<DistrictDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
 			@RequestParam(name = "keyword", defaultValue = StringUtils.EMPTY_STRING) final String keyword) {
 		final Pagination<DistrictDto> districts = this.iDistrictService.getDistrictsByKeyword(pageNum, keyword);
