@@ -12,8 +12,22 @@ import jp.co.toshiba.ppocph.utils.ResultDto;
  */
 public interface ICityService {
 
+	/**
+	 * 都市名称重複するかどうかをチェックする
+	 *
+	 * @param name       都市名称
+	 * @param districtId 地域ID
+	 * @return ResultDto<String>
+	 */
 	ResultDto<String> check(String name, Long districtId);
 
+	/**
+	 * キーワードによって都市情報を検索する
+	 *
+	 * @param pageNum ページングナンバー
+	 * @param keyword キーワード
+	 * @return Pagination<CityDto>
+	 */
 	Pagination<CityDto> getCitiesByKeyword(Integer pageNum, String keyword);
 
 	void save(CityDto cityDto);
