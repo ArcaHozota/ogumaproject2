@@ -27,8 +27,13 @@ public final class JacksonObjectMapper extends ObjectMapper {
 
 	private static final long serialVersionUID = 3882120239622401371L;
 
+	/** デフォルト日フォーマット */
 	private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
+
+	/** デフォルト日時フォーマット */
 	private static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+	/** デフォルト時フォーマット */
 	private static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
 
 	/**
