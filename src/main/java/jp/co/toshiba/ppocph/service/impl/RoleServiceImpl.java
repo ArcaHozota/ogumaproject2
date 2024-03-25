@@ -46,10 +46,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RoleServiceImpl implements IRoleService {
 
+	/**
+	 * 論理削除フラグ
+	 */
 	private static final String DELETE_FLG = "deleteFlg";
 
+	/**
+	 * 役割ID
+	 */
 	private static final String ROLE_ID = "roleId";
 
+	/**
+	 * 役割名称
+	 */
 	private static final String ROLE_NAME = "name";
 
 	/**

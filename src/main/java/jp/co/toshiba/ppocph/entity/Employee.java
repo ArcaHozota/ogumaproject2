@@ -62,7 +62,7 @@ public final class Employee implements Serializable {
 	private String email;
 
 	/**
-	 * 作成時間
+	 * 生年月日
 	 */
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;

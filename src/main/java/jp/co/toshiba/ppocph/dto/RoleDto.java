@@ -6,5 +6,15 @@ package jp.co.toshiba.ppocph.dto;
  * @author ArkamaHozota
  * @since 4.60
  */
-public record RoleDto(Long id, String name) {
+public record RoleDto(
+
+		/**
+		 * ID
+		 */
+		Long id,
+
+		/**
+		 * 名称
+		 */
+		String name) {
 }

@@ -19,6 +19,8 @@ import jp.co.toshiba.ppocph.repository.DistrictRepository;
 import jp.co.toshiba.ppocph.service.ICityService;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
+import jp.co.toshiba.ppocph.utils.SecondBeanUtils;
+import jp.co.toshiba.ppocph.utils.SnowflakeUtils;
 import jp.co.toshiba.ppocph.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -98,6 +100,11 @@ public final class CityServiceImpl implements ICityService {
 
 	@Override
 	public void save(final CityDto cityDto) {
+		final City city = new City();
+		SecondBeanUtils.copyNullableProperties(cityDto, city);
+		city.setId(SnowflakeUtils.snowflakeId());
+		city.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		this.cityRepository.saveAndFlush(city);
 	}
 
 	@Override
