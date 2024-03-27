@@ -60,6 +60,8 @@ public final class PgCrowdConstants {
 
 	public static final String MESSAGE_ROLE_NAME_DUPLICATED = "役割名称がすでに存在します。";
 
+	public static final String MESSAGE_DISTRICT_NAME_DUPLICATED = "地域名称がすでに存在します。";
+
 	public static final String MESSAGE_CITY_NAME_DUPLICATED = "都市名称がすでに存在します。";
 
 	public static final String MESSAGE_SPRINGSECURITY_REQUIRED_AUTH = "当ユーザの相応的な権限がないのでリクエスト拒否。";

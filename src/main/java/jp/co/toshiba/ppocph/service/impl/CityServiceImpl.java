@@ -2,6 +2,7 @@ package jp.co.toshiba.ppocph.service.impl;
 
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -116,7 +117,11 @@ public final class CityServiceImpl implements ICityService {
 		if (originalEntity.equals(city)) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
 		}
-		this.cityRepository.saveAndFlush(city);
+		try {
+			this.cityRepository.saveAndFlush(city);
+		} catch (final DataIntegrityViolationException e) {
+			return ResultDto.failed(PgCrowdConstants.MESSAGE_CITY_NAME_DUPLICATED);
+		}
 		return ResultDto.successWithoutData();
 	}
 }

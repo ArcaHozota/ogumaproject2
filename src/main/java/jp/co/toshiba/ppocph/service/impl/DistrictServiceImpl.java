@@ -123,7 +123,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 		try {
 			this.districtRepository.saveAndFlush(district);
 		} catch (final DataIntegrityViolationException e) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_ROLE_NAME_DUPLICATED);
+			return ResultDto.failed(PgCrowdConstants.MESSAGE_DISTRICT_NAME_DUPLICATED);
 		}
 		return ResultDto.successWithoutData();
 	}
