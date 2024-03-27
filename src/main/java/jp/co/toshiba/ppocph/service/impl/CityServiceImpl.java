@@ -68,9 +68,8 @@ public final class CityServiceImpl implements ICityService {
 			final Page<City> pages = this.cityRepository.findAll(specification, pageRequest);
 			final List<CityDto> cityDtos = pages.stream()
 					.map(item -> new CityDto(item.getId(), item.getName(), item.getDistrictId(),
-							item.getPronunciation(),
-							this.districtRepository.findById(item.getDistrictId()).orElseGet(District::new).getName(),
-							item.getPopulation(), item.getCityFlag()))
+							item.getPronunciation(), item.getDistrict().getName(), item.getPopulation(),
+							item.getCityFlag()))
 					.toList();
 			return Pagination.of(cityDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
@@ -92,8 +91,7 @@ public final class CityServiceImpl implements ICityService {
 		final Page<City> pages = this.cityRepository.findAll(specification3, pageRequest);
 		final List<CityDto> cityDtos = pages.stream()
 				.map(item -> new CityDto(item.getId(), item.getName(), item.getDistrictId(), item.getPronunciation(),
-						this.districtRepository.findById(item.getDistrictId()).orElseGet(District::new).getName(),
-						item.getPopulation(), item.getCityFlag()))
+						item.getDistrict().getName(), item.getPopulation(), item.getCityFlag()))
 				.toList();
 		return Pagination.of(cityDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
@@ -109,7 +107,16 @@ public final class CityServiceImpl implements ICityService {
 
 	@Override
 	public ResultDto<String> update(final CityDto cityDto) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		final City city = this.cityRepository.findById(cityDto.id()).orElseThrow(() -> {
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+		});
+		final City originalEntity = new City();
+		SecondBeanUtils.copyNullableProperties(city, originalEntity);
+		SecondBeanUtils.copyNullableProperties(cityDto, city);
+		if (originalEntity.equals(city)) {
+			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
+		}
+		this.cityRepository.saveAndFlush(city);
+		return ResultDto.successWithoutData();
 	}
 }
