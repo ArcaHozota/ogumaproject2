@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jp.co.toshiba.ppocph.common.PgCrowdURLConstants;
 import jp.co.toshiba.ppocph.dto.CityDto;
 import jp.co.toshiba.ppocph.dto.DistrictDto;
 import jp.co.toshiba.ppocph.service.ICityService;
@@ -45,7 +46,7 @@ public final class CityController {
 	 * @param cityDto 都市情報転送クラス
 	 * @return ResultDto<String>
 	 */
-	@GetMapping("/check")
+	@GetMapping(PgCrowdURLConstants.URL_CITY_CHECK)
 	public ResultDto<String> checkDuplicated(
 			@RequestParam(value = "name", defaultValue = StringUtils.EMPTY_STRING) final String name,
 			@RequestParam("districtId") final Long districtId) {
@@ -57,7 +58,7 @@ public final class CityController {
 	 *
 	 * @return ResultDto<String>
 	 */
-	@GetMapping("/checkEdition")
+	@GetMapping(PgCrowdURLConstants.URL_CITY_CHECK_EDITION)
 	public ResultDto<String> checkEdition() {
 		return ResultDto.successWithoutData();
 	}
@@ -68,7 +69,7 @@ public final class CityController {
 	 * @param cityId 都市ID
 	 * @return ResultDto<String>
 	 */
-	@GetMapping("/districtlist")
+	@GetMapping(PgCrowdURLConstants.URL_CITY_DISTRICTS)
 	public ResultDto<List<DistrictDto>> getDistrictList(@RequestParam(value = "cityId") final String cityId) {
 		final List<DistrictDto> districtDtos = this.iDistrictService.getDistrictsByCityId(cityId);
 		return ResultDto.successWithData(districtDtos);
@@ -81,7 +82,7 @@ public final class CityController {
 	 * @param keyword キーワード
 	 * @return ResultDto<Pagination<CityDto>>
 	 */
-	@GetMapping("/pagination")
+	@GetMapping(PgCrowdURLConstants.URL_CITY_PAGINATION)
 	public ResultDto<Pagination<CityDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
 			@RequestParam(name = "keyword", defaultValue = StringUtils.EMPTY_STRING) final String keyword) {
@@ -95,7 +96,7 @@ public final class CityController {
 	 * @param cityDto 都市情報DTO
 	 * @return ResultDto<String>
 	 */
-	@PostMapping("/infosave")
+	@PostMapping(PgCrowdURLConstants.URL_CITY_INSERT)
 	public ResultDto<String> saveInfo(@RequestBody final CityDto cityDto) {
 		this.iCityService.save(cityDto);
 		return ResultDto.successWithoutData();
@@ -107,7 +108,7 @@ public final class CityController {
 	 * @param cityDto 都市情報DTO
 	 * @return ResultDto<String>
 	 */
-	@PutMapping("/infoupd")
+	@PutMapping(PgCrowdURLConstants.URL_CITY_UPDATE)
 	public ResultDto<String> updateInfo(@RequestBody final CityDto cityDto) {
 		return this.iCityService.update(cityDto);
 	}

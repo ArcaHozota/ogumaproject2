@@ -77,4 +77,16 @@ public final class PgCrowdURLConstants {
 	public static final String URL_DISTRICT_CHECK_EDITION = "/pgcrowd/district/checkEdition";
 
 	public static final String URL_TO_CITY_PAGES = "/pgcrowd/category/to/cityPages";
+
+	public static final String URL_CITY_CHECK = "/pgcrowd/city/check";
+
+	public static final String URL_CITY_PAGINATION = "/pgcrowd/city/pagination";
+
+	public static final String URL_CITY_DISTRICTS = "/pgcrowd/city/districtlist";
+
+	public static final String URL_CITY_INSERT = "/pgcrowd/city/infosave";
+
+	public static final String URL_CITY_UPDATE = "/pgcrowd/city/infoupd";
+
+	public static final String URL_CITY_CHECK_EDITION = "/pgcrowd/city/checkEdition";
 }
