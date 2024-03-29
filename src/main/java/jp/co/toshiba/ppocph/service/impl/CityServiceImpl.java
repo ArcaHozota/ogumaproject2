@@ -94,7 +94,7 @@ public final class CityServiceImpl implements ICityService {
 					.map(item -> new CityDto(item.getId(), item.getName(), item.getDistrictId(),
 							item.getPronunciation(), item.getDistrict().getName(), item.getPopulation(),
 							item.getCityFlag()))
-					.distinct().sorted(Comparator.comparingLong(CityDto::id)).toList();
+					.distinct().sorted(Comparator.nullsLast(Comparator.comparingLong(CityDto::id))).toList();
 			final Integer pageMin = (pageNum - 1) * PgCrowdConstants.DEFAULT_PAGE_SIZE;
 			final Integer pageMax = (pageNum * PgCrowdConstants.DEFAULT_PAGE_SIZE) >= cityDtos.size() ? cityDtos.size()
 					: pageNum * PgCrowdConstants.DEFAULT_PAGE_SIZE;
