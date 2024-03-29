@@ -1,5 +1,6 @@
 package jp.co.toshiba.ppocph.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.dto.CityDto;
@@ -81,14 +83,28 @@ public final class CityServiceImpl implements ICityService {
 				searchStr);
 		final Specification<District> specification2 = Specification.where(where2).and(where3);
 		final List<District> districts = this.districtRepository.findAll(specification2);
-		final Specification<City> where4 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.in(root.get("districtId").in(districts.stream().map(District::getId).toList()));
-		final Specification<City> where5 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("name"),
+		if (!CollectionUtils.isEmpty(districts)) {
+			final List<City> cities = new ArrayList<>();
+			districts.forEach(item -> {
+				final List<City> cities2 = item.getCities();
+				cities.addAll(cities2);
+			});
+			final List<CityDto> cityDtos = cities.stream()
+					.map(item -> new CityDto(item.getId(), item.getName(), item.getDistrictId(),
+							item.getPronunciation(), item.getDistrict().getName(), item.getPopulation(),
+							item.getCityFlag()))
+					.distinct().toList();
+			final Integer pageMin = (pageNum - 1) * PgCrowdConstants.DEFAULT_PAGE_SIZE;
+			final Integer pageMax = (pageNum * PgCrowdConstants.DEFAULT_PAGE_SIZE) >= cityDtos.size() ? cityDtos.size()
+					: pageNum * PgCrowdConstants.DEFAULT_PAGE_SIZE;
+			return Pagination.of(cityDtos.subList(pageMin, pageMax), cityDtos.size(), pageNum,
+					PgCrowdConstants.DEFAULT_PAGE_SIZE);
+		}
+		final Specification<City> where4 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("name"),
 				searchStr);
-		final Specification<City> where6 = (root, query, criteriaBuilder) -> criteriaBuilder
+		final Specification<City> where5 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.like(root.get("pronunciation"), searchStr);
-		final Specification<City> specification3 = Specification.where(where1)
-				.and(Specification.anyOf(where4, where5, where6));
+		final Specification<City> specification3 = Specification.where(where1).and(Specification.anyOf(where4, where5));
 		final Page<City> pages = this.cityRepository.findAll(specification3, pageRequest);
 		final List<CityDto> cityDtos = pages.stream()
 				.map(item -> new CityDto(item.getId(), item.getName(), item.getDistrictId(), item.getPronunciation(),
