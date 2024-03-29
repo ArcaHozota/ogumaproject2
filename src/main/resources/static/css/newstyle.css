@@ -98,6 +98,7 @@ input:valid~label {
 }
 
 .forget a:hover {
+	color: #81d8d0;
 	text-decoration: underline;
 }
 
@@ -115,7 +116,7 @@ button {
 }
 
 button:hover {
-	background: #006400;
+	background: #7f0020;
 	color: #fff;
 }
 
