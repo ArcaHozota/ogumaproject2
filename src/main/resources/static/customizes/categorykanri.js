@@ -15,11 +15,6 @@ $(document).ready(function() {
 					id: "cityQueryTree",
 					text: "都市一覧",
 					icon: "bi bi-building-fill-check"
-				},
-				{
-					id: "stationQueryTree",
-					text: "駅一覧",
-					icon: "bi bi-buildings-fill"
 				}
 			]
 		}
@@ -38,10 +33,6 @@ $(document).ready(function() {
 	});
 	$("#cityQueryTree").on('click', function() {
 		let url = '/pgcrowd/category/to/cityPages';
-		checkPermissionAndTransfer(url);
-	});
-	$("#stationQueryTree").on('click', function() {
-		let url = '/pgcrowd/category/to/stationPages';
 		checkPermissionAndTransfer(url);
 	});
 });
