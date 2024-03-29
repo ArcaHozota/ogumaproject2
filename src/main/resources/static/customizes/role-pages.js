@@ -1,6 +1,6 @@
 let pageNum, totalRecords, totalPages, keyword;
 $(document).ready(function() {
-	$("#toRole").css('color', '#006400');
+	$("#toRole").css('color', '#7F0020');
 	toSelectedPg(1, keyword);
 });
 $("#searchBtn2").on('click', function() {
@@ -245,10 +245,10 @@ function authPutSuccessFunction(result) {
 		layer.msg(result.message);
 	}
 }
-function zTreeOnNodeCreated(event, treeId, treeNode) {
-	let iconObj = $("#" + treeNode.tId + "_ico");
+function zTreeOnNodeCreated(event, treeId, treeNode) { // 设置节点创建时的回调函数
+	let iconObj = $("#" + treeNode.tId + "_ico"); // 获取图标元素
 	iconObj.removeClass("button ico_docu ico_open ico_close");
-	iconObj.append("<i class='bi'></i>");
+	iconObj.append("<i class='bi'></i>"); // 添加bootstrap图标的基础类名
 	let iconObjectId = Number(iconObj.attr("id").substring(9, 10));
 	if ($.isNumeric(iconObj.attr("id").substring(10, 11))) {
 		iconObjectId = Number(iconObj.attr("id").substring(9, 11));

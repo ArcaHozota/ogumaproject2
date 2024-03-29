@@ -1,6 +1,6 @@
 let pageNum, totalRecords, totalPages, keyword;
 $(document).ready(function() {
-	$("#toCity").css('color', '#006400');
+	$("#toCity").css('color', '#7F0020');
 	toSelectedPg(1, keyword);
 });
 $("#searchBtn2").on('click', function() {
@@ -182,11 +182,11 @@ function checkCityName(cityName, district) {
 		});
 	}
 }
-function getDistricts(element, cityId) {
+function getDistricts(element, districtId) {
 	$(element).empty();
 	$.ajax({
 		url: '/pgcrowd/city/districtlist',
-		data: 'cityId=' + cityId,
+		data: 'districtId=' + districtId,
 		type: 'GET',
 		dataType: 'json',
 		success: function(result) {
