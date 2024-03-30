@@ -87,7 +87,7 @@ public final class CityServiceImpl implements ICityService {
 		final Specification<City> where5 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.like(root.get("pronunciation"), searchStr);
 		final Specification<City> where6 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.in(root.get("districtId").in(districtIds));
+				.and(root.get("districtId").in(districtIds));
 		final Specification<City> specification3 = Specification.where(where1)
 				.and(Specification.anyOf(where4, where5, where6));
 		final Page<City> pages = this.cityRepository.findAll(specification3, pageRequest);
