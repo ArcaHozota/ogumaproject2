@@ -1,6 +1,7 @@
 package jp.co.toshiba.ppocph.service.impl;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -96,6 +97,19 @@ public final class CityServiceImpl implements ICityService {
 						item.getDistrict().getName(), item.getPopulation(), item.getCityFlag()))
 				.toList();
 		return Pagination.of(cityDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+	}
+
+	@Override
+	public ResultDto<String> removeById(final Long id) {
+		final City city = this.cityRepository.findById(id).orElseThrow(() -> {
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+		});
+		if (Objects.equals(id, city.getDistrict().getShutoId())) {
+			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_FORBIDDEN3);
+		}
+		city.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
+		this.cityRepository.saveAndFlush(city);
+		return ResultDto.successWithoutData();
 	}
 
 	@Override

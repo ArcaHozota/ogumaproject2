@@ -30,7 +30,25 @@ public interface ICityService {
 	 */
 	Pagination<CityDto> getCitiesByKeyword(Integer pageNum, String keyword);
 
+	/**
+	 * IDによって情報を削除する
+	 *
+	 * @param id 都市ID
+	 * @return ResultDto<String>
+	 */
+	ResultDto<String> removeById(Long id);
+
+	/**
+	 * 都市情報追加
+	 *
+	 * @param cityDto 都市情報転送クラス
+	 */
 	void save(CityDto cityDto);
 
+	/**
+	 * 都市情報更新
+	 *
+	 * @param cityDto 都市情報転送クラス
+	 */
 	ResultDto<String> update(CityDto cityDto);
 }
