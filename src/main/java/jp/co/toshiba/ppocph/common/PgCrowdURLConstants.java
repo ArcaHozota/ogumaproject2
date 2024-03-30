@@ -16,7 +16,7 @@ public final class PgCrowdURLConstants {
 
 	public static final String URL_EMPLOYEE_CHECK = "/pgcrowd/employee/check";
 
-	public static final String URL_EMPLOYEE_DELETE = "/pgcrowd/employee/delete/**";
+	public static final String URL_EMPLOYEE_DELETE = "/pgcrowd/employee/delete/{userId}";
 
 	public static final String URL_EMPLOYEE_TO_ADDITION = "/pgcrowd/employee/to/addition";
 
@@ -36,7 +36,7 @@ public final class PgCrowdURLConstants {
 
 	public static final String URL_ROLE_UPDATE = "/pgcrowd/role/infoupd";
 
-	public static final String URL_ROLE_DELETE = "/pgcrowd/role/delete/**";
+	public static final String URL_ROLE_DELETE = "/pgcrowd/role/delete/{roleId}";
 
 	public static final String URL_ROLE_CHECK = "/pgcrowd/role/check";
 
@@ -87,6 +87,8 @@ public final class PgCrowdURLConstants {
 	public static final String URL_CITY_INSERT = "/pgcrowd/city/infosave";
 
 	public static final String URL_CITY_UPDATE = "/pgcrowd/city/infoupd";
+
+	public static final String URL_CITY_DELETE = "/pgcrowd/city/delete/{cityId}";
 
 	public static final String URL_CITY_CHECK_EDITION = "/pgcrowd/city/checkEdition";
 }
