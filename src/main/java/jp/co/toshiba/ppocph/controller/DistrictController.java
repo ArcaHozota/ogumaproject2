@@ -1,6 +1,7 @@
 package jp.co.toshiba.ppocph.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,7 +61,7 @@ public final class DistrictController {
 	 * @param districtDto 地域情報転送クラス
 	 * @return ResultDto<String>
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_DISTRICT_UPDATE)
+	@PutMapping(PgCrowdURLConstants.URL_DISTRICT_UPDATE)
 	public ResultDto<String> updateInfo(@RequestBody final DistrictDto districtDto) {
 		return this.iDistrictService.update(districtDto);
 	}
