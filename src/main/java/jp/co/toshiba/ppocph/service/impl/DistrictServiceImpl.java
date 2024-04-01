@@ -1,6 +1,7 @@
 package jp.co.toshiba.ppocph.service.impl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -57,7 +58,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 						item.getChiho(),
 						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
 						item.getDistrictFlag()))
-				.sorted().toList();
+				.sorted(Comparator.comparingLong(DistrictDto::id)).toList();
 		if (StringUtils.isEmpty(cityId)) {
 			return districtDtos1;
 		}
