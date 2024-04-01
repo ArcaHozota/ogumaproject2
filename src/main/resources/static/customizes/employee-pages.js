@@ -156,7 +156,7 @@ $("#emailEdit").change(function() {
 });
 $("#roleEdit").change(function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/employee/checkDelete',
+		url: '/pgcrowd/employee/delete/0L',
 		type: 'GET',
 		async: false
 	});
