@@ -50,6 +50,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 
 	@Override
 	public List<DistrictDto> getDistrictsByCityId(final String cityId) {
+		final List<DistrictDto> districtDtos = new ArrayList<>();
 		final List<District> districts = this.districtRepository.findAll();
 		final List<DistrictDto> districtDtos1 = districts.stream()
 				.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),
@@ -60,7 +61,11 @@ public final class DistrictServiceImpl implements IDistrictService {
 						item.getDistrictFlag()))
 				.sorted(Comparator.comparingLong(DistrictDto::id)).toList();
 		if (StringUtils.isEmpty(cityId) || StringUtils.isEqual("null", cityId)) {
-			return districtDtos1;
+			final DistrictDto districtDto = new DistrictDto(0L, PgCrowdConstants.DEFAULT_ROLE_NAME, null, null, null,
+					null, null);
+			districtDtos.add(districtDto);
+			districtDtos.addAll(districtDtos1);
+			return districtDtos;
 		}
 		final City city = this.cityRepository.findById(Long.parseLong(cityId)).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
