@@ -60,9 +60,9 @@ public final class DistrictServiceImpl implements IDistrictService {
 						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
 						item.getDistrictFlag()))
 				.sorted(Comparator.comparingLong(DistrictDto::id)).toList();
-		if (StringUtils.isEmpty(cityId) || StringUtils.isEqual("null", cityId)) {
-			final DistrictDto districtDto = new DistrictDto(0L, PgCrowdConstants.DEFAULT_ROLE_NAME, null, null, null,
-					null, null);
+		if (StringUtils.isEmpty(cityId) || !StringUtils.isDigital(cityId)) {
+			final DistrictDto districtDto = new DistrictDto(0L, PgCrowdConstants.DEFAULT_ROLE_NAME, 0L,
+					StringUtils.EMPTY_STRING, StringUtils.EMPTY_STRING, null, StringUtils.EMPTY_STRING);
 			districtDtos.add(districtDto);
 			districtDtos.addAll(districtDtos1);
 			return districtDtos;
