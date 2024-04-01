@@ -59,7 +59,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
 						item.getDistrictFlag()))
 				.sorted(Comparator.comparingLong(DistrictDto::id)).toList();
-		if (StringUtils.isEmpty(cityId)) {
+		if (StringUtils.isEmpty(cityId) || StringUtils.isEqual("null", cityId)) {
 			return districtDtos1;
 		}
 		final City city = this.cityRepository.findById(Long.parseLong(cityId)).orElseThrow(() -> {
