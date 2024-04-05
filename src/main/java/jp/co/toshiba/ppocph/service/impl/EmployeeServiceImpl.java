@@ -22,9 +22,9 @@ import org.springframework.stereotype.Service;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.config.PgCrowdPasswordEncoder;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
+import jp.co.toshiba.ppocph.entity.Authority;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.entity.EmployeeRole;
-import jp.co.toshiba.ppocph.entity.Authority;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.entity.RoleAuth;
 import jp.co.toshiba.ppocph.exception.PgCrowdException;
@@ -113,7 +113,8 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final Specification<RoleAuth> specification = Specification.where(where);
 		final List<Long> authIds = this.roleExRepository.findAll(specification).stream().map(RoleAuth::getAuthId)
 				.toList();
-		final List<String> authList = this.pgAuthRepository.findAllById(authIds).stream().map(Authority::getName).toList();
+		final List<String> authList = this.pgAuthRepository.findAllById(authIds).stream().map(Authority::getName)
+				.toList();
 		if (!authList.contains("employee%edition") && !authList.contains("employee%delete")) {
 			return Boolean.FALSE;
 		}
@@ -127,8 +128,8 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		});
 		final EmployeeRole employeeRole = this.employeeExRepository.findById(id).orElseGet(EmployeeRole::new);
 		return new EmployeeDto(employee.getId(), employee.getLoginAccount(), employee.getUsername(),
-				employee.getPassword(), employee.getEmail(), this.formatter.format(employee.getDateOfBirth()),
-				employeeRole.getRoleId());
+				PgCrowdConstants.DEFAULT_ROLE_NAME, employee.getEmail(),
+				this.formatter.format(employee.getDateOfBirth()), employeeRole.getRoleId());
 	}
 
 	@Override
@@ -188,6 +189,28 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
+	public Boolean register(final EmployeeDto employeeDto) {
+		final Specification<Employee> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("email"),
+				employeeDto.email());
+		final Specification<Employee> specification = Specification.where(where);
+		final Optional<Employee> findOne = this.employeeRepository.findOne(specification);
+		if (findOne.isPresent()) {
+			return Boolean.FALSE;
+		}
+		final String password = this.encoder.encode(employeeDto.password());
+		final Employee employee = new Employee();
+		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
+		employee.setId(SnowflakeUtils.snowflakeId());
+		employee.setLoginAccount(this.getRandomStr());
+		employee.setPassword(password);
+		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		employee.setCreatedTime(LocalDateTime.now());
+		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
+		this.employeeRepository.saveAndFlush(employee);
+		return Boolean.TRUE;
+	}
+
+	@Override
 	public void removeById(final Long userId) {
 		final Employee employee = this.employeeRepository.findById(userId).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
@@ -213,28 +236,6 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			employeeEx.setRoleId(employeeDto.roleId());
 			this.employeeExRepository.saveAndFlush(employeeEx);
 		}
-	}
-
-	@Override
-	public Boolean register(final EmployeeDto employeeDto) {
-		final Specification<Employee> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("email"),
-				employeeDto.email());
-		final Specification<Employee> specification = Specification.where(where);
-		final Optional<Employee> findOne = this.employeeRepository.findOne(specification);
-		if (findOne.isPresent()) {
-			return Boolean.FALSE;
-		}
-		final String password = this.encoder.encode(employeeDto.password());
-		final Employee employee = new Employee();
-		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
-		employee.setId(SnowflakeUtils.snowflakeId());
-		employee.setLoginAccount(this.getRandomStr());
-		employee.setPassword(password);
-		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
-		employee.setCreatedTime(LocalDateTime.now());
-		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
-		this.employeeRepository.saveAndFlush(employee);
-		return Boolean.TRUE;
 	}
 
 	@Override
