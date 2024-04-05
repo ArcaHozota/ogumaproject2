@@ -175,7 +175,7 @@ $("#editInfoBtn").on('click', function() {
 		layer.msg('入力情報不正。');
 	} else {
 		let rawPassword = $("#passwordEdit").val().trim();
-		if (rawPassword === "**************************************") {
+		if (rawPassword === "---------------------------") {
 			rawPassword = null;
 		}
 		let roleId = $("#roleEdit").attr('value');
@@ -218,7 +218,7 @@ $("#restoreBtn").on('click', function() {
 		success: function(result) {
 			let restoredInfo = result.data;
 			$("#usernameEdit").val(restoredInfo.username);
-			$("#passwordEdit").val('**************************************');
+			$("#passwordEdit").val(restoredInfo.password);
 			$("#emailEdit").val(restoredInfo.email);
 			$("#dateEdit").val(restoredInfo.dateOfBirth);
 		}
