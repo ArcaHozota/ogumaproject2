@@ -51,18 +51,18 @@
 							<i class="fa-solid fa-magnifying-glass"></i>
 						</button>
 					</div>
-					<ul class="navbar-nav mb-2 mb-lg-0 d-flex" id="dropdown-info">
+					<ul class="navbar-nav mb-2 mb-lg-0 d-flex" id="personalInfo"
+						th:with="securityPerson=${#authentication.getPrincipal()}">
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle btn btn-success me-2" href="#" role="button"
 								data-bs-toggle="dropdown" aria-expanded="false" style="height: 37.6px;">
 								<i class="fa-solid fa-user-circle"
-									th:text="${#authentication.getPrincipal().getOriginalAdmin().getUsername()}"></i></a>
+									th:text="${securityPerson.getOriginalAdmin().getUsername()}"></i></a>
 							<ul class="dropdown-menu dropdown-menu-end" role="menu">
 								<li>
 									<a class="dropdown-item" href="#" id="toPersonal">
 										<i class="fa-solid fa-user-gear"></i> 個人設定
-										<p th:text="${#authentication.getPrincipal().getOriginalAdmin().getId()}"
-											hidden />
+										<p th:text="${securityPerson.getOriginalAdmin().getId()}" hidden />
 									</a>
 								</li>
 								<li>
@@ -80,6 +80,7 @@
 								</li>
 								<form id="logoutForm" method="post" th:action="@{/pgcrowd/employee/logout}"
 									style="display:none;"></form>
+								<input th:value="${securityPerson.getAuthorities()}" id="securityPersonalAuths" hidden>
 							</ul>
 						</li>
 					</ul>
