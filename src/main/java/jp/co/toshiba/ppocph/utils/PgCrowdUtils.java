@@ -43,7 +43,7 @@ public final class PgCrowdUtils {
 	/**
 	 * 共通権限管理ストリーム
 	 *
-	 * @param stream
+	 * @param stream 権限ストリーム
 	 * @return List<String>
 	 */
 	public static final List<String> getNames(final Stream<GrantedAuthority> stream) {
