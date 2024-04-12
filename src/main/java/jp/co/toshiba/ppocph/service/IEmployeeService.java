@@ -46,8 +46,7 @@ public interface IEmployeeService {
 	 * @param keyword キーワード
 	 * @return Pagination<Employee>
 	 */
-	Pagination<EmployeeDto> getEmployeesByKeyword(Integer pageNum, String keyword, Long userId,
-			Collection<GrantedAuthority> authList);
+	Pagination<EmployeeDto> getEmployeesByKeyword(Integer pageNum, String keyword, Long userId, String authChkFlag);
 
 	/**
 	 * 社員登録

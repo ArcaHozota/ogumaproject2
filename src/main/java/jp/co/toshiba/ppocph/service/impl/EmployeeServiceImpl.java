@@ -105,8 +105,8 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public Pagination<EmployeeDto> getEmployeesByKeyword(final Integer pageNum, final String keyword, final Long userId,
-			final Collection<GrantedAuthority> authList) {
-		if (Boolean.FALSE.equals(this.checkEdition(authList))) {
+			final String authChkFlag) {
+		if (Boolean.FALSE.equals(Boolean.valueOf(authChkFlag))) {
 			final List<EmployeeDto> employeeDtos = new ArrayList<>();
 			final Employee employee = this.employeeRepository.findById(userId).orElseThrow(() -> {
 				throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);

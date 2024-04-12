@@ -15,7 +15,7 @@ function toSelectedPg(pageNum, keyword) {
 			'pageNum': pageNum,
 			'keyword': keyword,
 			'userId': $("#toPersonal").find("p").text(),
-			'authList': [$("#securityPersonalAuths").val()]
+			'authChkFlag': $("#securityPersonalAuths").text()
 		},
 		type: 'GET',
 		success: function(result) {
@@ -132,8 +132,8 @@ $("#tableBody").on('click', '.delete-btn', function() {
 });
 $("#tableBody").on('click', '.edit-btn', function() {
 	let editId = $(this).attr("editId");
-	let userId = $("#toPersonal").find("p").text();
-	let url = '/pgcrowd/employee/to/edition?editId=' + editId + '&userId=' + userId;
+	let authChkFlag = $("#securityPersonalAuths").text();
+	let url = '/pgcrowd/employee/to/edition?editId=' + editId + '&authChkFlag=' + authChkFlag;
 	checkPermissionAndTransfer(url);
 });
 $("#passwordEdit").change(function() {

@@ -80,7 +80,11 @@
 								</li>
 								<form id="logoutForm" method="post" th:action="@{/pgcrowd/employee/logout}"
 									style="display:none;"></form>
-								<input th:value="${securityPerson.getAuthorities()}" id="securityPersonalAuths" hidden>
+								<div th:with="authList=${securityPerson.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList()}"
+									hidden>
+									<p th:text="${authList.contains('employee%edition') or authList.contains('employee%delete') ? 'true' : 'false'}"
+										id="securityPersonalAuths" hidden>
+								</div>
 							</ul>
 						</li>
 					</ul>
