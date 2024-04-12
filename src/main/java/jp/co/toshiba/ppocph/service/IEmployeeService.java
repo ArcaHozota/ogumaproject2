@@ -1,5 +1,9 @@
 package jp.co.toshiba.ppocph.service;
 
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
@@ -22,10 +26,10 @@ public interface IEmployeeService {
 	/**
 	 * ユーザ編集権限チェック
 	 *
-	 * @param id 社員ID
+	 * @param authList 権限リスト
 	 * @return Boolean
 	 */
-	Boolean checkEdition(Long id);
+	Boolean checkEdition(Collection<GrantedAuthority> authList);
 
 	/**
 	 * IDによって社員情報を取得する
@@ -42,7 +46,16 @@ public interface IEmployeeService {
 	 * @param keyword キーワード
 	 * @return Pagination<Employee>
 	 */
-	Pagination<EmployeeDto> getEmployeesByKeyword(Integer pageNum, String keyword, Long userId);
+	Pagination<EmployeeDto> getEmployeesByKeyword(Integer pageNum, String keyword, Long userId,
+			Collection<GrantedAuthority> authList);
+
+	/**
+	 * 社員登録
+	 *
+	 * @param employeeDto 社員情報DTO
+	 * @return Boolean
+	 */
+	Boolean register(EmployeeDto employeeDto);
 
 	/**
 	 * 社員情報削除
@@ -57,14 +70,6 @@ public interface IEmployeeService {
 	 * @param employeeDto 社員情報転送クラス
 	 */
 	void save(EmployeeDto employeeDto);
-
-	/**
-	 * 社員登録
-	 *
-	 * @param employeeDto 社員情報DTO
-	 * @return Boolean
-	 */
-	Boolean register(EmployeeDto employeeDto);
 
 	/**
 	 * 社員情報行更新

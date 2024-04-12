@@ -1,7 +1,9 @@
 package jp.co.toshiba.ppocph.controller;
 
+import java.util.Collection;
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -82,8 +84,10 @@ public final class EmployeeController {
 	public ResultDto<Pagination<EmployeeDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
 			@RequestParam(name = "keyword", defaultValue = StringUtils.EMPTY_STRING) final String keyword,
-			@RequestParam("userId") final Long userId) {
-		final Pagination<EmployeeDto> employees = this.iEmployeeService.getEmployeesByKeyword(pageNum, keyword, userId);
+			@RequestParam("userId") final Long userId,
+			@RequestParam("authList") final Collection<GrantedAuthority> authList) {
+		final Pagination<EmployeeDto> employees = this.iEmployeeService.getEmployeesByKeyword(pageNum, keyword, userId,
+				authList);
 		return ResultDto.successWithData(employees);
 	}
 
@@ -134,8 +138,9 @@ public final class EmployeeController {
 	 * @return ModelAndView
 	 */
 	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_TO_EDITION)
-	public ModelAndView toEdition(@RequestParam("editId") final Long id, @RequestParam("userId") final Long userId) {
-		final Boolean checkEdition = this.iEmployeeService.checkEdition(userId);
+	public ModelAndView toEdition(@RequestParam("editId") final Long id,
+			@RequestParam("authList") final Collection<GrantedAuthority> authList) {
+		final Boolean checkEdition = this.iEmployeeService.checkEdition(authList);
 		final EmployeeDto employee = this.iEmployeeService.getEmployeeById(id);
 		if (Boolean.FALSE.equals(checkEdition)) {
 			final ModelAndView modelAndView = new ModelAndView("admin-editinfo2");

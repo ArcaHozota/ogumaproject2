@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,23 +17,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.config.PgCrowdPasswordEncoder;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
-import jp.co.toshiba.ppocph.entity.Authority;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.entity.EmployeeRole;
-import jp.co.toshiba.ppocph.entity.Role;
-import jp.co.toshiba.ppocph.entity.RoleAuth;
 import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
-import jp.co.toshiba.ppocph.repository.PgAuthRepository;
-import jp.co.toshiba.ppocph.repository.RoleExRepository;
-import jp.co.toshiba.ppocph.repository.RoleRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
@@ -68,21 +64,6 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	private final EmployeeExRepository employeeExRepository;
 
 	/**
-	 * 役割管理リポジトリ
-	 */
-	private final RoleRepository roleRepository;
-
-	/**
-	 * 役割権限連携リポジトリ
-	 */
-	private final RoleExRepository roleExRepository;
-
-	/**
-	 * 権限管理リポジトリ
-	 */
-	private final PgAuthRepository pgAuthRepository;
-
-	/**
 	 * エンコーダ
 	 */
 	private final PasswordEncoder encoder = new PgCrowdPasswordEncoder();
@@ -103,19 +84,9 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public Boolean checkEdition(final Long id) {
-		final EmployeeRole employeeRole = this.employeeExRepository.findById(id).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
-		});
-		final Role role = this.roleRepository.findById(employeeRole.getRoleId()).orElseGet(Role::new);
-		final Specification<RoleAuth> where = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("roleId"), role.getId());
-		final Specification<RoleAuth> specification = Specification.where(where);
-		final List<Long> authIds = this.roleExRepository.findAll(specification).stream().map(RoleAuth::getAuthId)
-				.toList();
-		final List<String> authList = this.pgAuthRepository.findAllById(authIds).stream().map(Authority::getName)
-				.toList();
-		if (!authList.contains("employee%edition") && !authList.contains("employee%delete")) {
+	public Boolean checkEdition(final Collection<GrantedAuthority> authList) {
+		final List<String> authList2 = authList.stream().map(GrantedAuthority::getAuthority).toList();
+		if (!authList2.contains("employee%edition") && !authList2.contains("employee%delete")) {
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;
@@ -133,9 +104,9 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public Pagination<EmployeeDto> getEmployeesByKeyword(final Integer pageNum, final String keyword,
-			final Long userId) {
-		if (Boolean.FALSE.equals(this.checkEdition(userId))) {
+	public Pagination<EmployeeDto> getEmployeesByKeyword(final Integer pageNum, final String keyword, final Long userId,
+			final Collection<GrantedAuthority> authList) {
+		if (Boolean.FALSE.equals(this.checkEdition(authList))) {
 			final List<EmployeeDto> employeeDtos = new ArrayList<>();
 			final Employee employee = this.employeeRepository.findById(userId).orElseThrow(() -> {
 				throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);

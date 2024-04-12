@@ -14,10 +14,10 @@ function toSelectedPg(pageNum, keyword) {
 		data: {
 			'pageNum': pageNum,
 			'keyword': keyword,
-			'userId': $("#toPersonal").find("p").text()
+			'userId': $("#toPersonal").find("p").text(),
+			'authList': [$("#securityPersonalAuths").val()]
 		},
 		type: 'GET',
-		dataType: 'json',
 		success: function(result) {
 			buildTableBody(result);
 			buildPageInfos(result);
