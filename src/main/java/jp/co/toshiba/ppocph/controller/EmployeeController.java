@@ -137,7 +137,7 @@ public final class EmployeeController {
 	 */
 	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_TO_EDITION)
 	public ModelAndView toEdition(@RequestParam("editId") final Long id,
-			@RequestParam("authChkFlag") final String authChkFlag) {
+			@RequestParam(name = "authChkFlag", defaultValue = "false") final String authChkFlag) {
 		final EmployeeDto employee = this.iEmployeeService.getEmployeeById(id);
 		if (Boolean.FALSE.equals(Boolean.valueOf(authChkFlag))) {
 			final ModelAndView modelAndView = new ModelAndView("admin-editinfo2");
