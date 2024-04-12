@@ -1,6 +1,10 @@
 package jp.co.toshiba.ppocph.utils;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Stream;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import com.alibaba.fastjson2.JSON;
 
@@ -30,10 +34,20 @@ public final class PgCrowdUtils {
 		final String acceptInformation = request.getHeader("Accept");
 		final String xRequestInformation = request.getHeader("X-Requested-With");
 		// 判断して返却する
-		return acceptInformation != null && acceptInformation.length() > 0
-				&& acceptInformation.contains("application/json")
-				|| xRequestInformation != null && xRequestInformation.length() > 0
-						&& "XMLHttpRequest".equals(xRequestInformation);
+		return ((acceptInformation != null) && (acceptInformation.length() > 0)
+				&& acceptInformation.contains("application/json"))
+				|| ((xRequestInformation != null) && (xRequestInformation.length() > 0)
+						&& "XMLHttpRequest".equals(xRequestInformation));
+	}
+
+	/**
+	 * 共通権限管理ストリーム
+	 *
+	 * @param stream
+	 * @return List<String>
+	 */
+	public static final List<String> getNames(final Stream<GrantedAuthority> stream) {
+		return stream.map(GrantedAuthority::getAuthority).toList();
 	}
 
 	/**
