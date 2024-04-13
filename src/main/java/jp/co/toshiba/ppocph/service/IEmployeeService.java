@@ -1,9 +1,5 @@
 package jp.co.toshiba.ppocph.service;
 
-import java.util.Collection;
-
-import org.springframework.security.core.GrantedAuthority;
-
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
@@ -22,14 +18,6 @@ public interface IEmployeeService {
 	 * @param loginAccount ログインアカウント
 	 */
 	ResultDto<String> checkDuplicated(String loginAccount);
-
-	/**
-	 * ユーザ編集権限チェック
-	 *
-	 * @param authList 権限リスト
-	 * @return Boolean
-	 */
-	Boolean checkEdition(Collection<GrantedAuthority> authList);
 
 	/**
 	 * IDによって社員情報を取得する

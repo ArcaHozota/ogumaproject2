@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,7 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -81,15 +79,6 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		return this.employeeRepository.findOne(example).isPresent()
 				? ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_DUPLICATED)
 				: ResultDto.successWithoutData();
-	}
-
-	@Override
-	public Boolean checkEdition(final Collection<GrantedAuthority> authList) {
-		final List<String> authList2 = authList.stream().map(GrantedAuthority::getAuthority).toList();
-		if (!authList2.contains("employee%edition") && !authList2.contains("employee%delete")) {
-			return Boolean.FALSE;
-		}
-		return Boolean.TRUE;
 	}
 
 	@Override
