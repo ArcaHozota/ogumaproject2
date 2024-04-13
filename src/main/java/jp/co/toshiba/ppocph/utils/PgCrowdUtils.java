@@ -46,7 +46,7 @@ public final class PgCrowdUtils {
 	 * @param stream 権限ストリーム
 	 * @return List<String>
 	 */
-	public static final List<String> getNames(final Stream<GrantedAuthority> stream) {
+	public static final List<String> getAuthNames(final Stream<GrantedAuthority> stream) {
 		return stream.map(GrantedAuthority::getAuthority).toList();
 	}
 
