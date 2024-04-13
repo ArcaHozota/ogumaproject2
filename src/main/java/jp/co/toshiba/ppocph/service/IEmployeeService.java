@@ -21,7 +21,7 @@ public interface IEmployeeService {
 	 *
 	 * @param loginAccount ログインアカウント
 	 */
-	ResultDto<String> check(String loginAccount);
+	ResultDto<String> checkDuplicated(String loginAccount);
 
 	/**
 	 * ユーザ編集権限チェック
@@ -61,7 +61,7 @@ public interface IEmployeeService {
 	 *
 	 * @param userId 社員ID
 	 */
-	void removeById(Long userId);
+	void remove(Long userId);
 
 	/**
 	 * 社員情報追加

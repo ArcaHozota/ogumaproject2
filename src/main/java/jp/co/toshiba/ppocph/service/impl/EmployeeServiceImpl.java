@@ -74,7 +74,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	@Override
-	public ResultDto<String> check(final String loginAccount) {
+	public ResultDto<String> checkDuplicated(final String loginAccount) {
 		final Employee employee = new Employee();
 		employee.setLoginAccount(loginAccount);
 		final Example<Employee> example = Example.of(employee, ExampleMatcher.matching());
@@ -182,9 +182,9 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public void removeById(final Long userId) {
+	public void remove(final Long userId) {
 		final Employee employee = this.employeeRepository.findById(userId).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
 		this.employeeRepository.saveAndFlush(employee);

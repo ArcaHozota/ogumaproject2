@@ -52,7 +52,7 @@ public final class CityController {
 	public ResultDto<String> checkDuplicated(
 			@RequestParam(value = "name", defaultValue = StringUtils.EMPTY_STRING) final String name,
 			@RequestParam("districtId") final Long districtId) {
-		return this.iCityService.check(name, districtId);
+		return this.iCityService.checkDuplicated(name, districtId);
 	}
 
 	/**
@@ -73,7 +73,7 @@ public final class CityController {
 	 */
 	@DeleteMapping(PgCrowdURLConstants.URL_CITY_DELETE)
 	public ResultDto<String> deleteInfo(@PathVariable("cityId") final Long cityId) {
-		return this.iCityService.removeById(cityId);
+		return this.iCityService.remove(cityId);
 	}
 
 	/**

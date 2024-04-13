@@ -57,7 +57,7 @@ public final class RoleController {
 	@GetMapping(PgCrowdURLConstants.URL_ROLE_CHECK)
 	public ResultDto<String> checkDuplicated(
 			@RequestParam(name = "name", defaultValue = StringUtils.EMPTY_STRING) final String name) {
-		return this.iRoleService.check(name);
+		return this.iRoleService.checkDuplicated(name);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public final class RoleController {
 	 */
 	@DeleteMapping(PgCrowdURLConstants.URL_ROLE_DELETE)
 	public ResultDto<String> deleteInfo(@PathVariable("roleId") final Long roleId) {
-		return this.iRoleService.removeById(roleId);
+		return this.iRoleService.remove(roleId);
 	}
 
 	/**
