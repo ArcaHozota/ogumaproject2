@@ -27,7 +27,11 @@
 			display: none;
 		}
 
-		.input-box #eyeIcons {
+		.container .login-box {
+			height: 550px;
+		}
+
+		.input-box #eyeIcons2 {
 			position: absolute;
 			cursor: pointer;
 			right: 30px;
@@ -37,32 +41,24 @@
 		}
 	</style>
 	<div class="container">
-		<p th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']} eq null ? '' : ${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
-			id="errorMsg" hidden />
-		<p th:text="${torokuMsg eq null ? '' : torokuMsg}" id="torokuMsg" hidden />
 		<div class="login-box">
 			<!-- Login Form -->
-			<form th:action="@{/pgcrowd/employee/do/login}" th:method="post" class="form-signin" role="form"
-				id="loginForm">
-				<h2>ログイン</h2>
+			<form th:action="@{/pgcrowd/employee/reset/password}" th:method="post" class="form-signin" role="form"
+				id="resetForm">
+				<h2>パスワードリセット</h2>
+				<div class="input-box">
+					<ion-icon name="person-circle-outline"></ion-icon>
+					<input type="text" name="account" id="accountIpt2" placeholder="アカウント" required>
+				</div>
 				<div class="input-box">
 					<ion-icon name="mail-outline"></ion-icon>
-					<input type="text" th:value="${registeredEmail eq null ? '' : registeredEmail}" name="loginAcct"
-						id="accountIpt" placeholder="アカウント" required>
+					<input type="text" name="email" id="emailIpt2" placeholder="メールアドレス" required>
 				</div>
 				<div class="input-box">
-					<ion-icon name="lock-closed-outline"></ion-icon>
-					<ion-icon name="eye-outline" id="eyeIcons"></ion-icon>
-					<input type="password" name="userPswd" id="passwordIpt" placeholder="パスワード" required>
+					<ion-icon name="calendar-number-outline"></ion-icon>
+					<input type="date" name="dateOfBirth" id="dateOfBirthIpt2" required>
 				</div>
-				<div class="remember-forget">
-					<label><input type="checkbox" name="remember-me">私を記憶する</label>
-					<a th:href="@{/pgcrowd/forget/password}">パスワード忘れ？</a>
-				</div>
-				<button type="button" id="loginBtn">ログイン</button>
-				<div class="register-link">
-					<p>アカウント無し？<a th:href="@{/pgcrowd/employee/to/signup}">登録しましょう！</a></p>
-				</div>
+				<button type="button" id="resetBtn">リセット</button>
 			</form>
 		</div>
 		<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

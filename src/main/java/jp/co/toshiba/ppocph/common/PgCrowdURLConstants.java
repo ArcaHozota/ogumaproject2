@@ -91,4 +91,6 @@ public final class PgCrowdURLConstants {
 	public static final String URL_CITY_DELETE = "/pgcrowd/city/delete/{cityId}";
 
 	public static final String URL_CITY_CHECK_EDITION = "/pgcrowd/city/checkEdition";
+
+	public static final String URL_FORGET_PASSWORD = "/pgcrowd/forget/password";
 }

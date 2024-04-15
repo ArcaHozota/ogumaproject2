@@ -44,6 +44,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 	public void addViewControllers(final ViewControllerRegistry registry) {
 		registry.addViewController(PgCrowdURLConstants.URL_TO_SIGN_UP).setViewName("admin-toroku");
 		registry.addViewController(PgCrowdURLConstants.URL_TO_LOGIN).setViewName("admin-login");
+		registry.addViewController(PgCrowdURLConstants.URL_FORGET_PASSWORD).setViewName("admin-forgot");
 		registry.addViewController(PgCrowdURLConstants.URL_TO_MAINMENU).setViewName("mainmenu");
 		registry.addViewController(PgCrowdURLConstants.URL_MENU_INITIAL).setViewName("menukanri");
 		registry.addViewController(PgCrowdURLConstants.URL_EMPLOYEE_TO_PAGES).setViewName("admin-pages");
