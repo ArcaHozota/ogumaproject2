@@ -40,6 +40,7 @@
 		<p th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']} eq null ? '' : ${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
 			id="errorMsg" hidden />
 		<p th:text="${torokuMsg eq null ? '' : torokuMsg}" id="torokuMsg" hidden />
+		<p th:text="${resetMsg eq null ? '' : resetMsg}" id="resetMsg" hidden />
 		<div class="login-box">
 			<!-- Login Form -->
 			<form th:action="@{/pgcrowd/employee/do/login}" th:method="post" class="form-signin" role="form"

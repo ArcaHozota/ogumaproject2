@@ -20,6 +20,7 @@
 		}
 	</style>
 	<div class="container">
+		<p th:text="${resetMsg eq null ? '' : resetMsg}" id="resetMsg" hidden />
 		<div class="login-box">
 			<!-- Login Form -->
 			<form th:action="@{/pgcrowd/employee/reset/password}" th:method="post" class="form-signin" role="form"
