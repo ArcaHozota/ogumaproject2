@@ -90,6 +90,28 @@ public final class EmployeeController {
 	}
 
 	/**
+	 * パスワードをリセット
+	 *
+	 * @param employeeDto 社員情報DTO
+	 * @return ResultDto<String>
+	 */
+	@PostMapping(PgCrowdURLConstants.URL_DO_SIGN_UP)
+	public ModelAndView resetPassword(@RequestParam("account") final String account,
+			@RequestParam("email") final String email, @RequestParam("dateOfBirth") final String dateOfBirth) {
+		final EmployeeDto employeeDto = new EmployeeDto(null, account, null, null, email, dateOfBirth, null);
+		final Boolean resetPassword = this.iEmployeeService.resetPassword(employeeDto);
+		if (Boolean.FALSE.equals(resetPassword)) {
+			final ModelAndView modelAndView = new ModelAndView("admin-forgot");
+			modelAndView.addObject("resetMsg", PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
+			return modelAndView;
+		}
+		final ModelAndView modelAndView = new ModelAndView("admin-login");
+		modelAndView.addObject("resetMsg", PgCrowdConstants.MESSAGE_RESET_PASSWORD);
+		modelAndView.addObject("registeredEmail", email);
+		return modelAndView;
+	}
+
+	/**
 	 * ログインアカウントによって社員情報を取得する
 	 *
 	 * @param loginAccount ログインアカウント

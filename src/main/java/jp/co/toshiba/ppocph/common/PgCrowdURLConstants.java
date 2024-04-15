@@ -93,4 +93,6 @@ public final class PgCrowdURLConstants {
 	public static final String URL_CITY_CHECK_EDITION = "/pgcrowd/city/checkEdition";
 
 	public static final String URL_FORGET_PASSWORD = "/pgcrowd/forget/password";
+
+	public static final String URL_RESET_PASSWORD = "/pgcrowd/employee/reset/password";
 }

@@ -180,6 +180,27 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
+	public Boolean resetPassword(final EmployeeDto employeeDto) {
+		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("loginAccount"), employeeDto.loginAccount());
+		final Specification<Employee> where3 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("email"), employeeDto.email());
+		final Specification<Employee> where4 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("dateOfBirth"), employeeDto.dateOfBirth());
+		final Specification<Employee> specification = Specification.allOf(where1, where2, where3, where4);
+		final Optional<Employee> optional = this.employeeRepository.findOne(specification);
+		if (optional.isEmpty()) {
+			return Boolean.FALSE;
+		}
+		final Employee employee = optional.get();
+		employee.setPassword(this.encoder.encode(PgCrowdConstants.DEFAULT_PASSWORD));
+		this.employeeRepository.saveAndFlush(employee);
+		return Boolean.TRUE;
+	}
+
+	@Override
 	public void save(final EmployeeDto employeeDto) {
 		final String password = this.encoder.encode(employeeDto.password());
 		final Employee employee = new Employee();
