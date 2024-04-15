@@ -75,7 +75,9 @@ public class WebSecurityConfiguration {
 						.hasAuthority("role%delete").requestMatchers(PgCrowdURLConstants.URL_DISTRICT_PAGINATION)
 						.hasAuthority("district%retrieve").requestMatchers(PgCrowdURLConstants.URL_DISTRICT_UPDATE)
 						.hasAuthority("district%edition").anyRequest().authenticated())
-				.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository())).exceptionHandling(handling -> {
+				.csrf(csrf -> csrf.ignoringRequestMatchers(PgCrowdURLConstants.URL_STATIC_RESOURCE)
+						.csrfTokenRepository(new CookieCsrfTokenRepository()))
+				.exceptionHandling(handling -> {
 					handling.authenticationEntryPoint((request, response, authenticationException) -> {
 						final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.UNAUTHORIZED.value(),
 								authenticationException.getMessage());
