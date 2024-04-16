@@ -95,7 +95,7 @@ public final class EmployeeController {
 	 * @param employeeDto 社員情報DTO
 	 * @return ResultDto<String>
 	 */
-	@PostMapping(PgCrowdURLConstants.URL_DO_SIGN_UP)
+	@PostMapping(PgCrowdURLConstants.URL_RESET_PASSWORD)
 	public ModelAndView resetPassword(@RequestParam("account") final String account,
 			@RequestParam("email") final String email, @RequestParam("dateOfBirth") final String dateOfBirth) {
 		final EmployeeDto employeeDto = new EmployeeDto(null, account, null, null, email, dateOfBirth, null);

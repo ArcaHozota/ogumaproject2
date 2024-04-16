@@ -177,6 +177,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		});
 		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
 		this.employeeRepository.saveAndFlush(employee);
+		this.employeeExRepository.deleteById(userId);
 	}
 
 	@Override
@@ -188,7 +189,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final Specification<Employee> where3 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("email"), employeeDto.email());
 		final Specification<Employee> where4 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("dateOfBirth"), employeeDto.dateOfBirth());
+				.equal(root.get("dateOfBirth"), LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
 		final Specification<Employee> specification = Specification.allOf(where1, where2, where3, where4);
 		final Optional<Employee> optional = this.employeeRepository.findOne(specification);
 		if (optional.isEmpty()) {

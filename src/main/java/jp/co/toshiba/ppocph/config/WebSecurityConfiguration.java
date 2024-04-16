@@ -55,7 +55,8 @@ public class WebSecurityConfiguration {
 		httpSecurity
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers(PgCrowdURLConstants.URL_STATIC_RESOURCE, PgCrowdURLConstants.URL_TO_SIGN_UP,
-								PgCrowdURLConstants.URL_DO_SIGN_UP, PgCrowdURLConstants.URL_FORGET_PASSWORD)
+								PgCrowdURLConstants.URL_DO_SIGN_UP, PgCrowdURLConstants.URL_FORGET_PASSWORD,
+								PgCrowdURLConstants.URL_RESET_PASSWORD)
 						.permitAll()
 						.requestMatchers(PgCrowdURLConstants.URL_EMPLOYEE_TO_PAGES,
 								PgCrowdURLConstants.URL_EMPLOYEE_PAGINATION,
