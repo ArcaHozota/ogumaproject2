@@ -92,8 +92,10 @@ public final class EmployeeController {
 	/**
 	 * パスワードをリセット
 	 *
-	 * @param employeeDto 社員情報DTO
-	 * @return ResultDto<String>
+	 * @param account     アカウント
+	 * @param email       メール
+	 * @param dateOfBirth 生年月日
+	 * @return ModelAndView
 	 */
 	@PostMapping(PgCrowdURLConstants.URL_RESET_PASSWORD)
 	public ModelAndView resetPassword(@RequestParam("account") final String account,
@@ -178,11 +180,13 @@ public final class EmployeeController {
 	/**
 	 * 社員登録
 	 *
-	 * @param employeeDto 社員情報DTO
-	 * @return ResultDto<String>
+	 * @param email       メール
+	 * @param password    パスワード
+	 * @param dateOfBirth 生年月日
+	 * @return ModelAndView
 	 */
 	@PostMapping(PgCrowdURLConstants.URL_DO_SIGN_UP)
-	public ModelAndView toroku(@RequestParam("email") final String email,
+	public ModelAndView register(@RequestParam("email") final String email,
 			@RequestParam("password") final String password, @RequestParam("dateOfBirth") final String dateOfBirth) {
 		final EmployeeDto employeeDto = new EmployeeDto(null, null, null, password, email, dateOfBirth, null);
 		final Boolean toroku = this.iEmployeeService.register(employeeDto);

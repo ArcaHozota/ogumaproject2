@@ -38,17 +38,6 @@ public final class RoleController {
 	private final IRoleService iRoleService;
 
 	/**
-	 * 権限付与モダルを初期表示する
-	 *
-	 * @return ResultDto<List<PgAuth>>
-	 */
-	@GetMapping(PgCrowdURLConstants.URL_ROLE_AUTHLIST)
-	public ResultDto<List<Authority>> authlists() {
-		final List<Authority> list = this.iRoleService.getAuthList();
-		return ResultDto.successWithData(list);
-	}
-
-	/**
 	 * 役割名称重複チェック
 	 *
 	 * @param name 役割名称
@@ -101,6 +90,17 @@ public final class RoleController {
 	public ResultDto<List<Long>> getAssignedAuth(@RequestParam("fuyoId") final Long roleId) {
 		final List<Long> authIds = this.iRoleService.getAuthIdsById(roleId);
 		return ResultDto.successWithData(authIds);
+	}
+
+	/**
+	 * 権限付与モダルを初期表示する
+	 *
+	 * @return ResultDto<List<PgAuth>>
+	 */
+	@GetMapping(PgCrowdURLConstants.URL_ROLE_AUTHLIST)
+	public ResultDto<List<Authority>> getAuthList() {
+		final List<Authority> list = this.iRoleService.getAuthList();
+		return ResultDto.successWithData(list);
 	}
 
 	/**
