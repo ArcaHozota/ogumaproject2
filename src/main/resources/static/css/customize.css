@@ -1,14 +1,10 @@
-/* General Font */
-@font-face {
-	font-family: 'SourceHanSans';
-	src: local('../fonts/SourceHanSans-Regular.otf');
-	font-weight: normal;
-	font-style: normal;
-}
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400&display=swap');
 
 /* General CSS */
 body {
-	font-family: 'SourceHanSans', sans-serif;
+	font-style: normal;
+	font-family: 'Noto Sans JP', sans-serif;
 }
 
 .text-bg-klein {
