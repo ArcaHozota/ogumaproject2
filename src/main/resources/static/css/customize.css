@@ -2,12 +2,12 @@
 @font-face {
 	font-family: 'SourceHanSans';
 	src: local('../fonts/SourceHanSans-Medium.otf');
-	font-weight: inherit;
-	font-style: normal;
 }
 
 /* General CSS */
 body {
+	font-style: normal;
+	font-weight: inherit;
 	font-family: 'SourceHanSans', sans-serif;
 }
 
