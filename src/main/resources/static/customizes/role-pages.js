@@ -66,7 +66,6 @@ $("#nameInput").on('change', function() {
 		url: '/pgcrowd/role/check',
 		data: 'name=' + this.value,
 		type: 'GET',
-		dataType: 'json',
 		success: function(result) {
 			if (result.status === 'SUCCESS') {
 				showValidationMsg(this, "success", "");
@@ -164,7 +163,6 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 	let ajaxReturn = $.ajax({
 		url: '/pgcrowd/role/authlists',
 		type: 'GET',
-		dataType: 'json',
 		async: false
 	});
 	if (ajaxReturn.status !== 200) {
@@ -201,7 +199,6 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 		url: '/pgcrowd/role/getAssigned',
 		data: 'fuyoId=' + fuyoId,
 		type: 'GET',
-		dataType: 'json',
 		async: false
 	});
 	let authIdList = ajaxReturn.responseJSON.data;
