@@ -6,7 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import jp.co.toshiba.ppocph.entity.Employee;
-import jp.co.toshiba.ppocph.utils.StringUtils;
+import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -25,7 +25,7 @@ public final class SecurityAdmin extends User {
 	SecurityAdmin(final Employee admin, final Collection<GrantedAuthority> authorities) {
 		super(admin.getLoginAccount(), admin.getPassword(), true, true, true, true, authorities);
 		this.originalAdmin = admin;
-		this.originalAdmin.setPassword(StringUtils.EMPTY_STRING);
+		this.originalAdmin.setPassword(CommonProjectUtils.EMPTY_STRING);
 	}
 
 	public Employee getOriginalAdmin() {

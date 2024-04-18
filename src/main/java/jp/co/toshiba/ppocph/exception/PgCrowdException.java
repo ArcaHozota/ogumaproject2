@@ -1,6 +1,6 @@
 package jp.co.toshiba.ppocph.exception;
 
-import jp.co.toshiba.ppocph.utils.StringUtils;
+import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
 
 /**
  * プロジェクト業務ロジック例外
@@ -19,7 +19,7 @@ public class PgCrowdException extends RuntimeException {
 
 	public PgCrowdException() {
 		super();
-		this.message = StringUtils.EMPTY_STRING;
+		this.message = CommonProjectUtils.EMPTY_STRING;
 	}
 
 	public PgCrowdException(final String message) {

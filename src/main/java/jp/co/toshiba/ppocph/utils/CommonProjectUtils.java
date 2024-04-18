@@ -1,26 +1,34 @@
 package jp.co.toshiba.ppocph.utils;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.GrantedAuthority;
 
+import com.alibaba.fastjson2.JSON;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jp.co.toshiba.ppocph.config.ResponseLoginDto;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
- * 共通ストリング判断ツール
+ * プロジェクト共通ツール
  *
  * @author ArkamaHozota
- * @since 1.10
+ * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class StringUtils {
+public final class CommonProjectUtils {
 
 	/**
 	 * UTF-8キャラセット
@@ -227,6 +235,33 @@ public final class StringUtils {
 	}
 
 	/**
+	 * 現在のリクエストがAJAXリクエストであるかどうかを判断する
+	 *
+	 * @param request リクエスト
+	 * @return true: ajax-request, false: no-ajax
+	 */
+	public static boolean discernRequestType(final HttpServletRequest request) {
+		// リクエストヘッダー情報の取得する
+		final String acceptInformation = request.getHeader("Accept");
+		final String xRequestInformation = request.getHeader("X-Requested-With");
+		// 判断して返却する
+		return ((acceptInformation != null) && (acceptInformation.length() > 0)
+				&& acceptInformation.contains("application/json"))
+				|| ((xRequestInformation != null) && (xRequestInformation.length() > 0)
+						&& "XMLHttpRequest".equals(xRequestInformation));
+	}
+
+	/**
+	 * 共通権限管理ストリーム
+	 *
+	 * @param stream 権限ストリーム
+	 * @return List<String>
+	 */
+	public static final List<String> getAuthNames(final Stream<GrantedAuthority> stream) {
+		return stream.map(GrantedAuthority::getAuthority).toList();
+	}
+
+	/**
 	 * ファジークエリ用の検索文を取得する
 	 *
 	 * @param keyword 検索文
@@ -281,7 +316,7 @@ public final class StringUtils {
 	 * @return true: すべて数字, false: 文字も含める
 	 */
 	public static boolean isDigital(@Nullable final String string) {
-		if (StringUtils.isEmpty(string)) {
+		if (CommonProjectUtils.isEmpty(string)) {
 			return false;
 		}
 		return Pattern.compile("\\d*").matcher(string).matches();
@@ -294,7 +329,7 @@ public final class StringUtils {
 	 * @return true: 空, false: 空ではない
 	 */
 	public static boolean isEmpty(@Nullable final String str) {
-		return str == null || str.isEmpty() || str.isBlank();
+		return (str == null) || str.isEmpty() || str.isBlank();
 	}
 
 	/**
@@ -305,10 +340,10 @@ public final class StringUtils {
 	 * @return true: イコール, false: イコールしない
 	 */
 	public static boolean isEqual(@Nullable final String str1, @Nullable final String str2) {
-		if (str1 == null && str2 == null) {
+		if ((str1 == null) && (str2 == null)) {
 			return true;
 		}
-		if (str1 == null || str2 == null || str1.length() != str2.length()) {
+		if ((str1 == null) || (str2 == null) || (str1.length() != str2.length())) {
 			return false;
 		}
 		return str1.trim().equals(str2.trim());
@@ -321,7 +356,7 @@ public final class StringUtils {
 	 * @return true: 空ではない, false: 空
 	 */
 	public static boolean isNotEmpty(@Nullable final String str) {
-		return !StringUtils.isEmpty(str);
+		return !CommonProjectUtils.isEmpty(str);
 	}
 
 	/**
@@ -332,7 +367,23 @@ public final class StringUtils {
 	 * @return true: イコールしない, false: イコール
 	 */
 	public static boolean isNotEqual(@Nullable final String str1, @Nullable final String str2) {
-		return !StringUtils.isEqual(str1, str2);
+		return !CommonProjectUtils.isEqual(str1, str2);
+	}
+
+	/**
+	 * 文字列をクライアントにレンダリングする
+	 *
+	 * @param response リスポンス
+	 * @param string   ストリング
+	 */
+	public static void renderString(final HttpServletResponse response, final ResponseLoginDto aResult) {
+		try {
+			response.setStatus(aResult.getCode());
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().print(JSON.toJSONString(aResult));
+		} catch (final IOException e) {
+			// do nothing
+		}
 	}
 
 	/**
@@ -342,7 +393,7 @@ public final class StringUtils {
 	 * @return 半角文字
 	 */
 	public static String toHankaku(@Nullable final String zenkaku) {
-		if (StringUtils.isEmpty(zenkaku)) {
+		if (CommonProjectUtils.isEmpty(zenkaku)) {
 			return EMPTY_STRING;
 		}
 		final StringBuilder builder = new StringBuilder();
@@ -365,7 +416,7 @@ public final class StringUtils {
 	 * @return 全角文字
 	 */
 	public static String toZenkaku(@Nullable final String hankaku) {
-		if (StringUtils.isEmpty(hankaku)) {
+		if (CommonProjectUtils.isEmpty(hankaku)) {
 			return EMPTY_STRING;
 		}
 		final StringBuilder builder = new StringBuilder();

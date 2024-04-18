@@ -42,7 +42,7 @@ public final class PgCrowdConstants {
 
 	public static final String LOGIC_DELETE_INITIAL = "approved";
 
-	public static final String MESSAGE_STRING_INVALIDATE = "Invalid password string";
+	public static final String MESSAGE_STRING_INVALIDATE = "入力した文字列は不規則。";
 
 	public static final String MESSAGE_STRING_NOTLOGIN = "ログインしてください";
 

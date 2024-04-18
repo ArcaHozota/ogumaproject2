@@ -21,10 +21,10 @@ import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.repository.CityRepository;
 import jp.co.toshiba.ppocph.repository.DistrictRepository;
 import jp.co.toshiba.ppocph.service.IDistrictService;
+import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 import jp.co.toshiba.ppocph.utils.SecondBeanUtils;
-import jp.co.toshiba.ppocph.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -60,9 +60,10 @@ public final class DistrictServiceImpl implements IDistrictService {
 						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
 						item.getDistrictFlag()))
 				.sorted(Comparator.comparingLong(DistrictDto::id)).toList();
-		if (StringUtils.isEmpty(cityId) || !StringUtils.isDigital(cityId)) {
+		if (CommonProjectUtils.isEmpty(cityId) || !CommonProjectUtils.isDigital(cityId)) {
 			final DistrictDto districtDto = new DistrictDto(0L, PgCrowdConstants.DEFAULT_ROLE_NAME, 0L,
-					StringUtils.EMPTY_STRING, StringUtils.EMPTY_STRING, null, StringUtils.EMPTY_STRING);
+					CommonProjectUtils.EMPTY_STRING, CommonProjectUtils.EMPTY_STRING, null,
+					CommonProjectUtils.EMPTY_STRING);
 			districtDtos.add(districtDto);
 			districtDtos.addAll(districtDtos1);
 			return districtDtos;
@@ -90,7 +91,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 		final Specification<District> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		final Specification<District> specification = Specification.where(where1);
-		if (StringUtils.isEmpty(keyword)) {
+		if (CommonProjectUtils.isEmpty(keyword)) {
 			final Page<District> pages = this.districtRepository.findAll(specification, pageRequest);
 			final List<DistrictDto> districtDtos = pages.stream()
 					.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),
@@ -102,7 +103,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 					.toList();
 			return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
-		final String searchStr = StringUtils.getDetailKeyword(keyword);
+		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
 		final Page<District> pages = this.districtRepository.findByShutoLike(searchStr, pageRequest);
 		final List<DistrictDto> districtDtos = pages.stream()
 				.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),
