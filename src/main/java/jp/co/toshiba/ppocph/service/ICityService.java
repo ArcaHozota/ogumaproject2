@@ -5,7 +5,7 @@ import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 
 /**
- * 地域サービスインターフェス
+ * 都市サービスインターフェス
  *
  * @author ArkamaHozota
  * @since 7.89

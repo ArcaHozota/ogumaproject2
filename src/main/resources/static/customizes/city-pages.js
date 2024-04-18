@@ -16,7 +16,6 @@ function toSelectedPg(pageNum, keyword) {
 			'keyword': keyword
 		},
 		type: 'GET',
-		dataType: 'json',
 		success: function(result) {
 			buildTableBody(result);
 			buildPageInfos(result);
@@ -203,7 +202,6 @@ function checkCityName(cityName, district) {
 				'districtId': districtVal
 			},
 			type: 'GET',
-			dataType: 'json',
 			success: function(result) {
 				if (result.status === 'SUCCESS') {
 					showValidationMsg(cityName, "success", "√");
@@ -220,7 +218,6 @@ function getDistricts(element, cityId) {
 		url: '/pgcrowd/city/districtlist',
 		data: 'cityId=' + cityId,
 		type: 'GET',
-		dataType: 'json',
 		success: function(result) {
 			$.each(result.data, (index, item) => {
 				let optionElement = $("<option></option>").attr('value', item.id)

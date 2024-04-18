@@ -214,7 +214,6 @@ $("#restoreBtn").on('click', function() {
 		url: '/pgcrowd/employee/inforestore',
 		data: 'editId=' + editId,
 		type: 'GET',
-		dataType: 'json',
 		success: function(result) {
 			let restoredInfo = result.data;
 			$("#usernameEdit").val(restoredInfo.username);
