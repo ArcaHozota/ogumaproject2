@@ -1,10 +1,14 @@
-/* Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+/* General Font */
+@font-face {
+	font-family: 'SourceHanSans';
+	src: local('../fonts/SourceHanSans-Medium.otf');
+	font-weight: inherit;
+	font-style: normal;
+}
 
 /* General CSS */
 body {
-	font-style: normal;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'SourceHanSans', sans-serif;
 }
 
 .text-bg-klein {
