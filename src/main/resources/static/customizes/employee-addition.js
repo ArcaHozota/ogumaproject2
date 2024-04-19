@@ -1,4 +1,5 @@
-let pageNum, totalRecords;
+let pageNum = '[[${pageNum}]]';
+let totalRecords;
 $("#loginAccountInput").change(function() {
 	$.ajax({
 		url: '/pgcrowd/employee/check',

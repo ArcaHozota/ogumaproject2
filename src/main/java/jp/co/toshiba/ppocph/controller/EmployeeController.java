@@ -192,12 +192,14 @@ public final class EmployeeController {
 			final RoleDto roleDto = this.iRoleService.getRoleById(employee.roleId());
 			modelAndView.addObject(PgCrowdConstants.ATTRNAME_EDITED_INFO, employee);
 			modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, roleDto);
+			modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 			return modelAndView;
 		}
 		final ModelAndView modelAndView = new ModelAndView("admin-editinfo");
 		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(id);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EDITED_INFO, employee);
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, roleDtos);
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return modelAndView;
 	}
 
