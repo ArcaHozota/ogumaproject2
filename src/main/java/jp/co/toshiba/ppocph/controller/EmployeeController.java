@@ -209,7 +209,7 @@ public final class EmployeeController {
 	 * @param pageNum ページ数
 	 * @return ModelAndView
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_PAGINATION)
+	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_TO_PAGES)
 	public ModelAndView toPages(@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum) {
 		final ModelAndView modelAndView = new ModelAndView("admin-pages");
 		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
