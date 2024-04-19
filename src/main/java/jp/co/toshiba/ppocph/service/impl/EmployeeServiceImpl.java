@@ -237,6 +237,8 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		if (originalEntity.equals(employee) && Objects.equals(employeeRole.getRoleId(), employeeDto.roleId())) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
 		}
+		employeeRole.setRoleId(employeeDto.roleId());
+		this.employeeExRepository.saveAndFlush(employeeRole);
 		this.employeeRepository.saveAndFlush(employee);
 		return ResultDto.successWithoutData();
 	}
