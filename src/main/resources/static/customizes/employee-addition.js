@@ -1,4 +1,4 @@
-let pageNum = '[[${pageNum}]]';
+let pageNum = $("#pageNumContainer").text();
 let totalRecords;
 $("#loginAccountInput").change(function() {
 	$.ajax({
@@ -99,7 +99,7 @@ $("#editInfoBtn").on('click', function() {
 			roleId = $("#roleEdit option:selected").val();
 		}
 		let putData = JSON.stringify({
-			'id': $("#editId").text(),
+			'id': $("#editIdContainer").text(),
 			'loginAccount': $("#loginAccountEdit").text(),
 			'username': $("#usernameEdit").val().trim(),
 			'password': rawPassword,
@@ -124,7 +124,7 @@ $("#resetBtn").on('click', function() {
 	formReset($("#inputForm"));
 });
 $("#restoreBtn").on('click', function() {
-	let editId = $("#editId").text();
+	let editId = $("#editIdContainer").text();
 	formReset($("#editForm"));
 	$.ajax({
 		url: '/pgcrowd/employee/inforestore',

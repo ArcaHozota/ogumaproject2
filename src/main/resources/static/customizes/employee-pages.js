@@ -1,6 +1,10 @@
-let pageNum, totalRecords, totalPages, keyword;
+let pageNum = $("#pageNumContainer").text();
+let totalRecords, totalPages, keyword;
 $(document).ready(function() {
 	$("#toAdmin").css('color', '#7F0020');
+	if (pageNum === '') {
+		pageNum = undefined;
+	}
 	toSelectedPg(pageNum, keyword);
 	$("#toAdmin").addClass('animate__animated animate__flipInY');
 });

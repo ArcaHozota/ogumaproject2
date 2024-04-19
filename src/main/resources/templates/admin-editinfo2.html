@@ -28,7 +28,8 @@
 					</div>
 					<div class="card-body">
 						<form role="form" id="editForm">
-							<p th:text="${arawaseta.id}" id="editId" hidden></p>
+							<p th:text="${arawaseta.id}" id="editIdContainer" hidden></p>
+							<p th:text="${pageNum}" id="pageNumContainer" hidden></p>
 							<div class="form-group row">
 								<label for="loginAccountEdit" class="col-sm-3 col-form-label text-end">ログインアカウント</label>
 								<div class="col-sm-7" style="height: 60px;">
