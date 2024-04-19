@@ -119,7 +119,7 @@ $(function() {
 	});
 	$("#toPages").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/employee/to/pages?pageNum=1';
+		let url = '/pgcrowd/employee/to/pages?pageNum=' + pageNum;
 		checkPermissionAndTransfer(url);
 	});
 	$("#toCategory").on('click', function(e) {
