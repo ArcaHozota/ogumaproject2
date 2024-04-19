@@ -204,6 +204,19 @@ public final class EmployeeController {
 	}
 
 	/**
+	 * 一覧画面へ遷移する
+	 *
+	 * @param pageNum ページ数
+	 * @return ModelAndView
+	 */
+	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_PAGINATION)
+	public ModelAndView toPages(@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum) {
+		final ModelAndView modelAndView = new ModelAndView("admin-pages");
+		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
+		return modelAndView;
+	}
+
+	/**
 	 * 情報更新
 	 *
 	 * @param employeeDto 社員情報DTO

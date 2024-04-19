@@ -46,7 +46,6 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 		registry.addViewController(PgCrowdURLConstants.URL_FORGET_PASSWORD).setViewName("admin-forgot");
 		registry.addViewController(PgCrowdURLConstants.URL_TO_MAINMENU).setViewName("mainmenu");
 		registry.addViewController(PgCrowdURLConstants.URL_MENU_INITIAL).setViewName("menukanri");
-		registry.addViewController(PgCrowdURLConstants.URL_EMPLOYEE_TO_PAGES).setViewName("admin-pages");
 		registry.addViewController(PgCrowdURLConstants.URL_ROLE_TO_PAGES).setViewName("role-pages");
 		registry.addViewController(PgCrowdURLConstants.URL_CATEGORY_INITIAL).setViewName("categorykanri");
 		registry.addViewController(PgCrowdURLConstants.URL_TO_DISTRICT_PAGES).setViewName("district-pages");
