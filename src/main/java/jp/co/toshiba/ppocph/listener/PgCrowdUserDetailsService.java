@@ -58,11 +58,14 @@ public final class PgCrowdUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+		final Specification<Employee> status = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("status"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("loginAccount"), username);
 		final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("email"), username);
-		final Specification<Employee> specification1 = Specification.where(where1).or(where2);
+		final Specification<Employee> specification1 = Specification.where(status)
+				.and(Specification.anyOf(where1, where2));
 		final Employee employee = this.employeeRepository.findOne(specification1).orElseThrow(() -> {
 			throw new DisabledException(PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR1);
 		});
