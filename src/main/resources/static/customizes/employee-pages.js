@@ -52,7 +52,7 @@ function buildTableBody(result) {
 }
 $("#tableBody").on('click', '.delete-btn', function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/employee/delete/0L',
+		url: '/pgcrowd/employee/infoDelete/0L',
 		type: 'GET',
 		async: false
 	});
@@ -71,7 +71,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 		confirmButtonColor: '#7F0020'
 	}).then((result) => {
 		if (result.isConfirmed) {
-			pgcrowdAjaxModify('/pgcrowd/employee/delete/' + userId, 'DELETE', null, normalDeleteSuccessFunction);
+			pgcrowdAjaxModify('/pgcrowd/employee/infoDelete/' + userId, 'DELETE', null, normalDeleteSuccessFunction);
 		} else {
 			$(this).close();
 		}
@@ -85,6 +85,6 @@ $("#addInfoBtn").on('click', function(e) {
 $("#tableBody").on('click', '.edit-btn', function() {
 	let editId = $(this).attr("editId");
 	let authChkFlag = $("#securityPersonalAuths").text();
-	let url = '/pgcrowd/employee/to/edition?editId=' + editId + '&pageNum=' + pageNum + '&authChkFlag=' + authChkFlag;
+	let url = '/pgcrowd/employee/toEdition?editId=' + editId + '&pageNum=' + pageNum + '&authChkFlag=' + authChkFlag;
 	checkPermissionAndTransfer(url);
 });

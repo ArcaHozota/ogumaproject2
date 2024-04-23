@@ -57,23 +57,23 @@ $(document).ready(function() {
 		openNodeLinkOnNewTab: true
 	});
 	$("#employeeAddTree").on('click', function() {
-		let url = '/pgcrowd/employee/to/addition';
+		let url = '/pgcrowd/employee/toAddition';
 		checkPermissionAndTransfer(url);
 	});
 	$("#employeeQueryTree").on('click', function() {
-		let url = '/pgcrowd/employee/to/pages?pageNum=1';
+		let url = '/pgcrowd/employee/toPages?pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
 	$("#roleQueryTree").on('click', function() {
-		let url = '/pgcrowd/role/to/pages?pageNum=1';
+		let url = '/pgcrowd/role/toPages?pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
 	$("#districtQueryTree").on('click', function() {
-		let url = '/pgcrowd/category/to/districtPages';
+		let url = '/pgcrowd/category/toDistrictPages';
 		checkPermissionAndTransfer(url);
 	});
 	$("#cityQueryTree").on('click', function() {
-		let url = '/pgcrowd/category/to/cityPages';
+		let url = '/pgcrowd/category/toCityPages';
 		checkPermissionAndTransfer(url);
 	});
 });

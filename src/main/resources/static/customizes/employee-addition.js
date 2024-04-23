@@ -49,7 +49,7 @@ $("#saveInfoBtn").on('click', function() {
 			'dateOfBirth': $("#dateInput").val(),
 			'roleId': $("#roleInput").val()
 		});
-		pgcrowdAjaxModify('/pgcrowd/employee/infosave', 'POST', postData, postSuccessFunction);
+		pgcrowdAjaxModify('/pgcrowd/employee/infoSave', 'POST', postData, postSuccessFunction);
 	}
 });
 $("#passwordEdit").change(function() {
@@ -72,7 +72,7 @@ $("#emailEdit").change(function() {
 });
 $("#roleEdit").change(function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/employee/delete/0L',
+		url: '/pgcrowd/employee/infoDelete/0L',
 		type: 'GET',
 		async: false
 	});
@@ -107,15 +107,15 @@ $("#editInfoBtn").on('click', function() {
 			'dateOfBirth': $("#dateEdit").val(),
 			'roleId': roleId
 		});
-		pgcrowdAjaxModify('/pgcrowd/employee/infoupd', 'PUT', putData, putSuccessFunction);
+		pgcrowdAjaxModify('/pgcrowd/employee/infoUpdate', 'PUT', putData, putSuccessFunction);
 	}
 });
 function postSuccessFunction() {
-	window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + totalRecords);
+	window.location.replace('/pgcrowd/employee/toPages?pageNum=' + totalRecords);
 }
 function putSuccessFunction(result) {
 	if (result.status === 'SUCCESS') {
-		window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + pageNum);
+		window.location.replace('/pgcrowd/employee/toPages?pageNum=' + pageNum);
 	} else {
 		layer.msg(result.message);
 	}
@@ -127,7 +127,7 @@ $("#restoreBtn").on('click', function() {
 	let editId = $("#editIdContainer").text();
 	formReset($("#editForm"));
 	$.ajax({
-		url: '/pgcrowd/employee/inforestore',
+		url: '/pgcrowd/employee/infoRestore',
 		data: 'editId=' + editId,
 		type: 'GET',
 		success: function(result) {

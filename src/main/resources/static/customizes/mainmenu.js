@@ -6,10 +6,10 @@ $("#categoryKanriMainmenu").on('click', function() {
 	checkPermissionAndTransfer(url);
 });
 $("#roleKanriMainmenu").on('click', function() {
-	let url = '/pgcrowd/role/to/pages?pageNum=1';
+	let url = '/pgcrowd/role/toPages?pageNum=1';
 	checkPermissionAndTransfer(url);
 });
 $("#adminKanriMainmenu").on('click', function() {
-	let url = '/pgcrowd/employee/to/pages?pageNum=1';
+	let url = '/pgcrowd/employee/toPages?pageNum=1';
 	checkPermissionAndTransfer(url);
 });

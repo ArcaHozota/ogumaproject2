@@ -100,17 +100,17 @@ $(function() {
 		e.preventDefault();
 		let userId = $(this).find("p").text();
 		let authChkFlag = $("#securityPersonalAuths").text();
-		let url = '/pgcrowd/employee/to/edition?editId=' + userId + '&authChkFlag=' + authChkFlag;
+		let url = '/pgcrowd/employee/toEdition?editId=' + userId + '&authChkFlag=' + authChkFlag;
 		checkPermissionAndTransfer(url);
 	});
 	$("#toAdmin").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/employee/to/pages?pageNum=1';
+		let url = '/pgcrowd/employee/toPages?pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toRole").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/role/to/pages?pageNum=1';
+		let url = '/pgcrowd/role/toPages?pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toMenu").on('click', function(e) {
@@ -119,7 +119,7 @@ $(function() {
 	});
 	$("#toPages").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/employee/to/pages?pageNum=' + pageNum;
+		let url = '/pgcrowd/employee/toPages?pageNum=' + pageNum;
 		checkPermissionAndTransfer(url);
 	});
 	$("#toCategory").on('click', function(e) {
@@ -129,12 +129,12 @@ $(function() {
 	});
 	$("#toDistrict").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/category/to/districtPages';
+		let url = '/pgcrowd/category/toDistrictPages';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toCity").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/category/to/cityPages';
+		let url = '/pgcrowd/category/toCityPages';
 		checkPermissionAndTransfer(url);
 	});
 });
