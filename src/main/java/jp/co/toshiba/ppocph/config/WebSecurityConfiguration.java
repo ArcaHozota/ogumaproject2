@@ -83,11 +83,13 @@ public class WebSecurityConfiguration {
 						final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.UNAUTHORIZED.value(),
 								authenticationException.getMessage());
 						CommonProjectUtils.renderString(response, responseResult);
+						log.error(responseResult.getMessage());
 					});
 					handling.accessDeniedHandler((request, response, accessDeniedException) -> {
 						final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.FORBIDDEN.value(),
 								PgCrowdConstants.MESSAGE_SPRINGSECURITY_REQUIRED_AUTH);
 						CommonProjectUtils.renderString(response, responseResult);
+						log.error(responseResult.getMessage());
 					});
 				})
 				.formLogin(formLogin -> formLogin.loginPage(PgCrowdURLConstants.URL_TO_LOGIN)
