@@ -62,9 +62,9 @@ public final class PgCrowdURLConstants {
 
 	public static final String URL_LOG_OUT = "/pgcrowd/employee/logout";
 
-	public static final String URL_TO_MAINMENU = "/pgcrowd/to/mainmenu";
+	public static final String URL_TO_MAINMENU = "/pgcrowd/category/toMainmenu";
 
-	public static final String URL_MENU_INITIAL = "/pgcrowd/menu/initial";
+	public static final String URL_MENU_INITIAL = "/pgcrowd/category/manuInitial";
 
 	public static final String URL_CATEGORY_INITIAL = "/pgcrowd/category/initial";
 
@@ -92,7 +92,7 @@ public final class PgCrowdURLConstants {
 
 	public static final String URL_CITY_CHECK_EDITION = "/pgcrowd/city/checkEdition";
 
-	public static final String URL_FORGET_PASSWORD = "/pgcrowd/forget/password";
+	public static final String URL_FORGET_PASSWORD = "/pgcrowd/employee/forget/password";
 
 	public static final String URL_RESET_PASSWORD = "/pgcrowd/employee/reset/password";
 }
