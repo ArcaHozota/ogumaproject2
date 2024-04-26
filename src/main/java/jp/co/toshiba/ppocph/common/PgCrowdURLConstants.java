@@ -64,7 +64,7 @@ public final class PgCrowdURLConstants {
 
 	public static final String URL_TO_MAINMENU = "/pgcrowd/category/toMainmenu";
 
-	public static final String URL_MENU_INITIAL = "/pgcrowd/category/manuInitial";
+	public static final String URL_MENU_INITIAL = "/pgcrowd/category/menuInitial";
 
 	public static final String URL_CATEGORY_INITIAL = "/pgcrowd/category/initial";
 
