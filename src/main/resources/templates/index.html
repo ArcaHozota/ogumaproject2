@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
 	<link rel="shortcut icon" type="image/x-icon" th:href="@{/static/oguma.ico}">
 	<script type="text/javascript" th:src="@{/static/jquery/jquery-3.7.1.min.js}"></script>
-	<script type="text/javascript" th:src="@{/static/layer/layer.js}"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -22,8 +22,8 @@
 			<h1 class="logo">OgumaProject</h1>
 			<div class="divider"></div>
 			<a th:href="@{/index}">ホーム</a>
-			<a href="#">詳細</a>
-			<a href="#">サービス</a>
+			<a href="#" id="detailsBtn">詳細</a>
+			<a href="#" id="warningBtn">警告</a>
 		</nav>
 		<div class="user-form-group">
 			<a class="login" th:href="@{/oguma/employee/login}">ログイン</a>
@@ -35,6 +35,7 @@
 		</div>
 	</header>
 	<h1 class="subscribe">A Demo Project of SpringSecurity.</h1>
+	<script type="text/javascript" th:src="@{/static/customizes/logintoroku.js}"></script>
 </body>
 
 </html>

@@ -76,3 +76,32 @@ $("#resetBtn").on('click', function() {
 	}
 	$("#resetForm").submit();
 });
+$("#detailsBtn").on('click', function(e) {
+	e.preventDefault();
+	let textDetail = '<div class="alert-divider"></div>' +
+		'画面：　Bootstrap5 + SweetAlert2 + Thymeleaf' +
+		'<br>データ転送：　Ajax + JSON' +
+		'<br>フレームワーク：　SpringBoot + SpringMVC' +
+		'<br>データ交互：　MyBatis' +
+		'<br>データベース：　oracle' +
+		'<br>セキュリティ：　SpringSecurity' +
+		'<div class="alert-divider"></div>' +
+		'<br>Powered by ArkamaHozota.' +
+		'<br>All rights reserved.';
+	swal.fire({
+		title: 'プロジェクト粗筋',
+		html: textDetail,
+		showCloseButton: true,
+		confirmButtonText: 'OK',
+		confirmButtonColor: '#002FA7'
+	});
+});
+$("#warningBtn").on('click', function(e) {
+	e.preventDefault();
+	swal.fire({
+		title: '警告',
+		html: '株式会社オージーエムの内部勉強利用しているプロジェクトです。王先生のご指示通りに使ってください。',
+		confirmButtonText: '了解しました。',
+		confirmButtonColor: '#7F0020'
+	});
+});

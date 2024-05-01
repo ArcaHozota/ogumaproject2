@@ -93,6 +93,12 @@ header {
 	z-index: -1;
 }
 
+.alert-divider {
+	background: #000;
+	height: 2px;
+	width: 100%;
+}
+
 @media (max-width: 768px) {
 	.nav {
 		position: absolute;
