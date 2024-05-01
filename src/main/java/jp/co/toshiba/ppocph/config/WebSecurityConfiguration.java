@@ -96,7 +96,7 @@ public class WebSecurityConfiguration {
 						.defaultSuccessUrl(OgumaProjectURLConstants.URL_TO_MAINMENU).permitAll()
 						.usernameParameter("loginAcct").passwordParameter("userPswd"))
 				.logout(logout -> logout.logoutUrl(OgumaProjectURLConstants.URL_LOG_OUT)
-						.logoutSuccessUrl(OgumaProjectURLConstants.URL_TO_LOGIN))
+						.logoutSuccessUrl(OgumaProjectURLConstants.URL_INDEX))
 				.rememberMe(remember -> remember.key(UUID.randomUUID().toString())
 						.tokenValiditySeconds(OgumaProjectConstants.DEFAULT_TOKEN_EXPIRED));
 		log.info(OgumaProjectConstants.MESSAGE_SPRING_SECURITY);
