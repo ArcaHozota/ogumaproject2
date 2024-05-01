@@ -21,7 +21,7 @@ import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.repository.CityRepository;
 import jp.co.toshiba.ppocph.repository.DistrictRepository;
 import jp.co.toshiba.ppocph.service.IDistrictService;
-import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
+import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 import jp.co.toshiba.ppocph.utils.SecondBeanUtils;
@@ -60,10 +60,10 @@ public final class DistrictServiceImpl implements IDistrictService {
 						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
 						item.getDistrictFlag()))
 				.sorted(Comparator.comparingLong(DistrictDto::id)).toList();
-		if (CommonProjectUtils.isEmpty(cityId) || !CommonProjectUtils.isDigital(cityId)) {
+		if (OgumaProjectUtils.isEmpty(cityId) || !OgumaProjectUtils.isDigital(cityId)) {
 			final DistrictDto districtDto = new DistrictDto(0L, PgCrowdConstants.DEFAULT_ROLE_NAME, 0L,
-					CommonProjectUtils.EMPTY_STRING, CommonProjectUtils.EMPTY_STRING, null,
-					CommonProjectUtils.EMPTY_STRING);
+					OgumaProjectUtils.EMPTY_STRING, OgumaProjectUtils.EMPTY_STRING, null,
+					OgumaProjectUtils.EMPTY_STRING);
 			districtDtos.add(districtDto);
 			districtDtos.addAll(districtDtos1);
 			return districtDtos;
@@ -91,7 +91,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 		final Specification<District> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		final Specification<District> specification = Specification.where(where1);
-		if (CommonProjectUtils.isEmpty(keyword)) {
+		if (OgumaProjectUtils.isEmpty(keyword)) {
 			final Page<District> pages = this.districtRepository.findAll(specification, pageRequest);
 			final List<DistrictDto> districtDtos = pages.stream()
 					.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),
@@ -103,7 +103,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 					.toList();
 			return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
-		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
+		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
 		final Page<District> pages = this.districtRepository.findByShutoLike(searchStr, pageRequest);
 		final List<DistrictDto> districtDtos = pages.stream()
 				.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),

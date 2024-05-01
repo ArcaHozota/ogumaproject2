@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jp.co.toshiba.ppocph.common.PgCrowdURLConstants;
 import jp.co.toshiba.ppocph.dto.DistrictDto;
 import jp.co.toshiba.ppocph.service.IDistrictService;
-import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
+import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 import lombok.AccessLevel;
@@ -50,7 +50,7 @@ public final class DistrictController {
 	@GetMapping(PgCrowdURLConstants.URL_DISTRICT_PAGINATION)
 	public ResultDto<Pagination<DistrictDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
-			@RequestParam(name = "keyword", defaultValue = CommonProjectUtils.EMPTY_STRING) final String keyword) {
+			@RequestParam(name = "keyword", defaultValue = OgumaProjectUtils.EMPTY_STRING) final String keyword) {
 		final Pagination<DistrictDto> districts = this.iDistrictService.getDistrictsByKeyword(pageNum, keyword);
 		return ResultDto.successWithData(districts);
 	}

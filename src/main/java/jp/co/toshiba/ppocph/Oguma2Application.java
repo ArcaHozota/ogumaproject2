@@ -8,7 +8,7 @@ import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import lombok.extern.log4j.Log4j2;
 
 /**
- * PgCrowdアプリケーション
+ * Ogumaアプリケーション
  *
  * @author ArkamaHozota
  * @since 1.00beta
@@ -16,9 +16,9 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @SpringBootApplication
 @ServletComponentScan
-public class PgCrowdApplication {
+public class Oguma2Application {
 	public static void main(final String[] args) {
-		SpringApplication.run(PgCrowdApplication.class, args);
+		SpringApplication.run(Oguma2Application.class, args);
 		log.info(PgCrowdConstants.MESSAGE_SPRING_APPLICATION);
 	}
 }

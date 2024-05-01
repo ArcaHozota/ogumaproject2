@@ -19,7 +19,7 @@ import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.repository.CityRepository;
 import jp.co.toshiba.ppocph.repository.DistrictRepository;
 import jp.co.toshiba.ppocph.service.ICityService;
-import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
+import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 import jp.co.toshiba.ppocph.utils.SecondBeanUtils;
@@ -66,7 +66,7 @@ public final class CityServiceImpl implements ICityService {
 		final Specification<City> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		final Specification<City> specification = Specification.where(where1);
-		if (CommonProjectUtils.isEmpty(keyword)) {
+		if (OgumaProjectUtils.isEmpty(keyword)) {
 			final Page<City> pages = this.cityRepository.findAll(specification, pageRequest);
 			final List<CityDto> cityDtos = pages.stream()
 					.map(item -> new CityDto(item.getId(), item.getName(), item.getDistrictId(),
@@ -75,7 +75,7 @@ public final class CityServiceImpl implements ICityService {
 					.toList();
 			return Pagination.of(cityDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
-		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
+		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
 		final Specification<District> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		final Specification<District> where3 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("name"),

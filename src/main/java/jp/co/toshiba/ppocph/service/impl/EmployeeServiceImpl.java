@@ -28,7 +28,7 @@ import jp.co.toshiba.ppocph.exception.PgCrowdException;
 import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
-import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
+import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 import jp.co.toshiba.ppocph.utils.SecondBeanUtils;
@@ -110,7 +110,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 				Sort.by(Direction.ASC, "id"));
 		final Specification<Employee> status = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
-		if (CommonProjectUtils.isEmpty(keyword)) {
+		if (OgumaProjectUtils.isEmpty(keyword)) {
 			final Specification<Employee> specification = Specification.where(status);
 			final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
 			final List<EmployeeDto> employeeDtos = pages.stream()
@@ -119,7 +119,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 					.toList();
 			return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
-		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
+		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
 		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.like(root.get("loginAccount"), searchStr);
 		final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
@@ -230,7 +230,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final EmployeeRole employeeRole = this.employeeExRepository.findById(employeeDto.id())
 				.orElseGet(EmployeeRole::new);
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
-		if (CommonProjectUtils.isNotEmpty(employeeDto.password())) {
+		if (OgumaProjectUtils.isNotEmpty(employeeDto.password())) {
 			employee.setPassword(this.encoder.encode(employeeDto.password()));
 		}
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));

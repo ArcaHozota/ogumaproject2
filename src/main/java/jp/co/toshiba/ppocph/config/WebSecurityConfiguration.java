@@ -17,7 +17,7 @@ import jakarta.annotation.Resource;
 import jp.co.toshiba.ppocph.common.PgCrowdConstants;
 import jp.co.toshiba.ppocph.common.PgCrowdURLConstants;
 import jp.co.toshiba.ppocph.listener.PgCrowdUserDetailsService;
-import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
+import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -82,13 +82,13 @@ public class WebSecurityConfiguration {
 					handling.authenticationEntryPoint((request, response, authenticationException) -> {
 						final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.UNAUTHORIZED.value(),
 								authenticationException.getMessage());
-						CommonProjectUtils.renderString(response, responseResult);
+						OgumaProjectUtils.renderString(response, responseResult);
 						log.error(responseResult.getMessage());
 					});
 					handling.accessDeniedHandler((request, response, accessDeniedException) -> {
 						final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.FORBIDDEN.value(),
 								PgCrowdConstants.MESSAGE_SPRINGSECURITY_REQUIRED_AUTH);
-						CommonProjectUtils.renderString(response, responseResult);
+						OgumaProjectUtils.renderString(response, responseResult);
 						log.error(responseResult.getMessage());
 					});
 				})

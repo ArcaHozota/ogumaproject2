@@ -41,7 +41,7 @@
 	<div th:fragment="navibar">
 		<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" data-bs-theme="dark">
 			<div class="container-fluid"> <a class="navbar-brand" style="font-size:24px;"
-					th:href="@{/pgcrowd/category/toMainmenu}">PGアプリケーション</a>
+					th:href="@{/pgcrowd/category/toMainmenu}">Ogumaプロジェクト</a>
 				<div class="collapse navbar-collapse">
 					<div class="input-group d-flex justify-content-end">
 						<input type="text" class="form-control" id="searchInput" placeholder="検索"
@@ -79,7 +79,7 @@
 								</li>
 								<form id="logoutForm" method="post" th:action="@{/pgcrowd/employee/logout}"
 									style="display:none;"></form>
-								<div th:with="authList=${T(jp.co.toshiba.ppocph.utils.CommonProjectUtils).getAuthNames(securityPerson.getAuthorities().stream())}"
+								<div th:with="authList=${T(jp.co.toshiba.ppocph.utils.OgumaProjectUtils).getAuthNames(securityPerson.getAuthorities().stream())}"
 									hidden>
 									<p th:text="${authList.contains('employee%edition') or authList.contains('employee%delete') ? 'true' : 'false'}"
 										id="securityPersonalAuths" hidden>

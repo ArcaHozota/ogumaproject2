@@ -16,7 +16,7 @@ import jp.co.toshiba.ppocph.common.PgCrowdURLConstants;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.Authority;
 import jp.co.toshiba.ppocph.service.IRoleService;
-import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
+import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 import lombok.AccessLevel;
@@ -45,7 +45,7 @@ public final class RoleController {
 	 */
 	@GetMapping(PgCrowdURLConstants.URL_ROLE_CHECK)
 	public ResultDto<String> checkDuplicated(
-			@RequestParam(name = "name", defaultValue = CommonProjectUtils.EMPTY_STRING) final String name) {
+			@RequestParam(name = "name", defaultValue = OgumaProjectUtils.EMPTY_STRING) final String name) {
 		return this.iRoleService.checkDuplicated(name);
 	}
 
@@ -113,7 +113,7 @@ public final class RoleController {
 	@GetMapping(PgCrowdURLConstants.URL_ROLE_PAGINATION)
 	public ResultDto<Pagination<RoleDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
-			@RequestParam(name = "keyword", defaultValue = CommonProjectUtils.EMPTY_STRING) final String keyword) {
+			@RequestParam(name = "keyword", defaultValue = OgumaProjectUtils.EMPTY_STRING) final String keyword) {
 		final Pagination<RoleDto> roles = this.iRoleService.getRolesByKeyword(pageNum, keyword);
 		return ResultDto.successWithData(roles);
 	}

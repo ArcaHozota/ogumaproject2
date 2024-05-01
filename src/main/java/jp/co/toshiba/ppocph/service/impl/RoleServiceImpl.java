@@ -28,7 +28,7 @@ import jp.co.toshiba.ppocph.repository.PgAuthRepository;
 import jp.co.toshiba.ppocph.repository.RoleExRepository;
 import jp.co.toshiba.ppocph.repository.RoleRepository;
 import jp.co.toshiba.ppocph.service.IRoleService;
-import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
+import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 import jp.co.toshiba.ppocph.utils.SecondBeanUtils;
@@ -176,20 +176,20 @@ public final class RoleServiceImpl implements IRoleService {
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
 				PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> specification = Specification.where(where1);
-		if (CommonProjectUtils.isEmpty(keyword)) {
+		if (OgumaProjectUtils.isEmpty(keyword)) {
 			final Page<Role> pages = this.roleRepository.findAll(specification, pageRequest);
 			final List<RoleDto> roleDtos = pages.stream().map(item -> new RoleDto(item.getId(), item.getName()))
 					.toList();
 			return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
-		if (CommonProjectUtils.isDigital(keyword)) {
+		if (OgumaProjectUtils.isDigital(keyword)) {
 			final Page<Role> byIdLike = this.roleRepository.findByIdLike(keyword, PgCrowdConstants.LOGIC_DELETE_INITIAL,
 					pageRequest);
 			final List<RoleDto> roleDtos = byIdLike.stream().map(item -> new RoleDto(item.getId(), item.getName()))
 					.toList();
 			return Pagination.of(roleDtos, byIdLike.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
-		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
+		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
 		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(ROLE_NAME),
 				searchStr);
 		final Page<Role> pages = this.roleRepository.findAll(specification.and(where2), pageRequest);
