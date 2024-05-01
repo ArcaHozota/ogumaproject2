@@ -61,6 +61,10 @@ header {
 	color: #000;
 }
 
+.login:hover {
+	text-decoration: underline;
+}
+
 .nav .logo {
 	display: none;
 }
