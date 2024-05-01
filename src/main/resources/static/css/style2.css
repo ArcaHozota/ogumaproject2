@@ -19,7 +19,7 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	background: rgba(0, 0, 0, 0.2);
+	background: rgba(255, 255, 255, 0.4);
 	backdrop-filter: blur(10px);
 }
 
@@ -79,7 +79,7 @@ header {
 	top: 50%;
 	position: absolute;
 	transform: translate(-50%, -50%);
-	text-shadow: 10px 0px 10px rgba(0, 0, 0, 0.5);
+	text-shadow: 10px 0px 10px rgba(255, 255, 255, 0.6);
 	font-size: 40px;
 	z-index: -1;
 }
