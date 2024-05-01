@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import jp.co.toshiba.ppocph.common.PgCrowdURLConstants;
+import jp.co.toshiba.ppocph.common.OgumaProjectURLConstants;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.Authority;
 import jp.co.toshiba.ppocph.service.IRoleService;
@@ -43,7 +43,7 @@ public final class RoleController {
 	 * @param name 役割名称
 	 * @return ResultDto<String>
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_ROLE_CHECK)
+	@GetMapping(OgumaProjectURLConstants.URL_ROLE_CHECK)
 	public ResultDto<String> checkDuplicated(
 			@RequestParam(name = "name", defaultValue = OgumaProjectUtils.EMPTY_STRING) final String name) {
 		return this.iRoleService.checkDuplicated(name);
@@ -54,7 +54,7 @@ public final class RoleController {
 	 *
 	 * @return ResultDto<String>
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_ROLE_CHECK_EDITION)
+	@GetMapping(OgumaProjectURLConstants.URL_ROLE_CHECK_EDITION)
 	public ResultDto<String> checkEdition() {
 		return ResultDto.successWithoutData();
 	}
@@ -65,7 +65,7 @@ public final class RoleController {
 	 * @param roleId 役割ID
 	 * @return ResultDto<String>
 	 */
-	@DeleteMapping(PgCrowdURLConstants.URL_ROLE_DELETE)
+	@DeleteMapping(OgumaProjectURLConstants.URL_ROLE_DELETE)
 	public ResultDto<String> deleteInfo(@PathVariable("roleId") final Long roleId) {
 		return this.iRoleService.remove(roleId);
 	}
@@ -76,7 +76,7 @@ public final class RoleController {
 	 * @param paramMap パラメータ
 	 * @return ResultDto<String>
 	 */
-	@PutMapping(PgCrowdURLConstants.URL_ROLE_ASSIGNMENT)
+	@PutMapping(OgumaProjectURLConstants.URL_ROLE_ASSIGNMENT)
 	public ResultDto<String> doAssignment(@RequestBody final Map<String, List<Long>> paramMap) {
 		return this.iRoleService.doAssignment(paramMap);
 	}
@@ -86,7 +86,7 @@ public final class RoleController {
 	 *
 	 * @return ResultDto<List<Long>>
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_ROLE_GET_ASSIGNED)
+	@GetMapping(OgumaProjectURLConstants.URL_ROLE_GET_ASSIGNED)
 	public ResultDto<List<Long>> getAssignedAuth(@RequestParam("fuyoId") final Long roleId) {
 		final List<Long> authIds = this.iRoleService.getAuthIdsById(roleId);
 		return ResultDto.successWithData(authIds);
@@ -97,7 +97,7 @@ public final class RoleController {
 	 *
 	 * @return ResultDto<List<PgAuth>>
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_ROLE_AUTHLIST)
+	@GetMapping(OgumaProjectURLConstants.URL_ROLE_AUTHLIST)
 	public ResultDto<List<Authority>> getAuthList() {
 		final List<Authority> list = this.iRoleService.getAuthList();
 		return ResultDto.successWithData(list);
@@ -110,7 +110,7 @@ public final class RoleController {
 	 * @param keyword キーワード
 	 * @return ResultDto<Pagination<Role>>
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_ROLE_PAGINATION)
+	@GetMapping(OgumaProjectURLConstants.URL_ROLE_PAGINATION)
 	public ResultDto<Pagination<RoleDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
 			@RequestParam(name = "keyword", defaultValue = OgumaProjectUtils.EMPTY_STRING) final String keyword) {
@@ -124,7 +124,7 @@ public final class RoleController {
 	 * @param roleDto 役割情報DTO
 	 * @return ResultDto<String>
 	 */
-	@PostMapping(PgCrowdURLConstants.URL_ROLE_INSERT)
+	@PostMapping(OgumaProjectURLConstants.URL_ROLE_INSERT)
 	public ResultDto<String> saveInfo(@RequestBody final RoleDto roleDto) {
 		this.iRoleService.save(roleDto);
 		return ResultDto.successWithoutData();
@@ -136,7 +136,7 @@ public final class RoleController {
 	 * @param roleDto 役割情報DTO
 	 * @return ResultDto<String>
 	 */
-	@PutMapping(PgCrowdURLConstants.URL_ROLE_UPDATE)
+	@PutMapping(OgumaProjectURLConstants.URL_ROLE_UPDATE)
 	public ResultDto<String> updateInfo(@RequestBody final RoleDto roleDto) {
 		return this.iRoleService.update(roleDto);
 	}

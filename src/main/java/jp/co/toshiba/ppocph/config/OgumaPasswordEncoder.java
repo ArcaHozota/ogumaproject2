@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author ArkamaHozota
  * @since 6.94
  */
-public final class PgCrowdPasswordEncoder implements PasswordEncoder {
+public final class OgumaPasswordEncoder implements PasswordEncoder {
 
 	/**
 	 * エンコーダ

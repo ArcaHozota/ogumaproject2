@@ -14,9 +14,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import jakarta.annotation.Resource;
-import jp.co.toshiba.ppocph.common.PgCrowdConstants;
-import jp.co.toshiba.ppocph.common.PgCrowdURLConstants;
-import jp.co.toshiba.ppocph.listener.PgCrowdUserDetailsService;
+import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
+import jp.co.toshiba.ppocph.common.OgumaProjectURLConstants;
+import jp.co.toshiba.ppocph.listener.OgumaProjectUserDetailsService;
 import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
 import lombok.extern.log4j.Log4j2;
 
@@ -35,7 +35,7 @@ public class WebSecurityConfiguration {
 	 * ログインサービス
 	 */
 	@Resource
-	private PgCrowdUserDetailsService pgCrowdUserDetailsService;
+	private OgumaProjectUserDetailsService pgCrowdUserDetailsService;
 
 	@Bean
 	protected AuthenticationManager authenticationManager(final AuthenticationManagerBuilder auth) {
@@ -44,9 +44,9 @@ public class WebSecurityConfiguration {
 
 	@Bean
 	protected DaoAuthenticationProvider daoAuthenticationProvider() {
-		final PgCrowdDaoAuthenticationProvider daoAuthenticationProvider = new PgCrowdDaoAuthenticationProvider();
+		final OgumaDaoAuthenticationProvider daoAuthenticationProvider = new OgumaDaoAuthenticationProvider();
 		daoAuthenticationProvider.setUserDetailsService(this.pgCrowdUserDetailsService);
-		daoAuthenticationProvider.setPasswordEncoder(new PgCrowdPasswordEncoder());
+		daoAuthenticationProvider.setPasswordEncoder(new OgumaPasswordEncoder());
 		return daoAuthenticationProvider;
 	}
 
@@ -54,29 +54,29 @@ public class WebSecurityConfiguration {
 	protected SecurityFilterChain filterChain(final HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers(PgCrowdURLConstants.URL_STATIC_RESOURCE, PgCrowdURLConstants.URL_TO_SIGN_UP,
-								PgCrowdURLConstants.URL_DO_SIGN_UP, PgCrowdURLConstants.URL_FORGET_PASSWORD,
-								PgCrowdURLConstants.URL_RESET_PASSWORD)
+						.requestMatchers(OgumaProjectURLConstants.URL_STATIC_RESOURCE, OgumaProjectURLConstants.URL_TO_SIGN_UP,
+								OgumaProjectURLConstants.URL_DO_SIGN_UP, OgumaProjectURLConstants.URL_FORGET_PASSWORD,
+								OgumaProjectURLConstants.URL_RESET_PASSWORD)
 						.permitAll()
-						.requestMatchers(PgCrowdURLConstants.URL_EMPLOYEE_TO_PAGES,
-								PgCrowdURLConstants.URL_EMPLOYEE_PAGINATION,
-								PgCrowdURLConstants.URL_EMPLOYEE_TO_EDITION, PgCrowdURLConstants.URL_EMPLOYEE_UPDATE)
+						.requestMatchers(OgumaProjectURLConstants.URL_EMPLOYEE_TO_PAGES,
+								OgumaProjectURLConstants.URL_EMPLOYEE_PAGINATION,
+								OgumaProjectURLConstants.URL_EMPLOYEE_TO_EDITION, OgumaProjectURLConstants.URL_EMPLOYEE_UPDATE)
 						.hasAuthority("employee%retrieve")
-						.requestMatchers(PgCrowdURLConstants.URL_EMPLOYEE_TO_ADDITION,
-								PgCrowdURLConstants.URL_EMPLOYEE_INSERT)
-						.hasAuthority("employee%edition").requestMatchers(PgCrowdURLConstants.URL_EMPLOYEE_DELETE)
+						.requestMatchers(OgumaProjectURLConstants.URL_EMPLOYEE_TO_ADDITION,
+								OgumaProjectURLConstants.URL_EMPLOYEE_INSERT)
+						.hasAuthority("employee%edition").requestMatchers(OgumaProjectURLConstants.URL_EMPLOYEE_DELETE)
 						.hasAuthority("employee%delete")
-						.requestMatchers(PgCrowdURLConstants.URL_ROLE_TO_PAGES, PgCrowdURLConstants.URL_ROLE_PAGINATION,
-								PgCrowdURLConstants.URL_ROLE_GET_ASSIGNED)
+						.requestMatchers(OgumaProjectURLConstants.URL_ROLE_TO_PAGES, OgumaProjectURLConstants.URL_ROLE_PAGINATION,
+								OgumaProjectURLConstants.URL_ROLE_GET_ASSIGNED)
 						.hasAuthority("role%retrieve")
-						.requestMatchers(PgCrowdURLConstants.URL_ROLE_INSERT, PgCrowdURLConstants.URL_ROLE_UPDATE,
-								PgCrowdURLConstants.URL_ROLE_AUTHLIST, PgCrowdURLConstants.URL_ROLE_CHECK_EDITION)
+						.requestMatchers(OgumaProjectURLConstants.URL_ROLE_INSERT, OgumaProjectURLConstants.URL_ROLE_UPDATE,
+								OgumaProjectURLConstants.URL_ROLE_AUTHLIST, OgumaProjectURLConstants.URL_ROLE_CHECK_EDITION)
 						.hasAuthority("role%edition")
-						.requestMatchers(PgCrowdURLConstants.URL_ROLE_ASSIGNMENT, PgCrowdURLConstants.URL_ROLE_DELETE)
-						.hasAuthority("role%delete").requestMatchers(PgCrowdURLConstants.URL_DISTRICT_PAGINATION)
-						.hasAuthority("district%retrieve").requestMatchers(PgCrowdURLConstants.URL_DISTRICT_UPDATE)
+						.requestMatchers(OgumaProjectURLConstants.URL_ROLE_ASSIGNMENT, OgumaProjectURLConstants.URL_ROLE_DELETE)
+						.hasAuthority("role%delete").requestMatchers(OgumaProjectURLConstants.URL_DISTRICT_PAGINATION)
+						.hasAuthority("district%retrieve").requestMatchers(OgumaProjectURLConstants.URL_DISTRICT_UPDATE)
 						.hasAuthority("district%edition").anyRequest().authenticated())
-				.csrf(csrf -> csrf.ignoringRequestMatchers(PgCrowdURLConstants.URL_STATIC_RESOURCE)
+				.csrf(csrf -> csrf.ignoringRequestMatchers(OgumaProjectURLConstants.URL_STATIC_RESOURCE)
 						.csrfTokenRepository(new CookieCsrfTokenRepository()))
 				.exceptionHandling(handling -> {
 					handling.authenticationEntryPoint((request, response, authenticationException) -> {
@@ -87,20 +87,20 @@ public class WebSecurityConfiguration {
 					});
 					handling.accessDeniedHandler((request, response, accessDeniedException) -> {
 						final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.FORBIDDEN.value(),
-								PgCrowdConstants.MESSAGE_SPRINGSECURITY_REQUIRED_AUTH);
+								OgumaProjectConstants.MESSAGE_SPRINGSECURITY_REQUIRED_AUTH);
 						OgumaProjectUtils.renderString(response, responseResult);
 						log.error(responseResult.getMessage());
 					});
 				})
-				.formLogin(formLogin -> formLogin.loginPage(PgCrowdURLConstants.URL_TO_LOGIN)
-						.loginProcessingUrl(PgCrowdURLConstants.URL_DO_LOGIN)
-						.defaultSuccessUrl(PgCrowdURLConstants.URL_TO_MAINMENU).permitAll()
+				.formLogin(formLogin -> formLogin.loginPage(OgumaProjectURLConstants.URL_TO_LOGIN)
+						.loginProcessingUrl(OgumaProjectURLConstants.URL_DO_LOGIN)
+						.defaultSuccessUrl(OgumaProjectURLConstants.URL_TO_MAINMENU).permitAll()
 						.usernameParameter("loginAcct").passwordParameter("userPswd"))
-				.logout(logout -> logout.logoutUrl(PgCrowdURLConstants.URL_LOG_OUT)
-						.logoutSuccessUrl(PgCrowdURLConstants.URL_TO_LOGIN))
+				.logout(logout -> logout.logoutUrl(OgumaProjectURLConstants.URL_LOG_OUT)
+						.logoutSuccessUrl(OgumaProjectURLConstants.URL_TO_LOGIN))
 				.rememberMe(remember -> remember.key(UUID.randomUUID().toString())
-						.tokenValiditySeconds(PgCrowdConstants.DEFAULT_TOKEN_EXPIRED));
-		log.info(PgCrowdConstants.MESSAGE_SPRING_SECURITY);
+						.tokenValiditySeconds(OgumaProjectConstants.DEFAULT_TOKEN_EXPIRED));
+		log.info(OgumaProjectConstants.MESSAGE_SPRING_SECURITY);
 		return httpSecurity.build();
 	}
 }

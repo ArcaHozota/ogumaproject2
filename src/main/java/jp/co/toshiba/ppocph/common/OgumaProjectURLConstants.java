@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  * @since 7.07
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class PgCrowdURLConstants {
+public final class OgumaProjectURLConstants {
 
 	public static final String URL_STATIC_RESOURCE = "/static/**";
 

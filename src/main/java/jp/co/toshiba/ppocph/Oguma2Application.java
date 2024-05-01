@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
-import jp.co.toshiba.ppocph.common.PgCrowdConstants;
+import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -19,6 +19,6 @@ import lombok.extern.log4j.Log4j2;
 public class Oguma2Application {
 	public static void main(final String[] args) {
 		SpringApplication.run(Oguma2Application.class, args);
-		log.info(PgCrowdConstants.MESSAGE_SPRING_APPLICATION);
+		log.info(OgumaProjectConstants.MESSAGE_SPRING_APPLICATION);
 	}
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import jp.co.toshiba.ppocph.common.PgCrowdURLConstants;
+import jp.co.toshiba.ppocph.common.OgumaProjectURLConstants;
 import jp.co.toshiba.ppocph.dto.DistrictDto;
 import jp.co.toshiba.ppocph.service.IDistrictService;
 import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
@@ -35,7 +35,7 @@ public final class DistrictController {
 	 *
 	 * @return ResultDto<String>
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_DISTRICT_CHECK_EDITION)
+	@GetMapping(OgumaProjectURLConstants.URL_DISTRICT_CHECK_EDITION)
 	public ResultDto<String> checkEdition() {
 		return ResultDto.successWithoutData();
 	}
@@ -47,7 +47,7 @@ public final class DistrictController {
 	 * @param keyword キーワード
 	 * @return ResultDto<Pagination<Role>>
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_DISTRICT_PAGINATION)
+	@GetMapping(OgumaProjectURLConstants.URL_DISTRICT_PAGINATION)
 	public ResultDto<Pagination<DistrictDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
 			@RequestParam(name = "keyword", defaultValue = OgumaProjectUtils.EMPTY_STRING) final String keyword) {
@@ -61,7 +61,7 @@ public final class DistrictController {
 	 * @param districtDto 地域情報転送クラス
 	 * @return ResultDto<String>
 	 */
-	@PutMapping(PgCrowdURLConstants.URL_DISTRICT_UPDATE)
+	@PutMapping(OgumaProjectURLConstants.URL_DISTRICT_UPDATE)
 	public ResultDto<String> updateInfo(@RequestBody final DistrictDto districtDto) {
 		return this.iDistrictService.update(districtDto);
 	}

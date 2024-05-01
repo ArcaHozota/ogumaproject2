@@ -16,13 +16,13 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import jp.co.toshiba.ppocph.common.PgCrowdConstants;
+import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.entity.Authority;
 import jp.co.toshiba.ppocph.entity.EmployeeRole;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.entity.RoleAuth;
-import jp.co.toshiba.ppocph.exception.PgCrowdException;
+import jp.co.toshiba.ppocph.exception.OgumaProjectException;
 import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.PgAuthRepository;
 import jp.co.toshiba.ppocph.repository.RoleExRepository;
@@ -84,12 +84,12 @@ public final class RoleServiceImpl implements IRoleService {
 	@Override
 	public ResultDto<String> checkDuplicated(final String name) {
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
-				PgCrowdConstants.LOGIC_DELETE_INITIAL);
+				OgumaProjectConstants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_NAME),
 				name);
 		final Specification<Role> specification = Specification.where(where1).and(where2);
 		return this.roleRepository.findOne(specification).isPresent()
-				? ResultDto.failed(PgCrowdConstants.MESSAGE_ROLE_NAME_DUPLICATED)
+				? ResultDto.failed(OgumaProjectConstants.MESSAGE_ROLE_NAME_DUPLICATED)
 				: ResultDto.successWithoutData();
 	}
 
@@ -105,7 +105,7 @@ public final class RoleServiceImpl implements IRoleService {
 		final List<Long> authIds = paramMap.get("authIdArray").stream().filter(a -> !Arrays.asList(idArray).contains(a))
 				.sorted().toList();
 		if (list2.equals(authIds)) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 		}
 		this.roleExRepository.deleteAll(list1);
 		final List<RoleAuth> list = authIds.stream().map(item -> {
@@ -117,7 +117,7 @@ public final class RoleServiceImpl implements IRoleService {
 		try {
 			this.roleExRepository.saveAllAndFlush(list);
 		} catch (final Exception e) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_FORBIDDEN2);
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_FORBIDDEN2);
 		}
 		return ResultDto.successWithoutData();
 	}
@@ -138,7 +138,7 @@ public final class RoleServiceImpl implements IRoleService {
 	@Override
 	public RoleDto getRoleById(final Long id) {
 		final Role role = this.roleRepository.findById(id).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOT_EXISTS);
+			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_NOT_EXISTS);
 		});
 		return new RoleDto(role.getId(), role.getName());
 	}
@@ -146,9 +146,9 @@ public final class RoleServiceImpl implements IRoleService {
 	@Override
 	public List<RoleDto> getRolesByEmployeeId(final Long employeeId) {
 		final List<RoleDto> secondRoles = new ArrayList<>();
-		final RoleDto secondRole = new RoleDto(0L, PgCrowdConstants.DEFAULT_ROLE_NAME);
+		final RoleDto secondRole = new RoleDto(0L, OgumaProjectConstants.DEFAULT_ROLE_NAME);
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
-				PgCrowdConstants.LOGIC_DELETE_INITIAL);
+				OgumaProjectConstants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> specification1 = Specification.where(where1);
 		final List<RoleDto> roleDtos = this.roleRepository.findAll(specification1).stream()
 				.map(item -> new RoleDto(item.getId(), item.getName())).toList();
@@ -171,30 +171,30 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public Pagination<RoleDto> getRolesByKeyword(final Integer pageNum, final String keyword) {
-		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
+		final PageRequest pageRequest = PageRequest.of(pageNum - 1, OgumaProjectConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
-				PgCrowdConstants.LOGIC_DELETE_INITIAL);
+				OgumaProjectConstants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> specification = Specification.where(where1);
 		if (OgumaProjectUtils.isEmpty(keyword)) {
 			final Page<Role> pages = this.roleRepository.findAll(specification, pageRequest);
 			final List<RoleDto> roleDtos = pages.stream().map(item -> new RoleDto(item.getId(), item.getName()))
 					.toList();
-			return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+			return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 		}
 		if (OgumaProjectUtils.isDigital(keyword)) {
-			final Page<Role> byIdLike = this.roleRepository.findByIdLike(keyword, PgCrowdConstants.LOGIC_DELETE_INITIAL,
+			final Page<Role> byIdLike = this.roleRepository.findByIdLike(keyword, OgumaProjectConstants.LOGIC_DELETE_INITIAL,
 					pageRequest);
 			final List<RoleDto> roleDtos = byIdLike.stream().map(item -> new RoleDto(item.getId(), item.getName()))
 					.toList();
-			return Pagination.of(roleDtos, byIdLike.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+			return Pagination.of(roleDtos, byIdLike.getTotalElements(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
 		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(ROLE_NAME),
 				searchStr);
 		final Page<Role> pages = this.roleRepository.findAll(specification.and(where2), pageRequest);
 		final List<RoleDto> roleDtos = pages.stream().map(item -> new RoleDto(item.getId(), item.getName())).toList();
-		return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+		return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 	}
 
 	@Override
@@ -204,12 +204,12 @@ public final class RoleServiceImpl implements IRoleService {
 		final Specification<EmployeeRole> specification = Specification.where(where);
 		final List<EmployeeRole> list = this.employeeExRepository.findAll(specification);
 		if (!list.isEmpty()) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_FORBIDDEN);
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_FORBIDDEN);
 		}
 		final Role role = this.roleRepository.findById(id).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
-		role.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
+		role.setDeleteFlg(OgumaProjectConstants.LOGIC_DELETE_FLG);
 		this.roleRepository.saveAndFlush(role);
 		return ResultDto.successWithoutData();
 	}
@@ -219,25 +219,25 @@ public final class RoleServiceImpl implements IRoleService {
 		final Role role = new Role();
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
 		role.setId(SnowflakeUtils.snowflakeId());
-		role.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		role.setDeleteFlg(OgumaProjectConstants.LOGIC_DELETE_INITIAL);
 		this.roleRepository.saveAndFlush(role);
 	}
 
 	@Override
 	public ResultDto<String> update(final RoleDto roleDto) {
 		final Role role = this.roleRepository.findById(roleDto.id()).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final Role originalEntity = new Role();
 		SecondBeanUtils.copyNullableProperties(role, originalEntity);
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
 		if (originalEntity.equals(role)) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 		}
 		try {
 			this.roleRepository.saveAndFlush(role);
 		} catch (final DataIntegrityViolationException e) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_ROLE_NAME_DUPLICATED);
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_ROLE_NAME_DUPLICATED);
 		}
 		return ResultDto.successWithoutData();
 	}

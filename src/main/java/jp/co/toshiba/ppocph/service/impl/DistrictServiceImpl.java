@@ -13,11 +13,11 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import jp.co.toshiba.ppocph.common.PgCrowdConstants;
+import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
 import jp.co.toshiba.ppocph.dto.DistrictDto;
 import jp.co.toshiba.ppocph.entity.City;
 import jp.co.toshiba.ppocph.entity.District;
-import jp.co.toshiba.ppocph.exception.PgCrowdException;
+import jp.co.toshiba.ppocph.exception.OgumaProjectException;
 import jp.co.toshiba.ppocph.repository.CityRepository;
 import jp.co.toshiba.ppocph.repository.DistrictRepository;
 import jp.co.toshiba.ppocph.service.IDistrictService;
@@ -61,7 +61,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 						item.getDistrictFlag()))
 				.sorted(Comparator.comparingLong(DistrictDto::id)).toList();
 		if (OgumaProjectUtils.isEmpty(cityId) || !OgumaProjectUtils.isDigital(cityId)) {
-			final DistrictDto districtDto = new DistrictDto(0L, PgCrowdConstants.DEFAULT_ROLE_NAME, 0L,
+			final DistrictDto districtDto = new DistrictDto(0L, OgumaProjectConstants.DEFAULT_ROLE_NAME, 0L,
 					OgumaProjectUtils.EMPTY_STRING, OgumaProjectUtils.EMPTY_STRING, null,
 					OgumaProjectUtils.EMPTY_STRING);
 			districtDtos.add(districtDto);
@@ -69,7 +69,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 			return districtDtos;
 		}
 		final City city = this.cityRepository.findById(Long.parseLong(cityId)).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final List<DistrictDto> districtDtos2 = new ArrayList<>();
 		final District district = districts.stream().filter(a -> Objects.equals(a.getId(), city.getDistrictId()))
@@ -86,10 +86,10 @@ public final class DistrictServiceImpl implements IDistrictService {
 
 	@Override
 	public Pagination<DistrictDto> getDistrictsByKeyword(final Integer pageNum, final String keyword) {
-		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
+		final PageRequest pageRequest = PageRequest.of(pageNum - 1, OgumaProjectConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		final Specification<District> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+				.equal(root.get("deleteFlg"), OgumaProjectConstants.LOGIC_DELETE_INITIAL);
 		final Specification<District> specification = Specification.where(where1);
 		if (OgumaProjectUtils.isEmpty(keyword)) {
 			final Page<District> pages = this.districtRepository.findAll(specification, pageRequest);
@@ -101,7 +101,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 							item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
 							item.getDistrictFlag()))
 					.toList();
-			return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+			return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
 		final Page<District> pages = this.districtRepository.findByShutoLike(searchStr, pageRequest);
@@ -113,24 +113,24 @@ public final class DistrictServiceImpl implements IDistrictService {
 						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
 						item.getDistrictFlag()))
 				.toList();
-		return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+		return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 	}
 
 	@Override
 	public ResultDto<String> update(final DistrictDto districtDto) {
 		final District district = this.districtRepository.findById(districtDto.id()).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final District originalEntity = new District();
 		SecondBeanUtils.copyNullableProperties(district, originalEntity);
 		SecondBeanUtils.copyNullableProperties(districtDto, district);
 		if (originalEntity.equals(district)) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 		}
 		try {
 			this.districtRepository.saveAndFlush(district);
 		} catch (final DataIntegrityViolationException e) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_DISTRICT_NAME_DUPLICATED);
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_DISTRICT_NAME_DUPLICATED);
 		}
 		return ResultDto.successWithoutData();
 	}

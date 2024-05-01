@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import jp.co.toshiba.ppocph.common.PgCrowdConstants;
-import jp.co.toshiba.ppocph.common.PgCrowdURLConstants;
+import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
+import jp.co.toshiba.ppocph.common.OgumaProjectURLConstants;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
@@ -51,7 +51,7 @@ public final class EmployeeController {
 	 * @param loginAccount ログインアカウント
 	 * @return ResultDto<String>
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_CHECK)
+	@GetMapping(OgumaProjectURLConstants.URL_EMPLOYEE_CHECK)
 	@ResponseBody
 	public ResultDto<String> checkDuplicated(@RequestParam("loginAcct") final String loginAccount) {
 		return this.iEmployeeService.checkDuplicated(loginAccount);
@@ -63,7 +63,7 @@ public final class EmployeeController {
 	 * @param userId 社員ID
 	 * @return ResultDto<String>
 	 */
-	@DeleteMapping(PgCrowdURLConstants.URL_EMPLOYEE_DELETE)
+	@DeleteMapping(OgumaProjectURLConstants.URL_EMPLOYEE_DELETE)
 	@ResponseBody
 	public ResultDto<String> deleteInfo(@PathVariable("userId") final Long userId) {
 		this.iEmployeeService.remove(userId);
@@ -77,7 +77,7 @@ public final class EmployeeController {
 	 * @param keyword キーワード
 	 * @return ResultDto<Pagination<Employee>>
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_PAGINATION)
+	@GetMapping(OgumaProjectURLConstants.URL_EMPLOYEE_PAGINATION)
 	@ResponseBody
 	public ResultDto<Pagination<EmployeeDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
@@ -97,16 +97,16 @@ public final class EmployeeController {
 	 * @param dateOfBirth 生年月日
 	 * @return ModelAndView
 	 */
-	@PostMapping(PgCrowdURLConstants.URL_DO_SIGN_UP)
+	@PostMapping(OgumaProjectURLConstants.URL_DO_SIGN_UP)
 	public ModelAndView register(@RequestParam("email") final String email,
 			@RequestParam("password") final String password, @RequestParam("dateOfBirth") final String dateOfBirth) {
 		final EmployeeDto employeeDto = new EmployeeDto(null, null, null, password, email, dateOfBirth, null);
 		final Boolean toroku = this.iEmployeeService.register(employeeDto);
 		final ModelAndView mAndView = new ModelAndView("admin-login");
 		if (Boolean.FALSE.equals(toroku)) {
-			mAndView.addObject("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_FAILURE);
+			mAndView.addObject("torokuMsg", OgumaProjectConstants.MESSAGE_TOROKU_FAILURE);
 		} else {
-			mAndView.addObject("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_SUCCESS);
+			mAndView.addObject("torokuMsg", OgumaProjectConstants.MESSAGE_TOROKU_SUCCESS);
 		}
 		mAndView.addObject("registeredEmail", email);
 		return mAndView;
@@ -120,18 +120,18 @@ public final class EmployeeController {
 	 * @param dateOfBirth 生年月日
 	 * @return ModelAndView
 	 */
-	@PostMapping(PgCrowdURLConstants.URL_RESET_PASSWORD)
+	@PostMapping(OgumaProjectURLConstants.URL_RESET_PASSWORD)
 	public ModelAndView resetPassword(@RequestParam("account") final String account,
 			@RequestParam("email") final String email, @RequestParam("dateOfBirth") final String dateOfBirth) {
 		final EmployeeDto employeeDto = new EmployeeDto(null, account, null, null, email, dateOfBirth, null);
 		final Boolean resetPassword = this.iEmployeeService.resetPassword(employeeDto);
 		if (Boolean.FALSE.equals(resetPassword)) {
 			final ModelAndView modelAndView = new ModelAndView("admin-forgot");
-			modelAndView.addObject("resetMsg", PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
+			modelAndView.addObject("resetMsg", OgumaProjectConstants.MESSAGE_STRING_PROHIBITED);
 			return modelAndView;
 		}
 		final ModelAndView modelAndView = new ModelAndView("admin-login");
-		modelAndView.addObject("resetMsg", PgCrowdConstants.MESSAGE_RESET_PASSWORD);
+		modelAndView.addObject("resetMsg", OgumaProjectConstants.MESSAGE_RESET_PASSWORD);
 		modelAndView.addObject("registeredEmail", email);
 		return modelAndView;
 	}
@@ -142,7 +142,7 @@ public final class EmployeeController {
 	 * @param loginAccount ログインアカウント
 	 * @return ResultDto<String>
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_RESTORE)
+	@GetMapping(OgumaProjectURLConstants.URL_EMPLOYEE_RESTORE)
 	@ResponseBody
 	public ResultDto<EmployeeDto> restoreInfo(@RequestParam("userId") final Long userId) {
 		final EmployeeDto employee = this.iEmployeeService.getEmployeeById(userId);
@@ -155,7 +155,7 @@ public final class EmployeeController {
 	 * @param employeeDto 社員情報DTO
 	 * @return ResultDto<String>
 	 */
-	@PostMapping(PgCrowdURLConstants.URL_EMPLOYEE_INSERT)
+	@PostMapping(OgumaProjectURLConstants.URL_EMPLOYEE_INSERT)
 	@ResponseBody
 	public ResultDto<String> saveInfo(@RequestBody final EmployeeDto employeeDto) {
 		this.iEmployeeService.save(employeeDto);
@@ -168,11 +168,11 @@ public final class EmployeeController {
 	 * @param userId ユーザID
 	 * @return ModelAndView
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_TO_ADDITION)
+	@GetMapping(OgumaProjectURLConstants.URL_EMPLOYEE_TO_ADDITION)
 	public ModelAndView toAddition() {
 		final List<RoleDto> employeeRolesById = this.iRoleService.getRolesByEmployeeId(null);
 		final ModelAndView modelAndView = new ModelAndView("admin-addinfo");
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, employeeRolesById);
+		modelAndView.addObject(OgumaProjectConstants.ATTRNAME_EMPLOYEEROLES, employeeRolesById);
 		return modelAndView;
 	}
 
@@ -182,7 +182,7 @@ public final class EmployeeController {
 	 * @param id 社員ID
 	 * @return ModelAndView
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_TO_EDITION)
+	@GetMapping(OgumaProjectURLConstants.URL_EMPLOYEE_TO_EDITION)
 	public ModelAndView toEdition(@RequestParam("editId") final Long id,
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
 			@RequestParam(name = "authChkFlag", defaultValue = "false") final String authChkFlag) {
@@ -190,16 +190,16 @@ public final class EmployeeController {
 		if (Boolean.FALSE.equals(Boolean.valueOf(authChkFlag))) {
 			final ModelAndView modelAndView = new ModelAndView("admin-editinfo2");
 			final RoleDto roleDto = this.iRoleService.getRoleById(employee.roleId());
-			modelAndView.addObject(PgCrowdConstants.ATTRNAME_EDITED_INFO, employee);
-			modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, roleDto);
-			modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
+			modelAndView.addObject(OgumaProjectConstants.ATTRNAME_EDITED_INFO, employee);
+			modelAndView.addObject(OgumaProjectConstants.ATTRNAME_EMPLOYEEROLES, roleDto);
+			modelAndView.addObject(OgumaProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 			return modelAndView;
 		}
 		final ModelAndView modelAndView = new ModelAndView("admin-editinfo");
 		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(id);
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EDITED_INFO, employee);
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_EMPLOYEEROLES, roleDtos);
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
+		modelAndView.addObject(OgumaProjectConstants.ATTRNAME_EDITED_INFO, employee);
+		modelAndView.addObject(OgumaProjectConstants.ATTRNAME_EMPLOYEEROLES, roleDtos);
+		modelAndView.addObject(OgumaProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return modelAndView;
 	}
 
@@ -209,10 +209,10 @@ public final class EmployeeController {
 	 * @param pageNum ページ数
 	 * @return ModelAndView
 	 */
-	@GetMapping(PgCrowdURLConstants.URL_EMPLOYEE_TO_PAGES)
+	@GetMapping(OgumaProjectURLConstants.URL_EMPLOYEE_TO_PAGES)
 	public ModelAndView toPages(@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum) {
 		final ModelAndView modelAndView = new ModelAndView("admin-pages");
-		modelAndView.addObject(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
+		modelAndView.addObject(OgumaProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return modelAndView;
 	}
 
@@ -222,7 +222,7 @@ public final class EmployeeController {
 	 * @param employeeDto 社員情報DTO
 	 * @return ResultDto<String>
 	 */
-	@PutMapping(PgCrowdURLConstants.URL_EMPLOYEE_UPDATE)
+	@PutMapping(OgumaProjectURLConstants.URL_EMPLOYEE_UPDATE)
 	@ResponseBody
 	public ResultDto<String> updateInfo(@RequestBody final EmployeeDto employeeDto) {
 		return this.iEmployeeService.update(employeeDto);

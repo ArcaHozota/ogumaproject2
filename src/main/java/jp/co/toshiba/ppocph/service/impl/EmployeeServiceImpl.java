@@ -19,12 +19,12 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import jp.co.toshiba.ppocph.common.PgCrowdConstants;
-import jp.co.toshiba.ppocph.config.PgCrowdPasswordEncoder;
+import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
+import jp.co.toshiba.ppocph.config.OgumaPasswordEncoder;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.entity.EmployeeRole;
-import jp.co.toshiba.ppocph.exception.PgCrowdException;
+import jp.co.toshiba.ppocph.exception.OgumaProjectException;
 import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
@@ -64,7 +64,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	/**
 	 * エンコーダ
 	 */
-	private final PasswordEncoder encoder = new PgCrowdPasswordEncoder();
+	private final PasswordEncoder encoder = new OgumaPasswordEncoder();
 
 	/**
 	 * 日時フォマーター
@@ -77,18 +77,18 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setLoginAccount(loginAccount);
 		final Example<Employee> example = Example.of(employee, ExampleMatcher.matching());
 		return this.employeeRepository.findOne(example).isPresent()
-				? ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_DUPLICATED)
+				? ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_DUPLICATED)
 				: ResultDto.successWithoutData();
 	}
 
 	@Override
 	public EmployeeDto getEmployeeById(final Long id) {
 		final Employee employee = this.employeeRepository.findById(id).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final EmployeeRole employeeRole = this.employeeExRepository.findById(id).orElseGet(EmployeeRole::new);
 		return new EmployeeDto(employee.getId(), employee.getLoginAccount(), employee.getUsername(),
-				PgCrowdConstants.DEFAULT_ROLE_NAME, employee.getEmail(),
+				OgumaProjectConstants.DEFAULT_ROLE_NAME, employee.getEmail(),
 				this.formatter.format(employee.getDateOfBirth()), employeeRole.getRoleId());
 	}
 
@@ -98,18 +98,18 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		if (Boolean.FALSE.equals(Boolean.valueOf(authChkFlag))) {
 			final List<EmployeeDto> employeeDtos = new ArrayList<>();
 			final Employee employee = this.employeeRepository.findById(userId).orElseThrow(() -> {
-				throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+				throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 			});
 			final EmployeeDto employeeDto = new EmployeeDto(employee.getId(), employee.getLoginAccount(),
 					employee.getUsername(), employee.getPassword(), employee.getEmail(),
 					this.formatter.format(employee.getDateOfBirth()), null);
 			employeeDtos.add(employeeDto);
-			return Pagination.of(employeeDtos, employeeDtos.size(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+			return Pagination.of(employeeDtos, employeeDtos.size(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 		}
-		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
+		final PageRequest pageRequest = PageRequest.of(pageNum - 1, OgumaProjectConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		final Specification<Employee> status = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+				.equal(root.get("deleteFlg"), OgumaProjectConstants.LOGIC_DELETE_INITIAL);
 		if (OgumaProjectUtils.isEmpty(keyword)) {
 			final Specification<Employee> specification = Specification.where(status);
 			final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
@@ -117,7 +117,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 					.map(item -> new EmployeeDto(item.getId(), item.getLoginAccount(), item.getUsername(),
 							item.getPassword(), item.getEmail(), this.formatter.format(item.getDateOfBirth()), null))
 					.toList();
-			return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+			return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
 		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
@@ -133,7 +133,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 				.map(item -> new EmployeeDto(item.getId(), item.getLoginAccount(), item.getUsername(),
 						item.getPassword(), item.getEmail(), this.formatter.format(item.getDateOfBirth()), null))
 				.toList();
-		return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+		return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 	}
 
 	private String getRandomStr() {
@@ -163,7 +163,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setId(SnowflakeUtils.snowflakeId());
 		employee.setLoginAccount(this.getRandomStr());
 		employee.setPassword(password);
-		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		employee.setDeleteFlg(OgumaProjectConstants.LOGIC_DELETE_INITIAL);
 		employee.setCreatedTime(LocalDateTime.now());
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
 		this.employeeRepository.saveAndFlush(employee);
@@ -173,9 +173,9 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	@Override
 	public void remove(final Long userId) {
 		final Employee employee = this.employeeRepository.findById(userId).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
-		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
+		employee.setDeleteFlg(OgumaProjectConstants.LOGIC_DELETE_FLG);
 		this.employeeRepository.saveAndFlush(employee);
 		this.employeeExRepository.deleteById(userId);
 	}
@@ -183,7 +183,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	@Override
 	public Boolean resetPassword(final EmployeeDto employeeDto) {
 		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+				.equal(root.get("deleteFlg"), OgumaProjectConstants.LOGIC_DELETE_INITIAL);
 		final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("loginAccount"), employeeDto.loginAccount());
 		final Specification<Employee> where3 = (root, query, criteriaBuilder) -> criteriaBuilder
@@ -196,7 +196,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			return Boolean.FALSE;
 		}
 		final Employee employee = optional.get();
-		employee.setPassword(this.encoder.encode(PgCrowdConstants.DEFAULT_PASSWORD));
+		employee.setPassword(this.encoder.encode(OgumaProjectConstants.DEFAULT_PASSWORD));
 		this.employeeRepository.saveAndFlush(employee);
 		return Boolean.TRUE;
 	}
@@ -208,7 +208,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setId(SnowflakeUtils.snowflakeId());
 		employee.setPassword(password);
-		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		employee.setDeleteFlg(OgumaProjectConstants.LOGIC_DELETE_INITIAL);
 		employee.setCreatedTime(LocalDateTime.now());
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
 		this.employeeRepository.saveAndFlush(employee);
@@ -223,7 +223,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	@Override
 	public ResultDto<String> update(final EmployeeDto employeeDto) {
 		final Employee employee = this.employeeRepository.findById(employeeDto.id()).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final Employee originalEntity = new Employee();
 		SecondBeanUtils.copyNullableProperties(employee, originalEntity);
@@ -235,7 +235,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		}
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
 		if (originalEntity.equals(employee) && Objects.equals(employeeRole.getRoleId(), employeeDto.roleId())) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 		}
 		employeeRole.setRoleId(employeeDto.roleId());
 		this.employeeExRepository.saveAndFlush(employeeRole);

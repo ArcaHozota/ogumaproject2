@@ -6,7 +6,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import jp.co.toshiba.ppocph.common.PgCrowdConstants;
+import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
  * @since 6.96
  */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public final class PgCrowdDaoAuthenticationProvider extends DaoAuthenticationProvider {
+public final class OgumaDaoAuthenticationProvider extends DaoAuthenticationProvider {
 
 	@Override
 	protected void additionalAuthenticationChecks(final UserDetails userDetails,
@@ -26,14 +26,14 @@ public final class PgCrowdDaoAuthenticationProvider extends DaoAuthenticationPro
 			this.logger.debug("Failed to authenticate since no credentials provided");
 			throw new BadCredentialsException(
 					this.messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials",
-							PgCrowdConstants.MESSAGE_SPRINGSECURITY_REQUIRED_AUTH));
+							OgumaProjectConstants.MESSAGE_SPRINGSECURITY_REQUIRED_AUTH));
 		}
 		final String presentedPassword = authentication.getCredentials().toString();
 		if (!this.getPasswordEncoder().matches(presentedPassword, userDetails.getPassword())) {
 			this.logger.debug("Failed to authenticate since password does not match stored value");
 			throw new BadCredentialsException(
 					this.messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials",
-							PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR4));
+							OgumaProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR4));
 		}
 	}
 }

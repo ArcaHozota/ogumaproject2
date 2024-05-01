@@ -8,7 +8,7 @@ import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
  * @author ArkamaHozota
  * @since 1.00beta
  */
-public class PgCrowdException extends RuntimeException {
+public class OgumaProjectException extends RuntimeException {
 
 	private static final long serialVersionUID = 8469408957890840211L;
 
@@ -17,12 +17,12 @@ public class PgCrowdException extends RuntimeException {
 	 */
 	private final String message;
 
-	public PgCrowdException() {
+	public OgumaProjectException() {
 		super();
 		this.message = OgumaProjectUtils.EMPTY_STRING;
 	}
 
-	public PgCrowdException(final String message) {
+	public OgumaProjectException(final String message) {
 		super(message);
 		this.message = message;
 	}
