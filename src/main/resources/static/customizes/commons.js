@@ -137,6 +137,12 @@ $(function() {
 		let url = '/oguma/category/toCityPages';
 		checkPermissionAndTransfer(url);
 	});
+	$("#toIndex").on('click', function(e) {
+		e.preventDefault();
+		$("#logoutForm").submit();
+		let url = "/index";
+		window.location.replace(url);
+	});
 });
 function checkPermissionAndTransfer(stringUrl) {
 	let ajaxResult = $.ajax({
