@@ -52,30 +52,29 @@ public class WebSecurityConfiguration {
 
 	@Bean
 	protected SecurityFilterChain filterChain(final HttpSecurity httpSecurity) throws Exception {
-		httpSecurity
-				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers(OgumaProjectURLConstants.URL_STATIC_RESOURCE, OgumaProjectURLConstants.URL_TO_SIGN_UP,
-								OgumaProjectURLConstants.URL_DO_SIGN_UP, OgumaProjectURLConstants.URL_FORGET_PASSWORD,
-								OgumaProjectURLConstants.URL_RESET_PASSWORD)
-						.permitAll()
-						.requestMatchers(OgumaProjectURLConstants.URL_EMPLOYEE_TO_PAGES,
-								OgumaProjectURLConstants.URL_EMPLOYEE_PAGINATION,
-								OgumaProjectURLConstants.URL_EMPLOYEE_TO_EDITION, OgumaProjectURLConstants.URL_EMPLOYEE_UPDATE)
-						.hasAuthority("employee%retrieve")
-						.requestMatchers(OgumaProjectURLConstants.URL_EMPLOYEE_TO_ADDITION,
-								OgumaProjectURLConstants.URL_EMPLOYEE_INSERT)
-						.hasAuthority("employee%edition").requestMatchers(OgumaProjectURLConstants.URL_EMPLOYEE_DELETE)
-						.hasAuthority("employee%delete")
-						.requestMatchers(OgumaProjectURLConstants.URL_ROLE_TO_PAGES, OgumaProjectURLConstants.URL_ROLE_PAGINATION,
-								OgumaProjectURLConstants.URL_ROLE_GET_ASSIGNED)
-						.hasAuthority("role%retrieve")
-						.requestMatchers(OgumaProjectURLConstants.URL_ROLE_INSERT, OgumaProjectURLConstants.URL_ROLE_UPDATE,
-								OgumaProjectURLConstants.URL_ROLE_AUTHLIST, OgumaProjectURLConstants.URL_ROLE_CHECK_EDITION)
-						.hasAuthority("role%edition")
-						.requestMatchers(OgumaProjectURLConstants.URL_ROLE_ASSIGNMENT, OgumaProjectURLConstants.URL_ROLE_DELETE)
-						.hasAuthority("role%delete").requestMatchers(OgumaProjectURLConstants.URL_DISTRICT_PAGINATION)
-						.hasAuthority("district%retrieve").requestMatchers(OgumaProjectURLConstants.URL_DISTRICT_UPDATE)
-						.hasAuthority("district%edition").anyRequest().authenticated())
+		httpSecurity.authorizeHttpRequests(authorize -> authorize
+				.requestMatchers(OgumaProjectURLConstants.URL_STATIC_RESOURCE, OgumaProjectURLConstants.URL_INDEX,
+						OgumaProjectURLConstants.URL_TO_SIGN_UP, OgumaProjectURLConstants.URL_DO_SIGN_UP,
+						OgumaProjectURLConstants.URL_FORGET_PASSWORD, OgumaProjectURLConstants.URL_RESET_PASSWORD)
+				.permitAll()
+				.requestMatchers(OgumaProjectURLConstants.URL_EMPLOYEE_TO_PAGES,
+						OgumaProjectURLConstants.URL_EMPLOYEE_PAGINATION,
+						OgumaProjectURLConstants.URL_EMPLOYEE_TO_EDITION, OgumaProjectURLConstants.URL_EMPLOYEE_UPDATE)
+				.hasAuthority("employee%retrieve")
+				.requestMatchers(OgumaProjectURLConstants.URL_EMPLOYEE_TO_ADDITION,
+						OgumaProjectURLConstants.URL_EMPLOYEE_INSERT)
+				.hasAuthority("employee%edition").requestMatchers(OgumaProjectURLConstants.URL_EMPLOYEE_DELETE)
+				.hasAuthority("employee%delete")
+				.requestMatchers(OgumaProjectURLConstants.URL_ROLE_TO_PAGES,
+						OgumaProjectURLConstants.URL_ROLE_PAGINATION, OgumaProjectURLConstants.URL_ROLE_GET_ASSIGNED)
+				.hasAuthority("role%retrieve")
+				.requestMatchers(OgumaProjectURLConstants.URL_ROLE_INSERT, OgumaProjectURLConstants.URL_ROLE_UPDATE,
+						OgumaProjectURLConstants.URL_ROLE_AUTHLIST, OgumaProjectURLConstants.URL_ROLE_CHECK_EDITION)
+				.hasAuthority("role%edition")
+				.requestMatchers(OgumaProjectURLConstants.URL_ROLE_ASSIGNMENT, OgumaProjectURLConstants.URL_ROLE_DELETE)
+				.hasAuthority("role%delete").requestMatchers(OgumaProjectURLConstants.URL_DISTRICT_PAGINATION)
+				.hasAuthority("district%retrieve").requestMatchers(OgumaProjectURLConstants.URL_DISTRICT_UPDATE)
+				.hasAuthority("district%edition").anyRequest().authenticated())
 				.csrf(csrf -> csrf.ignoringRequestMatchers(OgumaProjectURLConstants.URL_STATIC_RESOURCE)
 						.csrfTokenRepository(new CookieCsrfTokenRepository()))
 				.exceptionHandling(handling -> {
