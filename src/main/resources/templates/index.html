@@ -2,18 +2,40 @@
 <html lang="ja-JP" xmlns:th="https://www.thymeleaf.org">
 
 <head>
-	<title>	OgumaProject</title>
+	<title>OgumaProject</title>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="_csrf_header" th:content="${_csrf.headerName}">
 	<meta name="_csrf_token" th:content="${_csrf.token}">
-	<link rel="stylesheet" th:href="@{/static/css/style.css}">
+	<link rel="stylesheet" th:href="@{/static/css/style2.css}">
+	<link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
 	<link rel="shortcut icon" type="image/x-icon" th:href="@{/static/favicon.ico}">
 	<script type="text/javascript" th:src="@{/static/jquery/jquery-3.7.1.min.js}"></script>
 	<script type="text/javascript" th:src="@{/static/layer/layer.js}"></script>
 </head>
 
 <body>
+	<input type="checkbox" name="check" id="checkids">
+	<header>
+		<h1 class="logo">Oguma</h1>
+		<nav class="nav">
+			<h1 class="logo">Oguma</h1>
+			<div class="divider"></div>
+			<a th:href="@{/index}">ホーム</a>
+			<a href="#">詳細</a>
+			<a href="#">サービス</a>
+			<a href="#">連絡</a>
+		</nav>
+		<div class="user-form-group">
+			<a class="login" th:href="@{/oguma/employee/login}">ログイン</a>
+			<a class="signup" href="#">登録</a>
+			<label for="checkids">
+				<i class="bx bx-menu menucon"></i>
+				<i class="bx bx-x close-menu"></i>
+			</label>
+		</div>
+	</header>
+	<h1 class="subscribe">A Demo Project of SpringSecurity.</h1>
 </body>
 
 </html>
