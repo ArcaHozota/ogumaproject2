@@ -28,11 +28,11 @@ $(document).ready(function() {
 		openNodeLinkOnNewTab: true
 	});
 	$("#districtQueryTree").on('click', function() {
-		let url = '/pgcrowd/category/toDistrictPages';
+		let url = '/oguma/category/toDistrictPages';
 		checkPermissionAndTransfer(url);
 	});
 	$("#cityQueryTree").on('click', function() {
-		let url = '/pgcrowd/category/toCityPages';
+		let url = '/oguma/category/toCityPages';
 		checkPermissionAndTransfer(url);
 	});
 });

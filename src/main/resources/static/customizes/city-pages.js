@@ -10,7 +10,7 @@ $("#searchBtn2").on('click', function() {
 });
 function toSelectedPg(pageNum, keyword) {
 	$.ajax({
-		url: '/pgcrowd/city/pagination',
+		url: '/oguma/city/pagination',
 		data: {
 			'pageNum': pageNum,
 			'keyword': keyword
@@ -50,7 +50,7 @@ function buildTableBody(result) {
 }
 $("#addCityBtn").on('click', function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/city/checkEdition',
+		url: '/oguma/city/checkEdition',
 		type: 'GET',
 		async: false
 	});
@@ -97,12 +97,12 @@ $("#cityInfoSaveBtn").on('click', function() {
 			'population': Number($("#populationInput").val().trim().replace(/,/g, '')),
 			'cityFlag': $("#cityFlagInput").val().trim()
 		});
-		pgcrowdAjaxModify('/pgcrowd/city/infoSave', 'POST', postData, normalPostSuccessFunction("#cityAddModal"));
+		pgcrowdAjaxModify('/oguma/city/infoSave', 'POST', postData, normalPostSuccessFunction("#cityAddModal"));
 	}
 });
 $("#tableBody").on('click', '.edit-btn', function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/city/checkEdition',
+		url: '/oguma/city/checkEdition',
 		type: 'GET',
 		async: false
 	});
@@ -155,12 +155,12 @@ $("#cityInfoChangeBtn").on('click', function() {
 			'districtId': $("#districtEdit").val(),
 			'population': Number($("#populationEdit").val().trim().replace(/,/g, ''))
 		});
-		pgcrowdAjaxModify('/pgcrowd/city/infoUpdate', 'PUT', putData, putSuccessFunction);
+		pgcrowdAjaxModify('/oguma/city/infoUpdate', 'PUT', putData, putSuccessFunction);
 	}
 });
 $("#tableBody").on('click', '.delete-btn', function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/city/checkEdition',
+		url: '/oguma/city/checkEdition',
 		type: 'GET',
 		async: false
 	});
@@ -179,7 +179,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 		confirmButtonColor: '#7F0020'
 	}).then((result) => {
 		if (result.isConfirmed) {
-			pgcrowdAjaxModify('/pgcrowd/city/infoDelete/' + cityId, 'DELETE', null, normalDeleteSuccessFunction);
+			pgcrowdAjaxModify('/oguma/city/infoDelete/' + cityId, 'DELETE', null, normalDeleteSuccessFunction);
 		} else {
 			$(this).close();
 		}
@@ -196,7 +196,7 @@ function checkCityName(cityName, district) {
 		showValidationMsg(cityName, "error", "名称を空になってはいけません。");
 	} else {
 		$.ajax({
-			url: '/pgcrowd/city/check',
+			url: '/oguma/city/check',
 			data: {
 				'name': nameVal,
 				'districtId': districtVal
@@ -215,7 +215,7 @@ function checkCityName(cityName, district) {
 function getDistricts(element, cityId) {
 	$(element).empty();
 	$.ajax({
-		url: '/pgcrowd/city/getDistricts',
+		url: '/oguma/city/getDistricts',
 		data: 'cityId=' + cityId,
 		type: 'GET',
 		success: function(result) {

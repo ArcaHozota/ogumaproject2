@@ -14,7 +14,7 @@ $("#searchBtn2").on('click', function() {
 });
 function toSelectedPg(pageNum, keyword) {
 	$.ajax({
-		url: '/pgcrowd/employee/pagination',
+		url: '/oguma/employee/pagination',
 		data: {
 			'pageNum': pageNum,
 			'keyword': keyword,
@@ -52,7 +52,7 @@ function buildTableBody(result) {
 }
 $("#tableBody").on('click', '.delete-btn', function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/employee/infoDelete/0L',
+		url: '/oguma/employee/infoDelete/0L',
 		type: 'GET',
 		async: false
 	});
@@ -71,7 +71,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 		confirmButtonColor: '#7F0020'
 	}).then((result) => {
 		if (result.isConfirmed) {
-			pgcrowdAjaxModify('/pgcrowd/employee/infoDelete/' + userId, 'DELETE', null, normalDeleteSuccessFunction);
+			pgcrowdAjaxModify('/oguma/employee/infoDelete/' + userId, 'DELETE', null, normalDeleteSuccessFunction);
 		} else {
 			$(this).close();
 		}
@@ -79,12 +79,12 @@ $("#tableBody").on('click', '.delete-btn', function() {
 });
 $("#addInfoBtn").on('click', function(e) {
 	e.preventDefault();
-	let url = '/pgcrowd/employee/toAddition';
+	let url = '/oguma/employee/toAddition';
 	checkPermissionAndTransfer(url);
 });
 $("#tableBody").on('click', '.edit-btn', function() {
 	let editId = $(this).attr("editId");
 	let authChkFlag = $("#securityPersonalAuths").text();
-	let url = '/pgcrowd/employee/toEdition?editId=' + editId + '&pageNum=' + pageNum + '&authChkFlag=' + authChkFlag;
+	let url = '/oguma/employee/toEdition?editId=' + editId + '&pageNum=' + pageNum + '&authChkFlag=' + authChkFlag;
 	checkPermissionAndTransfer(url);
 });

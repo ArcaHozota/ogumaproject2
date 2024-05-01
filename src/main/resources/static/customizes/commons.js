@@ -90,51 +90,51 @@ $(function() {
 	});
 	$("#toMainmenu").on('click', function(e) {
 		e.preventDefault();
-		window.location.replace('/pgcrowd/category/toMainmenu');
+		window.location.replace('/oguma/category/toMainmenu');
 	});
 	$("#toMainmenu2").on('click', function(e) {
 		e.preventDefault();
-		window.location.replace('/pgcrowd/category/toMainmenu');
+		window.location.replace('/oguma/category/toMainmenu');
 	});
 	$("#toPersonal").on('click', function(e) {
 		e.preventDefault();
 		let userId = $(this).find("p").text();
 		let authChkFlag = $("#securityPersonalAuths").text();
-		let url = '/pgcrowd/employee/toEdition?editId=' + userId + '&authChkFlag=' + authChkFlag;
+		let url = '/oguma/employee/toEdition?editId=' + userId + '&authChkFlag=' + authChkFlag;
 		checkPermissionAndTransfer(url);
 	});
 	$("#toAdmin").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/employee/toPages?pageNum=1';
+		let url = '/oguma/employee/toPages?pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toRole").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/role/toPages?pageNum=1';
+		let url = '/oguma/role/toPages?pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toMenu").on('click', function(e) {
 		e.preventDefault();
-		window.location.replace('/pgcrowd/category/menuInitial');
+		window.location.replace('/oguma/category/menuInitial');
 	});
 	$("#toPages").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/employee/toPages?pageNum=' + pageNum;
+		let url = '/oguma/employee/toPages?pageNum=' + pageNum;
 		checkPermissionAndTransfer(url);
 	});
 	$("#toCategory").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/category/initial';
+		let url = '/oguma/category/initial';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toDistrict").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/category/toDistrictPages';
+		let url = '/oguma/category/toDistrictPages';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toCity").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/category/toCityPages';
+		let url = '/oguma/category/toCityPages';
 		checkPermissionAndTransfer(url);
 	});
 });

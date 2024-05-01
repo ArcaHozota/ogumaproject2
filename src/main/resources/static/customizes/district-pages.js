@@ -10,7 +10,7 @@ $("#searchBtn2").on('click', function() {
 });
 function toSelectedPg(pageNum, keyword) {
 	$.ajax({
-		url: '/pgcrowd/district/pagination',
+		url: '/oguma/district/pagination',
 		data: {
 			'pageNum': pageNum,
 			'keyword': keyword
@@ -47,7 +47,7 @@ function buildTableBody(result) {
 }
 $("#tableBody").on('click', '.edit-btn', function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/district/checkEdition',
+		url: '/oguma/district/checkEdition',
 		type: 'GET',
 		async: false
 	});
@@ -84,7 +84,7 @@ $("#districtInfoChangeBtn").on('click', function() {
 			'name': $("#nameEdit").val().trim(),
 			'chiho': $("#chihoEdit").val().trim()
 		});
-		pgcrowdAjaxModify('/pgcrowd/district/infoUpdate', 'PUT', putData, putSuccessFunction);
+		pgcrowdAjaxModify('/oguma/district/infoUpdate', 'PUT', putData, putSuccessFunction);
 	}
 });
 $("#tableBody").on('click', '.district-flg-td', function() {

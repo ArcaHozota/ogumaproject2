@@ -10,7 +10,7 @@ $("#searchBtn2").on('click', function() {
 });
 function toSelectedPg(pageNum, keyword) {
 	$.ajax({
-		url: '/pgcrowd/role/pagination',
+		url: '/oguma/role/pagination',
 		data: {
 			'pageNum': pageNum,
 			'keyword': keyword
@@ -47,7 +47,7 @@ function buildTableBody(result) {
 }
 $("#addRoleBtn").on('click', function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/role/checkEdition',
+		url: '/oguma/role/checkEdition',
 		type: 'GET',
 		async: false
 	});
@@ -63,7 +63,7 @@ $("#addRoleBtn").on('click', function() {
 });
 $("#nameInput").on('change', function() {
 	$.ajax({
-		url: '/pgcrowd/role/check',
+		url: '/oguma/role/check',
 		data: 'name=' + this.value,
 		type: 'GET',
 		success: function(result) {
@@ -91,7 +91,7 @@ $("#roleInfoSaveBtn").on('click', function() {
 });
 $("#tableBody").on('click', '.edit-btn', function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/role/checkEdition',
+		url: '/oguma/role/checkEdition',
 		type: 'GET',
 		async: false
 	});
@@ -122,12 +122,12 @@ $("#roleInfoChangeBtn").on('click', function() {
 			'id': this.value,
 			'name': $("#nameEdit").val().trim()
 		});
-		pgcrowdAjaxModify('/pgcrowd/role/infoUpdate', 'PUT', putData, putSuccessFunction);
+		pgcrowdAjaxModify('/oguma/role/infoUpdate', 'PUT', putData, putSuccessFunction);
 	}
 });
 $("#tableBody").on('click', '.delete-btn', function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/role/infoDelete/0L',
+		url: '/oguma/role/infoDelete/0L',
 		type: 'GET',
 		async: false
 	});
@@ -146,7 +146,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 		confirmButtonColor: '#7F0020'
 	}).then((result) => {
 		if (result.isConfirmed) {
-			pgcrowdAjaxModify('/pgcrowd/role/infoDelete/' + roleId, 'DELETE', null, normalDeleteSuccessFunction);
+			pgcrowdAjaxModify('/oguma/role/infoDelete/' + roleId, 'DELETE', null, normalDeleteSuccessFunction);
 		} else {
 			$(this).close();
 		}
@@ -161,7 +161,7 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 		backdrop: 'static'
 	});
 	let ajaxReturn = $.ajax({
-		url: '/pgcrowd/role/getAuthlist',
+		url: '/oguma/role/getAuthlist',
 		type: 'GET',
 		async: false
 	});
@@ -196,7 +196,7 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 	let zTreeObj = $.fn.zTree.getZTreeObj("authTree");
 	zTreeObj.expandAll(true);
 	ajaxReturn = $.ajax({
-		url: '/pgcrowd/role/getAssigned',
+		url: '/oguma/role/getAssigned',
 		data: 'fuyoId=' + fuyoId,
 		type: 'GET',
 		async: false
@@ -222,7 +222,7 @@ $("#authChangeBtn").on('click', function() {
 		'authIdArray': authIdArray,
 		'roleId': [fuyoId]
 	});
-	pgcrowdAjaxModify('/pgcrowd/role/doAssignment', 'PUT', putData, authPutSuccessFunction);
+	pgcrowdAjaxModify('/oguma/role/doAssignment', 'PUT', putData, authPutSuccessFunction);
 });
 function putSuccessFunction(result) {
 	if (result.status === 'SUCCESS') {
