@@ -22,12 +22,20 @@
 			text-decoration: none;
 		}
 
-		.navbar-brand {
-			transition: 300ms;
+		.effect-shine:hover {
+			mask-image: linear-gradient(-75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%);
+			mask-size: 200%;
+			animation: shine 2500ms infinite;
 		}
 
-		.navbar-brand:hover {
-			color: #7F0020;
+		@keyframes shine {
+			from {
+				-webkit-mask-position: 150%;
+			}
+
+			to {
+				-webkit-mask-position: -50%;
+			}
 		}
 	</style>
 	<script type="text/javascript" th:src="@{/static/jquery/jquery-3.7.1.min.js}"></script>
@@ -43,8 +51,8 @@
 	<!-- ヘッダーのフラグメント -->
 	<div th:fragment="navibar">
 		<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" data-bs-theme="dark">
-			<div class="container-fluid"> <a class="navbar-brand" style="font-size: 26px; font-weight: 700;"
-					th:href="@{/oguma/category/toMainmenu}">OgumaProject</a>
+			<div class="container-fluid"> <a class="navbar-brand effect-shine"
+					style="font-size: 26px; font-weight: 700;" th:href="@{/oguma/category/toMainmenu}">OgumaProject</a>
 				<div class="collapse navbar-collapse">
 					<div class="input-group d-flex justify-content-end">
 						<input type="text" class="form-control" id="searchInput" placeholder="検索"
