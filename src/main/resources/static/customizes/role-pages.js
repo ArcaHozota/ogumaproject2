@@ -81,7 +81,7 @@ $("#roleInfoSaveBtn").on('click', function() {
 	if (listArray.includes("")) {
 		pgcrowdNullInputboxDiscern(inputArrays);
 	} else if ($("#roleAddModal form").find('*').hasClass('is-invalid')) {
-		layer.msg('入力情報不正。');
+		layer.msg('入力情報不正');
 	} else {
 		let postData = JSON.stringify({
 			'name': $("#nameInput").val().trim()
@@ -116,7 +116,7 @@ $("#roleInfoChangeBtn").on('click', function() {
 	if (listArray.includes("")) {
 		pgcrowdNullInputboxDiscern(inputArrays);
 	} else if ($("#roleEditModal form").find('*').hasClass('is-invalid')) {
-		layer.msg('入力情報不正。');
+		layer.msg('入力情報不正');
 	} else {
 		let putData = JSON.stringify({
 			'id': this.value,

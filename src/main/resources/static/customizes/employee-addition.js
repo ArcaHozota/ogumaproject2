@@ -39,7 +39,7 @@ $("#saveInfoBtn").on('click', function() {
 	if (listArray.includes("")) {
 		pgcrowdNullInputboxDiscern(inputArrays);
 	} else if ($("#inputForm").find('*').hasClass('is-invalid')) {
-		layer.msg('入力情報不正。');
+		layer.msg('入力情報不正');
 	} else {
 		let postData = JSON.stringify({
 			'loginAccount': $("#loginAccountInput").val().trim(),
@@ -88,7 +88,7 @@ $("#editInfoBtn").on('click', function() {
 	if (listArray.includes("")) {
 		pgcrowdNullInputboxDiscern(inputArrays);
 	} else if ($("#editForm").find('*').hasClass('is-invalid')) {
-		layer.msg('入力情報不正。');
+		layer.msg('入力情報不正');
 	} else {
 		let rawPassword = $("#passwordEdit").val().trim();
 		if (rawPassword === "---------------------------") {

@@ -88,7 +88,7 @@ $("#cityInfoSaveBtn").on('click', function() {
 	if (listArray.includes("")) {
 		pgcrowdNullInputboxDiscern(inputArrays);
 	} else if ($("#cityAddModal form").find('*').hasClass('is-invalid')) {
-		layer.msg('入力情報不正。');
+		layer.msg('入力情報不正');
 	} else {
 		let postData = JSON.stringify({
 			'name': $("#nameInput").val().trim(),
@@ -146,7 +146,7 @@ $("#cityInfoChangeBtn").on('click', function() {
 	if (listArray.includes("")) {
 		pgcrowdNullInputboxDiscern(inputArrays);
 	} else if ($("#cityEditModal form").find('*').hasClass('is-invalid')) {
-		layer.msg('入力情報不正。');
+		layer.msg('入力情報不正');
 	} else {
 		let putData = JSON.stringify({
 			'id': this.value,

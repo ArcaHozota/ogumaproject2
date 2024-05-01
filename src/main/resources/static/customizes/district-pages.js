@@ -77,7 +77,7 @@ $("#districtInfoChangeBtn").on('click', function() {
 	if (listArray.includes("")) {
 		pgcrowdNullInputboxDiscern(inputArrays);
 	} else if ($("#districtEditModal form").find('*').hasClass('is-invalid')) {
-		layer.msg('入力情報不正。');
+		layer.msg('入力情報不正');
 	} else {
 		let putData = JSON.stringify({
 			'id': this.value,
