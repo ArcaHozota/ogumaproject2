@@ -14,6 +14,8 @@ public final class OgumaProjectURLConstants {
 
 	public static final String URL_STATIC_RESOURCE = "/static/**";
 
+	public static final String URL_INDEX = "/index";
+
 	public static final String URL_EMPLOYEE_PAGINATION = "/oguma/employee/pagination";
 
 	public static final String URL_EMPLOYEE_CHECK = "/oguma/employee/check";
