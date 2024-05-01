@@ -23,6 +23,10 @@
 			cursor: pointer;
 		}
 
+		.navbar-brand:hover {
+			color: #7F0020;
+		}
+
 		a {
 			text-decoration: none;
 		}
@@ -40,7 +44,7 @@
 	<!-- ヘッダーのフラグメント -->
 	<div th:fragment="navibar">
 		<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" data-bs-theme="dark">
-			<div class="container-fluid"> <a class="navbar-brand" style="font-size: 26px; font-weight: 900;"
+			<div class="container-fluid"> <a class="navbar-brand" style="font-size: 26px; font-weight: 800;"
 					th:href="@{/oguma/category/toMainmenu}">OgumaProject</a>
 				<div class="collapse navbar-collapse">
 					<div class="input-group d-flex justify-content-end">
