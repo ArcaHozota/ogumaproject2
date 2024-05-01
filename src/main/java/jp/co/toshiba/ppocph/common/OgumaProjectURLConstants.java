@@ -30,8 +30,6 @@ public final class OgumaProjectURLConstants {
 
 	public static final String URL_EMPLOYEE_UPDATE = "/oguma/employee/infoUpdate";
 
-	public static final String URL_EMPLOYEE_RESTORE = "/oguma/employee/infoRestore";
-
 	public static final String URL_EMPLOYEE_TO_PAGES = "/oguma/employee/toPages";
 
 	public static final String URL_ROLE_PAGINATION = "/oguma/role/pagination";

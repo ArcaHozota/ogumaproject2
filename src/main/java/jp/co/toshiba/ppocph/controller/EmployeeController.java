@@ -137,19 +137,6 @@ public final class EmployeeController {
 	}
 
 	/**
-	 * ログインアカウントによって社員情報を取得する
-	 *
-	 * @param loginAccount ログインアカウント
-	 * @return ResultDto<String>
-	 */
-	@GetMapping(OgumaProjectURLConstants.URL_EMPLOYEE_RESTORE)
-	@ResponseBody
-	public ResultDto<EmployeeDto> restoreInfo(@RequestParam("userId") final Long userId) {
-		final EmployeeDto employee = this.iEmployeeService.getEmployeeById(userId);
-		return ResultDto.successWithData(employee);
-	}
-
-	/**
 	 * 情報追加
 	 *
 	 * @param employeeDto 社員情報DTO
