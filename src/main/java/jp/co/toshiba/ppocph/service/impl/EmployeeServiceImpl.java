@@ -24,9 +24,11 @@ import jp.co.toshiba.ppocph.config.OgumaPasswordEncoder;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.entity.EmployeeRole;
+import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.exception.OgumaProjectException;
 import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
+import jp.co.toshiba.ppocph.repository.RoleRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
@@ -60,6 +62,11 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	 * 社員役割連携リポジトリ
 	 */
 	private final EmployeeExRepository employeeExRepository;
+
+	/**
+	 * 役割管理リポジトリ
+	 */
+	private final RoleRepository roleRepository;
 
 	/**
 	 * エンコーダ
@@ -117,7 +124,8 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 					.map(item -> new EmployeeDto(item.getId(), item.getLoginAccount(), item.getUsername(),
 							item.getPassword(), item.getEmail(), this.formatter.format(item.getDateOfBirth()), null))
 					.toList();
-			return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
+			return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum,
+					OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
 		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
@@ -136,6 +144,11 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 	}
 
+	/**
+	 * デフォルトのアカウントを取得する
+	 *
+	 * @return String
+	 */
 	private String getRandomStr() {
 		final String stry = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		final char[] cr1 = stry.toCharArray();
@@ -152,8 +165,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	public Boolean register(final EmployeeDto employeeDto) {
 		final Specification<Employee> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("email"),
 				employeeDto.email());
-		final Specification<Employee> specification = Specification.where(where);
-		final Optional<Employee> findOne = this.employeeRepository.findOne(specification);
+		final Optional<Employee> findOne = this.employeeRepository.findOne(where);
 		if (findOne.isPresent()) {
 			return Boolean.FALSE;
 		}
@@ -167,6 +179,15 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setCreatedTime(LocalDateTime.now());
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
 		this.employeeRepository.saveAndFlush(employee);
+		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("name"),
+				"正社員");
+		final Role role = this.roleRepository.findOne(where2).orElseThrow(() -> {
+			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
+		});
+		final EmployeeRole employeeRole = new EmployeeRole();
+		employeeRole.setEmployeeId(employee.getId());
+		employeeRole.setRoleId(role.getId());
+		this.employeeExRepository.saveAndFlush(employeeRole);
 		return Boolean.TRUE;
 	}
 
