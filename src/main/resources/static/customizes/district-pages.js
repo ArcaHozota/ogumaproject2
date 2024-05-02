@@ -73,9 +73,9 @@ $("#tableBody").on('click', '.edit-btn', function() {
 });
 $("#districtInfoChangeBtn").on('click', function() {
 	let inputArrays = ["#nameEdit", "#chihoEdit"];
-	let listArray = pgcrowdInputContextGet(inputArrays);
+	let listArray = ogumaInputContextGet(inputArrays);
 	if (listArray.includes("")) {
-		pgcrowdNullInputboxDiscern(inputArrays);
+		ogumaNullInputboxDiscern(inputArrays);
 	} else if ($("#districtEditModal form").find('*').hasClass('is-invalid')) {
 		layer.msg('入力情報不正');
 	} else {
@@ -84,7 +84,7 @@ $("#districtInfoChangeBtn").on('click', function() {
 			'name': $("#nameEdit").val().trim(),
 			'chiho': $("#chihoEdit").val().trim()
 		});
-		pgcrowdAjaxModify('/oguma/district/infoUpdate', 'PUT', putData, putSuccessFunction);
+		ogumaAjaxModify('/oguma/district/infoUpdate', 'PUT', putData, putSuccessFunction);
 	}
 });
 $("#tableBody").on('click', '.district-flg-td', function() {

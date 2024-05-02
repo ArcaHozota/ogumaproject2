@@ -226,7 +226,7 @@ function showValidationMsg(element, status, msg) {
 		$(element).next("span").addClass("invalid-feedback").text(msg);
 	}
 }
-function pgcrowdAjaxModify(url, type, data, successFunction) {
+function ogumaAjaxModify(url, type, data, successFunction) {
 	let header = $('meta[name=_csrf_header]').attr('content');
 	let token = $('meta[name=_csrf_token]').attr('content');
 	$.ajax({
@@ -244,19 +244,21 @@ function pgcrowdAjaxModify(url, type, data, successFunction) {
 		}
 	});
 }
-function pgcrowdNullInputboxDiscern(inputArrays) {
+function ogumaNullInputboxDiscern(inputArrays) {
 	for (const element of inputArrays) {
 		if ($(element).val().trim() === "") {
 			showValidationMsg(element, "error", "上記の入力ボックスを空になってはいけません。");
 		}
 	}
 }
-function pgcrowdInputContextGet(inputArrays) {
+function ogumaInputContextGet(inputArrays) {
 	let listArray = [];
 	for (const element of inputArrays) {
 		let inputContext = $(element).val().trim();
-		listArray.push(inputContext);
-		showValidationMsg(element, "success", "");
+		if (inputContext !== "" && !$(element).hasClass('is-invalid')) {
+			listArray.push(inputContext);
+			showValidationMsg(element, "success", "");
+		}
 	}
 	return listArray;
 }

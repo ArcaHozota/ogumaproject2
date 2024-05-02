@@ -77,16 +77,16 @@ $("#nameInput").on('change', function() {
 });
 $("#roleInfoSaveBtn").on('click', function() {
 	let inputArrays = ["#nameInput"];
-	let listArray = pgcrowdInputContextGet(inputArrays);
+	let listArray = ogumaInputContextGet(inputArrays);
 	if (listArray.includes("")) {
-		pgcrowdNullInputboxDiscern(inputArrays);
+		ogumaNullInputboxDiscern(inputArrays);
 	} else if ($("#roleAddModal form").find('*').hasClass('is-invalid')) {
 		layer.msg('入力情報不正');
 	} else {
 		let postData = JSON.stringify({
 			'name': $("#nameInput").val().trim()
 		});
-		pgcrowdAjaxModify('pgcrowd/role/infoSave', 'POST', postData, normalPostSuccessFunction("#roleAddModal"));
+		ogumaAjaxModify('oguma/role/infoSave', 'POST', postData, normalPostSuccessFunction("#roleAddModal"));
 	}
 });
 $("#tableBody").on('click', '.edit-btn', function() {
@@ -112,9 +112,9 @@ $("#tableBody").on('click', '.edit-btn', function() {
 });
 $("#roleInfoChangeBtn").on('click', function() {
 	let inputArrays = ["#nameEdit"];
-	let listArray = pgcrowdInputContextGet(inputArrays);
+	let listArray = ogumaInputContextGet(inputArrays);
 	if (listArray.includes("")) {
-		pgcrowdNullInputboxDiscern(inputArrays);
+		ogumaNullInputboxDiscern(inputArrays);
 	} else if ($("#roleEditModal form").find('*').hasClass('is-invalid')) {
 		layer.msg('入力情報不正');
 	} else {
@@ -122,7 +122,7 @@ $("#roleInfoChangeBtn").on('click', function() {
 			'id': this.value,
 			'name': $("#nameEdit").val().trim()
 		});
-		pgcrowdAjaxModify('/oguma/role/infoUpdate', 'PUT', putData, putSuccessFunction);
+		ogumaAjaxModify('/oguma/role/infoUpdate', 'PUT', putData, putSuccessFunction);
 	}
 });
 $("#tableBody").on('click', '.delete-btn', function() {
@@ -146,7 +146,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 		confirmButtonColor: '#7F0020'
 	}).then((result) => {
 		if (result.isConfirmed) {
-			pgcrowdAjaxModify('/oguma/role/infoDelete/' + roleId, 'DELETE', null, normalDeleteSuccessFunction);
+			ogumaAjaxModify('/oguma/role/infoDelete/' + roleId, 'DELETE', null, normalDeleteSuccessFunction);
 		} else {
 			$(this).close();
 		}
@@ -222,7 +222,7 @@ $("#authChangeBtn").on('click', function() {
 		'authIdArray': authIdArray,
 		'roleId': [fuyoId]
 	});
-	pgcrowdAjaxModify('/oguma/role/doAssignment', 'PUT', putData, authPutSuccessFunction);
+	ogumaAjaxModify('/oguma/role/doAssignment', 'PUT', putData, authPutSuccessFunction);
 });
 function putSuccessFunction(result) {
 	if (result.status === 'SUCCESS') {

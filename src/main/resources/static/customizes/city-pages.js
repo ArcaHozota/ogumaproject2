@@ -84,9 +84,9 @@ $("#districtInput").on('change', function() {
 });
 $("#cityInfoSaveBtn").on('click', function() {
 	let inputArrays = ["#nameInput", "#poInput", "#populationInput", "#cityFlagInput"];
-	let listArray = pgcrowdInputContextGet(inputArrays);
+	let listArray = ogumaInputContextGet(inputArrays);
 	if (listArray.includes("")) {
-		pgcrowdNullInputboxDiscern(inputArrays);
+		ogumaNullInputboxDiscern(inputArrays);
 	} else if ($("#cityAddModal form").find('*').hasClass('is-invalid')) {
 		layer.msg('入力情報不正');
 	} else {
@@ -97,7 +97,7 @@ $("#cityInfoSaveBtn").on('click', function() {
 			'population': Number($("#populationInput").val().trim().replace(/,/g, '')),
 			'cityFlag': $("#cityFlagInput").val().trim()
 		});
-		pgcrowdAjaxModify('/oguma/city/infoSave', 'POST', postData, normalPostSuccessFunction("#cityAddModal"));
+		ogumaAjaxModify('/oguma/city/infoSave', 'POST', postData, normalPostSuccessFunction("#cityAddModal"));
 	}
 });
 $("#tableBody").on('click', '.edit-btn', function() {
@@ -142,9 +142,9 @@ $("#districtEdit").on('change', function() {
 });
 $("#cityInfoChangeBtn").on('click', function() {
 	let inputArrays = ["#nameEdit", "#poEdit", "#populationEdit"];
-	let listArray = pgcrowdInputContextGet(inputArrays);
+	let listArray = ogumaInputContextGet(inputArrays);
 	if (listArray.includes("")) {
-		pgcrowdNullInputboxDiscern(inputArrays);
+		ogumaNullInputboxDiscern(inputArrays);
 	} else if ($("#cityEditModal form").find('*').hasClass('is-invalid')) {
 		layer.msg('入力情報不正');
 	} else {
@@ -155,7 +155,7 @@ $("#cityInfoChangeBtn").on('click', function() {
 			'districtId': $("#districtEdit").val(),
 			'population': Number($("#populationEdit").val().trim().replace(/,/g, ''))
 		});
-		pgcrowdAjaxModify('/oguma/city/infoUpdate', 'PUT', putData, putSuccessFunction);
+		ogumaAjaxModify('/oguma/city/infoUpdate', 'PUT', putData, putSuccessFunction);
 	}
 });
 $("#tableBody").on('click', '.delete-btn', function() {
@@ -179,7 +179,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 		confirmButtonColor: '#7F0020'
 	}).then((result) => {
 		if (result.isConfirmed) {
-			pgcrowdAjaxModify('/oguma/city/infoDelete/' + cityId, 'DELETE', null, normalDeleteSuccessFunction);
+			ogumaAjaxModify('/oguma/city/infoDelete/' + cityId, 'DELETE', null, normalDeleteSuccessFunction);
 		} else {
 			$(this).close();
 		}

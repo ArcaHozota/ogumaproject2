@@ -35,9 +35,9 @@ $("#emailInput").change(function() {
 });
 $("#saveInfoBtn").on('click', function() {
 	let inputArrays = ["#loginAccountInput", "#usernameInput", "#passwordInput", "#emailInput"];
-	let listArray = pgcrowdInputContextGet(inputArrays);
+	let listArray = ogumaInputContextGet(inputArrays);
 	if (listArray.includes("")) {
-		pgcrowdNullInputboxDiscern(inputArrays);
+		ogumaNullInputboxDiscern(inputArrays);
 	} else if ($("#inputForm").find('*').hasClass('is-invalid')) {
 		layer.msg('入力情報不正');
 	} else {
@@ -49,7 +49,7 @@ $("#saveInfoBtn").on('click', function() {
 			'dateOfBirth': $("#dateInput").val(),
 			'roleId': $("#roleInput").val()
 		});
-		pgcrowdAjaxModify('/oguma/employee/infoSave', 'POST', postData, postSuccessFunction);
+		ogumaAjaxModify('/oguma/employee/infoSave', 'POST', postData, postSuccessFunction);
 	}
 });
 $("#passwordEdit").change(function() {
@@ -84,9 +84,9 @@ $("#roleEdit").change(function() {
 });
 $("#editInfoBtn").on('click', function() {
 	let inputArrays = ["#usernameEdit", "#passwordEdit", "#emailEdit"];
-	let listArray = pgcrowdInputContextGet(inputArrays);
+	let listArray = ogumaInputContextGet(inputArrays);
 	if (listArray.includes("")) {
-		pgcrowdNullInputboxDiscern(inputArrays);
+		ogumaNullInputboxDiscern(inputArrays);
 	} else if ($("#editForm").find('*').hasClass('is-invalid')) {
 		layer.msg('入力情報不正');
 	} else {
@@ -107,7 +107,7 @@ $("#editInfoBtn").on('click', function() {
 			'dateOfBirth': $("#dateEdit").val(),
 			'roleId': roleId
 		});
-		pgcrowdAjaxModify('/oguma/employee/infoUpdate', 'PUT', putData, putSuccessFunction);
+		ogumaAjaxModify('/oguma/employee/infoUpdate', 'PUT', putData, putSuccessFunction);
 	}
 });
 function postSuccessFunction() {
