@@ -255,7 +255,7 @@ function ogumaInputContextGet(inputArrays) {
 	let listArray = [];
 	for (const element of inputArrays) {
 		let inputContext = $(element).val().trim();
-		if (inputContext !== "" && !$(element).hasClass('is-invalid')) {
+		if (!$(element).hasClass('is-invalid')) {
 			listArray.push(inputContext);
 			showValidationMsg(element, "success", "");
 		}
