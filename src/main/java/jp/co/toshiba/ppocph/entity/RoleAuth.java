@@ -2,16 +2,11 @@ package jp.co.toshiba.ppocph.entity;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.Table;
-import jp.co.toshiba.ppocph.dto.RoleAuthIds;
+import gaarason.database.annotation.Primary;
+import gaarason.database.annotation.Table;
+import jp.co.toshiba.ppocph.utils.OgumaPrimaryKeyGenerator;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 役割権限連携エンティティ
@@ -19,13 +14,8 @@ import lombok.ToString;
  * @author ArkamaHozota
  * @since 5.76
  */
-@Entity
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
+@Data
 @Table(name = "role_auth")
-@IdClass(RoleAuthIds.class)
 @EqualsAndHashCode(callSuper = false)
 public final class RoleAuth implements Serializable {
 
@@ -34,12 +24,12 @@ public final class RoleAuth implements Serializable {
 	/**
 	 * 権限ID
 	 */
-	@Id
+	@Primary(idGenerator = OgumaPrimaryKeyGenerator.class)
 	private Long authId;
 
 	/**
 	 * 役割ID
 	 */
-	@Id
+	@Primary(idGenerator = OgumaPrimaryKeyGenerator.class)
 	private Long roleId;
 }

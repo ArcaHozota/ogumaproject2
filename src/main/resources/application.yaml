@@ -29,3 +29,7 @@ spring:
       content-type: text/html
     prefix: classpath:/templates/
     suffix: .html
+gaarason:
+  database:
+    scan:
+      packages: jp.co.toshiba.ppocph

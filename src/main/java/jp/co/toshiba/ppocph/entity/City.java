@@ -2,17 +2,13 @@ package jp.co.toshiba.ppocph.entity;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import gaarason.database.annotation.BelongsTo;
+import gaarason.database.annotation.Column;
+import gaarason.database.annotation.Primary;
+import gaarason.database.annotation.Table;
+import jp.co.toshiba.ppocph.utils.OgumaPrimaryKeyGenerator;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 都市エンティティ
@@ -20,11 +16,7 @@ import lombok.ToString;
  * @author ArkamaHozota
  * @since 7.84
  */
-@Entity
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
+@Data
 @Table(name = "cities")
 @EqualsAndHashCode(callSuper = false)
 public class City implements Serializable {
@@ -34,7 +26,7 @@ public class City implements Serializable {
 	/**
 	 * ID
 	 */
-	@Id
+	@Primary(idGenerator = OgumaPrimaryKeyGenerator.class)
 	private Long id;
 
 	/**
@@ -74,7 +66,6 @@ public class City implements Serializable {
 	/**
 	 * 都市地域関連
 	 */
-	@ManyToOne
-	@JoinColumn(name = "districtId", insertable = false, updatable = false)
+	@BelongsTo(localModelForeignKey = "district_id")
 	private District district;
 }

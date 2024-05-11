@@ -2,15 +2,12 @@ package jp.co.toshiba.ppocph.entity;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import gaarason.database.annotation.Column;
+import gaarason.database.annotation.Primary;
+import gaarason.database.annotation.Table;
+import jp.co.toshiba.ppocph.utils.OgumaPrimaryKeyGenerator;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 社員役割連携エンティティ
@@ -18,11 +15,7 @@ import lombok.ToString;
  * @author ArkamaHozota
  * @since 5.00
  */
-@Entity
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
+@Data
 @Table(name = "employee_role")
 @EqualsAndHashCode(callSuper = false)
 public final class EmployeeRole implements Serializable {
@@ -32,7 +25,7 @@ public final class EmployeeRole implements Serializable {
 	/**
 	 * 社員ID
 	 */
-	@Id
+	@Primary(idGenerator = OgumaPrimaryKeyGenerator.class)
 	private Long employeeId;
 
 	/**

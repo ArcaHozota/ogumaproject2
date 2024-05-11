@@ -3,18 +3,13 @@ package jp.co.toshiba.ppocph.entity;
 import java.io.Serializable;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import gaarason.database.annotation.Column;
+import gaarason.database.annotation.HasOneOrMany;
+import gaarason.database.annotation.Primary;
+import gaarason.database.annotation.Table;
+import jp.co.toshiba.ppocph.utils.OgumaPrimaryKeyGenerator;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 地域エンティティ
@@ -22,11 +17,7 @@ import lombok.ToString;
  * @author ArkamaHozota
  * @since 7.80
  */
-@Entity
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
+@Data
 @Table(name = "districts")
 @EqualsAndHashCode(callSuper = false)
 public class District implements Serializable {
@@ -36,7 +27,7 @@ public class District implements Serializable {
 	/**
 	 * ID
 	 */
-	@Id
+	@Primary(idGenerator = OgumaPrimaryKeyGenerator.class)
 	private Long id;
 
 	/**
@@ -71,6 +62,6 @@ public class District implements Serializable {
 	/**
 	 * 地域都市関連
 	 */
-	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@HasOneOrMany(sonModelForeignKey = "district_id")
 	private List<City> cities;
 }
