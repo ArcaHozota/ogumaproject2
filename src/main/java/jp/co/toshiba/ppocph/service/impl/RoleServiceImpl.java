@@ -23,8 +23,8 @@ import jp.co.toshiba.ppocph.entity.EmployeeRole;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.entity.RoleAuth;
 import jp.co.toshiba.ppocph.exception.OgumaProjectException;
-import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
-import jp.co.toshiba.ppocph.repository.PgAuthRepository;
+import jp.co.toshiba.ppocph.repository.EmployeeRoleRepository;
+import jp.co.toshiba.ppocph.repository.AuthorityRepository;
 import jp.co.toshiba.ppocph.repository.RoleExRepository;
 import jp.co.toshiba.ppocph.repository.RoleRepository;
 import jp.co.toshiba.ppocph.service.IRoleService;
@@ -69,12 +69,12 @@ public final class RoleServiceImpl implements IRoleService {
 	/**
 	 * 権限管理リポジトリ
 	 */
-	private final PgAuthRepository pgAuthRepository;
+	private final AuthorityRepository pgAuthRepository;
 
 	/**
 	 * 社員役割連携リポジトリ
 	 */
-	private final EmployeeExRepository employeeExRepository;
+	private final EmployeeRoleRepository employeeExRepository;
 
 	/**
 	 * 役割権限連携リポジトリ

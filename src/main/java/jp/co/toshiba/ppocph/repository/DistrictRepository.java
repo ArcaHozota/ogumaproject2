@@ -1,12 +1,9 @@
 package jp.co.toshiba.ppocph.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
+import gaarason.database.contract.eloquent.Builder;
+import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
 import jp.co.toshiba.ppocph.entity.District;
 
 /**
@@ -15,16 +12,88 @@ import jp.co.toshiba.ppocph.entity.District;
  * @author ArkamaHozota
  * @since 7.80
  */
-public interface DistrictRepository extends JpaRepository<District, Long>, JpaSpecificationExecutor<District> {
+@Repository
+public class DistrictRepository extends BasicModel<District, Long> {
 
 	/**
-	 * 州都によって検索する
+	 * 删除(软/硬删除)
 	 *
-	 * @param name     キーワード
-	 * @param pageable ページング検索
-	 * @return Page<District>
+	 * @param builder 查询构造器
+	 * @return 删除的行数
 	 */
-	@Query(value = "select ds from District as ds inner join City as cy on cy.districtId = ds.id "
-			+ "where ds.deleteFlg= 'approved' and (ds.name like :name or ds.chiho like :name or cy.name like :name)")
-	Page<District> findByShutoLike(@Param("name") String name, Pageable pageable);
+	@Override
+	public int delete(final Builder<District, Long> builder) {
+		return this.softDeleting() ? this.softDelete(builder) : builder.forceDelete();
+	}
+
+	/**
+	 * 恢复软删除
+	 *
+	 * @param builder 查询构造器
+	 * @return 删除的行数
+	 */
+	@Override
+	public int restore(final Builder<District, Long> builder) {
+		return this.softDeleteRestore(builder);
+	}
+
+	/**
+	 * 软删除查询作用域
+	 *
+	 * @param builder 查询构造器
+	 */
+	@Override
+	protected void scopeSoftDelete(final Builder<District, Long> builder) {
+		builder.where("delete_flg", OgumaProjectConstants.LOGIC_DELETE_FLG);
+	}
+
+	/**
+	 * 软删除查询作用域(反)
+	 *
+	 * @param builder 查询构造器
+	 */
+	@Override
+	protected void scopeSoftDeleteOnlyTrashed(final Builder<District, Long> builder) {
+		builder.where("delete_flg", OgumaProjectConstants.LOGIC_DELETE_INITIAL);
+	}
+
+	/**
+	 * 软删除查询作用域(反)
+	 *
+	 * @param builder 查询构造器
+	 */
+	@Override
+	protected void scopeSoftDeleteWithTrashed(final Builder<District, Long> builder) {
+		builder.where("delete_flg", OgumaProjectConstants.LOGIC_DELETE_INITIAL);
+	}
+
+	/**
+	 * 软删除实现
+	 *
+	 * @param builder 查询构造器
+	 * @return 删除的行数
+	 */
+	@Override
+	protected int softDelete(final Builder<District, Long> builder) {
+		return builder.data("delete_flg", OgumaProjectConstants.LOGIC_DELETE_FLG).update();
+	}
+
+	/**
+	 * 恢复软删除实现
+	 *
+	 * @param builder 查询构造器
+	 * @return 恢复的行数
+	 */
+	@Override
+	protected int softDeleteRestore(final Builder<District, Long> builder) {
+		return builder.data("delete_flg", OgumaProjectConstants.LOGIC_DELETE_INITIAL).update();
+	}
+
+	/**
+	 * 是否启用软删除
+	 */
+	@Override
+	protected boolean softDeleting() {
+		return true;
+	}
 }

@@ -19,9 +19,9 @@ import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
 import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.entity.EmployeeRole;
 import jp.co.toshiba.ppocph.entity.RoleAuth;
-import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
+import jp.co.toshiba.ppocph.repository.EmployeeRoleRepository;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
-import jp.co.toshiba.ppocph.repository.PgAuthRepository;
+import jp.co.toshiba.ppocph.repository.AuthorityRepository;
 import jp.co.toshiba.ppocph.repository.RoleExRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +44,7 @@ public final class OgumaProjectUserDetailsService implements UserDetailsService 
 	/**
 	 * 社員役割連携リポジトリ
 	 */
-	private final EmployeeExRepository employeeExRepository;
+	private final EmployeeRoleRepository employeeExRepository;
 
 	/**
 	 * 役割権限連携リポジトリ
@@ -54,7 +54,7 @@ public final class OgumaProjectUserDetailsService implements UserDetailsService 
 	/**
 	 * 権限管理リポジトリ
 	 */
-	private final PgAuthRepository pgAuthRepository;
+	private final AuthorityRepository pgAuthRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {

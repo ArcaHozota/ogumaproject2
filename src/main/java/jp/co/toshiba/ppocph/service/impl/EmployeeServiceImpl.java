@@ -26,7 +26,7 @@ import jp.co.toshiba.ppocph.entity.Employee;
 import jp.co.toshiba.ppocph.entity.EmployeeRole;
 import jp.co.toshiba.ppocph.entity.Role;
 import jp.co.toshiba.ppocph.exception.OgumaProjectException;
-import jp.co.toshiba.ppocph.repository.EmployeeExRepository;
+import jp.co.toshiba.ppocph.repository.EmployeeRoleRepository;
 import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.repository.RoleRepository;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
@@ -61,7 +61,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	/**
 	 * 社員役割連携リポジトリ
 	 */
-	private final EmployeeExRepository employeeExRepository;
+	private final EmployeeRoleRepository employeeExRepository;
 
 	/**
 	 * 役割管理リポジトリ
