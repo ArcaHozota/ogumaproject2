@@ -2,7 +2,7 @@ package jp.co.toshiba.ppocph.listener;
 
 import java.util.Collection;
 
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
@@ -21,7 +21,7 @@ public final class SecurityAdmin extends User {
 
 	private final EmployeeDto originalAdmin;
 
-	SecurityAdmin(final EmployeeDto admin, final Collection<GrantedAuthority> authorities) {
+	SecurityAdmin(final EmployeeDto admin, final Collection<SimpleGrantedAuthority> authorities) {
 		super(admin.loginAccount(), admin.password(), true, true, true, true, authorities);
 		this.originalAdmin = admin;
 	}

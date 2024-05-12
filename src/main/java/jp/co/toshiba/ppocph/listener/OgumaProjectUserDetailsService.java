@@ -6,7 +6,6 @@ import static jp.co.toshiba.ppocph.jooq.Tables.EMPLOYEE_ROLE;
 import static jp.co.toshiba.ppocph.jooq.Tables.ROLE_AUTH;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.DSLContext;
@@ -14,7 +13,6 @@ import org.jooq.exception.NoDataFoundException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -71,8 +69,8 @@ public final class OgumaProjectUserDetailsService implements UserDetailsService 
 			throw new AuthenticationCredentialsNotFoundException(
 					OgumaProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR3);
 		}
-		final List<GrantedAuthority> authorities = new ArrayList<>();
-		authoritiesRecords.stream().map(item -> new SimpleGrantedAuthority(item.getName())).forEach(authorities::add);
+		final List<SimpleGrantedAuthority> authorities = authoritiesRecords.stream()
+				.map(item -> new SimpleGrantedAuthority(item.getName())).toList();
 		return new SecurityAdmin(employeeDto, authorities);
 	}
 }
