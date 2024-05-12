@@ -1,9 +1,16 @@
 package jp.co.toshiba.ppocph.listener;
 
+import static jp.co.toshiba.ppocph.jooq.Tables.AUTHORITIES;
+import static jp.co.toshiba.ppocph.jooq.Tables.EMPLOYEES;
+import static jp.co.toshiba.ppocph.jooq.Tables.EMPLOYEE_ROLE;
+import static jp.co.toshiba.ppocph.jooq.Tables.ROLE_AUTH;
+
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.DSLContext;
+import org.jooq.exception.NoDataFoundException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -15,12 +22,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
-import jp.co.toshiba.ppocph.entity.Employee;
-import jp.co.toshiba.ppocph.jooq.tables.EmployeeRole;
-import jp.co.toshiba.ppocph.jooq.tables.RoleAuth;
-import jp.co.toshiba.ppocph.repository.AuthorityRepository;
-import jp.co.toshiba.ppocph.repository.EmployeeRoleRepository;
-import jp.co.toshiba.ppocph.repository.RoleAuthRepository;
+import jp.co.toshiba.ppocph.dto.EmployeeDto;
+import jp.co.toshiba.ppocph.jooq.tables.records.AuthoritiesRecord;
+import jp.co.toshiba.ppocph.jooq.tables.records.EmployeeRoleRecord;
+import jp.co.toshiba.ppocph.jooq.tables.records.EmployeesRecord;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -41,29 +46,33 @@ public final class OgumaProjectUserDetailsService implements UserDetailsService 
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-		this.dslContext.select(null, null, null, null, null, null, null, null, null, null)
-		final Employee employee = this.employeeRepository.newQuery().where("login_account", username)
-				.orWhere(builder -> builder.where("email", username)).firstOrFail().getEntity();
-		if (employee == null) {
+		final EmployeesRecord employeesRecord = this.dslContext.selectFrom(EMPLOYEES)
+				.where(EMPLOYEES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+				.and(EMPLOYEES.LOGIN_ACCOUNT.eq(username).or(EMPLOYEES.EMAIL.eq(username))).fetchOne();
+		if (employeesRecord == null) {
 			throw new DisabledException(OgumaProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR1);
 		}
-		final EmployeeRole employeeRoleEntity = new EmployeeRole();
-		employeeRoleEntity.setEmployeeId(employee.getId());
-		final EmployeeRole employeeRole = this.employeeRoleRepository.findByPrimaryKeyOrNew(employeeRoleEntity)
-				.getEntity();
-		if (employeeRole == null) {
+		final EmployeeDto employeeDto = new EmployeeDto(employeesRecord.getId(), employeesRecord.getLoginAccount(),
+				employeesRecord.getUsername(), employeesRecord.getPassword(), employeesRecord.getEmail(),
+				DateTimeFormatter.ofPattern("yyyy-MM-dd").format(employeesRecord.getDateOfBirth()), 0L);
+		EmployeeRoleRecord employeeRoleRecord;
+		try {
+			employeeRoleRecord = this.dslContext.selectFrom(EMPLOYEE_ROLE)
+					.where(EMPLOYEE_ROLE.EMPLOYEE_ID.eq(employeesRecord.getId())).fetchSingle();
+		} catch (final NoDataFoundException e) {
 			throw new InsufficientAuthenticationException(OgumaProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR2);
+		} catch (final Exception e) {
+			throw new InsufficientAuthenticationException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 		}
-		final List<RoleAuth> roleAuths = this.roleAuthRepository.newQuery().where("role_id", employeeRole.getRoleId())
-				.get().toObjectList();
-		if (roleAuths.isEmpty()) {
+		final List<AuthoritiesRecord> authoritiesRecords = this.dslContext.select(AUTHORITIES.ID, AUTHORITIES.NAME)
+				.from(ROLE_AUTH).join(AUTHORITIES).on(ROLE_AUTH.AUTH_ID.eq(AUTHORITIES.ID))
+				.where(ROLE_AUTH.ROLE_ID.eq(employeeRoleRecord.getRoleId())).fetchInto(AuthoritiesRecord.class);
+		if (authoritiesRecords.isEmpty()) {
 			throw new AuthenticationCredentialsNotFoundException(
 					OgumaProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR3);
 		}
-		final List<Long> authIds = roleAuths.stream().map(RoleAuth::getAuthId).toList();
 		final List<GrantedAuthority> authorities = new ArrayList<>();
-		this.authorityRepository.findMany(authIds).toObjectList().stream()
-				.map(item -> new SimpleGrantedAuthority(item.getName())).forEach(authorities::add);
-		return new SecurityAdmin(employee, authorities);
+		authoritiesRecords.stream().map(item -> new SimpleGrantedAuthority(item.getName())).forEach(authorities::add);
+		return new SecurityAdmin(employeeDto, authorities);
 	}
 }
