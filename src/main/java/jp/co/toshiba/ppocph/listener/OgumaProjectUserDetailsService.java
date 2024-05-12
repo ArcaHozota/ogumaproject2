@@ -3,6 +3,7 @@ package jp.co.toshiba.ppocph.listener;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.DSLContext;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -15,10 +16,9 @@ import org.springframework.stereotype.Component;
 
 import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
 import jp.co.toshiba.ppocph.entity.Employee;
-import jp.co.toshiba.ppocph.entity.EmployeeRole;
-import jp.co.toshiba.ppocph.entity.RoleAuth;
+import jp.co.toshiba.ppocph.jooq.tables.EmployeeRole;
+import jp.co.toshiba.ppocph.jooq.tables.RoleAuth;
 import jp.co.toshiba.ppocph.repository.AuthorityRepository;
-import jp.co.toshiba.ppocph.repository.EmployeeRepository;
 import jp.co.toshiba.ppocph.repository.EmployeeRoleRepository;
 import jp.co.toshiba.ppocph.repository.RoleAuthRepository;
 import lombok.AccessLevel;
@@ -35,27 +35,13 @@ import lombok.RequiredArgsConstructor;
 public final class OgumaProjectUserDetailsService implements UserDetailsService {
 
 	/**
-	 * 社員管理リポジトリ
+	 * 共通リポジトリ
 	 */
-	private final EmployeeRepository employeeRepository;
-
-	/**
-	 * 社員役割連携リポジトリ
-	 */
-	private final EmployeeRoleRepository employeeRoleRepository;
-
-	/**
-	 * 役割権限連携リポジトリ
-	 */
-	private final RoleAuthRepository roleAuthRepository;
-
-	/**
-	 * 権限管理リポジトリ
-	 */
-	private final AuthorityRepository authorityRepository;
+	private final DSLContext dslContext;
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+		this.dslContext.select(null, null, null, null, null, null, null, null, null, null)
 		final Employee employee = this.employeeRepository.newQuery().where("login_account", username)
 				.orWhere(builder -> builder.where("email", username)).firstOrFail().getEntity();
 		if (employee == null) {

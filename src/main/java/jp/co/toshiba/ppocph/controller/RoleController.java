@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jp.co.toshiba.ppocph.common.OgumaProjectURLConstants;
+import jp.co.toshiba.ppocph.dto.AuthorityDto;
 import jp.co.toshiba.ppocph.dto.RoleDto;
-import jp.co.toshiba.ppocph.entity.Authority;
 import jp.co.toshiba.ppocph.service.IRoleService;
 import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
@@ -98,8 +98,8 @@ public final class RoleController {
 	 * @return ResultDto<List<PgAuth>>
 	 */
 	@GetMapping(OgumaProjectURLConstants.URL_ROLE_AUTHLIST)
-	public ResultDto<List<Authority>> getAuthList() {
-		final List<Authority> list = this.iRoleService.getAuthList();
+	public ResultDto<List<AuthorityDto>> getAuthList() {
+		final List<AuthorityDto> list = this.iRoleService.getAuthList();
 		return ResultDto.successWithData(list);
 	}
 

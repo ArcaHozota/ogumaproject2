@@ -3,8 +3,8 @@ package jp.co.toshiba.ppocph.service;
 import java.util.List;
 import java.util.Map;
 
+import jp.co.toshiba.ppocph.dto.AuthorityDto;
 import jp.co.toshiba.ppocph.dto.RoleDto;
-import jp.co.toshiba.ppocph.entity.Authority;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 
@@ -45,7 +45,7 @@ public interface IRoleService {
 	 *
 	 * @return List<PgAuth>
 	 */
-	List<Authority> getAuthList();
+	List<AuthorityDto> getAuthList();
 
 	/**
 	 * IDによって役割情報を検索する
