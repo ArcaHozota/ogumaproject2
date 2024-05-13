@@ -22,3 +22,6 @@ spring:
       content-type: text/html
     prefix: classpath:/templates/
     suffix: .html
+  jooq:
+    sql-dialect: POSTGRES
+    

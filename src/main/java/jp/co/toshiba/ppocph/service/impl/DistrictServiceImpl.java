@@ -1,30 +1,23 @@
 package jp.co.toshiba.ppocph.service.impl;
 
+import static jp.co.toshiba.ppocph.jooq.Tables.CITIES;
+import static jp.co.toshiba.ppocph.jooq.Tables.DISTRICTS;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
+import org.jooq.DSLContext;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
 import jp.co.toshiba.ppocph.dto.DistrictDto;
-import jp.co.toshiba.ppocph.entity.City;
-import jp.co.toshiba.ppocph.entity.District;
-import jp.co.toshiba.ppocph.exception.OgumaProjectException;
-import jp.co.toshiba.ppocph.repository.CityRepository;
-import jp.co.toshiba.ppocph.repository.DistrictRepository;
+import jp.co.toshiba.ppocph.jooq.tables.records.DistrictsRecord;
 import jp.co.toshiba.ppocph.service.IDistrictService;
 import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
-import jp.co.toshiba.ppocph.utils.SecondBeanUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -39,28 +32,21 @@ import lombok.RequiredArgsConstructor;
 public final class DistrictServiceImpl implements IDistrictService {
 
 	/**
-	 * 地域管理リポジトリ
+	 * 共通リポジトリ
 	 */
-	private final DistrictRepository districtRepository;
-
-	/**
-	 * 都市管理リポジトリ
-	 */
-	private final CityRepository cityRepository;
+	private final DSLContext dslContext;
 
 	@Override
 	public List<DistrictDto> getDistrictsByCityId(final String cityId) {
 		final List<DistrictDto> districtDtos = new ArrayList<>();
-		final List<District> districts = this.districtRepository.findAll();
-		final List<DistrictDto> districtDtos1 = districts.stream()
-				.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),
-						item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId())).toList()
-								.get(0).getName(),
-						item.getChiho(),
-						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
-						item.getDistrictFlag()))
+		final List<DistrictsRecord> districtRecords = this.dslContext.selectFrom(DISTRICTS)
+				.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+				.fetchInto(DistrictsRecord.class);
+		final List<DistrictDto> districtDtos1 = districtRecords
+				.stream().map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(), null,
+						item.getChiho(), null, item.getDistrictFlag()))
 				.sorted(Comparator.comparingLong(DistrictDto::id)).toList();
-		if (OgumaProjectUtils.isEmpty(cityId) || !OgumaProjectUtils.isDigital(cityId)) {
+		if (!OgumaProjectUtils.isDigital(cityId)) {
 			final DistrictDto districtDto = new DistrictDto(0L, OgumaProjectConstants.DEFAULT_ROLE_NAME, 0L,
 					OgumaProjectUtils.EMPTY_STRING, OgumaProjectUtils.EMPTY_STRING, null,
 					OgumaProjectUtils.EMPTY_STRING);
@@ -68,67 +54,67 @@ public final class DistrictServiceImpl implements IDistrictService {
 			districtDtos.addAll(districtDtos1);
 			return districtDtos;
 		}
-		final City city = this.cityRepository.findById(Long.parseLong(cityId)).orElseThrow(() -> {
-			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
-		});
-		final List<DistrictDto> districtDtos2 = new ArrayList<>();
-		final District district = districts.stream().filter(a -> Objects.equals(a.getId(), city.getDistrictId()))
-				.toList().get(0);
-		districtDtos2.add(new DistrictDto(district.getId(), district.getName(), district.getShutoId(),
-				district.getCities().stream().filter(a -> Objects.equals(a.getId(), district.getShutoId())).toList()
-						.get(0).getName(),
-				district.getChiho(),
-				district.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
-				district.getDistrictFlag()));
-		districtDtos2.addAll(districtDtos1);
-		return districtDtos2.stream().distinct().toList();
+		final DistrictsRecord districtsRecord = this.dslContext.select(DISTRICTS).from(DISTRICTS).innerJoin(CITIES)
+				.on(CITIES.DISTRICT_ID.eq(DISTRICTS.ID))
+				.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+				.and(CITIES.ID.eq(Long.parseLong(cityId))).fetchSingle().into(DistrictsRecord.class);
+		districtDtos
+				.add(new DistrictDto(districtsRecord.getId(), districtsRecord.getName(), districtsRecord.getShutoId(),
+						null, districtsRecord.getChiho(), null, districtsRecord.getDistrictFlag()));
+		districtDtos.addAll(districtDtos1);
+		return districtDtos.stream().distinct().toList();
 	}
 
 	@Override
 	public Pagination<DistrictDto> getDistrictsByKeyword(final Integer pageNum, final String keyword) {
-		final PageRequest pageRequest = PageRequest.of(pageNum - 1, OgumaProjectConstants.DEFAULT_PAGE_SIZE,
-				Sort.by(Direction.ASC, "id"));
-		final Specification<District> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), OgumaProjectConstants.LOGIC_DELETE_INITIAL);
-		final Specification<District> specification = Specification.where(where1);
-		if (OgumaProjectUtils.isEmpty(keyword)) {
-			final Page<District> pages = this.districtRepository.findAll(specification, pageRequest);
-			final List<DistrictDto> districtDtos = pages.stream()
-					.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),
-							item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId())).toList()
-									.get(0).getName(),
-							item.getChiho(),
-							item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
-							item.getDistrictFlag()))
-					.toList();
-			return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
-		}
-		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
-		final Page<District> pages = this.districtRepository.findByShutoLike(searchStr, pageRequest);
-		final List<DistrictDto> districtDtos = pages.stream()
-				.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),
-						item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId())).toList()
-								.get(0).getName(),
-						item.getChiho(),
-						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
-						item.getDistrictFlag()))
-				.toList();
-		return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
+//		final PageRequest pageRequest = PageRequest.of(pageNum - 1, OgumaProjectConstants.DEFAULT_PAGE_SIZE,
+//				Sort.by(Direction.ASC, "id"));
+//		final Specification<District> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
+//				.equal(root.get("deleteFlg"), OgumaProjectConstants.LOGIC_DELETE_INITIAL);
+//		final Specification<District> specification = Specification.where(where1);
+//		if (OgumaProjectUtils.isEmpty(keyword)) {
+//			final Page<District> pages = this.districtRepository.findAll(specification, pageRequest);
+//			final List<DistrictDto> districtDtos = pages.stream()
+//					.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),
+//							item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId())).toList()
+//									.get(0).getName(),
+//							item.getChiho(),
+//							item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
+//							item.getDistrictFlag()))
+//					.toList();
+//			return Pagination.of(districtDtos, pages.getTotalElements(), pageNum,
+//					OgumaProjectConstants.DEFAULT_PAGE_SIZE);
+//		}
+//		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
+//		final Page<District> pages = this.districtRepository.findByShutoLike(searchStr, pageRequest);
+//		final List<DistrictDto> districtDtos = pages.stream()
+//				.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),
+//						item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId())).toList()
+//								.get(0).getName(),
+//						item.getChiho(),
+//						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
+//						item.getDistrictFlag()))
+//				.toList();
+//		return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
+		return null;
 	}
 
 	@Override
 	public ResultDto<String> update(final DistrictDto districtDto) {
-		final District district = this.districtRepository.findById(districtDto.id()).orElseThrow(() -> {
-			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
-		});
-		final District originalEntity = new District();
-		SecondBeanUtils.copyNullableProperties(district, originalEntity);
-		SecondBeanUtils.copyNullableProperties(districtDto, district);
-		if (originalEntity.equals(district)) {
+		final DistrictsRecord districtsRecord = this.dslContext.selectFrom(DISTRICTS)
+				.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+				.and(DISTRICTS.ID.eq(districtDto.id())).fetchSingle().into(DistrictsRecord.class);
+		final DistrictDto aDistrictDto = new DistrictDto(districtsRecord.getId(), districtsRecord.getName(), null, null,
+				districtsRecord.getChiho(), null, null);
+		if (aDistrictDto.equals(districtDto)) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 		}
+		districtsRecord.setName(districtDto.name());
+		districtsRecord.setChiho(districtDto.chiho());
 		try {
-			this.districtRepository.saveAndFlush(district);
+			this.dslContext.update(DISTRICTS).set(districtsRecord)
+					.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+					.and(DISTRICTS.ID.eq(districtsRecord.getId())).execute();
 		} catch (final DataIntegrityViolationException e) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_DISTRICT_NAME_DUPLICATED);
 		}
