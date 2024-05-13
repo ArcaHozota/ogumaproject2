@@ -109,7 +109,7 @@ public final class CityServiceImpl implements ICityService {
 	public ResultDto<String> update(final CityDto cityDto) {
 		final CitiesRecord citiesRecord = this.dslContext.selectFrom(CITIES)
 				.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).and(CITIES.ID.eq(cityDto.id()))
-				.fetchSingle().into(CitiesRecord.class);
+				.fetchSingle();
 		final CityDto aCityDto = new CityDto(citiesRecord.getId(), citiesRecord.getName(), citiesRecord.getDistrictId(),
 				citiesRecord.getPronunciation(), null, citiesRecord.getPopulation(), null);
 		if (aCityDto.equals(cityDto)) {

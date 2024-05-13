@@ -38,8 +38,8 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<AuthoritiesRecord> AUTH_PKEY = Internal.createUniqueKey(Authorities.AUTHORITIES, DSL.name("auth_pkey"), new TableField[] { Authorities.AUTHORITIES.ID }, true);
-    public static final UniqueKey<AuthoritiesRecord> NUNIQUES = Internal.createUniqueKey(Authorities.AUTHORITIES, DSL.name("nUniques"), new TableField[] { Authorities.AUTHORITIES.NAME }, true);
-    public static final UniqueKey<AuthoritiesRecord> TUNIQUES = Internal.createUniqueKey(Authorities.AUTHORITIES, DSL.name("tUniques"), new TableField[] { Authorities.AUTHORITIES.TITLE }, true);
+    public static final UniqueKey<AuthoritiesRecord> AUTHNAMEUNIQUES = Internal.createUniqueKey(Authorities.AUTHORITIES, DSL.name("AuthNameUniques"), new TableField[] { Authorities.AUTHORITIES.NAME }, true);
+    public static final UniqueKey<AuthoritiesRecord> AUTHTITLEUNIQUES = Internal.createUniqueKey(Authorities.AUTHORITIES, DSL.name("AuthTitleUniques"), new TableField[] { Authorities.AUTHORITIES.TITLE }, true);
     public static final UniqueKey<CitiesRecord> CITIES_PKEY = Internal.createUniqueKey(Cities.CITIES, DSL.name("cities_pkey"), new TableField[] { Cities.CITIES.ID }, true);
     public static final UniqueKey<DistrictsRecord> DISTRICTS_PKEY = Internal.createUniqueKey(Districts.DISTRICTS, DSL.name("districts_pkey"), new TableField[] { Districts.DISTRICTS.ID }, true);
     public static final UniqueKey<EmployeeRoleRecord> EMPLOYEE_ROLE_PKEY = Internal.createUniqueKey(EmployeeRole.EMPLOYEE_ROLE, DSL.name("employee_role_pkey"), new TableField[] { EmployeeRole.EMPLOYEE_ROLE.EMPLOYEE_ID }, true);
@@ -48,7 +48,7 @@ public class Keys {
     public static final UniqueKey<EmployeesRecord> LOGINACCTUNIQUE = Internal.createUniqueKey(Employees.EMPLOYEES, DSL.name("LoginAcctUnique"), new TableField[] { Employees.EMPLOYEES.LOGIN_ACCOUNT }, true);
     public static final UniqueKey<RoleAuthRecord> ROLE_AUTH_PKEY = Internal.createUniqueKey(RoleAuth.ROLE_AUTH, DSL.name("role_auth_pkey"), new TableField[] { RoleAuth.ROLE_AUTH.ROLE_ID, RoleAuth.ROLE_AUTH.AUTH_ID }, true);
     public static final UniqueKey<RolesRecord> ROLE_PKEY = Internal.createUniqueKey(Roles.ROLES, DSL.name("role_pkey"), new TableField[] { Roles.ROLES.ID }, true);
-    public static final UniqueKey<RolesRecord> UT1 = Internal.createUniqueKey(Roles.ROLES, DSL.name("ut1"), new TableField[] { Roles.ROLES.NAME }, true);
+    public static final UniqueKey<RolesRecord> ROLENAMEUNIQUE = Internal.createUniqueKey(Roles.ROLES, DSL.name("RoleNameUnique"), new TableField[] { Roles.ROLES.NAME }, true);
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions

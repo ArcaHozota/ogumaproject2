@@ -113,7 +113,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 	public ResultDto<String> update(final DistrictDto districtDto) {
 		final DistrictsRecord districtsRecord = this.dslContext.selectFrom(DISTRICTS)
 				.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
-				.and(DISTRICTS.ID.eq(districtDto.id())).fetchSingle().into(DistrictsRecord.class);
+				.and(DISTRICTS.ID.eq(districtDto.id())).fetchSingle();
 		final DistrictDto aDistrictDto = new DistrictDto(districtsRecord.getId(), districtsRecord.getName(), null, null,
 				districtsRecord.getChiho(), null, null);
 		if (aDistrictDto.equals(districtDto)) {

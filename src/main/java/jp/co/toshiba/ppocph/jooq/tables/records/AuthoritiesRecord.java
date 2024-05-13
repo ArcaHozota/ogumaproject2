@@ -22,56 +22,56 @@ public class AuthoritiesRecord extends UpdatableRecordImpl<AuthoritiesRecord> im
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>public.authorities.id</code>.
+     * Setter for <code>public.authorities.id</code>. ID
      */
     public void setId(Long value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>public.authorities.id</code>.
+     * Getter for <code>public.authorities.id</code>. ID
      */
     public Long getId() {
         return (Long) get(0);
     }
 
     /**
-     * Setter for <code>public.authorities.name</code>.
+     * Setter for <code>public.authorities.name</code>. 権限名称
      */
     public void setName(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>public.authorities.name</code>.
+     * Getter for <code>public.authorities.name</code>. 権限名称
      */
     public String getName() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>public.authorities.title</code>.
+     * Setter for <code>public.authorities.title</code>. 漢字名称
      */
     public void setTitle(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>public.authorities.title</code>.
+     * Getter for <code>public.authorities.title</code>. 漢字名称
      */
     public String getTitle() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>public.authorities.category_id</code>.
+     * Setter for <code>public.authorities.category_id</code>. 分類ID
      */
     public void setCategoryId(Long value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>public.authorities.category_id</code>.
+     * Getter for <code>public.authorities.category_id</code>. 分類ID
      */
     public Long getCategoryId() {
         return (Long) get(3);

@@ -52,39 +52,39 @@ public class Cities extends TableImpl<CitiesRecord> {
     }
 
     /**
-     * The column <code>public.cities.id</code>.
+     * The column <code>public.cities.id</code>. ID
      */
-    public final TableField<CitiesRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<CitiesRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false), this, "ID");
 
     /**
-     * The column <code>public.cities.name</code>.
+     * The column <code>public.cities.name</code>. 名称
      */
-    public final TableField<CitiesRecord, String> NAME = createField(DSL.name("name"), SQLDataType.VARCHAR(20).nullable(false), this, "");
+    public final TableField<CitiesRecord, String> NAME = createField(DSL.name("name"), SQLDataType.VARCHAR(20).nullable(false), this, "名称");
 
     /**
-     * The column <code>public.cities.pronunciation</code>.
+     * The column <code>public.cities.pronunciation</code>. 読み方
      */
-    public final TableField<CitiesRecord, String> PRONUNCIATION = createField(DSL.name("pronunciation"), SQLDataType.VARCHAR(20), this, "");
+    public final TableField<CitiesRecord, String> PRONUNCIATION = createField(DSL.name("pronunciation"), SQLDataType.VARCHAR(20), this, "読み方");
 
     /**
-     * The column <code>public.cities.population</code>.
+     * The column <code>public.cities.population</code>. 人口数量
      */
-    public final TableField<CitiesRecord, Long> POPULATION = createField(DSL.name("population"), SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<CitiesRecord, Long> POPULATION = createField(DSL.name("population"), SQLDataType.BIGINT.nullable(false), this, "人口数量");
 
     /**
-     * The column <code>public.cities.city_flag</code>.
+     * The column <code>public.cities.city_flag</code>. 都市フラグ
      */
-    public final TableField<CitiesRecord, String> CITY_FLAG = createField(DSL.name("city_flag"), SQLDataType.VARCHAR(40), this, "");
+    public final TableField<CitiesRecord, String> CITY_FLAG = createField(DSL.name("city_flag"), SQLDataType.VARCHAR(40), this, "都市フラグ");
 
     /**
-     * The column <code>public.cities.district_id</code>.
+     * The column <code>public.cities.district_id</code>. 地域ID
      */
-    public final TableField<CitiesRecord, Long> DISTRICT_ID = createField(DSL.name("district_id"), SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<CitiesRecord, Long> DISTRICT_ID = createField(DSL.name("district_id"), SQLDataType.BIGINT.nullable(false), this, "地域ID");
 
     /**
-     * The column <code>public.cities.delete_flg</code>.
+     * The column <code>public.cities.delete_flg</code>. 論理削除フラグ
      */
-    public final TableField<CitiesRecord, String> DELETE_FLG = createField(DSL.name("delete_flg"), SQLDataType.VARCHAR(8).nullable(false), this, "");
+    public final TableField<CitiesRecord, String> DELETE_FLG = createField(DSL.name("delete_flg"), SQLDataType.VARCHAR(8).nullable(false), this, "論理削除フラグ");
 
     private Cities(Name alias, Table<CitiesRecord> aliased) {
         this(alias, aliased, null);

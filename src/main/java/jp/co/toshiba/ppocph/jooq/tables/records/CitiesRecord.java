@@ -22,98 +22,98 @@ public class CitiesRecord extends UpdatableRecordImpl<CitiesRecord> implements R
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>public.cities.id</code>.
+     * Setter for <code>public.cities.id</code>. ID
      */
     public void setId(Long value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>public.cities.id</code>.
+     * Getter for <code>public.cities.id</code>. ID
      */
     public Long getId() {
         return (Long) get(0);
     }
 
     /**
-     * Setter for <code>public.cities.name</code>.
+     * Setter for <code>public.cities.name</code>. 名称
      */
     public void setName(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>public.cities.name</code>.
+     * Getter for <code>public.cities.name</code>. 名称
      */
     public String getName() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>public.cities.pronunciation</code>.
+     * Setter for <code>public.cities.pronunciation</code>. 読み方
      */
     public void setPronunciation(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>public.cities.pronunciation</code>.
+     * Getter for <code>public.cities.pronunciation</code>. 読み方
      */
     public String getPronunciation() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>public.cities.population</code>.
+     * Setter for <code>public.cities.population</code>. 人口数量
      */
     public void setPopulation(Long value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>public.cities.population</code>.
+     * Getter for <code>public.cities.population</code>. 人口数量
      */
     public Long getPopulation() {
         return (Long) get(3);
     }
 
     /**
-     * Setter for <code>public.cities.city_flag</code>.
+     * Setter for <code>public.cities.city_flag</code>. 都市フラグ
      */
     public void setCityFlag(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>public.cities.city_flag</code>.
+     * Getter for <code>public.cities.city_flag</code>. 都市フラグ
      */
     public String getCityFlag() {
         return (String) get(4);
     }
 
     /**
-     * Setter for <code>public.cities.district_id</code>.
+     * Setter for <code>public.cities.district_id</code>. 地域ID
      */
     public void setDistrictId(Long value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>public.cities.district_id</code>.
+     * Getter for <code>public.cities.district_id</code>. 地域ID
      */
     public Long getDistrictId() {
         return (Long) get(5);
     }
 
     /**
-     * Setter for <code>public.cities.delete_flg</code>.
+     * Setter for <code>public.cities.delete_flg</code>. 論理削除フラグ
      */
     public void setDeleteFlg(String value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>public.cities.delete_flg</code>.
+     * Getter for <code>public.cities.delete_flg</code>. 論理削除フラグ
      */
     public String getDeleteFlg() {
         return (String) get(6);

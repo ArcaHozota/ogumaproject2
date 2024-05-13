@@ -22,84 +22,84 @@ public class DistrictsRecord extends UpdatableRecordImpl<DistrictsRecord> implem
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>public.districts.id</code>.
+     * Setter for <code>public.districts.id</code>. ID
      */
     public void setId(Long value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>public.districts.id</code>.
+     * Getter for <code>public.districts.id</code>. ID
      */
     public Long getId() {
         return (Long) get(0);
     }
 
     /**
-     * Setter for <code>public.districts.name</code>.
+     * Setter for <code>public.districts.name</code>. 名称
      */
     public void setName(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>public.districts.name</code>.
+     * Getter for <code>public.districts.name</code>. 名称
      */
     public String getName() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>public.districts.chiho</code>.
+     * Setter for <code>public.districts.chiho</code>. 地方
      */
     public void setChiho(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>public.districts.chiho</code>.
+     * Getter for <code>public.districts.chiho</code>. 地方
      */
     public String getChiho() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>public.districts.district_flag</code>.
+     * Setter for <code>public.districts.district_flag</code>. 地域フラグ
      */
     public void setDistrictFlag(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>public.districts.district_flag</code>.
+     * Getter for <code>public.districts.district_flag</code>. 地域フラグ
      */
     public String getDistrictFlag() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>public.districts.shuto_id</code>.
+     * Setter for <code>public.districts.shuto_id</code>. 州都ID
      */
     public void setShutoId(Long value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>public.districts.shuto_id</code>.
+     * Getter for <code>public.districts.shuto_id</code>. 州都ID
      */
     public Long getShutoId() {
         return (Long) get(4);
     }
 
     /**
-     * Setter for <code>public.districts.delete_flg</code>.
+     * Setter for <code>public.districts.delete_flg</code>. 論理削除フラグ
      */
     public void setDeleteFlg(String value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>public.districts.delete_flg</code>.
+     * Getter for <code>public.districts.delete_flg</code>. 論理削除フラグ
      */
     public String getDeleteFlg() {
         return (String) get(5);
