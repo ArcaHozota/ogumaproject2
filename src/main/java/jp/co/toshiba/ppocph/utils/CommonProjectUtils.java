@@ -6,11 +6,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.alibaba.fastjson2.JSON;
 
@@ -251,6 +253,16 @@ public final class CommonProjectUtils {
 	}
 
 	/**
+	 * 共通権限管理ストリーム
+	 *
+	 * @param stream 権限ストリーム
+	 * @return List<String>
+	 */
+	public static List<String> getAuthNames(final Stream<SimpleGrantedAuthority> stream) {
+		return stream.map(SimpleGrantedAuthority::getAuthority).toList();
+	}
+
+	/**
 	 * ファジークエリ用の検索文を取得する
 	 *
 	 * @param keyword 検索文
@@ -343,7 +355,7 @@ public final class CommonProjectUtils {
 	 * @return true: イコール, false: イコールしない
 	 */
 	public static boolean isEqual(@Nullable final Object obj1, @Nullable final Object obj2) {
-		if ((obj1 == null && obj2 == null) || (obj1 != null && obj1.equals(obj2))) {
+		if (obj1 == null && obj2 == null || obj1 != null && obj1.equals(obj2)) {
 			return true;
 		}
 		return false;
