@@ -14,7 +14,7 @@ import jp.co.toshiba.ppocph.dto.CitiesRecordDto;
 import jp.co.toshiba.ppocph.dto.CityDto;
 import jp.co.toshiba.ppocph.jooq.tables.records.CitiesRecord;
 import jp.co.toshiba.ppocph.service.ICityService;
-import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
+import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 import jp.co.toshiba.ppocph.utils.SnowflakeUtils;
@@ -50,7 +50,7 @@ public final class CityServiceImpl implements ICityService {
 	@Override
 	public Pagination<CityDto> getCitiesByKeyword(final Integer pageNum, final String keyword) {
 		final int offset = (pageNum - 1) * OgumaProjectConstants.DEFAULT_PAGE_SIZE;
-		if (OgumaProjectUtils.isEmpty(keyword)) {
+		if (CommonProjectUtils.isEmpty(keyword)) {
 			final Integer totalRecords = this.dslContext.selectCount().from(CITIES).innerJoin(DISTRICTS)
 					.on(DISTRICTS.ID.eq(CITIES.DISTRICT_ID))
 					.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).fetchSingle()
@@ -66,7 +66,7 @@ public final class CityServiceImpl implements ICityService {
 					.toList();
 			return Pagination.of(cityDtos, totalRecords, pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 		}
-		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
+		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
 		final Integer totalRecords = this.dslContext.selectCount().from(CITIES).innerJoin(DISTRICTS)
 				.on(DISTRICTS.ID.eq(CITIES.DISTRICT_ID))
 				.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).and(CITIES.NAME.like(searchStr)

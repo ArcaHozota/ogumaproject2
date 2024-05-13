@@ -1,6 +1,6 @@
 package jp.co.toshiba.ppocph.exception;
 
-import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
+import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
 
 /**
  * プロジェクト業務ロジック例外
@@ -19,7 +19,7 @@ public class OgumaProjectException extends RuntimeException {
 
 	public OgumaProjectException() {
 		super();
-		this.message = OgumaProjectUtils.EMPTY_STRING;
+		this.message = CommonProjectUtils.EMPTY_STRING;
 	}
 
 	public OgumaProjectException(final String message) {

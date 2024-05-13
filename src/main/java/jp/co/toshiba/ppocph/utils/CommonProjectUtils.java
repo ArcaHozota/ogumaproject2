@@ -6,12 +6,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
-import org.springframework.security.core.GrantedAuthority;
 
 import com.alibaba.fastjson2.JSON;
 
@@ -28,7 +27,7 @@ import lombok.NoArgsConstructor;
  * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class OgumaProjectUtils {
+public final class CommonProjectUtils {
 
 	/**
 	 * UTF-8キャラセット
@@ -245,20 +244,10 @@ public final class OgumaProjectUtils {
 		final String acceptInformation = request.getHeader("Accept");
 		final String xRequestInformation = request.getHeader("X-Requested-With");
 		// 判断して返却する
-		return ((acceptInformation != null) && (acceptInformation.length() > 0)
-				&& acceptInformation.contains("application/json"))
-				|| ((xRequestInformation != null) && (xRequestInformation.length() > 0)
-						&& "XMLHttpRequest".equals(xRequestInformation));
-	}
-
-	/**
-	 * 共通権限管理ストリーム
-	 *
-	 * @param stream 権限ストリーム
-	 * @return List<String>
-	 */
-	public static final List<String> getAuthNames(final Stream<GrantedAuthority> stream) {
-		return stream.map(GrantedAuthority::getAuthority).toList();
+		return acceptInformation != null && acceptInformation.length() > 0
+				&& acceptInformation.contains("application/json")
+				|| xRequestInformation != null && xRequestInformation.length() > 0
+						&& "XMLHttpRequest".equals(xRequestInformation);
 	}
 
 	/**
@@ -316,7 +305,7 @@ public final class OgumaProjectUtils {
 	 * @return true: すべて数字, false: 文字も含める
 	 */
 	public static boolean isDigital(@Nullable final String string) {
-		if (OgumaProjectUtils.isEmpty(string)) {
+		if (CommonProjectUtils.isEmpty(string)) {
 			return false;
 		}
 		return Pattern.compile("\\d*").matcher(string).matches();
@@ -329,7 +318,35 @@ public final class OgumaProjectUtils {
 	 * @return true: 空, false: 空ではない
 	 */
 	public static boolean isEmpty(@Nullable final String str) {
-		return (str == null) || str.isEmpty() || str.isBlank();
+		return str == null || str.isEmpty() || str.isBlank();
+	}
+
+	/**
+	 * 二つのロング数はイコールすることを判断する
+	 *
+	 * @param long1 ロング1
+	 * @param long2 ロング2
+	 * @return true: イコール, false: イコールしない
+	 */
+	public static boolean isEqual(@Nullable final Long long1, @Nullable final Long long2) {
+		if (long1 == null && long2 == null || long1.longValue() == long2.longValue()) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 二つのオブジェクトはイコールすることを判断する
+	 *
+	 * @param obj1 オブジェクト1
+	 * @param obj2 オブジェクト2
+	 * @return true: イコール, false: イコールしない
+	 */
+	public static boolean isEqual(@Nullable final Object obj1, @Nullable final Object obj2) {
+		if ((obj1 == null && obj2 == null) || (obj1 != null && obj1.equals(obj2))) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -340,10 +357,10 @@ public final class OgumaProjectUtils {
 	 * @return true: イコール, false: イコールしない
 	 */
 	public static boolean isEqual(@Nullable final String str1, @Nullable final String str2) {
-		if ((str1 == null) && (str2 == null)) {
+		if (str1 == null && str2 == null) {
 			return true;
 		}
-		if ((str1 == null) || (str2 == null) || (str1.length() != str2.length())) {
+		if (str1 == null || str2 == null || str1.length() != str2.length()) {
 			return false;
 		}
 		return str1.trim().equals(str2.trim());
@@ -356,7 +373,29 @@ public final class OgumaProjectUtils {
 	 * @return true: 空ではない, false: 空
 	 */
 	public static boolean isNotEmpty(@Nullable final String str) {
-		return !OgumaProjectUtils.isEmpty(str);
+		return !CommonProjectUtils.isEmpty(str);
+	}
+
+	/**
+	 * 二つのロング数はイコールしないことを判断する
+	 *
+	 * @param long1 ロング1
+	 * @param long2 ロング2
+	 * @return true: イコールしない, false: イコール
+	 */
+	public static boolean isNotEqual(@Nullable final Long long1, @Nullable final Long long2) {
+		return !CommonProjectUtils.isEqual(long1, long2);
+	}
+
+	/**
+	 * 二つのオブジェクトはイコールしないことを判断する
+	 *
+	 * @param obj1 オブジェクト1
+	 * @param obj2 オブジェクト2
+	 * @return true: イコールしない, false: イコール
+	 */
+	public static boolean isNotEqual(@Nullable final Object obj1, @Nullable final Object obj2) {
+		return !CommonProjectUtils.isEqual(obj1, obj2);
 	}
 
 	/**
@@ -367,7 +406,7 @@ public final class OgumaProjectUtils {
 	 * @return true: イコールしない, false: イコール
 	 */
 	public static boolean isNotEqual(@Nullable final String str1, @Nullable final String str2) {
-		return !OgumaProjectUtils.isEqual(str1, str2);
+		return !CommonProjectUtils.isEqual(str1, str2);
 	}
 
 	/**
@@ -376,11 +415,13 @@ public final class OgumaProjectUtils {
 	 * @param response リスポンス
 	 * @param string   ストリング
 	 */
+	@SuppressWarnings("deprecation")
 	public static void renderString(final HttpServletResponse response, final ResponseLoginDto aResult) {
 		try {
 			response.setStatus(aResult.getCode());
-			response.setContentType("application/json;charset=UTF-8");
+			response.setContentType(MediaType.APPLICATION_JSON_UTF8.toString());
 			response.getWriter().print(JSON.toJSONString(aResult));
+			response.getWriter().close();
 		} catch (final IOException e) {
 			// do nothing
 		}
@@ -393,7 +434,7 @@ public final class OgumaProjectUtils {
 	 * @return 半角文字
 	 */
 	public static String toHankaku(@Nullable final String zenkaku) {
-		if (OgumaProjectUtils.isEmpty(zenkaku)) {
+		if (CommonProjectUtils.isEmpty(zenkaku)) {
 			return EMPTY_STRING;
 		}
 		final StringBuilder builder = new StringBuilder();
@@ -416,7 +457,7 @@ public final class OgumaProjectUtils {
 	 * @return 全角文字
 	 */
 	public static String toZenkaku(@Nullable final String hankaku) {
-		if (OgumaProjectUtils.isEmpty(hankaku)) {
+		if (CommonProjectUtils.isEmpty(hankaku)) {
 			return EMPTY_STRING;
 		}
 		final StringBuilder builder = new StringBuilder();

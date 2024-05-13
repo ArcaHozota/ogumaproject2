@@ -17,7 +17,7 @@ import jp.co.toshiba.ppocph.dto.DistrictDto;
 import jp.co.toshiba.ppocph.dto.DistrictsRecordDto;
 import jp.co.toshiba.ppocph.jooq.tables.records.DistrictsRecord;
 import jp.co.toshiba.ppocph.service.IDistrictService;
-import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
+import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 import lombok.AccessLevel;
@@ -48,10 +48,10 @@ public final class DistrictServiceImpl implements IDistrictService {
 				.stream().map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(), null,
 						item.getChiho(), null, item.getDistrictFlag()))
 				.sorted(Comparator.comparingLong(DistrictDto::id)).toList();
-		if (!OgumaProjectUtils.isDigital(cityId)) {
+		if (!CommonProjectUtils.isDigital(cityId)) {
 			final DistrictDto districtDto = new DistrictDto(0L, OgumaProjectConstants.DEFAULT_ROLE_NAME, 0L,
-					OgumaProjectUtils.EMPTY_STRING, OgumaProjectUtils.EMPTY_STRING, null,
-					OgumaProjectUtils.EMPTY_STRING);
+					CommonProjectUtils.EMPTY_STRING, CommonProjectUtils.EMPTY_STRING, null,
+					CommonProjectUtils.EMPTY_STRING);
 			districtDtos.add(districtDto);
 			districtDtos.addAll(districtDtos1);
 			return districtDtos;
@@ -70,7 +70,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 	@Override
 	public Pagination<DistrictDto> getDistrictsByKeyword(final Integer pageNum, final String keyword) {
 		final int offset = (pageNum - 1) * OgumaProjectConstants.DEFAULT_PAGE_SIZE;
-		if (OgumaProjectUtils.isEmpty(keyword)) {
+		if (CommonProjectUtils.isEmpty(keyword)) {
 			final Integer totalRecords = this.dslContext.selectCount().from(DISTRICTS).innerJoin(CITIES)
 					.on(CITIES.DISTRICT_ID.eq(DISTRICTS.ID))
 					.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).fetchSingle()
@@ -89,7 +89,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 			}).toList();
 			return Pagination.of(districtDtos, totalRecords, pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 		}
-		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
+		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
 		final Integer totalRecords = this.dslContext.selectCount().from(DISTRICTS).innerJoin(CITIES)
 				.on(CITIES.DISTRICT_ID.eq(DISTRICTS.ID))
 				.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))

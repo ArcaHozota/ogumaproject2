@@ -19,7 +19,7 @@ import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
 import jp.co.toshiba.ppocph.service.IRoleService;
-import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
+import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
 import lombok.AccessLevel;
@@ -81,7 +81,7 @@ public final class EmployeeController {
 	@ResponseBody
 	public ResultDto<Pagination<EmployeeDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
-			@RequestParam(name = "keyword", defaultValue = OgumaProjectUtils.EMPTY_STRING) final String keyword,
+			@RequestParam(name = "keyword", defaultValue = CommonProjectUtils.EMPTY_STRING) final String keyword,
 			@RequestParam(name = "userId", required = false) final Long userId,
 			@RequestParam(name = "authChkFlag", defaultValue = "false") final String authChkFlag) {
 		final Pagination<EmployeeDto> employees = this.iEmployeeService.getEmployeesByKeyword(pageNum, keyword, userId,

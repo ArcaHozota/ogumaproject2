@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 import org.jooq.DSLContext;
@@ -21,15 +20,13 @@ import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
 import jp.co.toshiba.ppocph.config.OgumaPasswordEncoder;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
 import jp.co.toshiba.ppocph.exception.OgumaProjectException;
-import jp.co.toshiba.ppocph.jooq.tables.EmployeeRole;
 import jp.co.toshiba.ppocph.jooq.tables.records.EmployeeRoleRecord;
 import jp.co.toshiba.ppocph.jooq.tables.records.EmployeesRecord;
 import jp.co.toshiba.ppocph.jooq.tables.records.RolesRecord;
 import jp.co.toshiba.ppocph.service.IEmployeeService;
-import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
+import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
-import jp.co.toshiba.ppocph.utils.SecondBeanUtils;
 import jp.co.toshiba.ppocph.utils.SnowflakeUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -99,7 +96,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			return Pagination.of(employeeDtos, employeeDtos.size(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 		}
 		final int offset = (pageNum - 1) * OgumaProjectConstants.DEFAULT_PAGE_SIZE;
-		if (OgumaProjectUtils.isEmpty(keyword)) {
+		if (CommonProjectUtils.isEmpty(keyword)) {
 			final Integer totalRecords = this.dslContext.selectCount().from(EMPLOYEES)
 					.where(EMPLOYEES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).fetchSingle()
 					.into(Integer.class);
@@ -112,7 +109,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 					.toList();
 			return Pagination.of(employeeDtos, totalRecords, pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 		}
-		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
+		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
 		final Integer totalRecords = this.dslContext.selectCount().from(EMPLOYEES)
 				.where(EMPLOYEES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
 				.and(EMPLOYEES.USERNAME.like(searchStr).or(EMPLOYEES.LOGIN_ACCOUNT.like(searchStr))
@@ -212,7 +209,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employeesRecord.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
 		employeesRecord.setCreatedTime(LocalDateTime.now());
 		employeesRecord.setDeleteFlg(OgumaProjectConstants.LOGIC_DELETE_INITIAL);
-		if ((employeeDto.roleId() != null) && !Objects.equals(Long.valueOf(0L), employeeDto.roleId())) {
+		if (employeeDto.roleId() != null && !CommonProjectUtils.isEqual(Long.valueOf(0L), employeeDto.roleId())) {
 			final EmployeeRoleRecord employeeRoleRecord = this.dslContext.newRecord(EMPLOYEE_ROLE);
 			employeeRoleRecord.setEmployeeId(employeesRecord.getId());
 			employeeRoleRecord.setRoleId(employeeDto.roleId());
@@ -223,27 +220,43 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public ResultDto<String> update(final EmployeeDto employeeDto) {
-		EmployeesRecord employeesRecord = this.dslContext.selectFrom(EMPLOYEES)
+		final EmployeesRecord employeesRecord = this.dslContext.selectFrom(EMPLOYEES)
 				.where(EMPLOYEES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
 				.and(EMPLOYEES.ID.eq(employeeDto.id())).fetchSingle();
-		final Employee employee = this.employeeRepository.findById(employeeDto.id()).orElseThrow(() -> {
-			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
-		});
-		final Employee originalEntity = new Employee();
-		SecondBeanUtils.copyNullableProperties(employee, originalEntity);
-		final EmployeeRole employeeRole = this.employeeExRepository.findById(employeeDto.id())
-				.orElseGet(EmployeeRole::new);
-		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
-		if (OgumaProjectUtils.isNotEmpty(employeeDto.password())) {
-			employee.setPassword(this.encoder.encode(employeeDto.password()));
+		final EmployeeRoleRecord employeeRoleRecord = this.dslContext.selectFrom(EMPLOYEE_ROLE)
+				.where(EMPLOYEE_ROLE.EMPLOYEE_ID.eq(employeeDto.id())).fetchSingle();
+		if (CommonProjectUtils.isEmpty(employeeDto.password())) {
+			final EmployeeDto aEmployeeDto = new EmployeeDto(employeesRecord.getId(), employeesRecord.getLoginAccount(),
+					employeesRecord.getUsername(), null, employeesRecord.getEmail(),
+					this.formatter.format(employeesRecord.getDateOfBirth()), employeeRoleRecord.getRoleId());
+			if (CommonProjectUtils.isEqual(aEmployeeDto, employeeDto)) {
+				return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
+			}
+			employeesRecord.setLoginAccount(employeeDto.loginAccount());
+			employeesRecord.setUsername(employeeDto.username());
+			employeesRecord.setEmail(employeeDto.email());
+			employeesRecord.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
+			employeeRoleRecord.setRoleId(employeeDto.roleId());
+			employeeRoleRecord.insert();
+			employeesRecord.insert();
+			return ResultDto.successWithoutData();
 		}
-		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
-		if (originalEntity.equals(employee) && Objects.equals(employeeRole.getRoleId(), employeeDto.roleId())) {
+		final EmployeeDto nEmployeeDto = new EmployeeDto(employeeDto.id(), employeeDto.loginAccount(),
+				employeeDto.username(), this.encoder.encode(employeeDto.password()), employeeDto.email(),
+				employeeDto.dateOfBirth(), employeeDto.roleId());
+		final EmployeeDto aEmployeeDto = new EmployeeDto(employeesRecord.getId(), employeesRecord.getLoginAccount(),
+				employeesRecord.getUsername(), employeesRecord.getPassword(), employeesRecord.getEmail(),
+				this.formatter.format(employeesRecord.getDateOfBirth()), employeeRoleRecord.getRoleId());
+		if (CommonProjectUtils.isEqual(nEmployeeDto, aEmployeeDto)) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 		}
-		employeeRole.setRoleId(employeeDto.roleId());
-		this.employeeExRepository.saveAndFlush(employeeRole);
-		this.employeeRepository.saveAndFlush(employee);
+		employeesRecord.setLoginAccount(employeeDto.loginAccount());
+		employeesRecord.setUsername(employeeDto.username());
+		employeesRecord.setEmail(employeeDto.email());
+		employeesRecord.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
+		employeeRoleRecord.setRoleId(employeeDto.roleId());
+		employeeRoleRecord.insert();
+		employeesRecord.insert();
 		return ResultDto.successWithoutData();
 	}
 }
