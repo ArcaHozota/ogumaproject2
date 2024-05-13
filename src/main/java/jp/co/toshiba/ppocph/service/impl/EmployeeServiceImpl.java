@@ -10,10 +10,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Random;
 
 import org.jooq.DSLContext;
+import org.jooq.exception.NoDataFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -184,46 +184,48 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public Boolean resetPassword(final EmployeeDto employeeDto) {
-		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), OgumaProjectConstants.LOGIC_DELETE_INITIAL);
-		final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("loginAccount"), employeeDto.loginAccount());
-		final Specification<Employee> where3 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("email"), employeeDto.email());
-		final Specification<Employee> where4 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("dateOfBirth"), LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
-		final Specification<Employee> specification = Specification.allOf(where1, where2, where3, where4);
-		final Optional<Employee> optional = this.employeeRepository.findOne(specification);
-		if (optional.isEmpty()) {
+		try {
+			final EmployeesRecord employeesRecord = this.dslContext.selectFrom(EMPLOYEES)
+					.where(EMPLOYEES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+					.and(EMPLOYEES.LOGIN_ACCOUNT.eq(employeeDto.loginAccount()))
+					.and(EMPLOYEES.EMAIL.eq(employeeDto.email()))
+					.and(EMPLOYEES.DATE_OF_BIRTH.eq(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter)))
+					.fetchSingle();
+			employeesRecord.setPassword(this.encoder.encode(OgumaProjectConstants.DEFAULT_PASSWORD));
+			employeesRecord.insert();
+		} catch (final NoDataFoundException e) {
 			return Boolean.FALSE;
+		} catch (final Exception e) {
+			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 		}
-		final Employee employee = optional.get();
-		employee.setPassword(this.encoder.encode(OgumaProjectConstants.DEFAULT_PASSWORD));
-		this.employeeRepository.saveAndFlush(employee);
 		return Boolean.TRUE;
 	}
 
 	@Override
 	public void save(final EmployeeDto employeeDto) {
-		final String password = this.encoder.encode(employeeDto.password());
-		final Employee employee = new Employee();
-		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
-		employee.setId(SnowflakeUtils.snowflakeId());
-		employee.setPassword(password);
-		employee.setDeleteFlg(OgumaProjectConstants.LOGIC_DELETE_INITIAL);
-		employee.setCreatedTime(LocalDateTime.now());
-		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
-		this.employeeRepository.saveAndFlush(employee);
+		final EmployeesRecord employeesRecord = this.dslContext.newRecord(EMPLOYEES);
+		employeesRecord.setId(SnowflakeUtils.snowflakeId());
+		employeesRecord.setLoginAccount(employeeDto.loginAccount());
+		employeesRecord.setUsername(employeeDto.username());
+		employeesRecord.setPassword(this.encoder.encode(employeeDto.password()));
+		employeesRecord.setEmail(employeeDto.email());
+		employeesRecord.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
+		employeesRecord.setCreatedTime(LocalDateTime.now());
+		employeesRecord.setDeleteFlg(OgumaProjectConstants.LOGIC_DELETE_INITIAL);
 		if ((employeeDto.roleId() != null) && !Objects.equals(Long.valueOf(0L), employeeDto.roleId())) {
-			final EmployeeRole employeeEx = new EmployeeRole();
-			employeeEx.setEmployeeId(employee.getId());
-			employeeEx.setRoleId(employeeDto.roleId());
-			this.employeeExRepository.saveAndFlush(employeeEx);
+			final EmployeeRoleRecord employeeRoleRecord = this.dslContext.newRecord(EMPLOYEE_ROLE);
+			employeeRoleRecord.setEmployeeId(employeesRecord.getId());
+			employeeRoleRecord.setRoleId(employeeDto.roleId());
+			employeeRoleRecord.insert();
 		}
+		employeesRecord.insert();
 	}
 
 	@Override
 	public ResultDto<String> update(final EmployeeDto employeeDto) {
+		EmployeesRecord employeesRecord = this.dslContext.selectFrom(EMPLOYEES)
+				.where(EMPLOYEES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+				.and(EMPLOYEES.ID.eq(employeeDto.id())).fetchSingle();
 		final Employee employee = this.employeeRepository.findById(employeeDto.id()).orElseThrow(() -> {
 			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
