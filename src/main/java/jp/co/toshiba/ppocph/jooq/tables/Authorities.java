@@ -116,7 +116,7 @@ public class Authorities extends TableImpl<AuthoritiesRecord> {
 
     @Override
     public List<UniqueKey<AuthoritiesRecord>> getUniqueKeys() {
-        return Arrays.asList(Keys.AUTHNAMEUNIQUES, Keys.AUTHTITLEUNIQUES);
+        return Arrays.asList(Keys.AUTH_NAME_UNIQUE, Keys.AUTH_TITLE_UNIQUE);
     }
 
     @Override

@@ -111,7 +111,7 @@ public class Roles extends TableImpl<RolesRecord> {
 
     @Override
     public List<UniqueKey<RolesRecord>> getUniqueKeys() {
-        return Arrays.asList(Keys.ROLENAMEUNIQUE);
+        return Arrays.asList(Keys.ROLE_NAME_UNIQUE);
     }
 
     @Override

@@ -138,7 +138,7 @@ public class Employees extends TableImpl<EmployeesRecord> {
 
     @Override
     public List<UniqueKey<EmployeesRecord>> getUniqueKeys() {
-        return Arrays.asList(Keys.LOGINACCTUNIQUE, Keys.EMAILUNIQUE);
+        return Arrays.asList(Keys.LOGIN_ACCOUNT_UNIQUE, Keys.EMAIL_UNIQUE);
     }
 
     @Override

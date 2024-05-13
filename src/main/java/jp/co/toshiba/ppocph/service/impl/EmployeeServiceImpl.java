@@ -177,12 +177,9 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public void remove(final Long userId) {
-		final Employee employee = this.employeeRepository.findById(userId).orElseThrow(() -> {
-			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
-		});
-		employee.setDeleteFlg(OgumaProjectConstants.LOGIC_DELETE_FLG);
-		this.employeeRepository.saveAndFlush(employee);
-		this.employeeExRepository.deleteById(userId);
+		this.dslContext.update(EMPLOYEES).set(EMPLOYEES.DELETE_FLG, OgumaProjectConstants.LOGIC_DELETE_FLG)
+				.where(EMPLOYEES.ID.eq(userId)).execute();
+		this.dslContext.deleteFrom(EMPLOYEE_ROLE).where(EMPLOYEE_ROLE.EMPLOYEE_ID.eq(userId)).execute();
 	}
 
 	@Override
