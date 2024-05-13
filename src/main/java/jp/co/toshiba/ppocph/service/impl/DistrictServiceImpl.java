@@ -8,11 +8,13 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jooq.DSLContext;
+import org.jooq.impl.DSL;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
 import jp.co.toshiba.ppocph.dto.DistrictDto;
+import jp.co.toshiba.ppocph.dto.DistrictsRecordDto;
 import jp.co.toshiba.ppocph.jooq.tables.records.DistrictsRecord;
 import jp.co.toshiba.ppocph.service.IDistrictService;
 import jp.co.toshiba.ppocph.utils.OgumaProjectUtils;
@@ -67,36 +69,44 @@ public final class DistrictServiceImpl implements IDistrictService {
 
 	@Override
 	public Pagination<DistrictDto> getDistrictsByKeyword(final Integer pageNum, final String keyword) {
-//		final PageRequest pageRequest = PageRequest.of(pageNum - 1, OgumaProjectConstants.DEFAULT_PAGE_SIZE,
-//				Sort.by(Direction.ASC, "id"));
-//		final Specification<District> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-//				.equal(root.get("deleteFlg"), OgumaProjectConstants.LOGIC_DELETE_INITIAL);
-//		final Specification<District> specification = Specification.where(where1);
-//		if (OgumaProjectUtils.isEmpty(keyword)) {
-//			final Page<District> pages = this.districtRepository.findAll(specification, pageRequest);
-//			final List<DistrictDto> districtDtos = pages.stream()
-//					.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),
-//							item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId())).toList()
-//									.get(0).getName(),
-//							item.getChiho(),
-//							item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
-//							item.getDistrictFlag()))
-//					.toList();
-//			return Pagination.of(districtDtos, pages.getTotalElements(), pageNum,
-//					OgumaProjectConstants.DEFAULT_PAGE_SIZE);
-//		}
-//		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
-//		final Page<District> pages = this.districtRepository.findByShutoLike(searchStr, pageRequest);
-//		final List<DistrictDto> districtDtos = pages.stream()
-//				.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),
-//						item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId())).toList()
-//								.get(0).getName(),
-//						item.getChiho(),
-//						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
-//						item.getDistrictFlag()))
-//				.toList();
-//		return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
-		return null;
+		final int offset = (pageNum - 1) * OgumaProjectConstants.DEFAULT_PAGE_SIZE;
+		if (OgumaProjectUtils.isEmpty(keyword)) {
+			final Integer totalRecords = this.dslContext.selectCount().from(DISTRICTS).innerJoin(CITIES)
+					.on(CITIES.DISTRICT_ID.eq(DISTRICTS.ID))
+					.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).fetchSingle()
+					.into(Integer.class);
+			final List<DistrictsRecordDto> districtsRecords = this.dslContext
+					.select(DISTRICTS, CITIES.NAME.as("shutoName")).from(DISTRICTS).innerJoin(CITIES)
+					.on(CITIES.DISTRICT_ID.eq(DISTRICTS.ID))
+					.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+					.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(DistrictsRecordDto.class);
+			final List<DistrictDto> districtDtos = districtsRecords.stream().map(item -> {
+				final Long population = this.dslContext.select(DSL.sum(CITIES.POPULATION)).from(CITIES)
+						.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+						.and(CITIES.DISTRICT_ID.eq(item.getId())).fetchSingle().into(Long.class);
+				return new DistrictDto(item.getId(), item.getName(), item.getShutoId(), item.getShutoName(),
+						item.getChiho(), population, item.getDistrictFlag());
+			}).toList();
+			return Pagination.of(districtDtos, totalRecords, pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
+		}
+		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
+		final Integer totalRecords = this.dslContext.selectCount().from(DISTRICTS).innerJoin(CITIES)
+				.on(CITIES.DISTRICT_ID.eq(DISTRICTS.ID))
+				.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+				.and(DISTRICTS.NAME.like(searchStr).or(CITIES.NAME.like(searchStr))).fetchSingle().into(Integer.class);
+		final List<DistrictsRecordDto> districtsRecords = this.dslContext.select(DISTRICTS, CITIES.NAME.as("shutoName"))
+				.from(DISTRICTS).innerJoin(CITIES).on(CITIES.DISTRICT_ID.eq(DISTRICTS.ID))
+				.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+				.and(DISTRICTS.NAME.like(searchStr).or(CITIES.NAME.like(searchStr)))
+				.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(DistrictsRecordDto.class);
+		final List<DistrictDto> districtDtos = districtsRecords.stream().map(item -> {
+			final Long population = this.dslContext.select(DSL.sum(CITIES.POPULATION)).from(CITIES)
+					.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+					.and(CITIES.DISTRICT_ID.eq(item.getId())).fetchSingle().into(Long.class);
+			return new DistrictDto(item.getId(), item.getName(), item.getShutoId(), item.getShutoName(),
+					item.getChiho(), population, item.getDistrictFlag());
+		}).toList();
+		return Pagination.of(districtDtos, totalRecords, pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 	}
 
 	@Override
