@@ -72,12 +72,12 @@ public final class DistrictServiceImpl implements IDistrictService {
 		final int offset = (pageNum - 1) * OgumaProjectConstants.DEFAULT_PAGE_SIZE;
 		if (CommonProjectUtils.isEmpty(keyword)) {
 			final Integer totalRecords = this.dslContext.selectCount().from(DISTRICTS).innerJoin(CITIES)
-					.on(CITIES.DISTRICT_ID.eq(DISTRICTS.ID))
+					.on(CITIES.ID.eq(DISTRICTS.SHUTO_ID))
 					.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).fetchSingle()
 					.into(Integer.class);
 			final List<DistrictsRecordDto> districtsRecords = this.dslContext
 					.select(DISTRICTS, CITIES.NAME.as("shutoName")).from(DISTRICTS).innerJoin(CITIES)
-					.on(CITIES.DISTRICT_ID.eq(DISTRICTS.ID))
+					.on(CITIES.ID.eq(DISTRICTS.SHUTO_ID))
 					.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
 					.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(DistrictsRecordDto.class);
 			final List<DistrictDto> districtDtos = districtsRecords.stream().map(item -> {
@@ -91,11 +91,11 @@ public final class DistrictServiceImpl implements IDistrictService {
 		}
 		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
 		final Integer totalRecords = this.dslContext.selectCount().from(DISTRICTS).innerJoin(CITIES)
-				.on(CITIES.DISTRICT_ID.eq(DISTRICTS.ID))
+				.on(CITIES.ID.eq(DISTRICTS.SHUTO_ID))
 				.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
 				.and(DISTRICTS.NAME.like(searchStr).or(CITIES.NAME.like(searchStr))).fetchSingle().into(Integer.class);
 		final List<DistrictsRecordDto> districtsRecords = this.dslContext.select(DISTRICTS, CITIES.NAME.as("shutoName"))
-				.from(DISTRICTS).innerJoin(CITIES).on(CITIES.DISTRICT_ID.eq(DISTRICTS.ID))
+				.from(DISTRICTS).innerJoin(CITIES).on(CITIES.ID.eq(DISTRICTS.SHUTO_ID))
 				.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
 				.and(DISTRICTS.NAME.like(searchStr).or(CITIES.NAME.like(searchStr)))
 				.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(DistrictsRecordDto.class);
