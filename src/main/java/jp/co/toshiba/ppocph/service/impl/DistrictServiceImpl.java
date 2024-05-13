@@ -116,7 +116,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 				.and(DISTRICTS.ID.eq(districtDto.id())).fetchSingle();
 		final DistrictDto aDistrictDto = new DistrictDto(districtsRecord.getId(), districtsRecord.getName(), null, null,
 				districtsRecord.getChiho(), null, null);
-		if (aDistrictDto.equals(districtDto)) {
+		if (CommonProjectUtils.isEqual(aDistrictDto, districtDto)) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 		}
 		districtsRecord.setName(districtDto.name());

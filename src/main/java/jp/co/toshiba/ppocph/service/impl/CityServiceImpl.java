@@ -112,7 +112,7 @@ public final class CityServiceImpl implements ICityService {
 				.fetchSingle();
 		final CityDto aCityDto = new CityDto(citiesRecord.getId(), citiesRecord.getName(), citiesRecord.getDistrictId(),
 				citiesRecord.getPronunciation(), null, citiesRecord.getPopulation(), null);
-		if (aCityDto.equals(cityDto)) {
+		if (CommonProjectUtils.isEqual(aCityDto, cityDto)) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 		}
 		citiesRecord.setName(cityDto.name());
