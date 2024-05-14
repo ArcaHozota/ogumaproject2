@@ -76,8 +76,9 @@ public final class DistrictServiceImpl implements IDistrictService {
 					.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).fetchSingle()
 					.into(Integer.class);
 			final List<DistrictsRecordDto> districtsRecords = this.dslContext
-					.select(DISTRICTS, CITIES.NAME.as("shutoName")).from(DISTRICTS).innerJoin(CITIES)
-					.on(CITIES.ID.eq(DISTRICTS.SHUTO_ID))
+					.select(DISTRICTS.ID, DISTRICTS.NAME, DISTRICTS.CHIHO, DISTRICTS.SHUTO_ID,
+							CITIES.NAME.as("shutoName"), DISTRICTS.DISTRICT_FLAG, DISTRICTS.DELETE_FLG)
+					.from(DISTRICTS).innerJoin(CITIES).on(CITIES.ID.eq(DISTRICTS.SHUTO_ID))
 					.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
 					.orderBy(DISTRICTS.ID.asc()).limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset)
 					.fetchInto(DistrictsRecordDto.class);
@@ -95,7 +96,9 @@ public final class DistrictServiceImpl implements IDistrictService {
 				.on(CITIES.ID.eq(DISTRICTS.SHUTO_ID))
 				.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
 				.and(DISTRICTS.NAME.like(searchStr).or(CITIES.NAME.like(searchStr))).fetchSingle().into(Integer.class);
-		final List<DistrictsRecordDto> districtsRecords = this.dslContext.select(DISTRICTS, CITIES.NAME.as("shutoName"))
+		final List<DistrictsRecordDto> districtsRecords = this.dslContext
+				.select(DISTRICTS.ID, DISTRICTS.NAME, DISTRICTS.CHIHO, DISTRICTS.SHUTO_ID, CITIES.NAME.as("shutoName"),
+						DISTRICTS.DISTRICT_FLAG, DISTRICTS.DELETE_FLG)
 				.from(DISTRICTS).innerJoin(CITIES).on(CITIES.ID.eq(DISTRICTS.SHUTO_ID))
 				.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
 				.and(DISTRICTS.NAME.like(searchStr).or(CITIES.NAME.like(searchStr))).orderBy(DISTRICTS.ID.asc())
@@ -123,7 +126,9 @@ public final class DistrictServiceImpl implements IDistrictService {
 		districtsRecord.setName(districtDto.name());
 		districtsRecord.setChiho(districtDto.chiho());
 		try {
-			this.dslContext.update(DISTRICTS).set(districtsRecord).execute();
+			this.dslContext.update(DISTRICTS).set(districtsRecord)
+					.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+					.and(DISTRICTS.ID.eq(districtsRecord.getId())).execute();
 		} catch (final DataIntegrityViolationException e) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_DISTRICT_NAME_DUPLICATED);
 		}

@@ -2,21 +2,48 @@ package jp.co.toshiba.ppocph.dto;
 
 import java.io.Serializable;
 
-import jp.co.toshiba.ppocph.jooq.tables.records.DistrictsRecord;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * 地域情報データ転送クラス
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-public final class DistrictsRecordDto extends DistrictsRecord implements Serializable {
+public final class DistrictsRecordDto implements Serializable {
 
 	private static final long serialVersionUID = 4901833523366402492L;
+
+	/**
+	 * ID
+	 */
+	private Long id;
+
+	/**
+	 * 名称
+	 */
+	private String name;
+
+	/**
+	 * 地方名称
+	 */
+	private String chiho;
+
+	/**
+	 * 都道府県旗
+	 */
+	private String districtFlag;
+
+	/**
+	 * 州都ID
+	 */
+	private Long shutoId;
 
 	/**
 	 * 州都名称
 	 */
 	private String shutoName;
+
+	/**
+	 * 論理削除フラグ
+	 */
+	private String deleteFlg;
 }

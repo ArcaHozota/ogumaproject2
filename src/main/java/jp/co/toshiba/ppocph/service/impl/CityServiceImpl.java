@@ -57,8 +57,9 @@ public final class CityServiceImpl implements ICityService {
 					.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).fetchSingle()
 					.into(Integer.class);
 			final List<CitiesRecordDto> citiesRecords = this.dslContext
-					.select(CITIES, DISTRICTS.NAME.as("districtName")).from(CITIES).innerJoin(DISTRICTS)
-					.onKey(Keys.CITIES__FK_CITIES_DISTRICTS)
+					.select(CITIES.ID, CITIES.NAME, CITIES.CITY_FLAG, CITIES.DISTRICT_ID, CITIES.POPULATION,
+							CITIES.PRONUNCIATION, CITIES.DELETE_FLG, DISTRICTS.NAME.as("districtName"))
+					.from(CITIES).innerJoin(DISTRICTS).onKey(Keys.CITIES__FK_CITIES_DISTRICTS)
 					.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).orderBy(CITIES.ID.asc())
 					.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(CitiesRecordDto.class);
 			final List<CityDto> cityDtos = citiesRecords.stream()
@@ -73,7 +74,9 @@ public final class CityServiceImpl implements ICityService {
 				.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).and(CITIES.NAME.like(searchStr)
 						.or(CITIES.PRONUNCIATION.like(searchStr)).or(DISTRICTS.NAME.like(searchStr)))
 				.fetchSingle().into(Integer.class);
-		final List<CitiesRecordDto> citiesRecords = this.dslContext.select(CITIES, DISTRICTS.NAME.as("districtName"))
+		final List<CitiesRecordDto> citiesRecords = this.dslContext
+				.select(CITIES.ID, CITIES.NAME, CITIES.CITY_FLAG, CITIES.DISTRICT_ID, CITIES.POPULATION,
+						CITIES.PRONUNCIATION, CITIES.DELETE_FLG, DISTRICTS.NAME.as("districtName"))
 				.from(CITIES).innerJoin(DISTRICTS).onKey(Keys.CITIES__FK_CITIES_DISTRICTS)
 				.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
 				.and(CITIES.NAME.like(searchStr).or(CITIES.PRONUNCIATION.like(searchStr))
@@ -122,7 +125,9 @@ public final class CityServiceImpl implements ICityService {
 		citiesRecord.setPopulation(cityDto.population());
 		citiesRecord.setPronunciation(cityDto.pronunciation());
 		try {
-			this.dslContext.update(CITIES).set(citiesRecord).execute();
+			this.dslContext.update(CITIES).set(citiesRecord)
+					.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+					.and(CITIES.ID.eq(citiesRecord.getId())).execute();
 		} catch (final DataIntegrityViolationException e) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_CITY_NAME_DUPLICATED);
 		}
