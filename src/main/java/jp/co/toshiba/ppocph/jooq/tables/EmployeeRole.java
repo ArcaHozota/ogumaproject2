@@ -106,7 +106,7 @@ public class EmployeeRole extends TableImpl<EmployeeRoleRecord> {
 
     @Override
     public List<ForeignKey<EmployeeRoleRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.EMPLOYEE_ROLE__FK1, Keys.EMPLOYEE_ROLE__FK2);
+        return Arrays.asList(Keys.EMPLOYEE_ROLE__FK_ER_EMPLOYEES, Keys.EMPLOYEE_ROLE__FK_ER_ROLES);
     }
 
     private transient Employees _employees;
@@ -117,7 +117,7 @@ public class EmployeeRole extends TableImpl<EmployeeRoleRecord> {
      */
     public Employees employees() {
         if (_employees == null)
-            _employees = new Employees(this, Keys.EMPLOYEE_ROLE__FK1);
+            _employees = new Employees(this, Keys.EMPLOYEE_ROLE__FK_ER_EMPLOYEES);
 
         return _employees;
     }
@@ -127,7 +127,7 @@ public class EmployeeRole extends TableImpl<EmployeeRoleRecord> {
      */
     public Roles roles() {
         if (_roles == null)
-            _roles = new Roles(this, Keys.EMPLOYEE_ROLE__FK2);
+            _roles = new Roles(this, Keys.EMPLOYEE_ROLE__FK_ER_ROLES);
 
         return _roles;
     }

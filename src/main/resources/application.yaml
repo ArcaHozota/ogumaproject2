@@ -24,4 +24,7 @@ spring:
     suffix: .html
   jooq:
     sql-dialect: POSTGRES
-    
+# jOOQで生成したSQL文はコンソルで表示する
+logging:
+  level:
+    org.jooq.tools.LoggerListener: DEBUG

@@ -64,7 +64,7 @@ public final class OgumaProjectUserDetailsService implements UserDetailsService 
 			throw new InsufficientAuthenticationException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 		}
 		final List<AuthoritiesRecord> authoritiesRecords = this.dslContext.select(AUTHORITIES.ID, AUTHORITIES.NAME)
-				.from(ROLE_AUTH).innerJoin(AUTHORITIES).onKey(Keys.ROLE_AUTH__FK4)
+				.from(ROLE_AUTH).innerJoin(AUTHORITIES).onKey(Keys.ROLE_AUTH__FK_RA_AUTHORITIES)
 				.where(ROLE_AUTH.ROLE_ID.eq(employeeRoleRecord.getRoleId())).fetchInto(AuthoritiesRecord.class);
 		if (authoritiesRecords.isEmpty()) {
 			throw new AuthenticationCredentialsNotFoundException(

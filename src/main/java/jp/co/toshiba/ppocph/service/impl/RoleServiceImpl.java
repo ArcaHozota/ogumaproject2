@@ -167,9 +167,9 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public ResultDto<String> remove(final Long id) {
-		final List<RolesRecord> rolesRecords = this.dslContext.selectFrom(EMPLOYEE_ROLE)
-				.where(EMPLOYEE_ROLE.ROLE_ID.eq(id)).fetchInto(RolesRecord.class);
-		if (!rolesRecords.isEmpty()) {
+		final Integer roleInUsageCount = this.dslContext.selectCount().from(EMPLOYEE_ROLE)
+				.where(EMPLOYEE_ROLE.ROLE_ID.eq(id)).fetchSingle().into(Integer.class);
+		if (roleInUsageCount > 0) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_FORBIDDEN);
 		}
 		this.dslContext.update(ROLES).set(ROLES.DELETE_FLG, OgumaProjectConstants.LOGIC_DELETE_FLG)
