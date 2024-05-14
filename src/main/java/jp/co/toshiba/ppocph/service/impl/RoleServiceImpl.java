@@ -133,7 +133,7 @@ public final class RoleServiceImpl implements IRoleService {
 					.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).fetchSingle()
 					.into(Integer.class);
 			final List<RolesRecord> rolesRecords = this.dslContext.selectFrom(ROLES)
-					.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+					.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).orderBy(ROLES.ID.asc())
 					.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(RolesRecord.class);
 			final List<RoleDto> roleDtos = rolesRecords.stream().map(item -> new RoleDto(item.getId(), item.getName()))
 					.toList();
@@ -145,7 +145,8 @@ public final class RoleServiceImpl implements IRoleService {
 					.fetchSingle().into(Integer.class);
 			final List<RolesRecord> rolesRecords = this.dslContext.selectFrom(ROLES)
 					.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).and(ROLES.ID.like(keyword))
-					.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(RolesRecord.class);
+					.orderBy(ROLES.ID.asc()).limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset)
+					.fetchInto(RolesRecord.class);
 			final List<RoleDto> roleDtos = rolesRecords.stream().map(item -> new RoleDto(item.getId(), item.getName()))
 					.toList();
 			return Pagination.of(roleDtos, totalRecords, pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
@@ -156,7 +157,8 @@ public final class RoleServiceImpl implements IRoleService {
 				.fetchSingle().into(Integer.class);
 		final List<RolesRecord> rolesRecords = this.dslContext.selectFrom(ROLES)
 				.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).and(ROLES.NAME.like(searchStr))
-				.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(RolesRecord.class);
+				.orderBy(ROLES.ID.asc()).limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset)
+				.fetchInto(RolesRecord.class);
 		final List<RoleDto> roleDtos = rolesRecords.stream().map(item -> new RoleDto(item.getId(), item.getName()))
 				.toList();
 		return Pagination.of(roleDtos, totalRecords, pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
@@ -195,7 +197,9 @@ public final class RoleServiceImpl implements IRoleService {
 		}
 		rolesRecord.setName(roleDto.name());
 		try {
-			this.dslContext.update(ROLES).set(rolesRecord).execute();
+			this.dslContext.update(ROLES).set(rolesRecord)
+					.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+					.and(ROLES.ID.eq(rolesRecord.getId())).execute();
 		} catch (final DataIntegrityViolationException e) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_ROLE_NAME_DUPLICATED);
 		}

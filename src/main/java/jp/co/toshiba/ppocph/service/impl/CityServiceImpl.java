@@ -58,7 +58,7 @@ public final class CityServiceImpl implements ICityService {
 			final List<CitiesRecordDto> citiesRecords = this.dslContext
 					.select(CITIES, DISTRICTS.NAME.as("districtName")).from(CITIES).innerJoin(DISTRICTS)
 					.on(DISTRICTS.ID.eq(CITIES.DISTRICT_ID))
-					.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+					.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).orderBy(CITIES.ID.asc())
 					.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(CitiesRecordDto.class);
 			final List<CityDto> cityDtos = citiesRecords.stream()
 					.map(item -> new CityDto(item.getId(), item.getName(), item.getDistrictId(),
@@ -77,7 +77,8 @@ public final class CityServiceImpl implements ICityService {
 				.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
 				.and(CITIES.NAME.like(searchStr).or(CITIES.PRONUNCIATION.like(searchStr))
 						.or(DISTRICTS.NAME.like(searchStr)))
-				.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(CitiesRecordDto.class);
+				.orderBy(CITIES.ID.asc()).limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset)
+				.fetchInto(CitiesRecordDto.class);
 		final List<CityDto> cityDtos = citiesRecords
 				.stream().map(item -> new CityDto(item.getId(), item.getName(), item.getDistrictId(),
 						item.getPronunciation(), item.getDistrictName(), item.getPopulation(), item.getCityFlag()))

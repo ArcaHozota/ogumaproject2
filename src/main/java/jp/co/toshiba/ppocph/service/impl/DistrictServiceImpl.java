@@ -79,7 +79,8 @@ public final class DistrictServiceImpl implements IDistrictService {
 					.select(DISTRICTS, CITIES.NAME.as("shutoName")).from(DISTRICTS).innerJoin(CITIES)
 					.on(CITIES.ID.eq(DISTRICTS.SHUTO_ID))
 					.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
-					.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(DistrictsRecordDto.class);
+					.orderBy(DISTRICTS.ID.asc()).limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset)
+					.fetchInto(DistrictsRecordDto.class);
 			final List<DistrictDto> districtDtos = districtsRecords.stream().map(item -> {
 				final Long population = this.dslContext.select(DSL.sum(CITIES.POPULATION)).from(CITIES)
 						.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
@@ -97,7 +98,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 		final List<DistrictsRecordDto> districtsRecords = this.dslContext.select(DISTRICTS, CITIES.NAME.as("shutoName"))
 				.from(DISTRICTS).innerJoin(CITIES).on(CITIES.ID.eq(DISTRICTS.SHUTO_ID))
 				.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
-				.and(DISTRICTS.NAME.like(searchStr).or(CITIES.NAME.like(searchStr)))
+				.and(DISTRICTS.NAME.like(searchStr).or(CITIES.NAME.like(searchStr))).orderBy(DISTRICTS.ID.asc())
 				.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(DistrictsRecordDto.class);
 		final List<DistrictDto> districtDtos = districtsRecords.stream().map(item -> {
 			final Long population = this.dslContext.select(DSL.sum(CITIES.POPULATION)).from(CITIES)
