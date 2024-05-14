@@ -57,7 +57,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 			return districtDtos;
 		}
 		final DistrictsRecord districtsRecord = this.dslContext.select(DISTRICTS).from(DISTRICTS).innerJoin(CITIES)
-				.on(CITIES.DISTRICT_ID.eq(DISTRICTS.ID))
+				.on(CITIES.ID.eq(DISTRICTS.SHUTO_ID))
 				.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
 				.and(CITIES.ID.eq(Long.parseLong(cityId))).fetchSingle().into(DistrictsRecord.class);
 		districtDtos
