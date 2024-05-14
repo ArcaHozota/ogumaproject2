@@ -1,25 +1,32 @@
 package jp.co.toshiba.ppocph.service.impl;
 
 import static jp.co.toshiba.ppocph.jooq.Tables.AUTHORITIES;
+import static jp.co.toshiba.ppocph.jooq.Tables.EMPLOYEE_ROLE;
 import static jp.co.toshiba.ppocph.jooq.Tables.ROLES;
 import static jp.co.toshiba.ppocph.jooq.Tables.ROLE_AUTH;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
 import org.jooq.DSLContext;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
 import jp.co.toshiba.ppocph.dto.AuthorityDto;
 import jp.co.toshiba.ppocph.dto.RoleDto;
 import jp.co.toshiba.ppocph.jooq.tables.records.AuthoritiesRecord;
+import jp.co.toshiba.ppocph.jooq.tables.records.EmployeeRoleRecord;
 import jp.co.toshiba.ppocph.jooq.tables.records.RoleAuthRecord;
+import jp.co.toshiba.ppocph.jooq.tables.records.RolesRecord;
 import jp.co.toshiba.ppocph.service.IRoleService;
 import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
 import jp.co.toshiba.ppocph.utils.Pagination;
 import jp.co.toshiba.ppocph.utils.ResultDto;
+import jp.co.toshiba.ppocph.utils.SnowflakeUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -91,112 +98,107 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public RoleDto getRoleById(final Long id) {
-		return null;
-//		final Role role = this.roleRepository.findById(id).orElseThrow(() -> {
-//			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_NOT_EXISTS);
-//		});
-//		return new RoleDto(role.getId(), role.getName());
+		final RolesRecord rolesRecord = this.dslContext.selectFrom(ROLES)
+				.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).and(ROLES.ID.eq(id))
+				.fetchSingle();
+		return new RoleDto(rolesRecord.getId(), rolesRecord.getName());
 	}
 
 	@Override
 	public List<RoleDto> getRolesByEmployeeId(final Long employeeId) {
-		return null;
-//		final List<RoleDto> secondRoles = new ArrayList<>();
-//		final RoleDto secondRole = new RoleDto(0L, OgumaProjectConstants.DEFAULT_ROLE_NAME);
-//		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
-//				OgumaProjectConstants.LOGIC_DELETE_INITIAL);
-//		final Specification<Role> specification1 = Specification.where(where1);
-//		final List<RoleDto> roleDtos = this.roleRepository.findAll(specification1).stream()
-//				.map(item -> new RoleDto(item.getId(), item.getName())).toList();
-//		secondRoles.add(secondRole);
-//		secondRoles.addAll(roleDtos);
-//		if (employeeId == null) {
-//			return secondRoles;
-//		}
-//		final Optional<EmployeeRole> roledOptional = this.employeeExRepository.findById(employeeId);
-//		if (roledOptional.isEmpty()) {
-//			return secondRoles;
-//		}
-//		secondRoles.clear();
-//		final Long roleId = roledOptional.get().getRoleId();
-//		final List<RoleDto> selectedRole = roleDtos.stream().filter(a -> Objects.equals(a.id(), roleId)).toList();
-//		secondRoles.addAll(selectedRole);
-//		secondRoles.addAll(roleDtos);
-//		return secondRoles.stream().distinct().toList();
+		final List<RolesRecord> rolesRecords = this.dslContext.selectFrom(ROLES)
+				.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).fetchInto(RolesRecord.class);
+		final List<RoleDto> roleDtos = rolesRecords.stream().map(item -> new RoleDto(item.getId(), item.getName()))
+				.distinct().sorted(Comparator.comparing(RoleDto::id)).toList();
+		if (employeeId == null) {
+			final List<RoleDto> defaultRoleDtos = new ArrayList<>();
+			final RoleDto roleDto = new RoleDto(0L, OgumaProjectConstants.DEFAULT_ROLE_NAME);
+			defaultRoleDtos.add(roleDto);
+			defaultRoleDtos.addAll(roleDtos);
+			return defaultRoleDtos;
+		}
+		final EmployeeRoleRecord employeeRoleRecord = this.dslContext.selectFrom(EMPLOYEE_ROLE)
+				.where(EMPLOYEE_ROLE.EMPLOYEE_ID.eq(employeeId)).fetchSingle();
+		final List<RoleDto> list = roleDtos.stream()
+				.filter(a -> CommonProjectUtils.isEqual(a.id(), employeeRoleRecord.getRoleId())).toList();
+		list.addAll(roleDtos);
+		return list.stream().distinct().toList();
 	}
 
 	@Override
 	public Pagination<RoleDto> getRolesByKeyword(final Integer pageNum, final String keyword) {
-		return null;
-//		final PageRequest pageRequest = PageRequest.of(pageNum - 1, OgumaProjectConstants.DEFAULT_PAGE_SIZE,
-//				Sort.by(Direction.ASC, "id"));
-//		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
-//				OgumaProjectConstants.LOGIC_DELETE_INITIAL);
-//		final Specification<Role> specification = Specification.where(where1);
-//		if (OgumaProjectUtils.isEmpty(keyword)) {
-//			final Page<Role> pages = this.roleRepository.findAll(specification, pageRequest);
-//			final List<RoleDto> roleDtos = pages.stream().map(item -> new RoleDto(item.getId(), item.getName()))
-//					.toList();
-//			return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
-//		}
-//		if (OgumaProjectUtils.isDigital(keyword)) {
-//			final Page<Role> byIdLike = this.roleRepository.findByIdLike(keyword,
-//					OgumaProjectConstants.LOGIC_DELETE_INITIAL, pageRequest);
-//			final List<RoleDto> roleDtos = byIdLike.stream().map(item -> new RoleDto(item.getId(), item.getName()))
-//					.toList();
-//			return Pagination.of(roleDtos, byIdLike.getTotalElements(), pageNum,
-//					OgumaProjectConstants.DEFAULT_PAGE_SIZE);
-//		}
-//		final String searchStr = OgumaProjectUtils.getDetailKeyword(keyword);
-//		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(ROLE_NAME),
-//				searchStr);
-//		final Page<Role> pages = this.roleRepository.findAll(specification.and(where2), pageRequest);
-//		final List<RoleDto> roleDtos = pages.stream().map(item -> new RoleDto(item.getId(), item.getName())).toList();
-//		return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
+		final int offset = (pageNum - 1) * OgumaProjectConstants.DEFAULT_PAGE_SIZE;
+		if (CommonProjectUtils.isEmpty(keyword)) {
+			final Integer totalRecords = this.dslContext.selectCount().from(ROLES)
+					.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).fetchSingle()
+					.into(Integer.class);
+			final List<RolesRecord> rolesRecords = this.dslContext.selectFrom(ROLES)
+					.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+					.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(RolesRecord.class);
+			final List<RoleDto> roleDtos = rolesRecords.stream().map(item -> new RoleDto(item.getId(), item.getName()))
+					.toList();
+			return Pagination.of(roleDtos, totalRecords, pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
+		}
+		if (CommonProjectUtils.isDigital(keyword)) {
+			final Integer totalRecords = this.dslContext.selectCount().from(ROLES)
+					.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).and(ROLES.ID.like(keyword))
+					.fetchSingle().into(Integer.class);
+			final List<RolesRecord> rolesRecords = this.dslContext.selectFrom(ROLES)
+					.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).and(ROLES.ID.like(keyword))
+					.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(RolesRecord.class);
+			final List<RoleDto> roleDtos = rolesRecords.stream().map(item -> new RoleDto(item.getId(), item.getName()))
+					.toList();
+			return Pagination.of(roleDtos, totalRecords, pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
+		}
+		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
+		final Integer totalRecords = this.dslContext.selectCount().from(ROLES)
+				.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).and(ROLES.NAME.like(searchStr))
+				.fetchSingle().into(Integer.class);
+		final List<RolesRecord> rolesRecords = this.dslContext.selectFrom(ROLES)
+				.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).and(ROLES.NAME.like(searchStr))
+				.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(RolesRecord.class);
+		final List<RoleDto> roleDtos = rolesRecords.stream().map(item -> new RoleDto(item.getId(), item.getName()))
+				.toList();
+		return Pagination.of(roleDtos, totalRecords, pageNum, OgumaProjectConstants.DEFAULT_PAGE_SIZE);
 	}
 
 	@Override
 	public ResultDto<String> remove(final Long id) {
-//		final Specification<EmployeeRole> where = (root, query, criteriaBuilder) -> criteriaBuilder
-//				.equal(root.get(ROLE_ID), id);
-//		final Specification<EmployeeRole> specification = Specification.where(where);
-//		final List<EmployeeRole> list = this.employeeExRepository.findAll(specification);
-//		if (!list.isEmpty()) {
-//			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_FORBIDDEN);
-//		}
-//		final Role role = this.roleRepository.findById(id).orElseThrow(() -> {
-//			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
-//		});
-//		role.setDeleteFlg(OgumaProjectConstants.LOGIC_DELETE_FLG);
-//		this.roleRepository.saveAndFlush(role);
+		final EmployeeRoleRecord roleRecord = this.dslContext.selectFrom(EMPLOYEE_ROLE)
+				.where(EMPLOYEE_ROLE.ROLE_ID.eq(id)).fetchOne();
+		if (roleRecord != null) {
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_FORBIDDEN);
+		}
+		this.dslContext.update(ROLES).set(ROLES.DELETE_FLG, OgumaProjectConstants.LOGIC_DELETE_FLG)
+				.where(ROLES.ID.eq(id)).execute();
+		this.dslContext.deleteFrom(ROLE_AUTH).where(ROLE_AUTH.ROLE_ID.eq(id)).execute();
 		return ResultDto.successWithoutData();
 	}
 
 	@Override
 	public void save(final RoleDto roleDto) {
-//		final Role role = new Role();
-//		SecondBeanUtils.copyNullableProperties(roleDto, role);
-//		role.setId(SnowflakeUtils.snowflakeId());
-//		role.setDeleteFlg(OgumaProjectConstants.LOGIC_DELETE_INITIAL);
-//		this.roleRepository.saveAndFlush(role);
+		final RolesRecord rolesRecord = this.dslContext.newRecord(ROLES);
+		rolesRecord.setId(SnowflakeUtils.snowflakeId());
+		rolesRecord.setName(roleDto.name());
+		rolesRecord.setDeleteFlg(OgumaProjectConstants.LOGIC_DELETE_INITIAL);
+		rolesRecord.insert();
 	}
 
 	@Override
 	public ResultDto<String> update(final RoleDto roleDto) {
-//		final Role role = this.roleRepository.findById(roleDto.id()).orElseThrow(() -> {
-//			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
-//		});
-//		final Role originalEntity = new Role();
-//		SecondBeanUtils.copyNullableProperties(role, originalEntity);
-//		SecondBeanUtils.copyNullableProperties(roleDto, role);
-//		if (originalEntity.equals(role)) {
-//			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
-//		}
-//		try {
-//			this.roleRepository.saveAndFlush(role);
-//		} catch (final DataIntegrityViolationException e) {
-//			return ResultDto.failed(OgumaProjectConstants.MESSAGE_ROLE_NAME_DUPLICATED);
-//		}
+		final RolesRecord rolesRecord = this.dslContext.selectFrom(ROLES)
+				.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).and(ROLES.ID.eq(roleDto.id()))
+				.fetchSingle();
+		final RoleDto aRoleDto = new RoleDto(rolesRecord.getId(), rolesRecord.getName());
+		if (CommonProjectUtils.isEqual(aRoleDto, roleDto)) {
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
+		}
+		rolesRecord.setName(roleDto.name());
+		try {
+			this.dslContext.update(ROLES).set(rolesRecord).where(ROLES.ID.eq(rolesRecord.getId())).execute();
+		} catch (final DataIntegrityViolationException e) {
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_ROLE_NAME_DUPLICATED);
+		}
 		return ResultDto.successWithoutData();
 	}
 }
