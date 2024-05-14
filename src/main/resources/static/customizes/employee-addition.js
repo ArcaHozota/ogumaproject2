@@ -72,7 +72,7 @@ $("#emailEdit").change(function() {
 });
 $("#roleEdit").change(function() {
 	let ajaxResult = $.ajax({
-		url: '/oguma/employee/infoDelete/0L',
+		url: '/oguma/employee/checkDelete',
 		type: 'GET',
 		async: false
 	});

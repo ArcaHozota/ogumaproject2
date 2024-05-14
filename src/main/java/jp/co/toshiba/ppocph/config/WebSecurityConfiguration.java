@@ -73,10 +73,22 @@ public class WebSecurityConfiguration {
 				.requestMatchers(OgumaProjectURLConstants.URL_ROLE_INSERT, OgumaProjectURLConstants.URL_ROLE_UPDATE,
 						OgumaProjectURLConstants.URL_ROLE_AUTHLIST, OgumaProjectURLConstants.URL_ROLE_CHECK_EDITION)
 				.hasAuthority("role%edition")
-				.requestMatchers(OgumaProjectURLConstants.URL_ROLE_ASSIGNMENT, OgumaProjectURLConstants.URL_ROLE_DELETE)
-				.hasAuthority("role%delete").requestMatchers(OgumaProjectURLConstants.URL_DISTRICT_PAGINATION)
-				.hasAuthority("district%retrieve").requestMatchers(OgumaProjectURLConstants.URL_DISTRICT_UPDATE)
-				.hasAuthority("district%edition").anyRequest().authenticated())
+				.requestMatchers(OgumaProjectURLConstants.URL_ROLE_ASSIGNMENT, OgumaProjectURLConstants.URL_ROLE_DELETE,
+						OgumaProjectURLConstants.URL_ROLE_CHECK_DELETE)
+				.hasAuthority("role%delete")
+				.requestMatchers(OgumaProjectURLConstants.URL_DISTRICT_PAGINATION,
+						OgumaProjectURLConstants.URL_TO_DISTRICT_PAGES)
+				.hasAuthority("district%retrieve")
+				.requestMatchers(OgumaProjectURLConstants.URL_DISTRICT_UPDATE,
+						OgumaProjectURLConstants.URL_DISTRICT_CHECK_EDITION)
+				.hasAuthority("district%edition")
+				.requestMatchers(OgumaProjectURLConstants.URL_CITY_PAGINATION,
+						OgumaProjectURLConstants.URL_TO_CITY_PAGES)
+				.hasAuthority("city%retrieve")
+				.requestMatchers(OgumaProjectURLConstants.URL_CITY_CHECK_EDITION,
+						OgumaProjectURLConstants.URL_CITY_INSERT, OgumaProjectURLConstants.URL_CITY_UPDATE,
+						OgumaProjectURLConstants.URL_CITY_UPDATE)
+				.hasAuthority("city%edition").anyRequest().authenticated())
 				.csrf(csrf -> csrf.ignoringRequestMatchers(OgumaProjectURLConstants.URL_STATIC_RESOURCE)
 						.csrfTokenRepository(new CookieCsrfTokenRepository()))
 				.exceptionHandling(handling -> {

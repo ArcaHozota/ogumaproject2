@@ -54,6 +54,8 @@ public final class OgumaProjectURLConstants {
 
 	public static final String URL_ROLE_CHECK_EDITION = "/oguma/role/checkEdition";
 
+	public static final String URL_ROLE_CHECK_DELETE = "/oguma/role/checkDelete";
+
 	public static final String URL_TO_SIGN_UP = "/oguma/employee/toSignUp";
 
 	public static final String URL_DO_SIGN_UP = "/oguma/employee/toroku";

@@ -127,7 +127,7 @@ $("#roleInfoChangeBtn").on('click', function() {
 });
 $("#tableBody").on('click', '.delete-btn', function() {
 	let ajaxResult = $.ajax({
-		url: '/oguma/role/infoDelete/0L',
+		url: '/oguma/role/checkDelete',
 		type: 'GET',
 		async: false
 	});
