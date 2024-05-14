@@ -90,7 +90,7 @@ public final class RoleServiceImpl implements IRoleService {
 	@Override
 	public List<AuthorityDto> getAuthList() {
 		final List<AuthoritiesRecord> authoritiesRecords = this.dslContext.selectFrom(AUTHORITIES)
-				.fetchInto(AuthoritiesRecord.class);
+				.orderBy(AUTHORITIES.ID.asc()).fetchInto(AuthoritiesRecord.class);
 		return authoritiesRecords.stream()
 				.map(item -> new AuthorityDto(item.getId(), item.getName(), item.getTitle(), item.getCategoryId()))
 				.toList();
