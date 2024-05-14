@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
 import jp.co.toshiba.ppocph.dto.DistrictDto;
 import jp.co.toshiba.ppocph.dto.DistrictsRecordDto;
+import jp.co.toshiba.ppocph.jooq.Keys;
 import jp.co.toshiba.ppocph.jooq.tables.records.DistrictsRecord;
 import jp.co.toshiba.ppocph.service.IDistrictService;
 import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
@@ -48,23 +49,23 @@ public final class DistrictServiceImpl implements IDistrictService {
 				.stream().map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(), null,
 						item.getChiho(), null, item.getDistrictFlag()))
 				.sorted(Comparator.comparingLong(DistrictDto::id)).toList();
-		if (!CommonProjectUtils.isDigital(cityId)) {
-			final DistrictDto districtDto = new DistrictDto(0L, OgumaProjectConstants.DEFAULT_ROLE_NAME, 0L,
-					CommonProjectUtils.EMPTY_STRING, CommonProjectUtils.EMPTY_STRING, null,
-					CommonProjectUtils.EMPTY_STRING);
-			districtDtos.add(districtDto);
+		if (CommonProjectUtils.isDigital(cityId)) {
+			final Long selectedRecordId = this.dslContext.select(DISTRICTS.ID).from(DISTRICTS).innerJoin(CITIES)
+					.onKey(Keys.CITIES__FK_CITIES_DISTRICTS)
+					.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+					.and(CITIES.ID.eq(Long.parseLong(cityId))).fetchSingle().into(Long.class);
+			final List<DistrictDto> list = districtDtos1.stream()
+					.filter(a -> CommonProjectUtils.isEqual(a.id(), selectedRecordId)).toList();
+			districtDtos.addAll(list);
 			districtDtos.addAll(districtDtos1);
-			return districtDtos;
+			return districtDtos.stream().distinct().toList();
 		}
-		final DistrictsRecord districtsRecord = this.dslContext.select(DISTRICTS).from(DISTRICTS).innerJoin(CITIES)
-				.on(CITIES.ID.eq(DISTRICTS.SHUTO_ID))
-				.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
-				.and(CITIES.ID.eq(Long.parseLong(cityId))).fetchSingle().into(DistrictsRecord.class);
-		districtDtos
-				.add(new DistrictDto(districtsRecord.getId(), districtsRecord.getName(), districtsRecord.getShutoId(),
-						null, districtsRecord.getChiho(), null, districtsRecord.getDistrictFlag()));
+		final DistrictDto districtDto = new DistrictDto(0L, OgumaProjectConstants.DEFAULT_ROLE_NAME, 0L,
+				CommonProjectUtils.EMPTY_STRING, CommonProjectUtils.EMPTY_STRING, null,
+				CommonProjectUtils.EMPTY_STRING);
+		districtDtos.add(districtDto);
 		districtDtos.addAll(districtDtos1);
-		return districtDtos.stream().distinct().toList();
+		return districtDtos;
 	}
 
 	@Override

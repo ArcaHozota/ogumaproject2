@@ -106,23 +106,24 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public List<RoleDto> getRolesByEmployeeId(final Long employeeId) {
+		final List<RoleDto> roleDtos = new ArrayList<>();
 		final List<RolesRecord> rolesRecords = this.dslContext.selectFrom(ROLES)
 				.where(ROLES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).fetchInto(RolesRecord.class);
-		final List<RoleDto> roleDtos = rolesRecords.stream().map(item -> new RoleDto(item.getId(), item.getName()))
+		final List<RoleDto> roleDtos1 = rolesRecords.stream().map(item -> new RoleDto(item.getId(), item.getName()))
 				.distinct().sorted(Comparator.comparing(RoleDto::id)).toList();
 		if (employeeId == null) {
-			final List<RoleDto> defaultRoleDtos = new ArrayList<>();
 			final RoleDto roleDto = new RoleDto(0L, OgumaProjectConstants.DEFAULT_ROLE_NAME);
-			defaultRoleDtos.add(roleDto);
-			defaultRoleDtos.addAll(roleDtos);
-			return defaultRoleDtos;
+			roleDtos.add(roleDto);
+			roleDtos.addAll(roleDtos1);
+			return roleDtos;
 		}
 		final EmployeeRoleRecord employeeRoleRecord = this.dslContext.selectFrom(EMPLOYEE_ROLE)
 				.where(EMPLOYEE_ROLE.EMPLOYEE_ID.eq(employeeId)).fetchSingle();
 		final List<RoleDto> list = roleDtos.stream()
 				.filter(a -> CommonProjectUtils.isEqual(a.id(), employeeRoleRecord.getRoleId())).toList();
-		list.addAll(roleDtos);
-		return list.stream().distinct().toList();
+		roleDtos.addAll(list);
+		roleDtos.addAll(roleDtos1);
+		return roleDtos.stream().distinct().toList();
 	}
 
 	@Override
