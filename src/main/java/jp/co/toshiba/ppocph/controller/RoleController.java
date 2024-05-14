@@ -38,6 +38,16 @@ public final class RoleController {
 	private final IRoleService iRoleService;
 
 	/**
+	 * 削除権限チェック
+	 *
+	 * @return ResultDto<String>
+	 */
+	@GetMapping(OgumaProjectURLConstants.URL_ROLE_CHECK_DELETE)
+	public ResultDto<String> checkDelete() {
+		return ResultDto.successWithoutData();
+	}
+
+	/**
 	 * 役割名称重複チェック
 	 *
 	 * @param name 役割名称
