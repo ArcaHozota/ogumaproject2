@@ -103,7 +103,8 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 					.into(Integer.class);
 			final List<EmployeesRecord> employeesRecords = this.dslContext.selectFrom(EMPLOYEES)
 					.where(EMPLOYEES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
-					.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(EmployeesRecord.class);
+					.orderBy(EMPLOYEES.ID.asc()).limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset)
+					.fetchInto(EmployeesRecord.class);
 			final List<EmployeeDto> employeeDtos = employeesRecords.stream()
 					.map(item -> new EmployeeDto(item.getId(), item.getLoginAccount(), item.getUsername(),
 							item.getPassword(), item.getEmail(), this.formatter.format(item.getDateOfBirth()), null))
@@ -120,7 +121,8 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 				.where(EMPLOYEES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
 				.and(EMPLOYEES.USERNAME.like(searchStr).or(EMPLOYEES.LOGIN_ACCOUNT.like(searchStr))
 						.or(EMPLOYEES.EMAIL.like(searchStr)))
-				.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(EmployeesRecord.class);
+				.orderBy(EMPLOYEES.ID.asc()).limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset)
+				.fetchInto(EmployeesRecord.class);
 		final List<EmployeeDto> employeeDtos = employeesRecords.stream()
 				.map(item -> new EmployeeDto(item.getId(), item.getLoginAccount(), item.getUsername(),
 						item.getPassword(), item.getEmail(), this.formatter.format(item.getDateOfBirth()), null))
@@ -239,8 +241,11 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			employeesRecord.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
 			employeeRoleRecord.setRoleId(employeeDto.roleId());
 			try {
-				this.dslContext.update(EMPLOYEE_ROLE).set(employeeRoleRecord).execute();
-				this.dslContext.update(EMPLOYEES).set(employeesRecord).execute();
+				this.dslContext.update(EMPLOYEE_ROLE).set(employeeRoleRecord)
+						.where(EMPLOYEE_ROLE.EMPLOYEE_ID.eq(employeeRoleRecord.getEmployeeId())).execute();
+				this.dslContext.update(EMPLOYEES).set(employeesRecord)
+						.where(EMPLOYEES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+						.and(EMPLOYEES.ID.eq(employeesRecord.getId())).execute();
 			} catch (final DataIntegrityViolationException e) {
 				return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_DUPLICATED);
 			}
@@ -261,8 +266,11 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employeesRecord.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
 		employeeRoleRecord.setRoleId(employeeDto.roleId());
 		try {
-			this.dslContext.update(EMPLOYEE_ROLE).set(employeeRoleRecord).execute();
-			this.dslContext.update(EMPLOYEES).set(employeesRecord).execute();
+			this.dslContext.update(EMPLOYEE_ROLE).set(employeeRoleRecord)
+					.where(EMPLOYEE_ROLE.EMPLOYEE_ID.eq(employeeRoleRecord.getEmployeeId())).execute();
+			this.dslContext.update(EMPLOYEES).set(employeesRecord)
+					.where(EMPLOYEES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
+					.and(EMPLOYEES.ID.eq(employeesRecord.getId())).execute();
 		} catch (final DataIntegrityViolationException e) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_DUPLICATED);
 		}
