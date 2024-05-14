@@ -22,6 +22,8 @@ public final class OgumaProjectURLConstants {
 
 	public static final String URL_EMPLOYEE_DELETE = "/oguma/employee/infoDelete/{userId}";
 
+	public static final String URL_EMPLOYEE_CHECK_DELETE = "/oguma/employee/checkDelete";
+
 	public static final String URL_EMPLOYEE_TO_ADDITION = "/oguma/employee/toAddition";
 
 	public static final String URL_EMPLOYEE_TO_EDITION = "/oguma/employee/toEdition";

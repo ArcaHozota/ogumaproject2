@@ -63,7 +63,9 @@ public class WebSecurityConfiguration {
 				.hasAuthority("employee%retrieve")
 				.requestMatchers(OgumaProjectURLConstants.URL_EMPLOYEE_TO_ADDITION,
 						OgumaProjectURLConstants.URL_EMPLOYEE_INSERT)
-				.hasAuthority("employee%edition").requestMatchers(OgumaProjectURLConstants.URL_EMPLOYEE_DELETE)
+				.hasAuthority("employee%edition")
+				.requestMatchers(OgumaProjectURLConstants.URL_EMPLOYEE_DELETE,
+						OgumaProjectURLConstants.URL_EMPLOYEE_CHECK_DELETE)
 				.hasAuthority("employee%delete")
 				.requestMatchers(OgumaProjectURLConstants.URL_ROLE_TO_PAGES,
 						OgumaProjectURLConstants.URL_ROLE_PAGINATION, OgumaProjectURLConstants.URL_ROLE_GET_ASSIGNED)

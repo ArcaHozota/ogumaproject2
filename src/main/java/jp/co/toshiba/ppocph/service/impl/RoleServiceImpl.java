@@ -73,7 +73,7 @@ public final class RoleServiceImpl implements IRoleService {
 			return roleAuthRecord;
 		}).toList();
 		try {
-			this.dslContext.insertInto(ROLE_AUTH).values(newRoleAuthRecords).execute();
+			newRoleAuthRecords.forEach(RoleAuthRecord::insert);
 		} catch (final Exception e) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_FORBIDDEN2);
 		}

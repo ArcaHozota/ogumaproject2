@@ -46,6 +46,17 @@ public final class EmployeeController {
 	private final IRoleService iRoleService;
 
 	/**
+	 * 削除権限チェック
+	 *
+	 * @return ResultDto<String>
+	 */
+	@GetMapping(OgumaProjectURLConstants.URL_EMPLOYEE_CHECK_DELETE)
+	@ResponseBody
+	public ResultDto<String> checkDelete() {
+		return ResultDto.successWithoutData();
+	}
+
+	/**
 	 * ログインアカウントを重複するかどうかを確認する
 	 *
 	 * @param loginAccount ログインアカウント
