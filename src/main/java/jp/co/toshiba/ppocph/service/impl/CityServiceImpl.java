@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
 import jp.co.toshiba.ppocph.dto.CitiesRecordDto;
 import jp.co.toshiba.ppocph.dto.CityDto;
+import jp.co.toshiba.ppocph.jooq.Keys;
 import jp.co.toshiba.ppocph.jooq.tables.records.CitiesRecord;
 import jp.co.toshiba.ppocph.service.ICityService;
 import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
@@ -52,12 +53,12 @@ public final class CityServiceImpl implements ICityService {
 		final int offset = (pageNum - 1) * OgumaProjectConstants.DEFAULT_PAGE_SIZE;
 		if (CommonProjectUtils.isEmpty(keyword)) {
 			final Integer totalRecords = this.dslContext.selectCount().from(CITIES).innerJoin(DISTRICTS)
-					.on(DISTRICTS.ID.eq(CITIES.DISTRICT_ID))
+					.onKey(Keys.CITIES__FK_CITIES_DISTRICTS)
 					.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).fetchSingle()
 					.into(Integer.class);
 			final List<CitiesRecordDto> citiesRecords = this.dslContext
 					.select(CITIES, DISTRICTS.NAME.as("districtName")).from(CITIES).innerJoin(DISTRICTS)
-					.on(DISTRICTS.ID.eq(CITIES.DISTRICT_ID))
+					.onKey(Keys.CITIES__FK_CITIES_DISTRICTS)
 					.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).orderBy(CITIES.ID.asc())
 					.limit(OgumaProjectConstants.DEFAULT_PAGE_SIZE).offset(offset).fetchInto(CitiesRecordDto.class);
 			final List<CityDto> cityDtos = citiesRecords.stream()
@@ -68,12 +69,12 @@ public final class CityServiceImpl implements ICityService {
 		}
 		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
 		final Integer totalRecords = this.dslContext.selectCount().from(CITIES).innerJoin(DISTRICTS)
-				.on(DISTRICTS.ID.eq(CITIES.DISTRICT_ID))
+				.onKey(Keys.CITIES__FK_CITIES_DISTRICTS)
 				.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL)).and(CITIES.NAME.like(searchStr)
 						.or(CITIES.PRONUNCIATION.like(searchStr)).or(DISTRICTS.NAME.like(searchStr)))
 				.fetchSingle().into(Integer.class);
 		final List<CitiesRecordDto> citiesRecords = this.dslContext.select(CITIES, DISTRICTS.NAME.as("districtName"))
-				.from(CITIES).innerJoin(DISTRICTS).on(DISTRICTS.ID.eq(CITIES.DISTRICT_ID))
+				.from(CITIES).innerJoin(DISTRICTS).onKey(Keys.CITIES__FK_CITIES_DISTRICTS)
 				.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
 				.and(CITIES.NAME.like(searchStr).or(CITIES.PRONUNCIATION.like(searchStr))
 						.or(DISTRICTS.NAME.like(searchStr)))

@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
 import jp.co.toshiba.ppocph.dto.EmployeeDto;
+import jp.co.toshiba.ppocph.jooq.Keys;
 import jp.co.toshiba.ppocph.jooq.tables.records.AuthoritiesRecord;
 import jp.co.toshiba.ppocph.jooq.tables.records.EmployeeRoleRecord;
 import jp.co.toshiba.ppocph.jooq.tables.records.EmployeesRecord;
@@ -63,7 +64,7 @@ public final class OgumaProjectUserDetailsService implements UserDetailsService 
 			throw new InsufficientAuthenticationException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 		}
 		final List<AuthoritiesRecord> authoritiesRecords = this.dslContext.select(AUTHORITIES.ID, AUTHORITIES.NAME)
-				.from(ROLE_AUTH).innerJoin(AUTHORITIES).on(ROLE_AUTH.AUTH_ID.eq(AUTHORITIES.ID))
+				.from(ROLE_AUTH).innerJoin(AUTHORITIES).onKey(Keys.ROLE_AUTH__FK4)
 				.where(ROLE_AUTH.ROLE_ID.eq(employeeRoleRecord.getRoleId())).fetchInto(AuthoritiesRecord.class);
 		if (authoritiesRecords.isEmpty()) {
 			throw new AuthenticationCredentialsNotFoundException(
