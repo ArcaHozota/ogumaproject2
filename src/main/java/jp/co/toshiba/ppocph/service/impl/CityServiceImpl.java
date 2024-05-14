@@ -120,9 +120,7 @@ public final class CityServiceImpl implements ICityService {
 		citiesRecord.setPopulation(cityDto.population());
 		citiesRecord.setPronunciation(cityDto.pronunciation());
 		try {
-			this.dslContext.update(CITIES).set(citiesRecord)
-					.where(CITIES.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
-					.and(CITIES.ID.eq(citiesRecord.getId())).execute();
+			this.dslContext.update(CITIES).set(citiesRecord).execute();
 		} catch (final DataIntegrityViolationException e) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_CITY_NAME_DUPLICATED);
 		}

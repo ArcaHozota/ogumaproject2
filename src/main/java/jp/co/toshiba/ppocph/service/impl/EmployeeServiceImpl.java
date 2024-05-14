@@ -13,6 +13,7 @@ import java.util.Random;
 
 import org.jooq.DSLContext;
 import org.jooq.exception.NoDataFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -209,7 +210,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employeesRecord.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
 		employeesRecord.setCreatedTime(LocalDateTime.now());
 		employeesRecord.setDeleteFlg(OgumaProjectConstants.LOGIC_DELETE_INITIAL);
-		if (employeeDto.roleId() != null && !CommonProjectUtils.isEqual(Long.valueOf(0L), employeeDto.roleId())) {
+		if ((employeeDto.roleId() != null) && !CommonProjectUtils.isEqual(Long.valueOf(0L), employeeDto.roleId())) {
 			final EmployeeRoleRecord employeeRoleRecord = this.dslContext.newRecord(EMPLOYEE_ROLE);
 			employeeRoleRecord.setEmployeeId(employeesRecord.getId());
 			employeeRoleRecord.setRoleId(employeeDto.roleId());
@@ -237,8 +238,12 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			employeesRecord.setEmail(employeeDto.email());
 			employeesRecord.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
 			employeeRoleRecord.setRoleId(employeeDto.roleId());
-			employeeRoleRecord.insert();
-			employeesRecord.insert();
+			try {
+				this.dslContext.update(EMPLOYEE_ROLE).set(employeeRoleRecord).execute();
+				this.dslContext.update(EMPLOYEES).set(employeesRecord).execute();
+			} catch (final DataIntegrityViolationException e) {
+				return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_DUPLICATED);
+			}
 			return ResultDto.successWithoutData();
 		}
 		final EmployeeDto nEmployeeDto = new EmployeeDto(employeeDto.id(), employeeDto.loginAccount(),
@@ -255,8 +260,12 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employeesRecord.setEmail(employeeDto.email());
 		employeesRecord.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), this.formatter));
 		employeeRoleRecord.setRoleId(employeeDto.roleId());
-		employeeRoleRecord.insert();
-		employeesRecord.insert();
+		try {
+			this.dslContext.update(EMPLOYEE_ROLE).set(employeeRoleRecord).execute();
+			this.dslContext.update(EMPLOYEES).set(employeesRecord).execute();
+		} catch (final DataIntegrityViolationException e) {
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_DUPLICATED);
+		}
 		return ResultDto.successWithoutData();
 	}
 }

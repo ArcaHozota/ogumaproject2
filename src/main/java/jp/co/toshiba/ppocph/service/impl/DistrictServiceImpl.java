@@ -122,9 +122,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 		districtsRecord.setName(districtDto.name());
 		districtsRecord.setChiho(districtDto.chiho());
 		try {
-			this.dslContext.update(DISTRICTS).set(districtsRecord)
-					.where(DISTRICTS.DELETE_FLG.eq(OgumaProjectConstants.LOGIC_DELETE_INITIAL))
-					.and(DISTRICTS.ID.eq(districtsRecord.getId())).execute();
+			this.dslContext.update(DISTRICTS).set(districtsRecord).execute();
 		} catch (final DataIntegrityViolationException e) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_DISTRICT_NAME_DUPLICATED);
 		}

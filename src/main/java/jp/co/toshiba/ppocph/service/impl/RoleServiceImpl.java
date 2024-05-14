@@ -195,7 +195,7 @@ public final class RoleServiceImpl implements IRoleService {
 		}
 		rolesRecord.setName(roleDto.name());
 		try {
-			this.dslContext.update(ROLES).set(rolesRecord).where(ROLES.ID.eq(rolesRecord.getId())).execute();
+			this.dslContext.update(ROLES).set(rolesRecord).execute();
 		} catch (final DataIntegrityViolationException e) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_ROLE_NAME_DUPLICATED);
 		}
