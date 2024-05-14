@@ -62,7 +62,7 @@
 						</button>
 					</div>
 					<ul class="navbar-nav mb-2 mb-lg-0 d-flex" id="personalInfo"
-						th:with="securityPerson=${#authentication.getPrincipal()}">
+						th:with="securityPerson=${#authentication.principal}">
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle btn btn-success me-2" href="#" role="button"
 								data-bs-toggle="dropdown" aria-expanded="false" style="height: 37.6px;">
