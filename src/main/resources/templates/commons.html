@@ -67,12 +67,12 @@
 							<a class="nav-link dropdown-toggle btn btn-success me-2" href="#" role="button"
 								data-bs-toggle="dropdown" aria-expanded="false" style="height: 37.6px;">
 								<i class="fa-solid fa-user-circle"
-									th:text="${securityPerson.getOriginalAdmin().username}"></i></a>
+									th:text="${securityPerson.originalAdmin.username}"></i></a>
 							<ul class="dropdown-menu dropdown-menu-end" role="menu">
 								<li>
 									<a class="dropdown-item" href="#" id="toPersonal">
 										<i class="fa-solid fa-user-gear"></i> 個人設定
-										<p th:text="${securityPerson.getOriginalAdmin().id}" hidden />
+										<p th:text="${securityPerson.originalAdmin.id}" hidden />
 									</a>
 								</li>
 								<li>
