@@ -27,4 +27,7 @@ spring:
 # jOOQで生成したSQL文はコンソルで表示する
 logging:
   level:
-    org.jooq.tools.LoggerListener: DEBUG
+    org:
+      jooq:
+        tools:
+          LoggerListener: DEBUG
