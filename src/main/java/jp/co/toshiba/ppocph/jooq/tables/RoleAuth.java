@@ -106,7 +106,7 @@ public class RoleAuth extends TableImpl<RoleAuthRecord> {
 
     @Override
     public List<ForeignKey<RoleAuthRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.ROLE_AUTH__FK_RA_AUTHORITIES, Keys.ROLE_AUTH__FK_RA_ROLES);
+        return Arrays.asList(Keys.ROLE_AUTH__FK_RA_ROLES, Keys.ROLE_AUTH__FK_RA_AUTHORITIES);
     }
 
     private transient Roles _roles;
@@ -117,7 +117,7 @@ public class RoleAuth extends TableImpl<RoleAuthRecord> {
      */
     public Roles roles() {
         if (_roles == null)
-            _roles = new Roles(this, Keys.ROLE_AUTH__FK_RA_AUTHORITIES);
+            _roles = new Roles(this, Keys.ROLE_AUTH__FK_RA_ROLES);
 
         return _roles;
     }
@@ -127,7 +127,7 @@ public class RoleAuth extends TableImpl<RoleAuthRecord> {
      */
     public Authorities authorities() {
         if (_authorities == null)
-            _authorities = new Authorities(this, Keys.ROLE_AUTH__FK_RA_ROLES);
+            _authorities = new Authorities(this, Keys.ROLE_AUTH__FK_RA_AUTHORITIES);
 
         return _authorities;
     }
