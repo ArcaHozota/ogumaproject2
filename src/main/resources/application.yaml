@@ -11,6 +11,9 @@ spring:
     hikari:
       maximum-pool-size: 30
       max-lifetime: 1500000
+  jdbc:
+    template:
+      query-timeout: 300000ms
   output:
     ansi:
       enabled: ALWAYS

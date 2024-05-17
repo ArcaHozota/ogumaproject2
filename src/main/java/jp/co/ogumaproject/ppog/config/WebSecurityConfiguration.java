@@ -14,10 +14,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import jakarta.annotation.Resource;
-import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
-import jp.co.toshiba.ppocph.common.OgumaProjectURLConstants;
-import jp.co.toshiba.ppocph.listener.OgumaProjectUserDetailsService;
-import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
+import jp.co.ogumaproject.ppog.common.OgumaProjectConstants;
+import jp.co.ogumaproject.ppog.common.OgumaProjectURLConstants;
+import jp.co.ogumaproject.ppog.listener.OgumaProjectUserDetailsService;
+import jp.co.ogumaproject.ppog.utils.CommonProjectUtils;
 import lombok.extern.log4j.Log4j2;
 
 /**

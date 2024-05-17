@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
-import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
+import jp.co.ogumaproject.ppog.common.OgumaProjectConstants;
 import lombok.extern.log4j.Log4j2;
 
 /**

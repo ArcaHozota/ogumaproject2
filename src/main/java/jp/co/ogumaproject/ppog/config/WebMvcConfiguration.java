@@ -9,8 +9,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
-import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
-import jp.co.toshiba.ppocph.common.OgumaProjectURLConstants;
+import jp.co.ogumaproject.ppog.common.OgumaProjectConstants;
+import jp.co.ogumaproject.ppog.common.OgumaProjectURLConstants;
 import lombok.extern.log4j.Log4j2;
 
 /**

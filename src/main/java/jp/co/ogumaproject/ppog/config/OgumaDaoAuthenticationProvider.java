@@ -6,7 +6,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
+import jp.co.ogumaproject.ppog.common.OgumaProjectConstants;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

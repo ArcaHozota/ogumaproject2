@@ -18,7 +18,7 @@ import com.alibaba.fastjson2.JSON;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jp.co.toshiba.ppocph.config.ResponseLoginDto;
+import jp.co.ogumaproject.ppog.config.ResponseLoginDto;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -246,10 +246,10 @@ public final class CommonProjectUtils {
 		final String acceptInformation = request.getHeader("Accept");
 		final String xRequestInformation = request.getHeader("X-Requested-With");
 		// 判断して返却する
-		return acceptInformation != null && acceptInformation.length() > 0
-				&& acceptInformation.contains("application/json")
-				|| xRequestInformation != null && xRequestInformation.length() > 0
-						&& "XMLHttpRequest".equals(xRequestInformation);
+		return ((acceptInformation != null) && (acceptInformation.length() > 0)
+				&& acceptInformation.contains("application/json"))
+				|| ((xRequestInformation != null) && (xRequestInformation.length() > 0)
+						&& "XMLHttpRequest".equals(xRequestInformation));
 	}
 
 	/**
@@ -330,7 +330,7 @@ public final class CommonProjectUtils {
 	 * @return true: 空, false: 空ではない
 	 */
 	public static boolean isEmpty(@Nullable final String str) {
-		return str == null || str.isEmpty() || str.isBlank();
+		return (str == null) || str.isEmpty() || str.isBlank();
 	}
 
 	/**
@@ -341,7 +341,7 @@ public final class CommonProjectUtils {
 	 * @return true: イコール, false: イコールしない
 	 */
 	public static boolean isEqual(@Nullable final Long long1, @Nullable final Long long2) {
-		if (long1 == null && long2 == null || long1.longValue() == long2.longValue()) {
+		if (((long1 == null) && (long2 == null)) || (long1.longValue() == long2.longValue())) {
 			return true;
 		}
 		return false;
@@ -355,7 +355,7 @@ public final class CommonProjectUtils {
 	 * @return true: イコール, false: イコールしない
 	 */
 	public static boolean isEqual(@Nullable final Object obj1, @Nullable final Object obj2) {
-		if (obj1 == null && obj2 == null || obj1 != null && obj1.equals(obj2)) {
+		if (((obj1 == null) && (obj2 == null)) || ((obj1 != null) && obj1.equals(obj2))) {
 			return true;
 		}
 		return false;
@@ -369,10 +369,10 @@ public final class CommonProjectUtils {
 	 * @return true: イコール, false: イコールしない
 	 */
 	public static boolean isEqual(@Nullable final String str1, @Nullable final String str2) {
-		if (str1 == null && str2 == null) {
+		if ((str1 == null) && (str2 == null)) {
 			return true;
 		}
-		if (str1 == null || str2 == null || str1.length() != str2.length()) {
+		if ((str1 == null) || (str2 == null) || (str1.length() != str2.length())) {
 			return false;
 		}
 		return str1.trim().equals(str2.trim());
