@@ -2,9 +2,9 @@ package jp.co.ogumaproject.ppog.service;
 
 import java.util.List;
 
-import jp.co.toshiba.ppocph.dto.DistrictDto;
-import jp.co.toshiba.ppocph.utils.Pagination;
-import jp.co.toshiba.ppocph.utils.ResultDto;
+import jp.co.ogumaproject.ppog.dto.DistrictDto;
+import jp.co.ogumaproject.ppog.utils.Pagination;
+import jp.co.ogumaproject.ppog.utils.ResultDto;
 
 /**
  * 地域サービスインターフェス

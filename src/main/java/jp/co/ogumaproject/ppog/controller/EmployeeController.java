@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import jp.co.toshiba.ppocph.common.OgumaProjectConstants;
-import jp.co.toshiba.ppocph.common.OgumaProjectURLConstants;
-import jp.co.toshiba.ppocph.dto.EmployeeDto;
-import jp.co.toshiba.ppocph.dto.RoleDto;
-import jp.co.toshiba.ppocph.service.IEmployeeService;
-import jp.co.toshiba.ppocph.service.IRoleService;
-import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
-import jp.co.toshiba.ppocph.utils.Pagination;
-import jp.co.toshiba.ppocph.utils.ResultDto;
+import jp.co.ogumaproject.ppog.common.OgumaProjectConstants;
+import jp.co.ogumaproject.ppog.common.OgumaProjectURLConstants;
+import jp.co.ogumaproject.ppog.dto.EmployeeDto;
+import jp.co.ogumaproject.ppog.dto.RoleDto;
+import jp.co.ogumaproject.ppog.service.IEmployeeService;
+import jp.co.ogumaproject.ppog.service.IRoleService;
+import jp.co.ogumaproject.ppog.utils.CommonProjectUtils;
+import jp.co.ogumaproject.ppog.utils.Pagination;
+import jp.co.ogumaproject.ppog.utils.ResultDto;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 

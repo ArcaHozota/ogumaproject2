@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import jp.co.toshiba.ppocph.common.OgumaProjectURLConstants;
-import jp.co.toshiba.ppocph.dto.AuthorityDto;
-import jp.co.toshiba.ppocph.dto.RoleDto;
-import jp.co.toshiba.ppocph.service.IRoleService;
-import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
-import jp.co.toshiba.ppocph.utils.Pagination;
-import jp.co.toshiba.ppocph.utils.ResultDto;
+import jp.co.ogumaproject.ppog.common.OgumaProjectURLConstants;
+import jp.co.ogumaproject.ppog.dto.AuthorityDto;
+import jp.co.ogumaproject.ppog.dto.RoleDto;
+import jp.co.ogumaproject.ppog.service.IRoleService;
+import jp.co.ogumaproject.ppog.utils.CommonProjectUtils;
+import jp.co.ogumaproject.ppog.utils.Pagination;
+import jp.co.ogumaproject.ppog.utils.ResultDto;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 

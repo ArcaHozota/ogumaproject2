@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import jp.co.toshiba.ppocph.dto.EmployeeDto;
+import jp.co.ogumaproject.ppog.dto.EmployeeDto;
 import lombok.EqualsAndHashCode;
 
 /**

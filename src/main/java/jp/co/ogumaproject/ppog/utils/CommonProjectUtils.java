@@ -1,15 +1,20 @@
 package jp.co.ogumaproject.ppog.utils;
 
+import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -276,6 +281,26 @@ public final class CommonProjectUtils {
 			builder.append(charAt).append("%");
 		}
 		return builder.toString();
+	}
+
+	/**
+	 * エンティティのパラメータマップを取得する
+	 *
+	 * @param city 都市エンティティ
+	 * @return Map<String, Object>
+	 */
+	public static Map<String, Object> getParamMap(final Object obj) {
+		final Map<String, Object> paramMap = new HashMap<>();
+		final BeanWrapper beanWrapper = new BeanWrapperImpl(obj);
+		final PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();
+		for (final PropertyDescriptor propertyDescriptor : propertyDescriptors) {
+			final String propertyName = propertyDescriptor.getName();
+			if (CommonProjectUtils.isEqual("class", propertyName)) {
+				continue;
+			}
+			paramMap.put(propertyName, beanWrapper.getPropertyValue(propertyName));
+		}
+		return paramMap;
 	}
 
 	/**

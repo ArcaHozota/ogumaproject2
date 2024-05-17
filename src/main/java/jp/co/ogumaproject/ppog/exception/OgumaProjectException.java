@@ -1,6 +1,6 @@
 package jp.co.ogumaproject.ppog.exception;
 
-import jp.co.toshiba.ppocph.utils.CommonProjectUtils;
+import jp.co.ogumaproject.ppog.utils.CommonProjectUtils;
 
 /**
  * プロジェクト業務ロジック例外

@@ -1,8 +1,8 @@
 package jp.co.ogumaproject.ppog.service;
 
-import jp.co.toshiba.ppocph.dto.EmployeeDto;
-import jp.co.toshiba.ppocph.utils.Pagination;
-import jp.co.toshiba.ppocph.utils.ResultDto;
+import jp.co.ogumaproject.ppog.dto.EmployeeDto;
+import jp.co.ogumaproject.ppog.utils.Pagination;
+import jp.co.ogumaproject.ppog.utils.ResultDto;
 
 /**
  * 社員サービスインターフェス

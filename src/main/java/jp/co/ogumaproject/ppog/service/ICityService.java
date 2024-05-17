@@ -1,8 +1,8 @@
 package jp.co.ogumaproject.ppog.service;
 
-import jp.co.toshiba.ppocph.dto.CityDto;
-import jp.co.toshiba.ppocph.utils.Pagination;
-import jp.co.toshiba.ppocph.utils.ResultDto;
+import jp.co.ogumaproject.ppog.dto.CityDto;
+import jp.co.ogumaproject.ppog.utils.Pagination;
+import jp.co.ogumaproject.ppog.utils.ResultDto;
 
 /**
  * 都市サービスインターフェス

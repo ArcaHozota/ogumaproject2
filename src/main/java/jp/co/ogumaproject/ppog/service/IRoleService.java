@@ -3,10 +3,10 @@ package jp.co.ogumaproject.ppog.service;
 import java.util.List;
 import java.util.Map;
 
-import jp.co.toshiba.ppocph.dto.AuthorityDto;
-import jp.co.toshiba.ppocph.dto.RoleDto;
-import jp.co.toshiba.ppocph.utils.Pagination;
-import jp.co.toshiba.ppocph.utils.ResultDto;
+import jp.co.ogumaproject.ppog.dto.AuthorityDto;
+import jp.co.ogumaproject.ppog.dto.RoleDto;
+import jp.co.ogumaproject.ppog.utils.Pagination;
+import jp.co.ogumaproject.ppog.utils.ResultDto;
 
 /**
  * 役割サービスインターフェス
