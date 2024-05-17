@@ -62,7 +62,7 @@ public final class OgumaProjectUserDetailsService implements UserDetailsService 
 		} catch (final Exception e) {
 			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR2);
 		}
-		final List<Authority> authorities = this.authorityRepository.getListByForeignKey(employeeRole.getRoleId());
+		final List<Authority> authorities = this.authorityRepository.getListByRoleId(employeeRole.getRoleId());
 		if (authorities.isEmpty()) {
 			throw new AuthenticationCredentialsNotFoundException(
 					OgumaProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR3);

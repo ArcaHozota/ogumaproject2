@@ -11,12 +11,12 @@ import java.util.List;
 public interface CommonRepository<T> {
 
 	/**
-	 * 外部キーによってリストを取得する
+	 * IDリストによってリストを取得する
 	 *
-	 * @param foreignId
+	 * @param ids IDリスト
 	 * @return List<T>
 	 */
-	List<T> getListByForeignKey(Long foreignId);
+	List<T> getListByIds(List<Long> ids);
 
 	/**
 	 * IDによって1件抽出する

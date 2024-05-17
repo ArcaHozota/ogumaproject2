@@ -24,8 +24,9 @@ public class EmployeeRoleRepository implements CommonRepository<EmployeeRole> {
 	private JdbcClient jdbcClient;
 
 	@Override
-	public List<EmployeeRole> getListByForeignKey(final Long foreignId) {
-		return null;
+	public List<EmployeeRole> getListByIds(final List<Long> ids) {
+		return this.jdbcClient.sql("SELECT PERV.* FROM PPOG_EMPLOYEE_ROLE_VIEW PERV WHERE PERV.EMPLOYEE_ID IN (?)")
+				.params(ids).query(EmployeeRole.class).list();
 	}
 
 	@Override

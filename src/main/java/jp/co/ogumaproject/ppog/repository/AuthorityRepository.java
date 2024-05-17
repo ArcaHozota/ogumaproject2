@@ -24,10 +24,15 @@ public class AuthorityRepository implements CommonRepository<Authority> {
 	private JdbcClient jdbcClient;
 
 	@Override
-	public List<Authority> getListByForeignKey(final Long foreignId) {
+	public List<Authority> getListByIds(final List<Long> ids) {
+		return this.jdbcClient.sql("SELECT PAV.* FROM PPOG_AUTHORITY_VIEW PAV WHERE PAV.ID IN (?)").params(ids)
+				.query(Authority.class).list();
+	}
+
+	public List<Authority> getListByRoleId(final Long roleId) {
 		return this.jdbcClient.sql(
 				"SELECT PAV.* FROM PPOG_AUTHORITY_VIEW PAV INNER JOIN PPOG_ROLE_AUTH_VIEW PRAV ON PRAV.AUTH_ID = PAV.ID WHERE PRAV.ROLE_ID = ?")
-				.param(foreignId).query(Authority.class).list();
+				.param(roleId).query(Authority.class).list();
 	}
 
 	@Override
