@@ -15,6 +15,7 @@ import jp.co.ogumaproject.ppog.common.OgumaProjectConstants;
 import jp.co.ogumaproject.ppog.dto.EmployeeDto;
 import jp.co.ogumaproject.ppog.entity.Authority;
 import jp.co.ogumaproject.ppog.entity.Employee;
+import jp.co.ogumaproject.ppog.entity.EmployeeRole;
 import jp.co.ogumaproject.ppog.exception.OgumaProjectException;
 import jp.co.ogumaproject.ppog.repository.AuthorityRepository;
 import jp.co.ogumaproject.ppog.repository.EmployeeRepository;
@@ -49,22 +50,26 @@ public final class OgumaProjectUserDetailsService implements UserDetailsService 
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-		final Employee employee = this.employeeRepository.getOneByLoginAccount(username);
-		if (employee == null) {
+		Employee employee;
+		try {
+			employee = this.employeeRepository.getOneByLoginAccount(username);
+		} catch (final Exception e) {
 			throw new DisabledException(OgumaProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR1);
 		}
-		final Long roleId = this.employeeRoleRepository.getOneById(employee.getId()).getRoleId();
-		if (roleId == null) {
+		EmployeeRole employeeRole;
+		try {
+			employeeRole = this.employeeRoleRepository.getOneById(employee.getId());
+		} catch (final Exception e) {
 			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR2);
 		}
-		final List<Authority> authorities = this.authorityRepository.getListByForeignKey(roleId);
+		final List<Authority> authorities = this.authorityRepository.getListByForeignKey(employeeRole.getRoleId());
 		if (authorities.isEmpty()) {
 			throw new AuthenticationCredentialsNotFoundException(
 					OgumaProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR3);
 		}
 		final EmployeeDto employeeDto = new EmployeeDto(employee.getId(), employee.getLoginAccount(),
 				employee.getUsername(), employee.getPassword(), employee.getEmail(),
-				DateTimeFormatter.ofPattern("yyyy-MM-dd").format(employee.getDateOfBirth()), roleId);
+				DateTimeFormatter.ofPattern("yyyy-MM-dd").format(employee.getDateOfBirth()), employeeRole.getRoleId());
 		final List<SimpleGrantedAuthority> simpleGrantedAuthorities = authorities.stream()
 				.map(item -> new SimpleGrantedAuthority(item.getName())).toList();
 		return new SecurityAdmin(employeeDto, simpleGrantedAuthorities);
