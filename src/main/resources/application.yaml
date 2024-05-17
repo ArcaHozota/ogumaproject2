@@ -4,10 +4,10 @@ spring:
   application:
     name: ogumaproject2
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://52.199.163.241:5432/oguma
-    username: postgres
-    password: postgres
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@//52.199.163.241:1521/FREEPDB1
+    username: JPTCRSDBA1
+    password: JPTCRSDBA1
     hikari:
       maximum-pool-size: 30
       max-lifetime: 1500000
@@ -22,12 +22,3 @@ spring:
       content-type: text/html
     prefix: classpath:/templates/
     suffix: .html
-  jooq:
-    sql-dialect: POSTGRES
-# jOOQで生成したSQL文はコンソルで表示する
-logging:
-  level:
-    org:
-      jooq:
-        tools:
-          LoggerListener: DEBUG
