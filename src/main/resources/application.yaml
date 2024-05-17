@@ -25,3 +25,9 @@ spring:
       content-type: text/html
     prefix: classpath:/templates/
     suffix: .html
+logging:
+  level:
+    org:
+      springframework:
+        jdbc:
+          core: DEBUG
