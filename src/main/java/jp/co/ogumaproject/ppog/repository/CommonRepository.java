@@ -11,6 +11,14 @@ import java.util.List;
 public interface CommonRepository<T> {
 
 	/**
+	 * 外部キーによってリストを取得する
+	 *
+	 * @param foreignKey 外部キー
+	 * @return List<T>
+	 */
+	List<T> getListByForeignKey(Long foreignKey);
+
+	/**
 	 * IDリストによってリストを取得する
 	 *
 	 * @param ids IDリスト
