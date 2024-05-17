@@ -5,10 +5,10 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.11</version>
+		<version>3.2.5</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>jp.co.toshiba.ppocph</groupId>
+	<groupId>jp.co.ogumaproject.ppog</groupId>
 	<artifactId>ogumaproject2</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<name>ogumaproject2</name>
@@ -31,10 +31,10 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<!--
-		https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jooq -->
+		https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jooq</artifactId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 		<!--
 		https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf -->
@@ -68,11 +68,6 @@
 			<artifactId>fastjson2</artifactId>
 			<version>2.0.43</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -91,28 +86,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.jooq</groupId>
-				<artifactId>jooq-codegen-maven</artifactId>
-				<configuration>
-					<jdbc>
-						<driver>org.postgresql.Driver</driver>
-						<url>jdbc:postgresql://52.199.163.241:5432/oguma</url>
-						<user>postgres</user>
-						<password>postgres</password>
-					</jdbc>
-					<generator>
-						<database>
-							<includes>.*</includes>
-							<inputSchema>public</inputSchema>
-						</database>
-						<target>
-							<packageName>jp.co.toshiba.ppocph.jooq</packageName>
-							<directory>/src/main/java</directory>
-						</target>
-					</generator>
-				</configuration>
 			</plugin>
 		</plugins>
 		<resources>
