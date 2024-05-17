@@ -15,7 +15,7 @@ import jp.co.ogumaproject.ppog.entity.Authority;
  * @since 9.64
  */
 @Repository
-public final class AuthorityRepository implements CommonRepository<Authority> {
+public class AuthorityRepository implements CommonRepository<Authority> {
 
 	/**
 	 * JDBCクライアント

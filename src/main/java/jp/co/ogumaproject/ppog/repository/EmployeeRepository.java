@@ -15,7 +15,7 @@ import jp.co.ogumaproject.ppog.entity.Employee;
  * @since 9.64
  */
 @Repository
-public final class EmployeeRepository implements CommonRepository<Employee> {
+public class EmployeeRepository implements CommonRepository<Employee> {
 
 	/**
 	 * JDBCクライアント
