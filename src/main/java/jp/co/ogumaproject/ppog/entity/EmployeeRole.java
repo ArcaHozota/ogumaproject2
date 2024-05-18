@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class EmployeeRole extends CommonEntity {
+public final class EmployeeRole extends CommonEntity {
 
 	private static final long serialVersionUID = -4412331507806836307L;
 
