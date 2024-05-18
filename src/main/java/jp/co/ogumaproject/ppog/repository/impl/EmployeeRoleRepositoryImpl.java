@@ -1,6 +1,7 @@
 package jp.co.ogumaproject.ppog.repository.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppog.entity.EmployeeRole;
 import jp.co.ogumaproject.ppog.repository.EmployeeRoleRepository;
+import jp.co.ogumaproject.ppog.utils.CommonProjectUtils;
 
 /**
  * 社員役割リポジトリ
@@ -39,5 +41,20 @@ public class EmployeeRoleRepositoryImpl implements EmployeeRoleRepository {
 	public EmployeeRole getOneById(final Long id) {
 		return this.jdbcClient.sql("SELECT PERV.* FROM PPOG_EMPLOYEE_ROLE_VIEW PERV WHERE PERV.EMPLOYEE_ID = ?")
 				.param(id).query(EmployeeRole.class).single();
+	}
+
+	@Override
+	public void saveById(final EmployeeRole aEntity) {
+		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		this.jdbcClient
+				.sql("INSERT INTO PPOG_EMPLOYEE_ROLE PER (PER.EMPLOYEE_ID, PER.ROLE_ID) VALUES (:employeeId, :roleId)")
+				.params(paramMap).update();
+	}
+
+	@Override
+	public void updateById(final EmployeeRole aEntity) {
+		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		this.jdbcClient.sql("UPDATE PPOG_EMPLOYEE_ROLE PER SET PER.ROLE_ID =:roleId WHERE PER.EMPLOYEE_ID =:employeeId")
+				.params(paramMap).update();
 	}
 }

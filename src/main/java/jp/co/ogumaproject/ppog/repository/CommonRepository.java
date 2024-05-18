@@ -33,4 +33,18 @@ public interface CommonRepository<T> {
 	 * @return T
 	 */
 	T getOneById(Long id);
+
+	/**
+	 * 1件情報を保存する
+	 *
+	 * @param aEntity エンティティ
+	 */
+	void saveById(T aEntity);
+
+	/**
+	 * 1件情報を更新する
+	 *
+	 * @param aEntity エンティティ
+	 */
+	void updateById(T aEntity);
 }

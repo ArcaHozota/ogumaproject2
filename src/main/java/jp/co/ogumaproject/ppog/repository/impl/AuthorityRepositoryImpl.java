@@ -42,4 +42,14 @@ public class AuthorityRepositoryImpl implements AuthorityRepository {
 		return this.jdbcClient.sql("SELECT PAV.* FROM PPOG_AUTHORITY_VIEW PAV WHERE PAV.ID = ?").param(id)
 				.query(Authority.class).single();
 	}
+
+	@Deprecated
+	@Override
+	public void saveById(final Authority aEntity) {
+	}
+
+	@Deprecated
+	@Override
+	public void updateById(final Authority aEntity) {
+	}
 }

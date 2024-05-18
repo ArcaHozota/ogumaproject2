@@ -1,6 +1,7 @@
 package jp.co.ogumaproject.ppog.repository.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppog.entity.Employee;
 import jp.co.ogumaproject.ppog.repository.EmployeeRepository;
+import jp.co.ogumaproject.ppog.utils.CommonProjectUtils;
 
 /**
  * 社員リポジトリ
@@ -49,5 +51,24 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 		return this.jdbcClient
 				.sql("SELECT PEV.* FROM PPOG_EMPLOYEE_VIEW PEV WHERE PEV.LOGIN_ACCOUNT = ? OR PEV.USERNAME = ?")
 				.params(loginAccount, loginAccount).query(Employee.class).single();
+	}
+
+	@Override
+	public void saveById(final Employee aEntity) {
+		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		this.jdbcClient.sql(
+				"INSERT INTO PPOG_EMPLOYEE PE (PE.ID, PE.LOGIN_ACCOUNT, PE.PASSWORD, PE.USERNAME, PE.EMAIL, PE.CREATED_TIME, PE.DATE_OF_BIRTH, PE.DEL_FLG) "
+						+ "VALUES (:id, :loginAccount, :password, :username, :email, :createdTime, :dateOfBirth, :delFlg)")
+				.params(paramMap).update();
+	}
+
+	@Override
+	public void updateById(final Employee aEntity) {
+		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		this.jdbcClient.sql(
+				"UPDATE PPOG_EMPLOYEE PE SET PE.LOGIN_ACCOUNT =:loginAccount, PE.PASSWORD =:password, PE.USERNAME =:username, "
+						+ "PE.EMAIL =:email, PE.CREATED_TIME =:createdTime, PE.DATE_OF_BIRTH =:dateOfBirth "
+						+ "WHERE PE.DEL_FLG =:delFlg AND PE.ID =:id")
+				.params(paramMap).update();
 	}
 }
