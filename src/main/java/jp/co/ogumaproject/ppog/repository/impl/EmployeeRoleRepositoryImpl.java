@@ -26,6 +26,7 @@ public class EmployeeRoleRepositoryImpl implements EmployeeRoleRepository {
 	@Resource
 	private JdbcClient jdbcClient;
 
+	@Deprecated
 	@Override
 	public List<EmployeeRole> getListByForeignKey(final Long foreignKey) {
 		return null;
