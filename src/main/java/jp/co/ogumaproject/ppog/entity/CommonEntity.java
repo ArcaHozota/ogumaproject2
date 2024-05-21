@@ -11,7 +11,7 @@ import lombok.Data;
  * @since 9.63
  */
 @Data
-public class CommonEntity implements Serializable {
+public abstract class CommonEntity implements Serializable {
 
 	private static final long serialVersionUID = -8670508359179225927L;
 

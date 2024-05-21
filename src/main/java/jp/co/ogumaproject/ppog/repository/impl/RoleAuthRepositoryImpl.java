@@ -45,6 +45,12 @@ public class RoleAuthRepositoryImpl implements RoleAuthRepository {
 	}
 
 	@Override
+	public void removeById(final RoleAuth aEntity) {
+		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		this.jdbcClient.sql("DELETE FROM PPOG_ROLE_AUTH PRA WHERE PRA.ROLE_ID =:roleId").params(paramMap).update();
+	}
+
+	@Override
 	public void saveById(final RoleAuth aEntity) {
 		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
 		this.jdbcClient.sql("INSERT INTO PPOG_ROLE_AUTH PRA (PRA.ROLE_ID, PRA.AUTH_ID) VALUES (:roleId, :authId)")
@@ -55,5 +61,4 @@ public class RoleAuthRepositoryImpl implements RoleAuthRepository {
 	@Override
 	public void updateById(final RoleAuth aEntity) {
 	}
-
 }

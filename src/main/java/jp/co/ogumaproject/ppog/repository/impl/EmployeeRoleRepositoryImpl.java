@@ -45,6 +45,13 @@ public class EmployeeRoleRepositoryImpl implements EmployeeRoleRepository {
 	}
 
 	@Override
+	public void removeById(final EmployeeRole aEntity) {
+		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		this.jdbcClient.sql("DELETE FROM PPOG_EMPLOYEE_ROLE PER WHERE PER.EMPLOYEE_ID =:employeeId").params(paramMap)
+				.update();
+	}
+
+	@Override
 	public void saveById(final EmployeeRole aEntity) {
 		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
 		this.jdbcClient

@@ -54,6 +54,13 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	}
 
 	@Override
+	public void removeById(final Employee aEntity) {
+		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		this.jdbcClient.sql("UPDATE PPOG_EMPLOYEE PE SET PE.DEL_FLG =:delFlg WHERE PE.ID =:id").params(paramMap)
+				.update();
+	}
+
+	@Override
 	public void saveById(final Employee aEntity) {
 		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
 		this.jdbcClient.sql(
@@ -67,8 +74,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
 		this.jdbcClient.sql(
 				"UPDATE PPOG_EMPLOYEE PE SET PE.LOGIN_ACCOUNT =:loginAccount, PE.PASSWORD =:password, PE.USERNAME =:username, "
-						+ "PE.EMAIL =:email, PE.CREATED_TIME =:createdTime, PE.DATE_OF_BIRTH =:dateOfBirth "
-						+ "WHERE PE.DEL_FLG =:delFlg AND PE.ID =:id")
+						+ "PE.EMAIL =:email, PE.CREATED_TIME =:createdTime, PE.DATE_OF_BIRTH =:dateOfBirth WHERE PE.DEL_FLG =:delFlg AND PE.ID =:id")
 				.params(paramMap).update();
 	}
 }

@@ -45,6 +45,11 @@ public class AuthorityRepositoryImpl implements AuthorityRepository {
 
 	@Deprecated
 	@Override
+	public void removeById(final Authority aEntity) {
+	}
+
+	@Deprecated
+	@Override
 	public void saveById(final Authority aEntity) {
 	}
 
