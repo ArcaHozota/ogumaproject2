@@ -1,6 +1,7 @@
 package jp.co.ogumaproject.ppog.repository.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppog.entity.Role;
 import jp.co.ogumaproject.ppog.repository.RoleRepository;
+import jp.co.ogumaproject.ppog.utils.CommonProjectUtils;
 
 /**
  * 役割リポジトリ
@@ -33,26 +35,27 @@ public class RoleRepositoryImpl implements RoleRepository {
 
 	@Override
 	public List<Role> getListByIds(final List<Long> ids) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.jdbcClient.sql("SELECT PRV.* FROM PPOG_ROLE_VIEW PRV WHERE PRV.ID IN (?)").params(ids)
+				.query(Role.class).list();
 	}
 
 	@Override
 	public Role getOneById(final Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.jdbcClient.sql("SELECT PRV.* FROM PPOG_ROLE_VIEW PRV WHERE PRV.ID = ?").param(id).query(Role.class)
+				.single();
 	}
 
 	@Override
 	public void saveById(final Role aEntity) {
-		// TODO Auto-generated method stub
-
+		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		this.jdbcClient.sql("INSERT INTO PPOG_ROLE PR (PR.ID, PR.NAME, PR.DEL_FLG) VALUES (:id, :name, :delFlg)")
+				.params(paramMap).update();
 	}
 
 	@Override
 	public void updateById(final Role aEntity) {
-		// TODO Auto-generated method stub
-
+		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		this.jdbcClient.sql("UPDATE PPOG_ROLE PR SET PR.NAME =:name WHERE PR.DEL_FLG =:delFlg AND PR.ID =:id")
+				.params(paramMap).update();
 	}
-
 }
