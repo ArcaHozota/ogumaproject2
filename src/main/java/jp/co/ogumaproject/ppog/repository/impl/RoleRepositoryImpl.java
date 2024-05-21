@@ -2,8 +2,10 @@ package jp.co.ogumaproject.ppog.repository.impl;
 
 import java.util.List;
 
+import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
+import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppog.entity.Role;
 import jp.co.ogumaproject.ppog.repository.RoleRepository;
 
@@ -16,10 +18,17 @@ import jp.co.ogumaproject.ppog.repository.RoleRepository;
 @Repository
 public class RoleRepositoryImpl implements RoleRepository {
 
+	/**
+	 * JDBCクライアント
+	 */
+	@Resource
+	private JdbcClient jdbcClient;
+
 	@Override
 	public List<Role> getListByForeignKey(final Long foreignKey) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.jdbcClient.sql(
+				"SELECT PRV.* FROM PPOG_ROLE_VIEW PRV INNER JOIN PPOG_ROLE_AUTH_VIEW PRAV ON PRAV.ROLE_ID = PRV.ID WHERE PRAV.AUTH_ID = ?")
+				.params(foreignKey).query(Role.class).list();
 	}
 
 	@Override
