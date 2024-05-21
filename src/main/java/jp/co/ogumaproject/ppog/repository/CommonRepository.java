@@ -35,7 +35,7 @@ public interface CommonRepository<T> {
 	T getOneById(Long id);
 
 	/**
-	 * 1件情報を削除する
+	 * IDによって情報を削除する
 	 *
 	 * @param aEntity エンティティ
 	 */
