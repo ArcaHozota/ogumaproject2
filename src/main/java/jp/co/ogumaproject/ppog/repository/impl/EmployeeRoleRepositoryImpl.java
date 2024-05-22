@@ -50,6 +50,12 @@ public class EmployeeRoleRepositoryImpl implements EmployeeRoleRepository {
 				.param(id).query(EmployeeRole.class).single();
 	}
 
+	@Deprecated
+	@Override
+	public List<EmployeeRole> pagination(final Integer offset, final Integer pageSize, final String keyword) {
+		return null;
+	}
+
 	@Override
 	public void removeById(final EmployeeRole aEntity) {
 		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);

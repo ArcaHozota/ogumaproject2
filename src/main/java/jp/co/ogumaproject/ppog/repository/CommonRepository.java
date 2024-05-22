@@ -43,6 +43,16 @@ public interface CommonRepository<T> {
 	T getOneById(Long id);
 
 	/**
+	 * パージング検索
+	 *
+	 * @param offset   オフセット
+	 * @param pageSize ページサイズ
+	 * @param keyword  検索キーワード
+	 * @return List<T>
+	 */
+	List<T> pagination(Integer offset, Integer pageSize, String keyword);
+
+	/**
 	 * IDによって情報を削除する
 	 *
 	 * @param aEntity エンティティ

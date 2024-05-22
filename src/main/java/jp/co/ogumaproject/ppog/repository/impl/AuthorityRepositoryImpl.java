@@ -51,6 +51,12 @@ public class AuthorityRepositoryImpl implements AuthorityRepository {
 
 	@Deprecated
 	@Override
+	public List<Authority> pagination(final Integer offset, final Integer pageSize, final String keyword) {
+		return null;
+	}
+
+	@Deprecated
+	@Override
 	public void removeById(final Authority aEntity) {
 	}
 

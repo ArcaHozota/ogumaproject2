@@ -50,6 +50,12 @@ public class RoleAuthRepositoryImpl implements RoleAuthRepository {
 		return null;
 	}
 
+	@Deprecated
+	@Override
+	public List<RoleAuth> pagination(final Integer offset, final Integer pageSize, final String keyword) {
+		return null;
+	}
+
 	@Override
 	public void removeById(final RoleAuth aEntity) {
 		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);

@@ -56,7 +56,15 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	public Employee getOneByLoginAccount(final String loginAccount) {
 		return this.jdbcClient
 				.sql("SELECT PEV.* FROM PPOG_EMPLOYEE_VIEW PEV WHERE PEV.LOGIN_ACCOUNT = ? OR PEV.USERNAME = ?")
-				.params(loginAccount, loginAccount).query(Employee.class).single();
+				.param(loginAccount).query(Employee.class).single();
+	}
+
+	@Override
+	public List<Employee> pagination(final Integer offset, final Integer pageSize, final String keyword) {
+		return this.jdbcClient
+				.sql("SELECT PEV.* FROM PPOG_EMPLOYEE_VIEW PEV WHERE PEV.LOGIN_ACCOUNT LIKE ? OR PEV.USERNAME LIKE ? "
+						+ "OR PEV.EMAIL LIKE ? ORDER BY PEV.ID ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY")
+				.params(keyword, keyword, keyword, offset, pageSize).query(Employee.class).list();
 	}
 
 	@Override

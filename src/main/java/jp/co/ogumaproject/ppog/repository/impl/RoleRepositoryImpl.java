@@ -52,6 +52,13 @@ public class RoleRepositoryImpl implements RoleRepository {
 	}
 
 	@Override
+	public List<Role> pagination(final Integer offset, final Integer pageSize, final String keyword) {
+		return this.jdbcClient.sql(
+				"SELECT PRV.* FROM PPOG_ROLE_VIEW PRV WHERE PRV.NAME LIKE ? ORDER BY PRV.ID ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY")
+				.params(keyword, offset, pageSize).query(Role.class).list();
+	}
+
+	@Override
 	public void removeById(final Role aEntity) {
 		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
 		this.jdbcClient.sql("UPDATE PPOG_ROLE PR SET PR.DEL_FLG =:delFlg WHERE PR.ID =:id").params(paramMap).update();
