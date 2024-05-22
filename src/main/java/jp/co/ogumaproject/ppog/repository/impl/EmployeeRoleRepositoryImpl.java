@@ -28,6 +28,12 @@ public class EmployeeRoleRepositoryImpl implements EmployeeRoleRepository {
 
 	@Deprecated
 	@Override
+	public Integer countByName(final String name) {
+		return null;
+	}
+
+	@Deprecated
+	@Override
 	public List<EmployeeRole> getListByForeignKey(final Long foreignKey) {
 		return null;
 	}

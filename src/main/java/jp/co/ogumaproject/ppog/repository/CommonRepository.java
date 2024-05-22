@@ -11,6 +11,14 @@ import java.util.List;
 public interface CommonRepository<T> {
 
 	/**
+	 * 名称によって件数をカウントする
+	 *
+	 * @param name 名称
+	 * @return Integer
+	 */
+	Integer countByName(String name);
+
+	/**
 	 * 外部キーによってリストを取得する
 	 *
 	 * @param foreignKey 外部キー

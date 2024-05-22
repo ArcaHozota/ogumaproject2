@@ -27,6 +27,12 @@ public class RoleRepositoryImpl implements RoleRepository {
 	private JdbcClient jdbcClient;
 
 	@Override
+	public Integer countByName(final String name) {
+		return this.jdbcClient.sql("SELECT COUNT(1) FROM PPOG_ROLE PR WHERE PR.NAME = ?").param(name)
+				.query(Integer.class).single();
+	}
+
+	@Override
 	public List<Role> getListByForeignKey(final Long foreignKey) {
 		return this.jdbcClient.sql(
 				"SELECT PRV.* FROM PPOG_ROLE_VIEW PRV INNER JOIN PPOG_ROLE_AUTH_VIEW PRAV ON PRAV.ROLE_ID = PRV.ID WHERE PRAV.AUTH_ID = ?")

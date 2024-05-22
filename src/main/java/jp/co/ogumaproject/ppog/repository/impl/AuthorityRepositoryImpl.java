@@ -24,6 +24,12 @@ public class AuthorityRepositoryImpl implements AuthorityRepository {
 	@Resource
 	private JdbcClient jdbcClient;
 
+	@Deprecated
+	@Override
+	public Integer countByName(final String name) {
+		return null;
+	}
+
 	@Override
 	public List<Authority> getListByForeignKey(final Long foreignKey) {
 		return this.jdbcClient.sql(

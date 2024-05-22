@@ -26,6 +26,12 @@ public class RoleAuthRepositoryImpl implements RoleAuthRepository {
 	@Resource
 	private JdbcClient jdbcClient;
 
+	@Deprecated
+	@Override
+	public Integer countByName(final String name) {
+		return null;
+	}
+
 	@Override
 	public List<RoleAuth> getListByForeignKey(final Long foreignKey) {
 		return this.jdbcClient.sql("SELECT PRAV.* FROM PPOG_ROLE_AUTH_VIEW PRAV WHERE PRAV.ROLE_ID = ?")
