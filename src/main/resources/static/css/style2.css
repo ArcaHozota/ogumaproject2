@@ -49,7 +49,7 @@ header {
 	font-size: 18px;
 }
 
-.signup {
+.login {
 	border: rgba(255, 255, 255, 0.5) 2px solid;
 	padding: 8px 16px;
 	margin-left: 16px;
@@ -57,18 +57,9 @@ header {
 	transition: 300ms;
 }
 
-.signup:hover {
+.login:hover {
 	background: #fff;
 	color: #000;
-}
-
-.login {
-	transition: 300ms;
-}
-
-.login:hover {
-	color: #7f0020;
-	text-decoration: underline;
 }
 
 .nav .logo {
