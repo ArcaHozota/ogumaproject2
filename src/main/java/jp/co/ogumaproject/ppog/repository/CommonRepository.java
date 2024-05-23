@@ -27,6 +27,13 @@ public interface CommonRepository<T> {
 	Integer countByName(String name);
 
 	/**
+	 * 全件検索
+	 *
+	 * @return List<T>
+	 */
+	List<T> getList();
+
+	/**
 	 * 外部キーによってリストを取得する
 	 *
 	 * @param foreignKey 外部キー

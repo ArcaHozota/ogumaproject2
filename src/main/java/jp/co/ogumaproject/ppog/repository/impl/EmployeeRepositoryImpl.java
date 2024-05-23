@@ -39,6 +39,12 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 				.query(Integer.class).single();
 	}
 
+	@Deprecated
+	@Override
+	public List<Employee> getList() {
+		return null;
+	}
+
 	@Override
 	public List<Employee> getListByForeignKey(final Long foreignKey) {
 		return this.jdbcClient.sql(

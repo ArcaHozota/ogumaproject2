@@ -37,6 +37,12 @@ public class AuthorityRepositoryImpl implements AuthorityRepository {
 	}
 
 	@Override
+	public List<Authority> getList() {
+		return this.jdbcClient.sql("SELECT PAV.* FROM PPOG_AUTHORITY_VIEW PAV ORDER BY PAV.ID ASC")
+				.query(Authority.class).list();
+	}
+
+	@Override
 	public List<Authority> getListByForeignKey(final Long foreignKey) {
 		return this.jdbcClient.sql(
 				"SELECT PAV.* FROM PPOG_AUTHORITY_VIEW PAV INNER JOIN PPOG_ROLE_AUTH_VIEW PRAV ON PRAV.AUTH_ID = PAV.ID WHERE PRAV.ROLE_ID = ?")

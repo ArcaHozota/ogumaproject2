@@ -39,6 +39,11 @@ public class RoleRepositoryImpl implements RoleRepository {
 	}
 
 	@Override
+	public List<Role> getList() {
+		return this.jdbcClient.sql("SELECT PRV.* FROM PPOG_ROLE_VIEW PRV ORDER BY PRV.ID ASC").query(Role.class).list();
+	}
+
+	@Override
 	public List<Role> getListByForeignKey(final Long foreignKey) {
 		return this.jdbcClient.sql(
 				"SELECT PRV.* FROM PPOG_ROLE_VIEW PRV INNER JOIN PPOG_ROLE_AUTH_VIEW PRAV ON PRAV.ROLE_ID = PRV.ID WHERE PRAV.AUTH_ID = ?")
