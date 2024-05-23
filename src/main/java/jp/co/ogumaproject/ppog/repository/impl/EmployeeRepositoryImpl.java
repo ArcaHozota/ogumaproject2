@@ -54,6 +54,15 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	}
 
 	@Override
+	public Employee getOneByEntity(final Employee aEntity) {
+		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		return this.jdbcClient.sql(
+				"SELECT PEV.* FROM PPOG_EMPLOYEE_VIEW PEV WHERE PEV.LOGIN_ACCOUNT =:loginAccount AND PEV.EMAIL =:email "
+						+ "AND PEV.DATE_OF_BIRTH =:dateOfBirth")
+				.params(paramMap).query(Employee.class).single();
+	}
+
+	@Override
 	public Employee getOneById(final Long id) {
 		return this.jdbcClient.sql("SELECT PEV.* FROM PPOG_EMPLOYEE_VIEW PEV WHERE PEV.ID = ?").param(id)
 				.query(Employee.class).single();

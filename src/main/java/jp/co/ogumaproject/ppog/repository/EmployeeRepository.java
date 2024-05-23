@@ -11,6 +11,14 @@ import jp.co.ogumaproject.ppog.entity.Employee;
 public interface EmployeeRepository extends CommonRepository<Employee> {
 
 	/**
+	 * エンティティによって1件を抽出する
+	 *
+	 * @param aEntity エンティティ
+	 * @return Employee
+	 */
+	Employee getOneByEntity(Employee aEntity);
+
+	/**
 	 * アカウントによって1件を抽出する
 	 *
 	 * @param loginAccount アカウント
