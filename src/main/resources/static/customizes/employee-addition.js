@@ -100,7 +100,7 @@ $("#editInfoBtn").on('click', function() {
 		}
 		let putData = JSON.stringify({
 			'id': $("#editIdContainer").text(),
-			'loginAccount': $("#loginAccountEdit").text(),
+			'loginAccount': $("#loginAccountEdit").val().trim(),
 			'username': $("#usernameEdit").val().trim(),
 			'password': rawPassword,
 			'email': $("#emailEdit").val().trim(),

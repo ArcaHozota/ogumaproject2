@@ -33,7 +33,9 @@
 							<div class="form-group row">
 								<label for="loginAccountEdit" class="col-sm-3 col-form-label text-end">ログインアカウント</label>
 								<div class="col-sm-7" style="height: 60px;">
-									<p class="form-control" id="loginAccountEdit" th:text="${arawaseta.loginAccount}" />
+									<input type="text" class="form-control" id="loginAccountEdit"
+										placeholder="アカウントを入力してください" th:value="${arawaseta.loginAccount}">
+									<span class="form-text" style="font-size: 12px;"></span>
 								</div>
 							</div>
 							<div class="form-group row">
