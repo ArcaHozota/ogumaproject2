@@ -58,6 +58,12 @@ public class RoleRepositoryImpl implements RoleRepository {
 	}
 
 	@Override
+	public Role getOneByName(final String name) {
+		return this.jdbcClient.sql("SELECT PRV.* FROM PPOG_ROLE_VIEW PRV WHERE PRV.NAME = ?").param(name)
+				.query(Role.class).single();
+	}
+
+	@Override
 	public List<Role> pagination(final Integer offset, final Integer pageSize, final String keyword) {
 		return this.jdbcClient.sql(
 				"SELECT PRV.* FROM PPOG_ROLE_VIEW PRV WHERE PRV.NAME LIKE ? ORDER BY PRV.ID ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY")
