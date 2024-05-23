@@ -196,9 +196,10 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final Employee originalEntity = new Employee();
 		final Employee employee = this.employeeRepository.getOneById(employeeDto.id());
 		password = employee.getPassword();
-		employee.setPassword(CommonProjectUtils.EMPTY_STRING);
 		SecondBeanUtils.copyNullableProperties(employee, originalEntity);
+		originalEntity.setPassword(CommonProjectUtils.EMPTY_STRING);
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
+		employee.setPassword(CommonProjectUtils.EMPTY_STRING);
 		if (CommonProjectUtils.isNotEmpty(employeeDto.password())) {
 			passwordMatch = ENCODER.matches(employeeDto.password(), password);
 		} else {
