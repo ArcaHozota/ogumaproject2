@@ -26,6 +26,12 @@ public class AuthorityRepositoryImpl implements AuthorityRepository {
 
 	@Deprecated
 	@Override
+	public Integer countByKeyword(final String keyword) {
+		return null;
+	}
+
+	@Deprecated
+	@Override
 	public Integer countByName(final String name) {
 		return null;
 	}

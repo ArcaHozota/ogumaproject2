@@ -27,6 +27,12 @@ public class RoleRepositoryImpl implements RoleRepository {
 	private JdbcClient jdbcClient;
 
 	@Override
+	public Integer countByKeyword(final String keyword) {
+		return this.jdbcClient.sql("SELECT COUNT(1) FROM PPOG_ROLE_VIEW PRV WHERE PRV.NAME LIKE ?").param(keyword)
+				.query(Integer.class).single();
+	}
+
+	@Override
 	public Integer countByName(final String name) {
 		return this.jdbcClient.sql("SELECT COUNT(1) FROM PPOG_ROLE PR WHERE PR.NAME = ?").param(name)
 				.query(Integer.class).single();

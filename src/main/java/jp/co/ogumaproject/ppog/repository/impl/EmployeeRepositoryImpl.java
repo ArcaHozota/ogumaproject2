@@ -27,6 +27,13 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	private JdbcClient jdbcClient;
 
 	@Override
+	public Integer countByKeyword(final String keyword) {
+		return this.jdbcClient.sql(
+				"SELECT COUNT(1) FROM PPOG_EMPLOYEE_VIEW PEV WHERE PEV.LOGIN_ACCOUNT LIKE ? OR PEV.USERNAME LIKE ? OR PEV.EMAIL LIKE ?")
+				.param(keyword).query(Integer.class).single();
+	}
+
+	@Override
 	public Integer countByName(final String name) {
 		return this.jdbcClient.sql("SELECT COUNT(1) FROM PPOG_EMPLOYEE PE WHERE PE.LOGIN_ACCOUNT = ?").param(name)
 				.query(Integer.class).single();

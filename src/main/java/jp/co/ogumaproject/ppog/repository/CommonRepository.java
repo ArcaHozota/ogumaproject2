@@ -11,6 +11,14 @@ import java.util.List;
 public interface CommonRepository<T> {
 
 	/**
+	 * キーワードによって件数をカウントする
+	 *
+	 * @param keyword 検索キーワード
+	 * @return Integer
+	 */
+	Integer countByKeyword(String keyword);
+
+	/**
 	 * 名称によって件数をカウントする
 	 *
 	 * @param name 名称

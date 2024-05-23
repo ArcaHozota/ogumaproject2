@@ -28,6 +28,12 @@ public class EmployeeRoleRepositoryImpl implements EmployeeRoleRepository {
 
 	@Deprecated
 	@Override
+	public Integer countByKeyword(final String keyword) {
+		return null;
+	}
+
+	@Deprecated
+	@Override
 	public Integer countByName(final String name) {
 		return null;
 	}
