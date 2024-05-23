@@ -30,7 +30,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	public Integer countByKeyword(final String keyword) {
 		return this.jdbcClient.sql(
 				"SELECT COUNT(1) FROM PPOG_EMPLOYEE_VIEW PEV WHERE PEV.LOGIN_ACCOUNT LIKE ? OR PEV.USERNAME LIKE ? OR PEV.EMAIL LIKE ?")
-				.param(keyword).query(Integer.class).single();
+				.params(keyword, keyword, keyword).query(Integer.class).single();
 	}
 
 	@Override
@@ -62,8 +62,8 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	@Override
 	public Employee getOneByLoginAccount(final String loginAccount) {
 		return this.jdbcClient
-				.sql("SELECT PEV.* FROM PPOG_EMPLOYEE_VIEW PEV WHERE PEV.LOGIN_ACCOUNT = ? OR PEV.USERNAME = ?")
-				.param(loginAccount).query(Employee.class).single();
+				.sql("SELECT PEV.* FROM PPOG_EMPLOYEE_VIEW PEV WHERE PEV.LOGIN_ACCOUNT = ? OR PEV.EMAIL = ?")
+				.params(loginAccount, loginAccount).query(Employee.class).single();
 	}
 
 	@Override
