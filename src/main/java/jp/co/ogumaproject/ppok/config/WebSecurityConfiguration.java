@@ -17,7 +17,7 @@ import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppok.common.OgumaProjectConstants;
 import jp.co.ogumaproject.ppok.common.OgumaProjectURLConstants;
 import jp.co.ogumaproject.ppok.listener.OgumaProjectUserDetailsService;
-import jp.co.ogumaproject.ppok.utils.CommonProjectUtils;
+import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -95,13 +95,13 @@ public class WebSecurityConfiguration {
 					handling.authenticationEntryPoint((request, response, authenticationException) -> {
 						final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.UNAUTHORIZED.value(),
 								authenticationException.getMessage());
-						CommonProjectUtils.renderString(response, responseResult);
+						OgumaProjectUtils.renderString(response, responseResult);
 						log.warn(responseResult.getMessage());
 					});
 					handling.accessDeniedHandler((request, response, accessDeniedException) -> {
 						final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.FORBIDDEN.value(),
 								OgumaProjectConstants.MESSAGE_SPRINGSECURITY_REQUIRED_AUTH);
-						CommonProjectUtils.renderString(response, responseResult);
+						OgumaProjectUtils.renderString(response, responseResult);
 						log.warn(responseResult.getMessage());
 					});
 				})

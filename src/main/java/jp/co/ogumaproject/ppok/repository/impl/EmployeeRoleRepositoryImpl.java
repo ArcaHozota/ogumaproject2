@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppok.entity.EmployeeRole;
 import jp.co.ogumaproject.ppok.repository.EmployeeRoleRepository;
-import jp.co.ogumaproject.ppok.utils.CommonProjectUtils;
+import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 
 /**
  * 社員役割リポジトリ
@@ -70,14 +70,14 @@ public class EmployeeRoleRepositoryImpl implements EmployeeRoleRepository {
 
 	@Override
 	public void removeById(final EmployeeRole aEntity) {
-		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
 		this.jdbcClient.sql("DELETE FROM PPOG_EMPLOYEE_ROLE PER WHERE PER.EMPLOYEE_ID =:employeeId").params(paramMap)
 				.update();
 	}
 
 	@Override
 	public void saveById(final EmployeeRole aEntity) {
-		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
 		this.jdbcClient
 				.sql("INSERT INTO PPOG_EMPLOYEE_ROLE PER (PER.EMPLOYEE_ID, PER.ROLE_ID) VALUES (:employeeId, :roleId)")
 				.params(paramMap).update();
@@ -85,7 +85,7 @@ public class EmployeeRoleRepositoryImpl implements EmployeeRoleRepository {
 
 	@Override
 	public void updateById(final EmployeeRole aEntity) {
-		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
 		this.jdbcClient.sql("UPDATE PPOG_EMPLOYEE_ROLE PER SET PER.ROLE_ID =:roleId WHERE PER.EMPLOYEE_ID =:employeeId")
 				.params(paramMap).update();
 	}

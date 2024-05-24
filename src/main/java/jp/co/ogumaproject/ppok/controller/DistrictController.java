@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jp.co.ogumaproject.ppok.common.OgumaProjectURLConstants;
 import jp.co.ogumaproject.ppok.dto.DistrictDto;
 import jp.co.ogumaproject.ppok.service.IDistrictService;
-import jp.co.ogumaproject.ppok.utils.CommonProjectUtils;
+import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 import jp.co.ogumaproject.ppok.utils.Pagination;
 import jp.co.ogumaproject.ppok.utils.ResultDto;
 import lombok.AccessLevel;
@@ -50,7 +50,7 @@ public final class DistrictController {
 	@GetMapping(OgumaProjectURLConstants.URL_DISTRICT_PAGINATION)
 	public ResultDto<Pagination<DistrictDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
-			@RequestParam(name = "keyword", defaultValue = CommonProjectUtils.EMPTY_STRING) final String keyword) {
+			@RequestParam(name = "keyword", defaultValue = OgumaProjectUtils.EMPTY_STRING) final String keyword) {
 		final Pagination<DistrictDto> districts = this.iDistrictService.getDistrictsByKeyword(pageNum, keyword);
 		return ResultDto.successWithData(districts);
 	}

@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
  * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class CommonProjectUtils {
+public final class OgumaProjectUtils {
 
 	/**
 	 * UTF-8キャラセット
@@ -295,7 +295,7 @@ public final class CommonProjectUtils {
 		final PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();
 		for (final PropertyDescriptor propertyDescriptor : propertyDescriptors) {
 			final String propertyName = propertyDescriptor.getName();
-			if (CommonProjectUtils.isEqual("class", propertyName)) {
+			if (OgumaProjectUtils.isEqual("class", propertyName)) {
 				continue;
 			}
 			paramMap.put(propertyName, beanWrapper.getPropertyValue(propertyName));
@@ -342,7 +342,7 @@ public final class CommonProjectUtils {
 	 * @return true: すべて数字, false: 文字も含める
 	 */
 	public static boolean isDigital(@Nullable final String string) {
-		if (CommonProjectUtils.isEmpty(string)) {
+		if (OgumaProjectUtils.isEmpty(string)) {
 			return false;
 		}
 		return Pattern.compile("\\d*").matcher(string).matches();
@@ -410,7 +410,7 @@ public final class CommonProjectUtils {
 	 * @return true: 空ではない, false: 空
 	 */
 	public static boolean isNotEmpty(@Nullable final String str) {
-		return !CommonProjectUtils.isEmpty(str);
+		return !OgumaProjectUtils.isEmpty(str);
 	}
 
 	/**
@@ -421,7 +421,7 @@ public final class CommonProjectUtils {
 	 * @return true: イコールしない, false: イコール
 	 */
 	public static boolean isNotEqual(@Nullable final Long long1, @Nullable final Long long2) {
-		return !CommonProjectUtils.isEqual(long1, long2);
+		return !OgumaProjectUtils.isEqual(long1, long2);
 	}
 
 	/**
@@ -432,7 +432,7 @@ public final class CommonProjectUtils {
 	 * @return true: イコールしない, false: イコール
 	 */
 	public static boolean isNotEqual(@Nullable final Object obj1, @Nullable final Object obj2) {
-		return !CommonProjectUtils.isEqual(obj1, obj2);
+		return !OgumaProjectUtils.isEqual(obj1, obj2);
 	}
 
 	/**
@@ -443,7 +443,7 @@ public final class CommonProjectUtils {
 	 * @return true: イコールしない, false: イコール
 	 */
 	public static boolean isNotEqual(@Nullable final String str1, @Nullable final String str2) {
-		return !CommonProjectUtils.isEqual(str1, str2);
+		return !OgumaProjectUtils.isEqual(str1, str2);
 	}
 
 	/**
@@ -471,7 +471,7 @@ public final class CommonProjectUtils {
 	 * @return 半角文字
 	 */
 	public static String toHankaku(@Nullable final String zenkaku) {
-		if (CommonProjectUtils.isEmpty(zenkaku)) {
+		if (OgumaProjectUtils.isEmpty(zenkaku)) {
 			return EMPTY_STRING;
 		}
 		final StringBuilder builder = new StringBuilder();
@@ -494,7 +494,7 @@ public final class CommonProjectUtils {
 	 * @return 全角文字
 	 */
 	public static String toZenkaku(@Nullable final String hankaku) {
-		if (CommonProjectUtils.isEmpty(hankaku)) {
+		if (OgumaProjectUtils.isEmpty(hankaku)) {
 			return EMPTY_STRING;
 		}
 		final StringBuilder builder = new StringBuilder();

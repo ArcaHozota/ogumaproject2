@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppok.entity.Employee;
 import jp.co.ogumaproject.ppok.repository.EmployeeRepository;
-import jp.co.ogumaproject.ppok.utils.CommonProjectUtils;
+import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 
 /**
  * 社員リポジトリ
@@ -61,7 +61,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
 	@Override
 	public Employee getOneByEntity(final Employee aEntity) {
-		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
 		return this.jdbcClient.sql(
 				"SELECT PEV.* FROM PPOG_EMPLOYEES_VIEW PEV WHERE PEV.LOGIN_ACCOUNT =:loginAccount AND PEV.EMAIL =:email "
 						+ "AND PEV.DATE_OF_BIRTH =:dateOfBirth")
@@ -91,14 +91,14 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
 	@Override
 	public void removeById(final Employee aEntity) {
-		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
 		this.jdbcClient.sql("UPDATE PPOG_EMPLOYEES PE SET PE.DEL_FLG =:delFlg WHERE PE.ID =:id").params(paramMap)
 				.update();
 	}
 
 	@Override
 	public void saveById(final Employee aEntity) {
-		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
 		this.jdbcClient.sql(
 				"INSERT INTO PPOG_EMPLOYEES PE (PE.ID, PE.LOGIN_ACCOUNT, PE.PASSWORD, PE.USERNAME, PE.EMAIL, PE.CREATED_TIME, PE.DATE_OF_BIRTH, PE.DEL_FLG) "
 						+ "VALUES (:id, :loginAccount, :password, :username, :email, :createdTime, :dateOfBirth, :delFlg)")
@@ -107,7 +107,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
 	@Override
 	public void updateById(final Employee aEntity) {
-		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
 		this.jdbcClient.sql(
 				"UPDATE PPOG_EMPLOYEES PE SET PE.LOGIN_ACCOUNT =:loginAccount, PE.PASSWORD =:password, PE.USERNAME =:username, "
 						+ "PE.EMAIL =:email, PE.CREATED_TIME =:createdTime, PE.DATE_OF_BIRTH =:dateOfBirth WHERE PE.DEL_FLG =:delFlg AND PE.ID =:id")

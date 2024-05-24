@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppok.entity.RoleAuth;
 import jp.co.ogumaproject.ppok.repository.RoleAuthRepository;
-import jp.co.ogumaproject.ppok.utils.CommonProjectUtils;
+import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 
 /**
  * 役割権限リポジトリ
@@ -80,7 +80,7 @@ public class RoleAuthRepositoryImpl implements RoleAuthRepository {
 
 	@Override
 	public void saveById(final RoleAuth aEntity) {
-		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
 		this.jdbcClient.sql("INSERT INTO PPOG_ROLE_AUTH PRA (PRA.ROLE_ID, PRA.AUTH_ID) VALUES (:roleId, :authId)")
 				.params(paramMap).update();
 	}

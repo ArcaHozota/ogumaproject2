@@ -16,7 +16,7 @@ import jp.co.ogumaproject.ppok.common.OgumaProjectURLConstants;
 import jp.co.ogumaproject.ppok.dto.AuthorityDto;
 import jp.co.ogumaproject.ppok.dto.RoleDto;
 import jp.co.ogumaproject.ppok.service.IRoleService;
-import jp.co.ogumaproject.ppok.utils.CommonProjectUtils;
+import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 import jp.co.ogumaproject.ppok.utils.Pagination;
 import jp.co.ogumaproject.ppok.utils.ResultDto;
 import lombok.AccessLevel;
@@ -55,7 +55,7 @@ public final class RoleController {
 	 */
 	@GetMapping(OgumaProjectURLConstants.URL_ROLE_CHECK)
 	public ResultDto<String> checkDuplicated(
-			@RequestParam(name = "name", defaultValue = CommonProjectUtils.EMPTY_STRING) final String name) {
+			@RequestParam(name = "name", defaultValue = OgumaProjectUtils.EMPTY_STRING) final String name) {
 		return this.iRoleService.checkDuplicated(name);
 	}
 
@@ -123,7 +123,7 @@ public final class RoleController {
 	@GetMapping(OgumaProjectURLConstants.URL_ROLE_PAGINATION)
 	public ResultDto<Pagination<RoleDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
-			@RequestParam(name = "keyword", defaultValue = CommonProjectUtils.EMPTY_STRING) final String keyword) {
+			@RequestParam(name = "keyword", defaultValue = OgumaProjectUtils.EMPTY_STRING) final String keyword) {
 		final Pagination<RoleDto> roles = this.iRoleService.getRolesByKeyword(pageNum, keyword);
 		return ResultDto.successWithData(roles);
 	}

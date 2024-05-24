@@ -1,6 +1,6 @@
 package jp.co.ogumaproject.ppok.exception;
 
-import jp.co.ogumaproject.ppok.utils.CommonProjectUtils;
+import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 
 /**
  * プロジェクト業務ロジック例外
@@ -19,7 +19,7 @@ public class OgumaProjectException extends RuntimeException {
 
 	public OgumaProjectException() {
 		super();
-		this.message = CommonProjectUtils.EMPTY_STRING;
+		this.message = OgumaProjectUtils.EMPTY_STRING;
 	}
 
 	public OgumaProjectException(final String message) {

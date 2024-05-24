@@ -19,7 +19,7 @@ import jp.co.ogumaproject.ppok.repository.EmployeeRoleRepository;
 import jp.co.ogumaproject.ppok.repository.RoleAuthRepository;
 import jp.co.ogumaproject.ppok.repository.RoleRepository;
 import jp.co.ogumaproject.ppok.service.IRoleService;
-import jp.co.ogumaproject.ppok.utils.CommonProjectUtils;
+import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 import jp.co.ogumaproject.ppok.utils.Pagination;
 import jp.co.ogumaproject.ppok.utils.ResultDto;
 import jp.co.ogumaproject.ppok.utils.SecondBeanUtils;
@@ -74,7 +74,7 @@ public final class RoleServiceImpl implements IRoleService {
 				.toList();
 		final List<Long> list = this.roleAuthRepository.getListByForeignKey(roleId).stream().map(RoleAuth::getAuthId)
 				.toList();
-		if (CommonProjectUtils.isEqual(list, authIds)) {
+		if (OgumaProjectUtils.isEqual(list, authIds)) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 		}
 		this.roleAuthRepository.batchRemoveByForeignKey(roleId);
@@ -118,7 +118,7 @@ public final class RoleServiceImpl implements IRoleService {
 		} else {
 			final EmployeeRole employeeRole = this.employeeRoleRepository.getOneById(employeeId);
 			final List<Role> selectedRole = roles.stream()
-					.filter(a -> CommonProjectUtils.isEqual(a.getId(), employeeRole.getRoleId()))
+					.filter(a -> OgumaProjectUtils.isEqual(a.getId(), employeeRole.getRoleId()))
 					.collect(Collectors.toList());
 			roleDtos.addAll(selectedRole);
 		}
@@ -130,7 +130,7 @@ public final class RoleServiceImpl implements IRoleService {
 	@Override
 	public Pagination<RoleDto> getRolesByKeyword(final Integer pageNum, final String keyword) {
 		final int offset = (pageNum - 1) * PAGE_SIZE;
-		final String detailKeyword = CommonProjectUtils.getDetailKeyword(keyword);
+		final String detailKeyword = OgumaProjectUtils.getDetailKeyword(keyword);
 		final Integer totalRecords = this.roleRepository.countByKeyword(detailKeyword);
 		final List<Role> roles = this.roleRepository.pagination(offset, PAGE_SIZE, detailKeyword);
 		final List<RoleDto> roleDtos = roles.stream().map(item -> new RoleDto(item.getId(), item.getName()))
@@ -165,7 +165,7 @@ public final class RoleServiceImpl implements IRoleService {
 		final Role role = this.roleRepository.getOneById(roleDto.id());
 		SecondBeanUtils.copyNullableProperties(role, originalEntity);
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
-		if (CommonProjectUtils.isEqual(originalEntity, role)) {
+		if (OgumaProjectUtils.isEqual(originalEntity, role)) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 		}
 		this.roleRepository.updateById(role);

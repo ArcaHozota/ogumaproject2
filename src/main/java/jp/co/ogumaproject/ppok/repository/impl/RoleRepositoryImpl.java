@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppok.entity.Role;
 import jp.co.ogumaproject.ppok.repository.RoleRepository;
-import jp.co.ogumaproject.ppok.utils.CommonProjectUtils;
+import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 
 /**
  * 役割リポジトリ
@@ -78,20 +78,20 @@ public class RoleRepositoryImpl implements RoleRepository {
 
 	@Override
 	public void removeById(final Role aEntity) {
-		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
 		this.jdbcClient.sql("UPDATE PPOG_ROLES PR SET PR.DEL_FLG =:delFlg WHERE PR.ID =:id").params(paramMap).update();
 	}
 
 	@Override
 	public void saveById(final Role aEntity) {
-		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
 		this.jdbcClient.sql("INSERT INTO PPOG_ROLES PR (PR.ID, PR.NAME, PR.DEL_FLG) VALUES (:id, :name, :delFlg)")
 				.params(paramMap).update();
 	}
 
 	@Override
 	public void updateById(final Role aEntity) {
-		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
+		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
 		this.jdbcClient.sql("UPDATE PPOG_ROLES PR SET PR.NAME =:name WHERE PR.DEL_FLG =:delFlg AND PR.ID =:id")
 				.params(paramMap).update();
 	}

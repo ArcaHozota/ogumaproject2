@@ -20,7 +20,7 @@ import jp.co.ogumaproject.ppok.repository.EmployeeRepository;
 import jp.co.ogumaproject.ppok.repository.EmployeeRoleRepository;
 import jp.co.ogumaproject.ppok.repository.RoleRepository;
 import jp.co.ogumaproject.ppok.service.IEmployeeService;
-import jp.co.ogumaproject.ppok.utils.CommonProjectUtils;
+import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 import jp.co.ogumaproject.ppok.utils.Pagination;
 import jp.co.ogumaproject.ppok.utils.ResultDto;
 import jp.co.ogumaproject.ppok.utils.SecondBeanUtils;
@@ -98,7 +98,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			return Pagination.of(employeeDtos, employeeDtos.size(), pageNum, PAGE_SIZE);
 		}
 		final int offset = (pageNum - 1) * PAGE_SIZE;
-		final String detailKeyword = CommonProjectUtils.getDetailKeyword(keyword);
+		final String detailKeyword = OgumaProjectUtils.getDetailKeyword(keyword);
 		final Integer totalRecords = this.employeeRepository.countByKeyword(detailKeyword);
 		final List<Employee> employees = this.employeeRepository.pagination(offset, PAGE_SIZE, detailKeyword);
 		final List<EmployeeDto> employeeDtos = employees.stream()
@@ -191,24 +191,24 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public ResultDto<String> update(final EmployeeDto employeeDto) {
-		String password = CommonProjectUtils.EMPTY_STRING;
+		String password = OgumaProjectUtils.EMPTY_STRING;
 		boolean passwordMatch = false;
 		final Employee originalEntity = new Employee();
 		final Employee employee = this.employeeRepository.getOneById(employeeDto.id());
 		password = employee.getPassword();
 		SecondBeanUtils.copyNullableProperties(employee, originalEntity);
-		originalEntity.setPassword(CommonProjectUtils.EMPTY_STRING);
+		originalEntity.setPassword(OgumaProjectUtils.EMPTY_STRING);
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
-		employee.setPassword(CommonProjectUtils.EMPTY_STRING);
-		if (CommonProjectUtils.isNotEmpty(employeeDto.password())) {
+		employee.setPassword(OgumaProjectUtils.EMPTY_STRING);
+		if (OgumaProjectUtils.isNotEmpty(employeeDto.password())) {
 			passwordMatch = ENCODER.matches(employeeDto.password(), password);
 		} else {
 			passwordMatch = true;
 		}
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), FORMATTER));
-		if (CommonProjectUtils.isEqual(originalEntity, employee) && passwordMatch) {
+		if (OgumaProjectUtils.isEqual(originalEntity, employee) && passwordMatch) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
-		} else if (CommonProjectUtils.isEqual(originalEntity, employee)) {
+		} else if (OgumaProjectUtils.isEqual(originalEntity, employee)) {
 			employee.setPassword(ENCODER.encode(employeeDto.password()));
 		} else if (passwordMatch) {
 			employee.setPassword(password);

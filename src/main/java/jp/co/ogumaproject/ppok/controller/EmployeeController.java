@@ -19,7 +19,7 @@ import jp.co.ogumaproject.ppok.dto.EmployeeDto;
 import jp.co.ogumaproject.ppok.dto.RoleDto;
 import jp.co.ogumaproject.ppok.service.IEmployeeService;
 import jp.co.ogumaproject.ppok.service.IRoleService;
-import jp.co.ogumaproject.ppok.utils.CommonProjectUtils;
+import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 import jp.co.ogumaproject.ppok.utils.Pagination;
 import jp.co.ogumaproject.ppok.utils.ResultDto;
 import lombok.AccessLevel;
@@ -92,7 +92,7 @@ public final class EmployeeController {
 	@ResponseBody
 	public ResultDto<Pagination<EmployeeDto>> pagination(
 			@RequestParam(name = "pageNum", defaultValue = "1") final Integer pageNum,
-			@RequestParam(name = "keyword", defaultValue = CommonProjectUtils.EMPTY_STRING) final String keyword,
+			@RequestParam(name = "keyword", defaultValue = OgumaProjectUtils.EMPTY_STRING) final String keyword,
 			@RequestParam(name = "userId", required = false) final Long userId,
 			@RequestParam(name = "authChkFlag", defaultValue = "false") final String authChkFlag) {
 		final Pagination<EmployeeDto> employees = this.iEmployeeService.getEmployeesByKeyword(pageNum, keyword, userId,
