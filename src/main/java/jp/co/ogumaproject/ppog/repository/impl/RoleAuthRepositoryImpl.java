@@ -26,6 +26,11 @@ public class RoleAuthRepositoryImpl implements RoleAuthRepository {
 	@Resource
 	private JdbcClient jdbcClient;
 
+	@Override
+	public void batchRemoveByForeignKey(final Long foreignKey) {
+		this.jdbcClient.sql("DELETE FROM PPOG_ROLE_AUTH PRA WHERE PRA.ROLE_ID = ?").param(foreignKey).update();
+	}
+
 	@Deprecated
 	@Override
 	public Integer countByKeyword(final String keyword) {
@@ -68,10 +73,9 @@ public class RoleAuthRepositoryImpl implements RoleAuthRepository {
 		return null;
 	}
 
+	@Deprecated
 	@Override
 	public void removeById(final RoleAuth aEntity) {
-		final Map<String, Object> paramMap = CommonProjectUtils.getParamMap(aEntity);
-		this.jdbcClient.sql("DELETE FROM PPOG_ROLE_AUTH PRA WHERE PRA.ROLE_ID =:roleId").params(paramMap).update();
 	}
 
 	@Override
