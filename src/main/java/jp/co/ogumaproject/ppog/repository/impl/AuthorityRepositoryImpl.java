@@ -38,26 +38,26 @@ public class AuthorityRepositoryImpl implements AuthorityRepository {
 
 	@Override
 	public List<Authority> getList() {
-		return this.jdbcClient.sql("SELECT PAV.* FROM PPOG_AUTHORITY_VIEW PAV ORDER BY PAV.ID ASC")
+		return this.jdbcClient.sql("SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV ORDER BY PAV.ID ASC")
 				.query(Authority.class).list();
 	}
 
 	@Override
 	public List<Authority> getListByForeignKey(final Long foreignKey) {
 		return this.jdbcClient.sql(
-				"SELECT PAV.* FROM PPOG_AUTHORITY_VIEW PAV INNER JOIN PPOG_ROLE_AUTH_VIEW PRAV ON PRAV.AUTH_ID = PAV.ID WHERE PRAV.ROLE_ID = ?")
+				"SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV INNER JOIN PPOG_ROLE_AUTH_VIEW PRAV ON PRAV.AUTH_ID = PAV.ID WHERE PRAV.ROLE_ID = ?")
 				.param(foreignKey).query(Authority.class).list();
 	}
 
 	@Override
 	public List<Authority> getListByIds(final List<Long> ids) {
-		return this.jdbcClient.sql("SELECT PAV.* FROM PPOG_AUTHORITY_VIEW PAV WHERE PAV.ID IN (?)").params(ids)
+		return this.jdbcClient.sql("SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV WHERE PAV.ID IN (?)").params(ids)
 				.query(Authority.class).list();
 	}
 
 	@Override
 	public Authority getOneById(final Long id) {
-		return this.jdbcClient.sql("SELECT PAV.* FROM PPOG_AUTHORITY_VIEW PAV WHERE PAV.ID = ?").param(id)
+		return this.jdbcClient.sql("SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV WHERE PAV.ID = ?").param(id)
 				.query(Authority.class).single();
 	}
 
