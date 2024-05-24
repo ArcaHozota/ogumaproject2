@@ -219,8 +219,8 @@ $("#authChangeBtn").on('click', function() {
 		authIdArray.push(authId);
 	}
 	let putData = JSON.stringify({
-		'authIdArray': authIdArray,
-		'roleId': [fuyoId]
+		'authIds': authIdArray,
+		'roleIds': [fuyoId]
 	});
 	ogumaAjaxModify('/oguma/role/doAssignment', 'PUT', putData, authPutSuccessFunction);
 });

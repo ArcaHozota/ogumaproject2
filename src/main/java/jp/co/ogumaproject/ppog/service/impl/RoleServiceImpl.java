@@ -1,6 +1,7 @@
 package jp.co.ogumaproject.ppog.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,7 +13,10 @@ import jp.co.ogumaproject.ppog.dto.AuthorityDto;
 import jp.co.ogumaproject.ppog.dto.RoleDto;
 import jp.co.ogumaproject.ppog.entity.EmployeeRole;
 import jp.co.ogumaproject.ppog.entity.Role;
+import jp.co.ogumaproject.ppog.entity.RoleAuth;
+import jp.co.ogumaproject.ppog.repository.AuthorityRepository;
 import jp.co.ogumaproject.ppog.repository.EmployeeRoleRepository;
+import jp.co.ogumaproject.ppog.repository.RoleAuthRepository;
 import jp.co.ogumaproject.ppog.repository.RoleRepository;
 import jp.co.ogumaproject.ppog.service.IRoleService;
 import jp.co.ogumaproject.ppog.utils.CommonProjectUtils;
@@ -35,13 +39,8 @@ public final class RoleServiceImpl implements IRoleService {
 
 	private static final Integer PAGE_SIZE = OgumaProjectConstants.DEFAULT_PAGE_SIZE;
 
-//	/**
-//	 * 社員リポジトリ
-//	 */
-//	private final EmployeeRepository employeeRepository;
-
 	/**
-	 * 社員リポジトリ
+	 * 社員役割リポジトリ
 	 */
 	private final EmployeeRoleRepository employeeRoleRepository;
 
@@ -49,6 +48,16 @@ public final class RoleServiceImpl implements IRoleService {
 	 * 役割リポジトリ
 	 */
 	private final RoleRepository roleRepository;
+
+	/**
+	 * 役割権限リポジトリ
+	 */
+	private final RoleAuthRepository roleAuthRepository;
+
+	/**
+	 * 権限リポジトリ
+	 */
+	private final AuthorityRepository authorityRepository;
 
 	@Override
 	public ResultDto<String> checkDuplicated(final String name) {
@@ -59,20 +68,36 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public ResultDto<String> doAssignment(final Map<String, List<Long>> paramMap) {
-		// TODO Auto-generated method stub
-		return null;
+		final Long roleId = paramMap.get("roleIds").get(0);
+		final Long[] authIdArray = { 1L, 5L, 9L, 12L };
+		final List<Long> authIds = paramMap.get("authIds").stream().filter(a -> !Arrays.asList(authIdArray).contains(a))
+				.toList();
+		final List<Long> list = this.roleAuthRepository.getListByForeignKey(roleId).stream().map(RoleAuth::getAuthId)
+				.toList();
+		if (CommonProjectUtils.isEqual(list, authIds)) {
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
+		}
+		this.roleAuthRepository.batchRemoveByForeignKey(roleId);
+		final List<RoleAuth> roleAuths = authIds.stream().map(item -> {
+			final RoleAuth roleAuth = new RoleAuth();
+			roleAuth.setRoleId(roleId);
+			roleAuth.setAuthId(item);
+			return roleAuth;
+		}).toList();
+		roleAuths.forEach(roleAuth -> this.roleAuthRepository.saveById(roleAuth));
+		return ResultDto.successWithoutData();
 	}
 
 	@Override
 	public List<Long> getAuthIdsById(final Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.roleAuthRepository.getListByForeignKey(id).stream().map(RoleAuth::getAuthId).toList();
 	}
 
 	@Override
 	public List<AuthorityDto> getAuthList() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.authorityRepository.getList().stream()
+				.map(item -> new AuthorityDto(item.getId(), item.getName(), item.getTitle(), item.getCategoryId()))
+				.toList();
 	}
 
 	@Override
@@ -84,12 +109,19 @@ public final class RoleServiceImpl implements IRoleService {
 	@Override
 	public List<RoleDto> getRolesByEmployeeId(final Long employeeId) {
 		final List<Role> roleDtos = new ArrayList<>();
-		final EmployeeRole employeeRole = this.employeeRoleRepository.getOneById(employeeId);
 		final List<Role> roles = this.roleRepository.getList();
-		final List<Role> selectedRole = roles.stream()
-				.filter(a -> CommonProjectUtils.isEqual(a.getId(), employeeRole.getRoleId()))
-				.collect(Collectors.toList());
-		roleDtos.addAll(selectedRole);
+		if (employeeId == null) {
+			final Role role = new Role();
+			role.setId(0L);
+			role.setName(OgumaProjectConstants.DEFAULT_ROLE_NAME);
+			roleDtos.add(role);
+		} else {
+			final EmployeeRole employeeRole = this.employeeRoleRepository.getOneById(employeeId);
+			final List<Role> selectedRole = roles.stream()
+					.filter(a -> CommonProjectUtils.isEqual(a.getId(), employeeRole.getRoleId()))
+					.collect(Collectors.toList());
+			roleDtos.addAll(selectedRole);
+		}
 		roleDtos.addAll(roles);
 		return roleDtos.stream().distinct().map(item -> new RoleDto(item.getId(), item.getName()))
 				.collect(Collectors.toList());
