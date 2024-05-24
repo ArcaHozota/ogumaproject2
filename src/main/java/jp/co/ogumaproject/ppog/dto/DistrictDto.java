@@ -29,9 +29,14 @@ public record DistrictDto(
 		String shutoName,
 
 		/**
+		 * 地方ID
+		 */
+		Long chihoId,
+
+		/**
 		 * 地方名称
 		 */
-		String chiho,
+		String chihoName,
 
 		/**
 		 * 人口数量
