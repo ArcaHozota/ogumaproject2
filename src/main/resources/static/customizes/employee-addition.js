@@ -5,7 +5,6 @@ $("#loginAccountInput").change(function() {
 		url: '/oguma/employee/check',
 		data: 'loginAcct=' + this.value,
 		type: 'GET',
-		dataType: 'json',
 		success: function(result) {
 			if (result.status === 'SUCCESS') {
 				showValidationMsg(this, "success", "√");
@@ -51,6 +50,20 @@ $("#saveInfoBtn").on('click', function() {
 		});
 		ogumaAjaxModify('/oguma/employee/infoSave', 'POST', postData, postSuccessFunction);
 	}
+});
+$("#loginAccountEdit").change(function() {
+	$.ajax({
+		url: '/oguma/employee/check',
+		data: 'loginAcct=' + this.value,
+		type: 'GET',
+		success: function(result) {
+			if (result.status === 'SUCCESS') {
+				showValidationMsg(this, "success", "√");
+			} else {
+				showValidationMsg(this, "error", result.message);
+			}
+		}
+	});
 });
 $("#passwordEdit").change(function() {
 	let editPassword = this.value;
