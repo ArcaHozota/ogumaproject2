@@ -1,6 +1,7 @@
 package jp.co.ogumaproject.ppok.repository.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppok.entity.District;
 import jp.co.ogumaproject.ppok.repository.DistrictRepository;
+import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 
 /**
  * 地域リポジトリ
@@ -26,13 +28,16 @@ public class DistrictRepositoryImpl implements DistrictRepository {
 
 	@Override
 	public Integer countByKeyword(final String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.jdbcClient.sql(
+				"SELECT COUNT(1) FROM PPOG_DISTRICTS_VIEW PDV INNER JOIN PPOG_CHIHOS_VIEW PCHV ON PCHV.ID = PDV.CHIHO_ID"
+						+ "INNER JOIN PPOG_CITIES_VIEW PCV ON PCV.ID = PDV.SHUTO_ID WHERE PDV.NAME LIKE ? OR PCV.NAME LIKE ? "
+						+ "OR PCHV.NAME LIKE ?")
+				.params(keyword, keyword, keyword).query(Integer.class).single();
 	}
 
+	@Deprecated
 	@Override
 	public Integer countByName(final String name) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -71,22 +76,23 @@ public class DistrictRepositoryImpl implements DistrictRepository {
 				.params(keyword, keyword, keyword, offset, pageSize).query(District.class).list();
 	}
 
+	@Deprecated
 	@Override
 	public void removeById(final District aEntity) {
-		// TODO Auto-generated method stub
-
 	}
 
+	@Deprecated
 	@Override
 	public void saveById(final District aEntity) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void updateById(final District aEntity) {
-		// TODO Auto-generated method stub
-
+		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
+		this.jdbcClient.sql(
+				"UPDATE PPOG_DISTRICTS PD SET PD.NAME =:name, PD.CHIHO_ID =:chihoId, PD.SHUTO_ID =:shutoId, PD.DISTRICT_FLAG =:districtFlag "
+						+ "WHERE PD.DEL_FLG =:delFlg AND PD.ID =:id")
+				.params(paramMap).update();
 	}
 
 }
