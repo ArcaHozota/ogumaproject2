@@ -37,6 +37,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RoleServiceImpl implements IRoleService {
 
+	/**
+	 * ページサイズ
+	 */
 	private static final Integer PAGE_SIZE = OgumaProjectConstants.DEFAULT_PAGE_SIZE;
 
 	/**

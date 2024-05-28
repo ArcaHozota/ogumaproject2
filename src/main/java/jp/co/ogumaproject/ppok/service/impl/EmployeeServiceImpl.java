@@ -38,6 +38,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EmployeeServiceImpl implements IEmployeeService {
 
+	/**
+	 * ページサイズ
+	 */
 	private static final Integer PAGE_SIZE = OgumaProjectConstants.DEFAULT_PAGE_SIZE;
 
 	/**
