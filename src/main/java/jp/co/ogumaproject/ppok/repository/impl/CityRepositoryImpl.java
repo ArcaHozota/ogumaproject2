@@ -38,8 +38,9 @@ public class CityRepositoryImpl implements CityRepository {
 
 	@Override
 	public List<City> getListByForeignKey(final Long foreignKey) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.jdbcClient.sql(
+				"SELECT PCV.* FROM PPOG_CITIES_VIEW PCV INNER JOIN PPOG_DISTRICTS_VIEW PDV ON PDV.ID = PCV.DISTRICT_ID WHERE PDV.ID = ?")
+				.param(foreignKey).query(City.class).list();
 	}
 
 	@Override
