@@ -30,12 +30,6 @@ public class AuthorityRepositoryImpl implements AuthorityRepository {
 		return null;
 	}
 
-	@Deprecated
-	@Override
-	public Integer countByName(final String name) {
-		return null;
-	}
-
 	@Override
 	public List<Authority> getList() {
 		return this.jdbcClient.sql("SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV ORDER BY PAV.ID ASC")

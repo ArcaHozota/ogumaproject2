@@ -11,6 +11,14 @@ import jp.co.ogumaproject.ppok.entity.Employee;
 public interface EmployeeRepository extends CommonRepository<Employee> {
 
 	/**
+	 * 名称によってレコード数を計算する
+	 *
+	 * @param name 社員名称
+	 * @return Integer
+	 */
+	Integer countByName(String name);
+
+	/**
 	 * エンティティによって1件を抽出する
 	 *
 	 * @param aEntity エンティティ

@@ -19,14 +19,6 @@ public interface CommonRepository<T> {
 	Integer countByKeyword(String keyword);
 
 	/**
-	 * 名称によって件数をカウントする
-	 *
-	 * @param name 名称
-	 * @return Integer
-	 */
-	Integer countByName(String name);
-
-	/**
 	 * 全件検索
 	 *
 	 * @return List<T>

@@ -30,12 +30,6 @@ public class ChihoRepositoryImpl implements ChihoRepository {
 		return null;
 	}
 
-	@Deprecated
-	@Override
-	public Integer countByName(final String name) {
-		return null;
-	}
-
 	@Override
 	public List<Chiho> getList() {
 		return this.jdbcClient.sql("SELECT PCHV.* FROM PPOG_CHIHOS_VIEW PCHV ORCER BY PCHV.ID ASC").query(Chiho.class)

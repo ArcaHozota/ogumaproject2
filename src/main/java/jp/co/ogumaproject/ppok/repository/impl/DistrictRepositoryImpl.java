@@ -35,12 +35,6 @@ public class DistrictRepositoryImpl implements DistrictRepository {
 				.params(keyword, keyword, keyword).query(Integer.class).single();
 	}
 
-	@Deprecated
-	@Override
-	public Integer countByName(final String name) {
-		return null;
-	}
-
 	@Override
 	public List<District> getList() {
 		return this.jdbcClient.sql("SELECT PDV.* FROM PPOG_DISTRICTS_VIEW PDV ORDER BY PDV.ID ASC")

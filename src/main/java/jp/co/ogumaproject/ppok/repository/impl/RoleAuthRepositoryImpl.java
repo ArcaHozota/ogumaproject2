@@ -39,12 +39,6 @@ public class RoleAuthRepositoryImpl implements RoleAuthRepository {
 
 	@Deprecated
 	@Override
-	public Integer countByName(final String name) {
-		return null;
-	}
-
-	@Deprecated
-	@Override
 	public List<RoleAuth> getList() {
 		return null;
 	}
