@@ -89,10 +89,10 @@ public final class DistrictServiceImpl implements IDistrictService {
 		final Integer totalRecords = this.districtRepository.countByKeyword(detailKeyword);
 		final List<DistrictDto> districtDtos = this.districtRepository.pagination(offset, PAGE_SIZE, detailKeyword)
 				.stream().map(item -> {
-					final Long population = this.cityRepository.getListByForeignKey(item.id()).stream()
+					final Long population = this.cityRepository.getListByForeignKey(item.getId()).stream()
 							.map(City::getPopulation).reduce((a, v) -> (a + v)).get();
-					return new DistrictDto(item.id(), item.name(), item.shutoId(), item.shutoName(), item.chihoId(),
-							item.chihoName(), population, item.districtFlag());
+					return new DistrictDto(item.getId(), item.getName(), item.getShutoId(), item.getShutoName(),
+							item.getChihoId(), item.getChihoName(), population, item.getDistrictFlag());
 				}).toList();
 		return Pagination.of(districtDtos, totalRecords, pageNum, PAGE_SIZE);
 	}
