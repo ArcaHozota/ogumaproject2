@@ -2,6 +2,7 @@ package jp.co.ogumaproject.ppok.service;
 
 import java.util.List;
 
+import jp.co.ogumaproject.ppok.dto.CityDto;
 import jp.co.ogumaproject.ppok.dto.DistrictDto;
 import jp.co.ogumaproject.ppok.entity.Chiho;
 import jp.co.ogumaproject.ppok.utils.Pagination;
@@ -39,6 +40,14 @@ public interface IDistrictService {
 	 * @return Pagination<DistrictDto>
 	 */
 	Pagination<DistrictDto> getDistrictsByKeyword(Integer pageNum, String keyword);
+
+	/**
+	 * 州都リストを取得する
+	 *
+	 * @param districtDto 地域情報転送クラス
+	 * @return List<CityDto>
+	 */
+	List<CityDto> getShutos(DistrictDto districtDto);
 
 	/**
 	 * 地域情報更新

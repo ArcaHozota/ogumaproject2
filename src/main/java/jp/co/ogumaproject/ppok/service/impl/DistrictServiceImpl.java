@@ -51,6 +51,15 @@ public final class DistrictServiceImpl implements IDistrictService {
 	private final CityRepository cityRepository;
 
 	@Override
+	public List<Chiho> getChihos(final String chihoName) {
+		final List<Chiho> chihos = new ArrayList<>();
+		final List<Chiho> list = this.chihoRepository.getList();
+		chihos.addAll(list.stream().filter(a -> OgumaProjectUtils.isEqual(a.getName(), chihoName)).toList());
+		chihos.addAll(list);
+		return chihos.stream().distinct().toList();
+	}
+
+	@Override
 	public List<DistrictDto> getDistrictsByCityId(final String cityId) {
 		final List<District> districts = this.districtRepository.getList();
 		if (!OgumaProjectUtils.isDigital(cityId)) {
