@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import jp.co.ogumaproject.ppok.common.OgumaProjectConstants;
+import jp.co.ogumaproject.ppok.dto.CityDto;
 import jp.co.ogumaproject.ppok.dto.DistrictDto;
 import jp.co.ogumaproject.ppok.entity.Chiho;
 import jp.co.ogumaproject.ppok.entity.City;
@@ -93,6 +94,12 @@ public final class DistrictServiceImpl implements IDistrictService {
 							item.getChihoId(), chiho.getName(), population, item.getDistrictFlag());
 				}).toList();
 		return Pagination.of(districtDtos, totalRecords, pageNum, PAGE_SIZE);
+	}
+
+	@Override
+	public List<CityDto> getShutos(final DistrictDto districtDto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
