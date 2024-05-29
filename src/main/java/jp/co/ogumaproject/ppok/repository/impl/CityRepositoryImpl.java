@@ -67,7 +67,7 @@ public class CityRepositoryImpl implements CityRepository {
 	@Override
 	public List<City> pagination(final Integer offset, final Integer pageSize, final String keyword) {
 		return this.jdbcClient.sql(
-				"SELECT PCV.*, PDV.NAME AS SHUTO_NAME FROM PPOG_CITIES_VIEW PCV INNER JOIN PPOG_DISTRICTS_VIEW PDV ON PDV.ID = PCV.DISTRICT_ID "
+				"SELECT PCV.*, PDV.NAME AS DISTRICT_NAME FROM PPOG_CITIES_VIEW PCV INNER JOIN PPOG_DISTRICTS_VIEW PDV ON PDV.ID = PCV.DISTRICT_ID "
 						+ "WHERE PCV.NAME LIKE ? OR PCV.PRONUNCIATION LIKE ? OR PDV.NAME LIKE ? OFFSET ? ROWS FETCH NEXT ? ROWS ONLY")
 				.params(keyword, keyword, keyword, offset, pageSize).query(City.class).list();
 	}

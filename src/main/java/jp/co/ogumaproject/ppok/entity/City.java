@@ -33,7 +33,7 @@ public final class City extends CommonEntity {
 	/**
 	 * 都道府県名称
 	 */
-	private Long districtName;
+	private String districtName;
 
 	/**
 	 * 人口数量
