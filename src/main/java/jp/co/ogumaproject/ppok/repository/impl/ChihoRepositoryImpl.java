@@ -26,7 +26,7 @@ public class ChihoRepositoryImpl implements ChihoRepository {
 
 	@Override
 	public List<Chiho> getList() {
-		return this.jdbcClient.sql("SELECT PCHV.* FROM PPOG_CHIHOS_VIEW PCHV ORCER BY PCHV.ID ASC").query(Chiho.class)
+		return this.jdbcClient.sql("SELECT PCHV.* FROM PPOG_CHIHOS_VIEW PCHV ORDER BY PCHV.ID ASC").query(Chiho.class)
 				.list();
 	}
 
