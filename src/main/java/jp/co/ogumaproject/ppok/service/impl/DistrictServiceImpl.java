@@ -1,6 +1,7 @@
 package jp.co.ogumaproject.ppok.service.impl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import jp.co.ogumaproject.ppok.service.IDistrictService;
 import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 import jp.co.ogumaproject.ppok.utils.Pagination;
 import jp.co.ogumaproject.ppok.utils.ResultDto;
+import jp.co.ogumaproject.ppok.utils.SecondBeanUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -98,13 +100,25 @@ public final class DistrictServiceImpl implements IDistrictService {
 
 	@Override
 	public List<CityDto> getShutos(final DistrictDto districtDto) {
-		// TODO Auto-generated method stub
-		return null;
+		final List<CityDto> cityDtos = new ArrayList<>();
+		final List<City> cities = this.cityRepository.getListByForeignKey(districtDto.id());
+		cityDtos.addAll(cities.stream().filter(a -> OgumaProjectUtils.isEqual(a.getName(), districtDto.shutoName()))
+				.map(item -> new CityDto(item.getId(), item.getName(), null, null, null, null, null)).toList());
+		cityDtos.addAll(cities.stream().sorted(Comparator.comparingLong(City::getId))
+				.map(item -> new CityDto(item.getId(), item.getName(), null, null, null, null, null)).toList());
+		return cityDtos.stream().distinct().toList();
 	}
 
 	@Override
 	public ResultDto<String> update(final DistrictDto districtDto) {
-		// TODO Auto-generated method stub
-		return null;
+		final District originalEntity = new District();
+		final District district = this.districtRepository.getOneById(districtDto.id());
+		SecondBeanUtils.copyNullableProperties(district, originalEntity);
+		SecondBeanUtils.copyNullableProperties(districtDto, district);
+		if (OgumaProjectUtils.isEqual(originalEntity, district)) {
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
+		}
+		this.districtRepository.updateById(district);
+		return ResultDto.successWithoutData();
 	}
 }
