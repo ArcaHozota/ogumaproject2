@@ -24,12 +24,6 @@ public class ChihoRepositoryImpl implements ChihoRepository {
 	@Resource
 	private JdbcClient jdbcClient;
 
-	@Deprecated
-	@Override
-	public Integer countByKeyword(final String keyword) {
-		return null;
-	}
-
 	@Override
 	public List<Chiho> getList() {
 		return this.jdbcClient.sql("SELECT PCHV.* FROM PPOG_CHIHOS_VIEW PCHV ORCER BY PCHV.ID ASC").query(Chiho.class)
@@ -52,12 +46,6 @@ public class ChihoRepositoryImpl implements ChihoRepository {
 	public Chiho getOneById(final Long id) {
 		return this.jdbcClient.sql("SELECT PCHV.* FROM PPOG_CHIHOS_VIEW PCHV WHERE PCHV.ID = ?").param(id)
 				.query(Chiho.class).single();
-	}
-
-	@Deprecated
-	@Override
-	public List<Chiho> pagination(final Integer offset, final Integer pageSize, final String keyword) {
-		return null;
 	}
 
 	@Deprecated

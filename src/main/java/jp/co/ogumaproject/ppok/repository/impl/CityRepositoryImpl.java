@@ -25,12 +25,6 @@ public class CityRepositoryImpl implements CityRepository {
 	private JdbcClient jdbcClient;
 
 	@Override
-	public Integer countByKeyword(final String keyword) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<City> getList() {
 		// TODO Auto-generated method stub
 		return null;
@@ -53,12 +47,6 @@ public class CityRepositoryImpl implements CityRepository {
 	public City getOneById(final Long id) {
 		return this.jdbcClient.sql("SELECT PCV.* FROM PPOG_CITIES_VIEW PCV WHERE PCV.ID = ?").param(id)
 				.query(City.class).single();
-	}
-
-	@Override
-	public List<City> pagination(final Integer offset, final Integer pageSize, final String keyword) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

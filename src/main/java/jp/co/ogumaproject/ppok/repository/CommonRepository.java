@@ -11,14 +11,6 @@ import java.util.List;
 public interface CommonRepository<T> {
 
 	/**
-	 * キーワードによって件数をカウントする
-	 *
-	 * @param keyword 検索キーワード
-	 * @return Integer
-	 */
-	Integer countByKeyword(String keyword);
-
-	/**
 	 * 全件検索
 	 *
 	 * @return List<T>
@@ -48,16 +40,6 @@ public interface CommonRepository<T> {
 	 * @return T
 	 */
 	T getOneById(Long id);
-
-	/**
-	 * パージング検索
-	 *
-	 * @param offset   オフセット
-	 * @param pageSize ページサイズ
-	 * @param keyword  検索キーワード
-	 * @return List<T>
-	 */
-	List<T> pagination(Integer offset, Integer pageSize, String keyword);
 
 	/**
 	 * IDによって情報を削除する

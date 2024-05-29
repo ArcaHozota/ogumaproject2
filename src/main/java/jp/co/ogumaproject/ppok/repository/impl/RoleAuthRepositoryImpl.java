@@ -33,12 +33,6 @@ public class RoleAuthRepositoryImpl implements RoleAuthRepository {
 
 	@Deprecated
 	@Override
-	public Integer countByKeyword(final String keyword) {
-		return null;
-	}
-
-	@Deprecated
-	@Override
 	public List<RoleAuth> getList() {
 		return null;
 	}
@@ -58,12 +52,6 @@ public class RoleAuthRepositoryImpl implements RoleAuthRepository {
 	@Deprecated
 	@Override
 	public RoleAuth getOneById(final Long id) {
-		return null;
-	}
-
-	@Deprecated
-	@Override
-	public List<RoleAuth> pagination(final Integer offset, final Integer pageSize, final String keyword) {
 		return null;
 	}
 

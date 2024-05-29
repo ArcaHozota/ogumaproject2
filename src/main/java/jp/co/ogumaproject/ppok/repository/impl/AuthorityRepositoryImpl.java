@@ -24,12 +24,6 @@ public class AuthorityRepositoryImpl implements AuthorityRepository {
 	@Resource
 	private JdbcClient jdbcClient;
 
-	@Deprecated
-	@Override
-	public Integer countByKeyword(final String keyword) {
-		return null;
-	}
-
 	@Override
 	public List<Authority> getList() {
 		return this.jdbcClient.sql("SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV ORDER BY PAV.ID ASC")
@@ -53,12 +47,6 @@ public class AuthorityRepositoryImpl implements AuthorityRepository {
 	public Authority getOneById(final Long id) {
 		return this.jdbcClient.sql("SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV WHERE PAV.ID = ?").param(id)
 				.query(Authority.class).single();
-	}
-
-	@Deprecated
-	@Override
-	public List<Authority> pagination(final Integer offset, final Integer pageSize, final String keyword) {
-		return null;
 	}
 
 	@Deprecated

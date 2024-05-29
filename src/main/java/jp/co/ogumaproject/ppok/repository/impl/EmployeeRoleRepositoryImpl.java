@@ -28,12 +28,6 @@ public class EmployeeRoleRepositoryImpl implements EmployeeRoleRepository {
 
 	@Deprecated
 	@Override
-	public Integer countByKeyword(final String keyword) {
-		return null;
-	}
-
-	@Deprecated
-	@Override
 	public List<EmployeeRole> getList() {
 		return null;
 	}
@@ -54,12 +48,6 @@ public class EmployeeRoleRepositoryImpl implements EmployeeRoleRepository {
 	public EmployeeRole getOneById(final Long id) {
 		return this.jdbcClient.sql("SELECT PERV.* FROM PPOG_EMPLOYEE_ROLE_VIEW PERV WHERE PERV.EMPLOYEE_ID = ?")
 				.param(id).query(EmployeeRole.class).single();
-	}
-
-	@Deprecated
-	@Override
-	public List<EmployeeRole> pagination(final Integer offset, final Integer pageSize, final String keyword) {
-		return null;
 	}
 
 	@Override

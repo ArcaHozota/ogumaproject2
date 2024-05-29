@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
 import jakarta.annotation.Resource;
+import jp.co.ogumaproject.ppok.dto.DistrictDto;
 import jp.co.ogumaproject.ppok.entity.District;
 import jp.co.ogumaproject.ppok.repository.DistrictRepository;
 import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
@@ -62,12 +63,12 @@ public class DistrictRepositoryImpl implements DistrictRepository {
 	}
 
 	@Override
-	public List<District> pagination(final Integer offset, final Integer pageSize, final String keyword) {
+	public List<DistrictDto> pagination(final Integer offset, final Integer pageSize, final String keyword) {
 		return this.jdbcClient.sql(
 				"SELECT PDV.* FROM PPOG_DISTRICTS_VIEW PDV INNER JOIN PPOG_CHIHOS_VIEW PCHV ON PCHV.ID = PDV.CHIHO_ID "
 						+ "INNER JOIN PPOG_CITIES_VIEW PCV ON PCV.ID = PDV.SHUTO_ID WHERE PDV.NAME LIKE ? OR PCV.NAME LIKE ? "
 						+ "OR PCHV.NAME LIKE ? ORDER BY PDV.ID ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY")
-				.params(keyword, keyword, keyword, offset, pageSize).query(District.class).list();
+				.params(keyword, keyword, keyword, offset, pageSize).query(DistrictDto.class).list();
 	}
 
 	@Deprecated
