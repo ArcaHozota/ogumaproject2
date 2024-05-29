@@ -93,7 +93,7 @@ public class CityRepositoryImpl implements CityRepository {
 	public void updateById(final City aEntity) {
 		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
 		this.jdbcClient.sql(
-				"UPDATE PPOG_CITIES PC SET PC.NAME =:id, PC.PRONUNCIATION =:pronunciation, PC.DISTRICT_ID =:districtId, "
+				"UPDATE PPOG_CITIES PC SET PC.NAME =:name, PC.PRONUNCIATION =:pronunciation, PC.DISTRICT_ID =:districtId, "
 						+ "PC.CITY_FLAG =:cityFlag, PC.POPULATION =:population WHERE PC.DEL_FLG =:delFlg AND PC.ID =:id")
 				.params(paramMap).update();
 	}
