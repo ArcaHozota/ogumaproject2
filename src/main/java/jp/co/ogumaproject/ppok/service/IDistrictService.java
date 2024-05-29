@@ -3,6 +3,7 @@ package jp.co.ogumaproject.ppok.service;
 import java.util.List;
 
 import jp.co.ogumaproject.ppok.dto.DistrictDto;
+import jp.co.ogumaproject.ppok.entity.Chiho;
 import jp.co.ogumaproject.ppok.utils.Pagination;
 import jp.co.ogumaproject.ppok.utils.ResultDto;
 
@@ -13,6 +14,14 @@ import jp.co.ogumaproject.ppok.utils.ResultDto;
  * @since 7.81
  */
 public interface IDistrictService {
+
+	/**
+	 * 地方リストを取得する
+	 *
+	 * @param chihoName 地方名称
+	 * @return List<Chiho>
+	 */
+	List<Chiho> getChihos(String chihoName);
 
 	/**
 	 * 都市IDによって地域一覧を取得する

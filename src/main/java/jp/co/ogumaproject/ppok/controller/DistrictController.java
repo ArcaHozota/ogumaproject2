@@ -46,11 +46,13 @@ public final class DistrictController {
 	/**
 	 * 地方リストを取得する
 	 *
+	 * @param chihoName 地方名称
 	 * @return ResultDto<String>
 	 */
 	@GetMapping(OgumaProjectURLConstants.URL_DISTRICT_CHIHOS)
-	public ResultDto<List<Chiho>> getChihos() {
-		return ResultDto.successWithoutData();
+	public ResultDto<List<Chiho>> getChihos(@RequestParam("chihoName") final String chihoName) {
+		final List<Chiho> chihos = this.iDistrictService.getChihos(chihoName);
+		return ResultDto.successWithData(chihos);
 	}
 
 	/**
