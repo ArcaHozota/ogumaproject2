@@ -2,7 +2,6 @@ package jp.co.ogumaproject.ppok.repository;
 
 import java.util.List;
 
-import jp.co.ogumaproject.ppok.dto.DistrictDto;
 import jp.co.ogumaproject.ppok.entity.District;
 
 /**
@@ -27,7 +26,7 @@ public interface DistrictRepository extends CommonRepository<District> {
 	 * @param offset   オフセット
 	 * @param pageSize ページサイズ
 	 * @param keyword  検索キーワード
-	 * @return List<DistrictDto>
+	 * @return List<District>
 	 */
-	List<DistrictDto> pagination(Integer offset, Integer pageSize, String keyword);
+	List<District> pagination(Integer offset, Integer pageSize, String keyword);
 }
