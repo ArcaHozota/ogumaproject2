@@ -34,7 +34,7 @@ function buildTableBody(result) {
 		let idTd = $("<th scope='row' class='text-center table-light' style='width:150px;vertical-align:middle;'></th>").append(item.id);
 		let nameTd = $("<td scope='row' class='text-center table-light' style='width:70px;vertical-align:middle;'></td>").append(item.name);
 		let shutoTd = $("<td scope='row' class='text-center table-light' style='width:70px;vertical-align:middle;'></td>").append(item.shutoName);
-		let chihoTd = $("<td scope='row' class='text-center table-light' style='width:70px;vertical-align:middle;'></td>").append(item.chiho);
+		let chihoTd = $("<td scope='row' class='text-center table-light' style='width:70px;vertical-align:middle;'></td>").append(item.chihoName);
 		let populationTd = $("<td scope='row' class='text-center table-light' style='width:50px;vertical-align:middle;'></td>").append(patternedPop);
 		let flagImg = $("<img>").attr('src', '/static/image/flags/prefectures/' + item.districtFlag + '.svg').attr('alt', '').height(27).width(40);
 		let flagTd = $("<td scope='row' class='text-center table-light district-flg-td' role='button' style='width:50px;vertical-align:middle;'></td>").append(flagImg);
