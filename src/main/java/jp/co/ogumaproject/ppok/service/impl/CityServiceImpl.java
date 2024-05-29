@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 
 import jp.co.ogumaproject.ppok.common.OgumaProjectConstants;
 import jp.co.ogumaproject.ppok.dto.CityDto;
+import jp.co.ogumaproject.ppok.entity.City;
 import jp.co.ogumaproject.ppok.repository.CityRepository;
+import jp.co.ogumaproject.ppok.repository.DistrictRepository;
 import jp.co.ogumaproject.ppok.service.ICityService;
 import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 import jp.co.ogumaproject.ppok.utils.Pagination;
@@ -28,6 +30,11 @@ public final class CityServiceImpl implements ICityService {
 	 * ページサイズ
 	 */
 	private static final Integer PAGE_SIZE = OgumaProjectConstants.DEFAULT_PAGE_SIZE;
+
+	/**
+	 * 地域リポジトリ
+	 */
+	private final DistrictRepository districtRepository;
 
 	/**
 	 * 都市リポジトリ
@@ -55,7 +62,14 @@ public final class CityServiceImpl implements ICityService {
 
 	@Override
 	public ResultDto<String> remove(final Long id) {
-		// TODO Auto-generated method stub
+		final Integer countByShutoId = this.districtRepository.countByShutoId(id);
+		if (countByShutoId > 0) {
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_FORBIDDEN3);
+		}
+		final City city = new City();
+		city.setId(id);
+		city.setDelFlg(OgumaProjectConstants.LOGIC_DELETE_FLG);
+		this.cityRepository.updateById(city);
 		return null;
 	}
 

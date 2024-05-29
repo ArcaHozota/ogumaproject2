@@ -21,6 +21,14 @@ public interface DistrictRepository extends CommonRepository<District> {
 	Integer countByKeyword(String keyword);
 
 	/**
+	 * 州都IDによって件数をカウントする
+	 *
+	 * @param shutoId 州都ID
+	 * @return Integer
+	 */
+	Integer countByShutoId(Long shutoId);
+
+	/**
 	 * パージング検索
 	 *
 	 * @param offset   オフセット

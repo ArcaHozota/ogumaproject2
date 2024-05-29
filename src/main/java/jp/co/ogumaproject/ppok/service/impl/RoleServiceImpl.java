@@ -147,9 +147,10 @@ public final class RoleServiceImpl implements IRoleService {
 		if (!listByForeignKey.isEmpty()) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_FORBIDDEN);
 		}
-		final Role role = this.roleRepository.getOneById(id);
+		final Role role = new Role();
+		role.setId(id);
 		role.setDelFlg(OgumaProjectConstants.LOGIC_DELETE_FLG);
-		this.roleRepository.updateById(role);
+		this.roleRepository.removeById(role);
 		return ResultDto.successWithoutData();
 	}
 

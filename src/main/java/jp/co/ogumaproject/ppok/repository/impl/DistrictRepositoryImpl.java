@@ -36,6 +36,12 @@ public class DistrictRepositoryImpl implements DistrictRepository {
 	}
 
 	@Override
+	public Integer countByShutoId(final Long shutoId) {
+		return this.jdbcClient.sql("SELECT COUNT(1) FROM PPOG_DISTRICTS_VIEW PDV WHERE PDV.SHUTO_ID = ?").param(shutoId)
+				.query(Integer.class).single();
+	}
+
+	@Override
 	public List<District> getList() {
 		return this.jdbcClient.sql("SELECT PDV.* FROM PPOG_DISTRICTS_VIEW PDV ORDER BY PDV.ID ASC")
 				.query(District.class).list();

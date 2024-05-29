@@ -154,7 +154,8 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public void remove(final Long userId) {
-		final Employee employee = this.employeeRepository.getOneById(userId);
+		final Employee employee = new Employee();
+		employee.setId(userId);
 		employee.setDelFlg(OgumaProjectConstants.LOGIC_DELETE_FLG);
 		this.employeeRepository.removeById(employee);
 	}
