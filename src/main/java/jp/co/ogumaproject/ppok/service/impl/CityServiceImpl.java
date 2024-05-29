@@ -13,6 +13,8 @@ import jp.co.ogumaproject.ppok.service.ICityService;
 import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 import jp.co.ogumaproject.ppok.utils.Pagination;
 import jp.co.ogumaproject.ppok.utils.ResultDto;
+import jp.co.ogumaproject.ppok.utils.SecondBeanUtils;
+import jp.co.ogumaproject.ppok.utils.SnowflakeUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -70,18 +72,28 @@ public final class CityServiceImpl implements ICityService {
 		city.setId(id);
 		city.setDelFlg(OgumaProjectConstants.LOGIC_DELETE_FLG);
 		this.cityRepository.updateById(city);
-		return null;
+		return ResultDto.successWithoutData();
 	}
 
 	@Override
 	public void save(final CityDto cityDto) {
-		// TODO Auto-generated method stub
-
+		final City city = new City();
+		SecondBeanUtils.copyNullableProperties(cityDto, city);
+		city.setId(SnowflakeUtils.snowflakeId());
+		city.setDelFlg(OgumaProjectConstants.LOGIC_DELETE_INITIAL);
+		this.cityRepository.saveById(city);
 	}
 
 	@Override
 	public ResultDto<String> update(final CityDto cityDto) {
-		// TODO Auto-generated method stub
-		return null;
+		final City originalEntity = new City();
+		final City city = this.cityRepository.getOneById(cityDto.id());
+		SecondBeanUtils.copyNullableProperties(city, originalEntity);
+		SecondBeanUtils.copyNullableProperties(cityDto, city);
+		if (OgumaProjectUtils.isEqual(originalEntity, city)) {
+			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
+		}
+		this.cityRepository.updateById(city);
+		return ResultDto.successWithoutData();
 	}
 }
