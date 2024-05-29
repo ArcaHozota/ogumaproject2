@@ -25,8 +25,23 @@ public class CityRepositoryImpl implements CityRepository {
 	private JdbcClient jdbcClient;
 
 	@Override
+	public Integer countByKeyword(final String keyword) {
+		return this.jdbcClient.sql(
+				"SELECT COUNT(1) FROM PPOG_CITIES_VIEW PCV INNER JOIN PPOG_DISTRICTS_VIEW PDV ON PDV.ID = PCV.DISTRICT_ID "
+						+ "WHERE PCV.NAME LIKE ? OR PCV.PRONUNCIATION LIKE ? OR PDV.NAME LIKE ?")
+				.params(keyword, keyword, keyword).query(Integer.class).single();
+	}
+
+	@Override
+	public Integer countByName(final String name, final Long districtId) {
+		return this.jdbcClient.sql("SELECT COUNT(1) FROM PPOG_CITIES_VIEW PCV WHERE EXISTS ("
+				+ "SELECT 1 FROM PPOG_DISTRICTS_VIEW PDV WHERE PCV.DISTRICT_ID = PDV.ID AND PDV.ID = ? AND PCV.NAME = ?)")
+				.params(name, districtId).query(Integer.class).single();
+	}
+
+	@Deprecated
+	@Override
 	public List<City> getList() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -37,9 +52,9 @@ public class CityRepositoryImpl implements CityRepository {
 				.param(foreignKey).query(City.class).list();
 	}
 
+	@Deprecated
 	@Override
 	public List<City> getListByIds(final List<Long> ids) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -47,6 +62,14 @@ public class CityRepositoryImpl implements CityRepository {
 	public City getOneById(final Long id) {
 		return this.jdbcClient.sql("SELECT PCV.* FROM PPOG_CITIES_VIEW PCV WHERE PCV.ID = ?").param(id)
 				.query(City.class).single();
+	}
+
+	@Override
+	public List<City> pagination(final Integer offset, final Integer pageSize, final String keyword) {
+		return this.jdbcClient.sql(
+				"SELECT PCV.*, PDV.NAME AS SHUTO_NAME FROM PPOG_CITIES_VIEW PCV INNER JOIN PPOG_DISTRICTS_VIEW PDV ON PDV.ID = PCV.DISTRICT_ID "
+						+ "WHERE PCV.NAME LIKE ? OR PCV.PRONUNCIATION LIKE ? OR PDV.NAME LIKE ? OFFSET ? ROWS FETCH NEXT ? ROWS ONLY")
+				.params(keyword, keyword, keyword, offset, pageSize).query(City.class).list();
 	}
 
 	@Override

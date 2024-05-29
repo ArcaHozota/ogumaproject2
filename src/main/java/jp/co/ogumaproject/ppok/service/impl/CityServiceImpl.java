@@ -2,7 +2,9 @@ package jp.co.ogumaproject.ppok.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import jp.co.ogumaproject.ppok.common.OgumaProjectConstants;
 import jp.co.ogumaproject.ppok.dto.CityDto;
+import jp.co.ogumaproject.ppok.repository.CityRepository;
 import jp.co.ogumaproject.ppok.service.ICityService;
 import jp.co.ogumaproject.ppok.utils.Pagination;
 import jp.co.ogumaproject.ppok.utils.ResultDto;
@@ -18,10 +20,17 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CityServiceImpl implements ICityService {
+
+	/**
+	 * 都市リポジトリ
+	 */
+	private final CityRepository cityRepository;
+
 	@Override
 	public ResultDto<String> checkDuplicated(final String name, final Long districtId) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.cityRepository.countByName(name, districtId) > 0
+				? ResultDto.failed(OgumaProjectConstants.MESSAGE_CITY_NAME_DUPLICATED)
+				: ResultDto.successWithoutData();
 	}
 
 	@Override

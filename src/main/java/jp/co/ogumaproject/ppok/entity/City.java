@@ -31,6 +31,11 @@ public final class City extends CommonEntity {
 	private Long districtId;
 
 	/**
+	 * 都道府県名称
+	 */
+	private Long districtName;
+
+	/**
 	 * 人口数量
 	 */
 	private Long population;
