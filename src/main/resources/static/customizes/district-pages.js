@@ -95,7 +95,7 @@ $("#tableBody").on('click', '.district-flg-td', function() {
 function getChihos(element, chihoVal) {
 	$(element).empty();
 	$.ajax({
-		url: '/pgcrowd/district/getChihos',
+		url: '/oguma/district/getChihos',
 		data: 'chihoName=' + chihoVal,
 		type: 'GET',
 		success: function(result) {
@@ -111,7 +111,7 @@ function getShutos(element, editId, shutoVal) {
 	let token = $('meta[name=_csrf_token]').attr('content');
 	$(element).empty();
 	$.ajax({
-		url: '/pgcrowd/district/getShutos',
+		url: '/oguma/district/getShutos',
 		type: 'POST',
 		headers: {
 			[header]: token
