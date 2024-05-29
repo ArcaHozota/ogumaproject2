@@ -1,5 +1,7 @@
 package jp.co.ogumaproject.ppok.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jp.co.ogumaproject.ppok.common.OgumaProjectURLConstants;
 import jp.co.ogumaproject.ppok.dto.DistrictDto;
+import jp.co.ogumaproject.ppok.entity.Chiho;
 import jp.co.ogumaproject.ppok.service.IDistrictService;
 import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 import jp.co.ogumaproject.ppok.utils.Pagination;
@@ -37,6 +40,16 @@ public final class DistrictController {
 	 */
 	@GetMapping(OgumaProjectURLConstants.URL_DISTRICT_CHECK_EDITION)
 	public ResultDto<String> checkEdition() {
+		return ResultDto.successWithoutData();
+	}
+
+	/**
+	 * 地方リストを取得する
+	 *
+	 * @return ResultDto<String>
+	 */
+	@GetMapping(OgumaProjectURLConstants.URL_DISTRICT_CHIHOS)
+	public ResultDto<List<Chiho>> getChihos() {
 		return ResultDto.successWithoutData();
 	}
 

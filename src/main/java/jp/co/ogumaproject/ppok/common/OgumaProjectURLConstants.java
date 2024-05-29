@@ -76,6 +76,10 @@ public final class OgumaProjectURLConstants {
 
 	public static final String URL_DISTRICT_PAGINATION = "/oguma/district/pagination";
 
+	public static final String URL_DISTRICT_CHIHOS = "/oguma/district/getChihos";
+
+	public static final String URL_DISTRICT_SHUTOS = "/oguma/district/getShutos";
+
 	public static final String URL_DISTRICT_UPDATE = "/oguma/district/infoUpdate";
 
 	public static final String URL_DISTRICT_CHECK_EDITION = "/oguma/district/checkEdition";
