@@ -66,20 +66,16 @@ public final class DistrictServiceImpl implements IDistrictService {
 	public List<DistrictDto> getDistrictsByCityId(final String cityId) {
 		final List<District> districts = this.districtRepository.getList();
 		if (!OgumaProjectUtils.isDigital(cityId)) {
-			return districts.stream().map(item -> {
-				final Chiho chiho = this.chihoRepository.getOneById(item.getChihoId());
-				return new DistrictDto(item.getId(), item.getName(), null, null, null, chiho.getName(), null, null);
-			}).toList();
+			return districts.stream().map(item -> new DistrictDto(item.getId(), item.getName(), null, null, null,
+					item.getChihoName(), null, null)).toList();
 		}
 		final List<District> aDistricts = new ArrayList<>();
 		final City city = this.cityRepository.getOneById(Long.parseLong(cityId));
 		aDistricts.add(districts.stream().filter(a -> OgumaProjectUtils.isEqual(a.getId(), city.getDistrictId()))
 				.toList().get(0));
 		aDistricts.addAll(districts);
-		return aDistricts.stream().distinct().map(item -> {
-			final Chiho chiho = this.chihoRepository.getOneById(item.getChihoId());
-			return new DistrictDto(item.getId(), item.getName(), null, null, null, chiho.getName(), null, null);
-		}).toList();
+		return aDistricts.stream().distinct().map(item -> new DistrictDto(item.getId(), item.getName(), null, null,
+				null, item.getChihoName(), null, null)).toList();
 	}
 
 	@Override
