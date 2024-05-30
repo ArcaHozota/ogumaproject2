@@ -41,6 +41,11 @@ public final class District extends CommonEntity {
 	private String chihoName;
 
 	/**
+	 * 人口数量
+	 */
+	private Long population;
+
+	/**
 	 * 都道府県旗
 	 */
 	private String districtFlag;

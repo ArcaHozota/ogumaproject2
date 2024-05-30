@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -121,13 +120,11 @@ public final class RoleServiceImpl implements IRoleService {
 		} else {
 			final EmployeeRole employeeRole = this.employeeRoleRepository.getOneById(employeeId);
 			final List<Role> selectedRole = roles.stream()
-					.filter(a -> OgumaProjectUtils.isEqual(a.getId(), employeeRole.getRoleId()))
-					.collect(Collectors.toList());
+					.filter(a -> OgumaProjectUtils.isEqual(a.getId(), employeeRole.getRoleId())).toList();
 			roleDtos.addAll(selectedRole);
 		}
 		roleDtos.addAll(roles);
-		return roleDtos.stream().distinct().map(item -> new RoleDto(item.getId(), item.getName()))
-				.collect(Collectors.toList());
+		return roleDtos.stream().distinct().map(item -> new RoleDto(item.getId(), item.getName())).toList();
 	}
 
 	@Override
@@ -136,8 +133,7 @@ public final class RoleServiceImpl implements IRoleService {
 		final String detailKeyword = OgumaProjectUtils.getDetailKeyword(keyword);
 		final Integer totalRecords = this.roleRepository.countByKeyword(detailKeyword);
 		final List<Role> roles = this.roleRepository.pagination(offset, PAGE_SIZE, detailKeyword);
-		final List<RoleDto> roleDtos = roles.stream().map(item -> new RoleDto(item.getId(), item.getName()))
-				.collect(Collectors.toList());
+		final List<RoleDto> roleDtos = roles.stream().map(item -> new RoleDto(item.getId(), item.getName())).toList();
 		return Pagination.of(roleDtos, totalRecords, pageNum, PAGE_SIZE);
 	}
 

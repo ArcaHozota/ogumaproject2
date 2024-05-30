@@ -36,8 +36,8 @@ public class CityRepositoryImpl implements CityRepository {
 
 	@Override
 	public Integer countByName(final String name, final Long districtId) {
-		return this.jdbcClient.sql("SELECT COUNT(1) FROM PPOG_CITIES_VIEW PCV WHERE EXISTS ("
-				+ "SELECT 1 FROM PPOG_DISTRICTS_VIEW PDV WHERE PCV.DISTRICT_ID = PDV.ID AND PDV.ID = ? AND PCV.NAME = ?)")
+		return this.jdbcClient
+				.sql("SELECT COUNT(1) FROM PPOG_CITIES_VIEW PCV WHERE PCV.NAME = ? AND PCV.DISTRICT_ID = ?")
 				.params(name, districtId).query(Integer.class).single();
 	}
 
