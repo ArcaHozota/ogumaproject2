@@ -74,8 +74,8 @@ public final class DistrictServiceImpl implements IDistrictService {
 		aDistricts.add(districts.parallelStream()
 				.filter(a -> OgumaProjectUtils.isEqual(a.getId(), city.getDistrictId())).findFirst().get());
 		aDistricts.addAll(districts);
-		return aDistricts.stream().distinct().map(item -> new DistrictDto(item.getId(), item.getName(), null, null,
-				null, item.getChihoName(), null, null)).toList();
+		return aDistricts.parallelStream().distinct().map(item -> new DistrictDto(item.getId(), item.getName(), null,
+				null, null, item.getChihoName(), null, null)).toList();
 	}
 
 	@Override
@@ -99,9 +99,9 @@ public final class DistrictServiceImpl implements IDistrictService {
 				cities.parallelStream().filter(a -> OgumaProjectUtils.isEqual(a.getName(), districtDto.shutoName()))
 						.map(item -> new CityDto(item.getId(), item.getName(), null, null, null, null, null))
 						.findFirst().get());
-		cityDtos.addAll(cities.parallelStream().sorted(Comparator.comparingLong(City::getId))
+		cityDtos.addAll(cities.stream().sorted(Comparator.comparingLong(City::getId))
 				.map(item -> new CityDto(item.getId(), item.getName(), null, null, null, null, null)).toList());
-		return cityDtos.stream().distinct().toList();
+		return cityDtos.parallelStream().distinct().toList();
 	}
 
 	@Override
