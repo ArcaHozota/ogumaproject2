@@ -119,9 +119,9 @@ public final class RoleServiceImpl implements IRoleService {
 			roleDtos.add(role);
 		} else {
 			final EmployeeRole employeeRole = this.employeeRoleRepository.getOneById(employeeId);
-			final List<Role> selectedRole = roles.stream()
-					.filter(a -> OgumaProjectUtils.isEqual(a.getId(), employeeRole.getRoleId())).toList();
-			roleDtos.addAll(selectedRole);
+			final Role selectedRole = roles.stream()
+					.filter(a -> OgumaProjectUtils.isEqual(a.getId(), employeeRole.getRoleId())).findFirst().get();
+			roleDtos.add(selectedRole);
 		}
 		roleDtos.addAll(roles);
 		return roleDtos.stream().distinct().map(item -> new RoleDto(item.getId(), item.getName())).toList();
