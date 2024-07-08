@@ -67,7 +67,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 		final List<District> districts = this.districtRepository.getList();
 		if (!OgumaProjectUtils.isDigital(cityId)) {
 			return districts.stream().map(item -> new DistrictDto(item.getId(), item.getName(), null, null, null,
-					item.getChihoName(), null, null)).toList();
+					item.getChihoName(), null, item.getDistrictFlag())).toList();
 		}
 		final List<District> aDistricts = new ArrayList<>();
 		final City city = this.cityRepository.getOneById(Long.parseLong(cityId));
@@ -75,7 +75,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 				.findFirst().get());
 		aDistricts.addAll(districts);
 		return aDistricts.stream().distinct().map(item -> new DistrictDto(item.getId(), item.getName(), null, null,
-				null, item.getChihoName(), null, null)).toList();
+				null, item.getChihoName(), null, item.getDistrictFlag())).toList();
 	}
 
 	@Override
