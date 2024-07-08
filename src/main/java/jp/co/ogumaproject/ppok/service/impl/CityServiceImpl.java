@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import jp.co.ogumaproject.ppok.common.OgumaProjectConstants;
 import jp.co.ogumaproject.ppok.dto.CityDto;
 import jp.co.ogumaproject.ppok.entity.City;
+import jp.co.ogumaproject.ppok.entity.District;
 import jp.co.ogumaproject.ppok.repository.CityRepository;
 import jp.co.ogumaproject.ppok.repository.DistrictRepository;
 import jp.co.ogumaproject.ppok.service.ICityService;
@@ -56,9 +57,11 @@ public final class CityServiceImpl implements ICityService {
 		final String detailKeyword = OgumaProjectUtils.getDetailKeyword(keyword);
 		final Integer totalRecords = this.cityRepository.countByKeyword(detailKeyword);
 		final List<CityDto> cityDtos = this.cityRepository.pagination(offset, PAGE_SIZE, detailKeyword).stream()
-				.map(item -> new CityDto(item.getId(), item.getName(), item.getDistrictId(), item.getPronunciation(),
-						item.getDistrictName(), item.getPopulation(), item.getCityFlag()))
-				.toList();
+				.map(item -> {
+					final District district = this.districtRepository.getOneById(item.getDistrictId());
+					return new CityDto(item.getId(), item.getName(), item.getDistrictId(), item.getPronunciation(),
+							district.getName(), item.getPopulation(), item.getCityFlag());
+				}).toList();
 		return Pagination.of(cityDtos, totalRecords, pageNum, PAGE_SIZE);
 	}
 

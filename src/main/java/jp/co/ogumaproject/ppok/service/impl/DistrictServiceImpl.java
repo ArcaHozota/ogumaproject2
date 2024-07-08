@@ -66,16 +66,22 @@ public final class DistrictServiceImpl implements IDistrictService {
 	public List<DistrictDto> getDistrictsByCityId(final String cityId) {
 		final List<District> districts = this.districtRepository.getList();
 		if (!OgumaProjectUtils.isDigital(cityId)) {
-			return districts.stream().map(item -> new DistrictDto(item.getId(), item.getName(), null, null, null,
-					item.getChihoName(), null, item.getDistrictFlag())).toList();
+			return districts.stream().map(item -> {
+				final Chiho chiho = this.chihoRepository.getOneById(item.getChihoId());
+				return new DistrictDto(item.getId(), item.getName(), null, null, null, chiho.getName(), null,
+						item.getDistrictFlag());
+			}).toList();
 		}
 		final List<District> aDistricts = new ArrayList<>();
 		final City city = this.cityRepository.getOneById(Long.parseLong(cityId));
 		aDistricts.add(districts.stream().filter(a -> OgumaProjectUtils.isEqual(a.getId(), city.getDistrictId()))
 				.findFirst().get());
 		aDistricts.addAll(districts);
-		return aDistricts.stream().distinct().map(item -> new DistrictDto(item.getId(), item.getName(), null, null,
-				null, item.getChihoName(), null, item.getDistrictFlag())).toList();
+		return aDistricts.stream().distinct().map(item -> {
+			final Chiho chiho = this.chihoRepository.getOneById(item.getChihoId());
+			return new DistrictDto(item.getId(), item.getName(), null, null, null, chiho.getName(), null,
+					item.getDistrictFlag());
+		}).toList();
 	}
 
 	@Override
@@ -84,10 +90,12 @@ public final class DistrictServiceImpl implements IDistrictService {
 		final String detailKeyword = OgumaProjectUtils.getDetailKeyword(keyword);
 		final Integer totalRecords = this.districtRepository.countByKeyword(detailKeyword);
 		final List<DistrictDto> districtDtos = this.districtRepository.pagination(offset, PAGE_SIZE, detailKeyword)
-				.stream()
-				.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(), item.getShutoName(),
-						item.getChihoId(), item.getChihoName(), item.getPopulation(), item.getDistrictFlag()))
-				.toList();
+				.stream().map(item -> {
+					final Chiho chiho = this.chihoRepository.getOneById(item.getChihoId());
+					final City shuto = this.cityRepository.getOneById(item.getShutoId());
+					return new DistrictDto(item.getId(), item.getName(), item.getShutoId(), shuto.getName(),
+							item.getChihoId(), chiho.getName(), item.getPopulation(), item.getDistrictFlag());
+				}).toList();
 		return Pagination.of(districtDtos, totalRecords, pageNum, PAGE_SIZE);
 	}
 

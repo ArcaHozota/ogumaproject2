@@ -69,14 +69,12 @@ public class DistrictRepositoryImpl implements DistrictRepository {
 
 	@Override
 	public List<District> pagination(final Integer offset, final Integer pageSize, final String keyword) {
-		return this.jdbcClient.sql("SELECT PDV.*, PCHV.NAME AS CHIHO_NAME, PCV.NAME AS SHUTO_NAME, SUBQUERY.POPULATION "
-				+ "FROM PPOG_DISTRICTS_VIEW PDV INNER JOIN PPOG_CHIHOS_VIEW PCHV ON PCHV.ID = PDV.CHIHO_ID "
-				+ "INNER JOIN PPOG_CITIES_VIEW PCV ON PCV.ID = PDV.SHUTO_ID "
-				+ "LEFT JOIN (SELECT PCV.DISTRICT_ID, SUM(PCV.POPULATION) AS POPULATION FROM PPOG_CITIES_VIEW PCV "
-				+ "GROUP BY PCV.DISTRICT_ID) SUBQUERY ON SUBQUERY.DISTRICT_ID = PDV.ID "
-				+ "WHERE PDV.NAME LIKE ? OR PCV.NAME LIKE ? OR PCHV.NAME LIKE ? ORDER BY PDV.ID ASC "
-				+ "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY").params(keyword, keyword, keyword, offset, pageSize)
-				.query(District.class).list();
+		return this.jdbcClient
+				.sql("SELECT PDV.* FROM PPOG_DISTRICTS_VIEW PDV INNER JOIN PPOG_CHIHOS_VIEW PCHV "
+						+ "ON PCHV.ID = PDV.CHIHO_ID INNER JOIN PPOG_CITIES_VIEW PCV ON PCV.ID = PDV.SHUTO_ID "
+						+ "WHERE PDV.NAME LIKE ? OR PCV.NAME LIKE ? OR PCHV.NAME LIKE ? ORDER BY PDV.ID ASC "
+						+ "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY")
+				.params(keyword, keyword, keyword, offset, pageSize).query(District.class).list();
 	}
 
 	@Deprecated
