@@ -93,8 +93,10 @@ public final class DistrictServiceImpl implements IDistrictService {
 				.stream().map(item -> {
 					final Chiho chiho = this.chihoRepository.getOneById(item.getChihoId());
 					final City shuto = this.cityRepository.getOneById(item.getShutoId());
+					final Long population = this.cityRepository.getListByForeignKey(item.getId()).stream()
+							.map(City::getPopulation).reduce((a, v) -> a + v).get();
 					return new DistrictDto(item.getId(), item.getName(), item.getShutoId(), shuto.getName(),
-							item.getChihoId(), chiho.getName(), item.getPopulation(), item.getDistrictFlag());
+							item.getChihoId(), chiho.getName(), population, item.getDistrictFlag());
 				}).toList();
 		return Pagination.of(districtDtos, totalRecords, pageNum, PAGE_SIZE);
 	}
