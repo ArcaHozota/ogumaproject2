@@ -27,13 +27,14 @@
 			display: none;
 		}
 
-		.input-box #eyeIcons {
-			position: absolute;
+		form .inputBox ion-icon#eyeIcons {
 			cursor: pointer;
-			right: 30px;
-			color: #fff;
-			font-size: 1.2em;
-			top: 20px;
+			left: 220px;
+		}
+
+		form .inputBox ion-icon#eyeIcons2 {
+			cursor: pointer;
+			left: 220px;
 		}
 	</style>
 	<div class="container">
@@ -41,31 +42,58 @@
 			id="errorMsg" hidden />
 		<p th:text="${torokuMsg eq null ? '' : torokuMsg}" id="torokuMsg" hidden />
 		<p th:text="${resetMsg eq null ? '' : resetMsg}" id="resetMsg" hidden />
-		<div class="login-box">
-			<!-- Login Form -->
-			<form th:action="@{/oguma/employee/doLogin}" th:method="post" class="form-signin" role="form"
-				id="loginForm">
-				<h2>ログイン</h2>
-				<div class="input-box">
-					<ion-icon name="mail-outline"></ion-icon>
-					<input type="text" th:value="${registeredEmail eq null ? '' : registeredEmail}" name="loginAcct"
-						id="accountIpt" placeholder="アカウント" required>
-				</div>
-				<div class="input-box">
-					<ion-icon name="lock-closed-outline"></ion-icon>
-					<ion-icon name="eye-outline" id="eyeIcons"></ion-icon>
-					<input type="password" name="userPswd" id="passwordIpt" placeholder="パスワード" required>
-				</div>
-				<div class="remember-forget">
-					<label><input type="checkbox" name="remember-me">私を記憶する</label>
-					<a th:href="@{/oguma/employee/forget/password}">パスワード忘れ？</a>
-				</div>
-				<button type="button" id="loginBtn">ログイン</button>
-				<div class="register-link">
-					<p>アカウント無し？<a th:href="@{/oguma/employee/toSignUp}">登録しましょう！</a></p>
-				</div>
-			</form>
-		</div>
+		<span></span>
+		<span></span>
+		<span></span>
+		<form th:action="@{/oguma/employee/doLogin}" th:method="post" id="loginForm">
+			<h2>ログイン</h2>
+			<div class="inputBox">
+				<ion-icon name="mail-outline"></ion-icon>
+				<input type="text" th:value="${registeredEmail eq null ? '' : registeredEmail}" name="loginAcct"
+					id="accountIpt" placeholder="アカウント" required>
+			</div>
+			<div class="inputBox">
+				<ion-icon name="lock-closed-outline"></ion-icon>
+				<ion-icon name="eye-outline" id="eyeIcons"></ion-icon>
+				<input type="password" name="userPswd" id="passwordIpt" placeholder="パスワード" required>
+			</div>
+			<div class="rememberForget">
+				<a href="#"><input type="checkbox" name="remember-me">私を記憶する</a>
+				<a th:href="@{/oguma/employee/forget/password}">パスワード忘れ？</a>
+			</div>
+			<div class="inputBox">
+				<input type="submit" value="ログイン" id="loginBtn">
+			</div>
+			<div class="inputBox group">
+				<a href="#">アカウント無し? <b id="signup">登録</b></a>
+			</div>
+		</form>
+		<form th:action="@{/oguma/employee/toroku}" th:method="post" id="signupForm">
+			<h2>登録</h2>
+			<div class="inputBox">
+				<ion-icon name="mail-outline"></ion-icon>
+				<input type="text" name="email" id="emailIpt" placeholder="メールアドレス" required>
+			</div>
+			<div class="inputBox">
+				<ion-icon name="key-outline"></ion-icon>
+				<ion-icon name="eye-outline" id="eyeIcons2"></ion-icon>
+				<input type="password" name="password" id="passwordIpt1" placeholder="パスワード" required>
+			</div>
+			<div class="inputBox">
+				<ion-icon name="key-outline"></ion-icon>
+				<input type="password" name="password" id="passwordIpt2" placeholder="パスワード再入力" required>
+			</div>
+			<div class="inputBox">
+				<ion-icon name="calendar-number-outline"></ion-icon>
+				<input type="date" name="dateOfBirth" id="dateOfBirthIpt" required>
+			</div>
+			<div class="inputBox">
+				<input type="submit" value="登録" id="torokuBtn">
+			</div>
+			<div class="inputBox group">
+				<a href="#">すでにアカウント持ち? <b id="login">ログイン</b></a>
+			</div>
+		</form>
 		<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 		<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 	</div>

@@ -2,7 +2,7 @@
 <html lang="ja-JP" xmlns:th="https://www.thymeleaf.org">
 
 <head>
-	<title>PGアプリケーション</title>
+	<title>OgumaProject</title>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="_csrf_header" th:content="${_csrf.headerName}">
@@ -13,37 +13,34 @@
 	<script type="text/javascript" th:src="@{/static/layer/layer.js}"></script>
 </head>
 
-<body>
-	<style>
-		.container .login-box {
-			height: 550px;
-		}
-	</style>
+<body class="resetPasswordFeature">
 	<div class="container">
 		<p th:text="${resetMsg eq null ? '' : resetMsg}" id="resetMsg" hidden />
-		<div class="login-box">
-			<!-- Login Form -->
-			<form th:action="@{/oguma/employee/reset/password}" th:method="post" class="form-signin" role="form"
-				id="resetForm">
-				<h2>パスワードリセット</h2>
-				<div class="input-box">
-					<ion-icon name="person-circle-outline"></ion-icon>
-					<input type="text" name="account" id="accountIpt2" placeholder="アカウント" required>
-				</div>
-				<div class="input-box">
-					<ion-icon name="mail-outline"></ion-icon>
-					<input type="text" name="email" id="emailIpt2" placeholder="メールアドレス" required>
-				</div>
-				<div class="input-box">
-					<ion-icon name="calendar-number-outline"></ion-icon>
-					<input type="date" name="dateOfBirth" id="dateOfBirthIpt2" required>
-				</div>
-				<button type="button" id="resetBtn">リセット</button>
-				<div class="register-link">
-					<p>パスワードを00000000でリセットされます。</p>
-				</div>
-			</form>
-		</div>
+		<span></span>
+		<span></span>
+		<span></span>
+		<!-- Login Form -->
+		<form th:action="@{/oguma/employee/reset/password}" th:method="post" id="resetForm">
+			<h2>パスワードリセット</h2>
+			<div class="inputBox">
+				<ion-icon name="person-circle-outline"></ion-icon>
+				<input type="text" name="account" id="accountIpt2" placeholder="アカウント" required>
+			</div>
+			<div class="inputBox">
+				<ion-icon name="mail-outline"></ion-icon>
+				<input type="text" name="email" id="emailIpt2" placeholder="メールアドレス" required>
+			</div>
+			<div class="inputBox">
+				<ion-icon name="calendar-number-outline"></ion-icon>
+				<input type="date" name="dateOfBirth" id="dateOfBirthIpt2" required>
+			</div>
+			<div class="inputBox">
+				<input type="submit" value="リセット" id="resetBtn">
+			</div>
+			<div class="inputBox group">
+				<a href="#" style="font-size: 0.5em;">パスワードを00000000でリセットされます。<b id="resetLogin">戻す</b></a>
+			</div>
+		</form>
 		<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 		<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 	</div>

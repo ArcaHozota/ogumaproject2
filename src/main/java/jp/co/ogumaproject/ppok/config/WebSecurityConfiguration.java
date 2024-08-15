@@ -54,8 +54,8 @@ public class WebSecurityConfiguration {
 	protected SecurityFilterChain filterChain(final HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers(OgumaProjectURLConstants.URL_STATIC_RESOURCE, OgumaProjectURLConstants.URL_INDEX,
-						OgumaProjectURLConstants.URL_TO_SIGN_UP, OgumaProjectURLConstants.URL_DO_SIGN_UP,
-						OgumaProjectURLConstants.URL_FORGET_PASSWORD, OgumaProjectURLConstants.URL_RESET_PASSWORD)
+						OgumaProjectURLConstants.URL_DO_SIGN_UP, OgumaProjectURLConstants.URL_FORGET_PASSWORD,
+						OgumaProjectURLConstants.URL_RESET_PASSWORD)
 				.permitAll()
 				.requestMatchers(OgumaProjectURLConstants.URL_EMPLOYEE_TO_PAGES,
 						OgumaProjectURLConstants.URL_EMPLOYEE_PAGINATION,

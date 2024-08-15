@@ -1,11 +1,5 @@
-/* Project Name: Responsive Login Page
-Youtube: https://youtube.com/@devRasen
-Copyright: 2023 MdRasen */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
 
-/* Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-
-/* General CSS */
 * {
 	margin: 0;
 	padding: 0;
@@ -13,155 +7,236 @@ Copyright: 2023 MdRasen */
 	font-family: 'Poppins', sans-serif;
 }
 
-/* Custom CSS */
-.container {
-	width: 100%;
-	height: 100vh;
-	background: url(../image/background.jpg) no-repeat;
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
+
+body::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: url(../image/background.jpg);
+	background-attachment: fixed;
 	background-size: cover;
 	background-position: center;
+}
+
+body::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: url(../image/background.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-position: center;
+	opacity: 0;
+	transition: 500ms;
+}
+
+body.signupFeature::after {
+	opacity: 1;
+}
+
+.container {
+	position: relative;
+	width: 350px;
+	height: 340px;
+	border-radius: 15px;
+	box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	z-index: 1000;
+	transition: 500ms;
+	overflow: hidden;
 }
 
-.container .login-box {
-	position: relative;
-	width: 390px;
-	height: 420px;
-	background-color: transparent;
-	border: 2px solid rgba(255, 255, 255, 0.5);
-	border-radius: 20px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	backdrop-filter: blur(15px);
+body.signupFeature .container {
+	height: 440px;
 }
 
-.login-box h2 {
-	font-size: 28px;
-	color: #fff;
-	text-align: center;
-}
-
-.login-box .input-box {
-	position: relative;
-	width: 310px;
-	margin: 30px 0;
-	border-bottom: 2px solid #fff;
-}
-
-.input-box input {
+.container::before {
+	content: '';
+	position: absolute;
 	width: 100%;
-	height: 50px;
-	background: transparent;
-	border: none;
-	outline: none;
-	font-size: 16px;
-	color: #fff;
-	padding: 0 35px 0 5px;
+	height: 100%;
+	background: repeating-conic-gradient(from var(--a), #7f0020 0%, #7f0020 10%, transparent 10%, transparent 80%, #7f0020 100%);
+	border-radius: 20px;
+	animation: animate 3000ms linear infinite;
 }
 
-.input-box input::placeholder {
-	color: #f9f9f9;
+body.signupFeature .container::before {
+	filter: hue-rotate(140deg);
 }
 
-.input-box input::-ms-reveal {
-	filter: invert(100%);
+body.resetPasswordFeature .container::before {
+	filter: hue-rotate(220deg);
 }
 
-.input-box input[type="date"]::-webkit-calendar-picker-indicator {
-	filter: invert(100%);
+@property --a {
+	syntax: '<angle>';
+	inherits: false;
+	initial-value: 0deg;
 }
 
-.input-box .icon {
+@keyframes animate {
+	from {
+		--a: 0deg;
+	}
+
+	to {
+		--a: 360deg;
+	}
+}
+
+.container span {
 	position: absolute;
-	right: 8px;
-	color: #fff;
-	font-size: 18px;
-	line-height: 50px;
+	inset: 5px;
+	overflow: hidden;
+	border-radius: 15px;
 }
 
-.input-box ion-icon {
+.container span::before {
+	content: '';
 	position: absolute;
-	right: 8px;
+	inset: 5px;
+	background: url(../image/background.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-position: center;
+	filter: blur(10px);
+}
+
+.container span::after {
+	content: '';
+	position: absolute;
+	inset: 5px;
+	background: url(../image/background.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-position: center;
+	filter: blur(15px);
+}
+
+body.signupFeature .container span::before,
+body.signupFeature .container span::after {
+	background: url(../image/background.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-position: center;
+	filter: blur(15px);
+}
+
+form {
+	position: absolute;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+	gap: 15px;
+	transition: 500ms;
+}
+
+form#signupForm {
+	left: 100%;
+}
+
+body.signupFeature form#loginForm {
+	left: -100%;
+}
+
+body.signupFeature form#signupForm {
+	left: 0;
+}
+
+form h2 {
+	position: relative;
+	color: #fff;
+	font-size: 1.5em;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	font-weight: 800;
+	margin-bottom: 10px;
+}
+
+form .inputBox {
+	position: relative;
+	width: 70%;
+	display: flex;
+	justify-content: space-between;
+}
+
+form .inputBox ion-icon {
+	position: absolute;
+	left: 5px;
 	color: #fff;
 	font-size: 1.2em;
-	top: 20px;
+	top: 7px;
 }
 
-.login-box .remember-forget {
-	margin: -15px 0 15px;
-	font-size: 15px;
+form .inputBox a {
+	color: #fff;
+	text-decoration: none;
+	font-size: 0.85em;
+}
+
+form .rememberForget {
+	position: relative;
+	width: 70%;
+	font-size: 0.85em;
 	color: #fff;
 	display: flex;
 	justify-content: space-between;
 }
 
-.remember-forget label input {
-	margin-right: 3px;
+form .rememberForget a {
+	color: #fff;
+	text-decoration: none;
 }
 
-.login-box button {
+form .rememberForget a:nth-child(2) {
+	text-decoration: underline;
+}
+
+form .inputBox input {
 	width: 100%;
-	height: 40px;
-	border-radius: 40px;
-	background: #fff;
-	border: none;
 	outline: none;
-	cursor: pointer;
-	font-size: 1em;
-	font-weight: 600;
-	transition: all 0.5s;
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	background: rgba(0, 0, 0, 0.15);
+	padding: 6px 25px;
+	border-radius: 4px;
+	font-size: 0.85em;
+	color: #fff;
 }
 
-.login-box button:hover {
+form .inputBox input::placeholder {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+form .inputBox input[type='submit'] {
 	background: #7f0020;
-	color: #fff;
+	font-weight: 500;
+	cursor: pointer;
 }
 
-.login-box .register-link {
-	font-size: 15px;
-	color: #fff;
-	text-align: center;
-	margin: 20px 0 10px;
+form#signupForm .inputBox input[type='submit'] {
+	background: #006400;
 }
 
-.remember-forget a {
-	color: #fff;
-	text-decoration: none;
+form#resetForm .inputBox input[type='submit'] {
+	background: #002fa7;
 }
 
-.remember-forget a:hover {
-	color: #81d8d0;
+form .inputBox.group a {
+	margin: 0 auto;
+}
+
+form .inputBox b {
+	font-weight: 900;
 	text-decoration: underline;
-}
-
-.register-link p a {
-	text-decoration: none;
-	color: #fff;
-	font-weight: 600;
-}
-
-.register-link p a:hover {
-	text-decoration: underline;
-}
-
-/* Responsive Design */
-@media (max-width : 460px) {
-	.container .login-box {
-		width: 350px;
-	}
-
-	.login-box .input-box {
-		width: 290px;
-	}
-}
-
-@media (max-width : 360px) {
-	.container .login-box {
-		width: 100%;
-		height: 100vh;
-		border: none;
-	}
 }

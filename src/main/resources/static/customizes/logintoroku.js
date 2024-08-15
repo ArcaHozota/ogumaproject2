@@ -37,7 +37,8 @@ $(document).ready(function() {
 		layer.msg(message3);
 	}
 });
-$("#loginBtn").on('click', function() {
+$("#loginBtn").on('click', function(e) {
+	e.preventDefault();
 	let account = $("#accountIpt").val().trim();
 	let password = $("#passwordIpt").val().trim();
 	if (account === "" && password === "") {
@@ -50,7 +51,8 @@ $("#loginBtn").on('click', function() {
 		$("#loginForm").submit();
 	}
 });
-$("#torokuBtn").on('click', function() {
+$("#torokuBtn").on('click', function(e) {
+	e.preventDefault();
 	let inputArrays = ["#emailIpt", "#passwordIpt1", "#passwordIpt2", "#dateOfBirthIpt"];
 	for (const element of inputArrays) {
 		if ($(element).val().trim() === "") {
@@ -66,7 +68,8 @@ $("#torokuBtn").on('click', function() {
 		$("#torokuForm").submit();
 	}
 });
-$("#resetBtn").on('click', function() {
+$("#resetBtn").on('click', function(e) {
+	e.preventDefault();
 	let inputArrays = ["#accountIpt2", "#emailIpt2", "#dateOfBirthIpt2"];
 	for (const element of inputArrays) {
 		if ($(element).val().trim() === "") {
@@ -100,8 +103,19 @@ $("#warningBtn").on('click', function(e) {
 	e.preventDefault();
 	swal.fire({
 		title: '警告',
-		html: '株式会社オージーエムの内部勉強利用しているプロジェクトです。王先生のご指示通りに使ってください。',
+		html: '本社の王先生のご指示通りに使ってください。',
 		confirmButtonText: '了解しました。',
 		confirmButtonColor: '#7F0020'
 	});
+});
+$("#login").on("click", function(e) {
+	e.preventDefault();
+	$("body").removeClass('signupFeature');
+});
+$("#signup").on("click", function(e) {
+	e.preventDefault();
+	$("body").addClass('signupFeature');
+});
+$("#resetLogin").on("click", function(){
+	window.location.replace('/oguma/employee/login');
 });
