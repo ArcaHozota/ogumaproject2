@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppok.entity.Authority;
 import jp.co.ogumaproject.ppok.repository.AuthorityRepository;
+import oracle.jdbc.driver.OracleSQLException;
 
 /**
  * 権限リポジトリ
@@ -16,7 +18,8 @@ import jp.co.ogumaproject.ppok.repository.AuthorityRepository;
  * @since 9.64
  */
 @Repository
-public class AuthorityRepositoryImpl implements AuthorityRepository {
+@Transactional(rollbackFor = OracleSQLException.class)
+public class AuthorityRepositoryImpl extends CommonRepositoryImpl<Authority> implements AuthorityRepository {
 
 	/**
 	 * JDBCクライアント
@@ -26,8 +29,8 @@ public class AuthorityRepositoryImpl implements AuthorityRepository {
 
 	@Override
 	public List<Authority> getList() {
-		return this.jdbcClient.sql("SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV ORDER BY PAV.ID ASC")
-				.query(Authority.class).list();
+		final String aSQL = "SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV ORDER BY PAV.ID ASC";
+		return this.getCommonList(aSQL, Authority.class);
 	}
 
 	@Override
