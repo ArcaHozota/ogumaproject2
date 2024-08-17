@@ -29,15 +29,14 @@ public class AuthorityRepositoryImpl extends CommonRepositoryImpl<Authority> imp
 
 	@Override
 	public List<Authority> getList() {
-		final String aSQL = "SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV ORDER BY PAV.ID ASC";
-		return this.getCommonList(aSQL, Authority.class);
+		final String sql = "SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV ORDER BY PAV.ID ASC";
+		return this.getCommonList(sql, Authority.class);
 	}
 
 	@Override
 	public List<Authority> getListByForeignKey(final Long foreignKey) {
-		return this.jdbcClient.sql(
-				"SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV INNER JOIN PPOG_ROLE_AUTH_VIEW PRAV ON PRAV.AUTH_ID = PAV.ID WHERE PRAV.ROLE_ID = ?")
-				.param(foreignKey).query(Authority.class).list();
+		final String sql = "SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV INNER JOIN PPOG_ROLE_AUTH_VIEW PRAV ON PRAV.AUTH_ID = PAV.ID WHERE PRAV.ROLE_ID = ?";
+		return this.getCommonListByForeignKey(sql, foreignKey, Authority.class);
 	}
 
 	@Override
