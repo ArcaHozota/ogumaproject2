@@ -35,7 +35,7 @@ public abstract class CommonRepositoryImpl<T> {
 	 * キーワードによってレコード数を取得する
 	 *
 	 * @param aSQL      SQL文
-	 * @param aKeywords エンティティオブジェクト
+	 * @param aKeywords キーワード
 	 */
 	protected Long commonCountByKeywords(final String aSQL, final Object... aKeywords) {
 		return this.jdbcClient.sql(aSQL).params(aKeywords).query(Long.class).single();
