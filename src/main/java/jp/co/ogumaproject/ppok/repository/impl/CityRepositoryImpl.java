@@ -1,15 +1,16 @@
 package jp.co.ogumaproject.ppok.repository.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppok.entity.City;
 import jp.co.ogumaproject.ppok.repository.CityRepository;
-import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
+import oracle.jdbc.driver.OracleSQLException;
 
 /**
  * 都市リポジトリ
@@ -18,7 +19,8 @@ import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
  * @since 10.0.1
  */
 @Repository
-public class CityRepositoryImpl implements CityRepository {
+@Transactional(rollbackFor = OracleSQLException.class)
+public class CityRepositoryImpl extends CommonRepositoryImpl<City> implements CityRepository {
 
 	/**
 	 * JDBCクライアント
@@ -49,9 +51,8 @@ public class CityRepositoryImpl implements CityRepository {
 
 	@Override
 	public List<City> getListByForeignKey(final Long foreignKey) {
-		return this.jdbcClient.sql(
-				"SELECT PCV.* FROM PPOG_CITIES_VIEW PCV INNER JOIN PPOG_DISTRICTS_VIEW PDV ON PDV.ID = PCV.DISTRICT_ID WHERE PDV.ID = ?")
-				.param(foreignKey).query(City.class).list();
+		final String sql = "SELECT PCV.* FROM PPOG_CITIES_VIEW PCV INNER JOIN PPOG_DISTRICTS_VIEW PDV ON PDV.ID = PCV.DISTRICT_ID WHERE PDV.ID = ?";
+		return this.getCommonListByForeignKey(sql, foreignKey);
 	}
 
 	@Deprecated
@@ -62,39 +63,42 @@ public class CityRepositoryImpl implements CityRepository {
 
 	@Override
 	public City getOneById(final Long id) {
-		return this.jdbcClient.sql("SELECT PCV.* FROM PPOG_CITIES_VIEW PCV WHERE PCV.ID = ?").param(id)
-				.query(City.class).single();
+		final String sql = "SELECT PCV.* FROM PPOG_CITIES_VIEW PCV WHERE PCV.ID = ?";
+		return this.getCommonOneById(sql, id);
+	}
+
+	/**
+	 * イニシャル
+	 */
+	@PostConstruct
+	private void initial() {
+		this.setEntityClass(City.class);
 	}
 
 	@Override
 	public List<City> pagination(final Integer offset, final Integer pageSize, final String keyword) {
-		return this.jdbcClient.sql(
-				"SELECT PCV.*, PDV.NAME AS DISTRICT_NAME FROM PPOG_CITIES_VIEW PCV INNER JOIN PPOG_DISTRICTS_VIEW PDV ON PDV.ID = PCV.DISTRICT_ID "
-						+ "WHERE PCV.NAME LIKE ? OR PCV.PRONUNCIATION LIKE ? OR PDV.NAME LIKE ? OFFSET ? ROWS FETCH NEXT ? ROWS ONLY")
-				.params(keyword, keyword, keyword, offset, pageSize).query(City.class).list();
+		final String sql = "SELECT PCV.*, PDV.NAME AS DISTRICT_NAME FROM PPOG_CITIES_VIEW PCV INNER JOIN PPOG_DISTRICTS_VIEW PDV ON PDV.ID = PCV.DISTRICT_ID "
+				+ "WHERE PCV.NAME LIKE ? OR PCV.PRONUNCIATION LIKE ? OR PDV.NAME LIKE ? OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+		return this.getCommonListByKeywords(sql, keyword, keyword, keyword, offset, pageSize);
 	}
 
 	@Override
 	public void removeById(final City aEntity) {
-		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
-		this.jdbcClient.sql("UPDATE PPOG_CITIES PC SET PC.DEL_FLG =:delFlg WHERE PC.ID =:id").params(paramMap).update();
+		final String sql = "UPDATE PPOG_CITIES PC SET PC.DEL_FLG =:delFlg WHERE PC.ID =:id";
+		this.commonModifyById(sql, aEntity);
 	}
 
 	@Override
 	public void saveById(final City aEntity) {
-		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
-		this.jdbcClient.sql(
-				"INSERT INTO PPOG_CITIES PC (PC.ID, PC.NAME, PC.PRONUNCIATION, PC.DISTRICT_ID, PC.CITY_FLAG, PC.POPULATION, PC.DEL_FLG) "
-						+ "VALUES (:id, :name, :pronunciation, :districtId, :cityFlag, :population, :delFlg)")
-				.params(paramMap).update();
+		final String sql = "INSERT INTO PPOG_CITIES PC (PC.ID, PC.NAME, PC.PRONUNCIATION, PC.DISTRICT_ID, PC.CITY_FLAG, PC.POPULATION, PC.DEL_FLG) "
+				+ "VALUES (:id, :name, :pronunciation, :districtId, :cityFlag, :population, :delFlg)";
+		this.commonModifyById(sql, aEntity);
 	}
 
 	@Override
 	public void updateById(final City aEntity) {
-		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
-		this.jdbcClient.sql(
-				"UPDATE PPOG_CITIES PC SET PC.NAME =:name, PC.PRONUNCIATION =:pronunciation, PC.DISTRICT_ID =:districtId, "
-						+ "PC.CITY_FLAG =:cityFlag, PC.POPULATION =:population WHERE PC.DEL_FLG =:delFlg AND PC.ID =:id")
-				.params(paramMap).update();
+		final String sql = "UPDATE PPOG_CITIES PC SET PC.NAME =:name, PC.PRONUNCIATION =:pronunciation, PC.DISTRICT_ID =:districtId, "
+				+ "PC.CITY_FLAG =:cityFlag, PC.POPULATION =:population WHERE PC.DEL_FLG =:delFlg AND PC.ID =:id";
+		this.commonModifyById(sql, aEntity);
 	}
 }

@@ -23,7 +23,7 @@ public class AuthorityRepositoryImpl extends CommonRepositoryImpl<Authority> imp
 	@Override
 	public List<Authority> getList() {
 		final String sql = "SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV ORDER BY PAV.ID ASC";
-		return this.getCommonList(sql);
+		return this.getCommonListByKeywords(sql);
 	}
 
 	@Override

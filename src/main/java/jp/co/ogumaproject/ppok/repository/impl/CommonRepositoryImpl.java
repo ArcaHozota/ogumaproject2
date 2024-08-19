@@ -43,20 +43,6 @@ public abstract class CommonRepositoryImpl<T> {
 	}
 
 	/**
-	 * リストを取得する
-	 *
-	 * @param aSql SQL文
-	 * @return List<T>
-	 */
-	protected List<T> getCommonList(final String aSql) {
-		final List<T> list = this.jdbcClient.sql(aSql).query(this.getEntityClass()).list();
-		if (CollectionUtils.isEmpty(list)) {
-			return new ArrayList<>();
-		}
-		return list;
-	}
-
-	/**
 	 * 外部キーによってリストを取得する
 	 *
 	 * @param aSql        SQL文
@@ -80,6 +66,21 @@ public abstract class CommonRepositoryImpl<T> {
 	 */
 	protected List<T> getCommonListByIds(final String aSql, final List<Long> aIdList) {
 		final List<T> list = this.jdbcClient.sql(aSql).param(aIdList).query(this.getEntityClass()).list();
+		if (CollectionUtils.isEmpty(list)) {
+			return new ArrayList<>();
+		}
+		return list;
+	}
+
+	/**
+	 * キーワードによってリストを取得する
+	 *
+	 * @param aSql      SQL文
+	 * @param aKeywords キーワード
+	 * @return List<T>
+	 */
+	protected List<T> getCommonListByKeywords(final String aSql, final Object... aKeywords) {
+		final List<T> list = this.jdbcClient.sql(aSql).params(aKeywords).query(this.getEntityClass()).list();
 		if (CollectionUtils.isEmpty(list)) {
 			return new ArrayList<>();
 		}

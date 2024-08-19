@@ -23,7 +23,7 @@ public class ChihoRepositoryImpl extends CommonRepositoryImpl<Chiho> implements 
 	@Override
 	public List<Chiho> getList() {
 		final String sql = "SELECT PCHV.* FROM PPOG_CHIHOS_VIEW PCHV ORDER BY PCHV.ID ASC";
-		return this.getCommonList(sql);
+		return this.getCommonListByKeywords(sql);
 	}
 
 	@Deprecated
