@@ -102,7 +102,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		}
 		final int offset = (pageNum - 1) * PAGE_SIZE;
 		final String detailKeyword = OgumaProjectUtils.getDetailKeyword(keyword);
-		final Integer totalRecords = this.employeeRepository.countByKeyword(detailKeyword);
+		final Long totalRecords = this.employeeRepository.countByKeyword(detailKeyword);
 		final List<Employee> employees = this.employeeRepository.pagination(offset, PAGE_SIZE, detailKeyword);
 		final List<EmployeeDto> employeeDtos = employees.stream()
 				.map(item -> new EmployeeDto(item.getId(), item.getLoginAccount(), item.getUsername(),
@@ -130,7 +130,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public Boolean register(final EmployeeDto employeeDto) {
-		final Integer emailCount = this.employeeRepository.countByKeyword(employeeDto.email());
+		final Long emailCount = this.employeeRepository.countByKeyword(employeeDto.email());
 		if (emailCount > 0) {
 			return Boolean.FALSE;
 		}

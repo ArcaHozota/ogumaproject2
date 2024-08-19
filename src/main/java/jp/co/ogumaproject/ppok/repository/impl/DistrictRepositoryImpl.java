@@ -3,10 +3,12 @@ package jp.co.ogumaproject.ppok.repository.impl;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.PostConstruct;
 import jp.co.ogumaproject.ppok.entity.District;
 import jp.co.ogumaproject.ppok.repository.DistrictRepository;
+import oracle.jdbc.driver.OracleSQLException;
 
 /**
  * 地域リポジトリ
@@ -15,6 +17,7 @@ import jp.co.ogumaproject.ppok.repository.DistrictRepository;
  * @since 9.97
  */
 @Repository
+@Transactional(rollbackFor = OracleSQLException.class)
 public class DistrictRepositoryImpl extends CommonRepositoryImpl<District> implements DistrictRepository {
 
 	@Override
