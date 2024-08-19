@@ -12,7 +12,23 @@ import org.springframework.util.CollectionUtils;
 import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 
+/**
+ * 共通リポジトリ
+ *
+ * @author ArkamaHozota
+ * @since 10.34
+ */
 public abstract class CommonRepositoryImpl<T> {
+
+	/**
+	 * エンティティ
+	 */
+	private T entity;
+
+	/**
+	 * エンティティクラス
+	 */
+	private Class<T> entityClass;
 
 	/**
 	 * JDBCクライアント
@@ -38,8 +54,8 @@ public abstract class CommonRepositoryImpl<T> {
 	 * @param aEntityClass エンティティクラス
 	 * @return List<T>
 	 */
-	protected List<T> getCommonList(final String aSql, final Class<T> aEntityClass) {
-		final List<T> list = this.jdbcClient.sql(aSql).query(aEntityClass).list();
+	protected List<T> getCommonList(final String aSql) {
+		final List<T> list = this.jdbcClient.sql(aSql).query(this.getEntityClass()).list();
 		if (CollectionUtils.isEmpty(list)) {
 			return new ArrayList<>();
 		}
@@ -54,9 +70,8 @@ public abstract class CommonRepositoryImpl<T> {
 	 * @param aEntityClass エンティティクラス
 	 * @return List<T>
 	 */
-	protected List<T> getCommonListByForeignKey(final String aSql, final Long aForeignKey,
-			final Class<T> aEntityClass) {
-		final List<T> list = this.jdbcClient.sql(aSql).param(aForeignKey).query(aEntityClass).list();
+	protected List<T> getCommonListByForeignKey(final String aSql, final Long aForeignKey) {
+		final List<T> list = this.jdbcClient.sql(aSql).param(aForeignKey).query(this.getEntityClass()).list();
 		if (CollectionUtils.isEmpty(list)) {
 			return new ArrayList<>();
 		}
@@ -71,8 +86,8 @@ public abstract class CommonRepositoryImpl<T> {
 	 * @param aEntityClass エンティティクラス
 	 * @return List<T>
 	 */
-	protected List<T> getCommonListByIds(final String aSql, final List<Long> aIdList, final Class<T> aEntityClass) {
-		final List<T> list = this.jdbcClient.sql(aSql).param(aIdList).query(aEntityClass).list();
+	protected List<T> getCommonListByIds(final String aSql, final List<Long> aIdList) {
+		final List<T> list = this.jdbcClient.sql(aSql).param(aIdList).query(this.getEntityClass()).list();
 		if (CollectionUtils.isEmpty(list)) {
 			return new ArrayList<>();
 		}
@@ -88,12 +103,48 @@ public abstract class CommonRepositoryImpl<T> {
 	 * @return T
 	 */
 	@SuppressWarnings("unchecked")
-	protected T getCommonOneById(final String aSql, final Long aId, final Class<T> aEntityClass) {
+	protected T getCommonOneById(final String aSql, final Long aId) {
 		try {
-			return this.jdbcClient.sql(aSql).param(aId).query(aEntityClass).single();
+			return this.jdbcClient.sql(aSql).param(aId).query(this.getEntityClass()).single();
 		} catch (final EmptyResultDataAccessException e) {
-			return (T) new BeanWrapperImpl(aEntityClass).getWrappedInstance();
+			return (T) new BeanWrapperImpl(this.getEntity()).getWrappedInstance();
 		}
+	}
+
+	/**
+	 * getter of entity
+	 *
+	 * @return T
+	 */
+	public T getEntity() {
+		return this.entity;
+	}
+
+	/**
+	 * getter of entityClass
+	 *
+	 * @return Class<T>
+	 */
+	public Class<T> getEntityClass() {
+		return this.entityClass;
+	}
+
+	/**
+	 * setter of entity
+	 *
+	 * @return T
+	 */
+	public void setEntity(final T entity) {
+		this.entity = entity;
+	}
+
+	/**
+	 * setter of entityClass
+	 *
+	 * @return Class<T>
+	 */
+	public void setEntityClass(final Class<T> entityClass) {
+		this.entityClass = entityClass;
 	}
 
 }

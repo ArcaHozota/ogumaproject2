@@ -22,25 +22,25 @@ public class AuthorityRepositoryImpl extends CommonRepositoryImpl<Authority> imp
 	@Override
 	public List<Authority> getList() {
 		final String sql = "SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV ORDER BY PAV.ID ASC";
-		return this.getCommonList(sql, Authority.class);
+		return this.getCommonList(sql);
 	}
 
 	@Override
 	public List<Authority> getListByForeignKey(final Long foreignKey) {
 		final String sql = "SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV INNER JOIN PPOG_ROLE_AUTH_VIEW PRAV ON PRAV.AUTH_ID = PAV.ID WHERE PRAV.ROLE_ID = ?";
-		return this.getCommonListByForeignKey(sql, foreignKey, Authority.class);
+		return this.getCommonListByForeignKey(sql, foreignKey);
 	}
 
 	@Override
 	public List<Authority> getListByIds(final List<Long> ids) {
 		final String sql = "SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV WHERE PAV.ID IN (?)";
-		return this.getCommonListByIds(sql, ids, Authority.class);
+		return this.getCommonListByIds(sql, ids);
 	}
 
 	@Override
 	public Authority getOneById(final Long id) {
 		final String sql = "SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV WHERE PAV.ID = ?";
-		return this.getCommonOneById(sql, id, Authority.class);
+		return this.getCommonOneById(sql, id);
 	}
 
 	@Deprecated
