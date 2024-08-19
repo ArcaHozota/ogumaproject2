@@ -55,7 +55,7 @@ public final class CityServiceImpl implements ICityService {
 	public Pagination<CityDto> getCitiesByKeyword(final Integer pageNum, final String keyword) {
 		final int offset = (pageNum - 1) * PAGE_SIZE;
 		final String detailKeyword = OgumaProjectUtils.getDetailKeyword(keyword);
-		final Integer totalRecords = this.cityRepository.countByKeyword(detailKeyword);
+		final Long totalRecords = this.cityRepository.countByKeyword(detailKeyword);
 		final List<CityDto> cityDtos = this.cityRepository.pagination(offset, PAGE_SIZE, detailKeyword).stream()
 				.map(item -> {
 					final District district = this.districtRepository.getOneById(item.getDistrictId());

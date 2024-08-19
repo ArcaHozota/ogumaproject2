@@ -18,7 +18,7 @@ public interface CityRepository extends CommonRepository<City> {
 	 * @param keyword 検索キーワード
 	 * @return Integer
 	 */
-	Integer countByKeyword(String keyword);
+	Long countByKeyword(String keyword);
 
 	/**
 	 * 名称によってレコード数を計算する
@@ -26,7 +26,7 @@ public interface CityRepository extends CommonRepository<City> {
 	 * @param name 社員名称
 	 * @return Integer
 	 */
-	Integer countByName(String name, Long districtId);
+	Long countByName(String name, Long districtId);
 
 	/**
 	 * パージング検索

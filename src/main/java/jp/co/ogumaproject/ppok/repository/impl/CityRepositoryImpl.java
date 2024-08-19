@@ -29,16 +29,16 @@ public class CityRepositoryImpl extends CommonRepositoryImpl<City> implements Ci
 	private JdbcClient jdbcClient;
 
 	@Override
-	public Integer countByKeyword(final String keyword) {
+	public Long countByKeyword(final String keyword) {
 		final String sql = "SELECT COUNT(1) FROM PPOG_CITIES_VIEW PCV INNER JOIN PPOG_DISTRICTS_VIEW PDV ON PDV.ID = PCV.DISTRICT_ID "
 				+ "WHERE PCV.NAME LIKE ? OR PCV.PRONUNCIATION LIKE ? OR PDV.NAME LIKE ?";
-		return this.commonCountByKeywords(sql, keyword, keyword, keyword).intValue();
+		return this.commonCountByKeywords(sql, keyword, keyword, keyword);
 	}
 
 	@Override
-	public Integer countByName(final String name, final Long districtId) {
+	public Long countByName(final String name, final Long districtId) {
 		final String sql = "SELECT COUNT(1) FROM PPOG_CITIES_VIEW PCV WHERE PCV.NAME = ? AND PCV.DISTRICT_ID = ?";
-		return this.commonCountByKeywords(sql, name, districtId).intValue();
+		return this.commonCountByKeywords(sql, name, districtId);
 	}
 
 	@Deprecated
