@@ -2,12 +2,10 @@ package jp.co.ogumaproject.ppok.repository.impl;
 
 import java.util.List;
 
-import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppok.entity.City;
 import jp.co.ogumaproject.ppok.repository.CityRepository;
 import oracle.jdbc.driver.OracleSQLException;
@@ -21,12 +19,6 @@ import oracle.jdbc.driver.OracleSQLException;
 @Repository
 @Transactional(rollbackFor = OracleSQLException.class)
 public class CityRepositoryImpl extends CommonRepositoryImpl<City> implements CityRepository {
-
-	/**
-	 * JDBCクライアント
-	 */
-	@Resource
-	private JdbcClient jdbcClient;
 
 	@Override
 	public Long countByKeyword(final String keyword) {
