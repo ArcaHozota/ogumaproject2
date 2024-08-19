@@ -67,7 +67,7 @@ public final class CityServiceImpl implements ICityService {
 
 	@Override
 	public ResultDto<String> remove(final Long id) {
-		final Integer countByShutoId = this.districtRepository.countByShutoId(id);
+		final Long countByShutoId = this.districtRepository.countByShutoId(id);
 		if (countByShutoId > 0) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_FORBIDDEN3);
 		}

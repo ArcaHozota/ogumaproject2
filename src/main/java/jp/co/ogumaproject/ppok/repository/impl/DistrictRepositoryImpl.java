@@ -18,17 +18,17 @@ import jp.co.ogumaproject.ppok.repository.DistrictRepository;
 public class DistrictRepositoryImpl extends CommonRepositoryImpl<District> implements DistrictRepository {
 
 	@Override
-	public Integer countByKeyword(final String keyword) {
+	public Long countByKeyword(final String keyword) {
 		final String sql = "SELECT COUNT(1) FROM PPOG_DISTRICTS_VIEW PDV INNER JOIN PPOG_CHIHOS_VIEW PCHV ON PCHV.ID = PDV.CHIHO_ID "
 				+ "INNER JOIN PPOG_CITIES_VIEW PCV ON PCV.ID = PDV.SHUTO_ID WHERE PDV.NAME LIKE ? OR PCV.NAME LIKE ? "
 				+ "OR PCHV.NAME LIKE ?";
-		return this.commonCountByKeywords(sql, keyword, keyword, keyword).intValue();
+		return this.commonCountByKeywords(sql, keyword, keyword, keyword);
 	}
 
 	@Override
-	public Integer countByShutoId(final Long shutoId) {
+	public Long countByShutoId(final Long shutoId) {
 		final String sql = "SELECT COUNT(1) FROM PPOG_DISTRICTS_VIEW PDV WHERE PDV.SHUTO_ID = ?";
-		return this.commonCountByKeywords(sql, shutoId).intValue();
+		return this.commonCountByKeywords(sql, shutoId);
 	}
 
 	@Override

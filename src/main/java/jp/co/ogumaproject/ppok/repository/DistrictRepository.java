@@ -18,7 +18,7 @@ public interface DistrictRepository extends CommonRepository<District> {
 	 * @param keyword 検索キーワード
 	 * @return Integer
 	 */
-	Integer countByKeyword(String keyword);
+	Long countByKeyword(String keyword);
 
 	/**
 	 * 州都IDによって件数をカウントする
@@ -26,7 +26,7 @@ public interface DistrictRepository extends CommonRepository<District> {
 	 * @param shutoId 州都ID
 	 * @return Integer
 	 */
-	Integer countByShutoId(Long shutoId);
+	Long countByShutoId(Long shutoId);
 
 	/**
 	 * パージング検索

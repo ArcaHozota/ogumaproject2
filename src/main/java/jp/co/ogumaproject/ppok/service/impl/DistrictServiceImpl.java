@@ -88,7 +88,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 	public Pagination<DistrictDto> getDistrictsByKeyword(final Integer pageNum, final String keyword) {
 		final int offset = (pageNum - 1) * PAGE_SIZE;
 		final String detailKeyword = OgumaProjectUtils.getDetailKeyword(keyword);
-		final Integer totalRecords = this.districtRepository.countByKeyword(detailKeyword);
+		final Long totalRecords = this.districtRepository.countByKeyword(detailKeyword);
 		final List<DistrictDto> districtDtos = this.districtRepository.pagination(offset, PAGE_SIZE, detailKeyword)
 				.stream().map(item -> {
 					final Chiho chiho = this.chihoRepository.getOneById(item.getChihoId());
