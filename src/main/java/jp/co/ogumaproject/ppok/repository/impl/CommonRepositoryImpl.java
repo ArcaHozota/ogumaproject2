@@ -118,7 +118,7 @@ public abstract class CommonRepositoryImpl<T> {
 	@SuppressWarnings("unchecked")
 	protected T getCommonOneByKeywords(final String aSql, final Object... aKeywords) {
 		try {
-			return this.jdbcClient.sql(aSql).param(aKeywords).query(this.getEntityClass()).single();
+			return this.jdbcClient.sql(aSql).params(aKeywords).query(this.getEntityClass()).single();
 		} catch (final EmptyResultDataAccessException e) {
 			return (T) new BeanWrapperImpl(this.getEntityClass()).getWrappedInstance();
 		}

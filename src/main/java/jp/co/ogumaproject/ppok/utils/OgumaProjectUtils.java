@@ -366,7 +366,10 @@ public final class OgumaProjectUtils {
 	 * @return true: イコール, false: イコールしない
 	 */
 	public static boolean isEqual(@Nullable final Long long1, @Nullable final Long long2) {
-		if (((long1 == null) && (long2 == null)) || (long1.longValue() == long2.longValue())) {
+		if ((long1 == null) && (long2 == null)) {
+			return true;
+		} else if ((long1 == null) || (long2 == null)) {
+		} else if (long1.longValue() == long2.longValue()) {
 			return true;
 		}
 		return false;

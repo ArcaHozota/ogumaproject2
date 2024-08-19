@@ -195,30 +195,33 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public ResultDto<String> update(final EmployeeDto employeeDto) {
-		final String password = employeeDto.password();
+		final Employee originalEntity = new Employee();
 		final Employee employee = this.employeeRepository.getOneById(employeeDto.id());
-		final EmployeeRole employeeRole = this.employeeRoleRepository.getOneById(employee.getId());
-		final EmployeeDto aEmployeeDto = new EmployeeDto(employee.getId(), employee.getLoginAccount(),
-				employee.getUsername(), password, employee.getEmail(), FORMATTER.format(employee.getDateOfBirth()),
-				employeeRole.getRoleId());
+		SecondBeanUtils.copyNullableProperties(employee, originalEntity);
+		final String password = employeeDto.password();
 		boolean passwordMatch = false;
 		if (OgumaProjectUtils.isNotEmpty(password)) {
 			passwordMatch = ENCODER.matches(password, employee.getPassword());
 		} else {
 			passwordMatch = true;
 		}
-		if (OgumaProjectUtils.isEqual(aEmployeeDto, employeeDto) && passwordMatch) {
-			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
+		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
+		employee.setPassword(OgumaProjectUtils.EMPTY_STRING);
+		originalEntity.setPassword(OgumaProjectUtils.EMPTY_STRING);
+		final EmployeeRole employeeRole = this.employeeRoleRepository.getOneById(employee.getId());
+		if (OgumaProjectUtils.isEqual(originalEntity, employee) && passwordMatch) {
+			if (OgumaProjectUtils.isEqual(employeeDto.roleId(), employeeRole.getRoleId())) {
+				return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
+			} else {
+				employeeRole.setRoleId(employeeDto.roleId());
+			}
 		}
-		employee.setLoginAccount(employeeDto.loginAccount());
-		employee.setUsername(employeeDto.username());
+		employeeRole.setRoleId(employeeDto.roleId());
+		this.employeeRoleRepository.updateById(employeeRole);
 		if (!passwordMatch) {
 			employee.setPassword(ENCODER.encode(password));
 		}
-		employee.setEmail(employeeDto.email());
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), FORMATTER));
-		employeeRole.setRoleId(employeeDto.roleId());
-		this.employeeRoleRepository.updateById(employeeRole);
 		this.employeeRepository.updateById(employee);
 		return ResultDto.successWithoutData();
 	}

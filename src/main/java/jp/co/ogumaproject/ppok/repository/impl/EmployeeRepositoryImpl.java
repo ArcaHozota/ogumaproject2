@@ -70,7 +70,7 @@ public class EmployeeRepositoryImpl extends CommonRepositoryImpl<Employee> imple
 	@Override
 	public Employee getOneByLoginAccount(final String loginAccount) {
 		final String sql = "SELECT PEV.* FROM PPOG_EMPLOYEES_VIEW PEV WHERE PEV.LOGIN_ACCOUNT = ? OR PEV.EMAIL = ?";
-		return this.getCommonOneByKeywords(sql, loginAccount);
+		return this.getCommonOneByKeywords(sql, loginAccount, loginAccount);
 	}
 
 	/**
