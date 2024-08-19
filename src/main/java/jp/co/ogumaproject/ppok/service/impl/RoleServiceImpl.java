@@ -131,7 +131,7 @@ public final class RoleServiceImpl implements IRoleService {
 	public Pagination<RoleDto> getRolesByKeyword(final Integer pageNum, final String keyword) {
 		final int offset = (pageNum - 1) * PAGE_SIZE;
 		final String detailKeyword = OgumaProjectUtils.getDetailKeyword(keyword);
-		final Integer totalRecords = this.roleRepository.countByKeyword(detailKeyword);
+		final Long totalRecords = this.roleRepository.countByKeyword(detailKeyword);
 		final List<Role> roles = this.roleRepository.pagination(offset, PAGE_SIZE, detailKeyword);
 		final List<RoleDto> roleDtos = roles.stream().map(item -> new RoleDto(item.getId(), item.getName())).toList();
 		return Pagination.of(roleDtos, totalRecords, pageNum, PAGE_SIZE);

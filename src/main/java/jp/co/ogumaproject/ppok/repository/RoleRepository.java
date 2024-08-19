@@ -18,7 +18,7 @@ public interface RoleRepository extends CommonRepository<Role> {
 	 * @param keyword 検索キーワード
 	 * @return Integer
 	 */
-	Integer countByKeyword(String keyword);
+	Long countByKeyword(String keyword);
 
 	/**
 	 * 名称によってレコード数を計算する
@@ -26,7 +26,7 @@ public interface RoleRepository extends CommonRepository<Role> {
 	 * @param name 社員名称
 	 * @return Integer
 	 */
-	Integer countByName(String name);
+	Long countByName(String name);
 
 	/**
 	 * 名称によって1件を抽出する
