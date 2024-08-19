@@ -2,6 +2,7 @@ package jp.co.ogumaproject.ppok.repository.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -9,6 +10,7 @@ import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.util.CollectionUtils;
 
 import jakarta.annotation.Resource;
+import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 
 public abstract class CommonRepositoryImpl<T> {
 
@@ -17,6 +19,17 @@ public abstract class CommonRepositoryImpl<T> {
 	 */
 	@Resource
 	private JdbcClient jdbcClient;
+
+	/**
+	 * IDによってデータ修飾を行う
+	 *
+	 * @param aSQL    SQL文
+	 * @param aEntity エンティティオブジェクト
+	 */
+	protected void commonModifyById(final String aSQL, final T aEntity) {
+		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
+		this.jdbcClient.sql(aSQL).params(paramMap).update();
+	}
 
 	/**
 	 * リストを取得する
@@ -44,6 +57,22 @@ public abstract class CommonRepositoryImpl<T> {
 	protected List<T> getCommonListByForeignKey(final String aSql, final Long aForeignKey,
 			final Class<T> aEntityClass) {
 		final List<T> list = this.jdbcClient.sql(aSql).param(aForeignKey).query(aEntityClass).list();
+		if (CollectionUtils.isEmpty(list)) {
+			return new ArrayList<>();
+		}
+		return list;
+	}
+
+	/**
+	 * IDリストによってリストを取得する
+	 *
+	 * @param aSql         SQL文
+	 * @param aIdList      IDリスト
+	 * @param aEntityClass エンティティクラス
+	 * @return List<T>
+	 */
+	protected List<T> getCommonListByIds(final String aSql, final List<Long> aIdList, final Class<T> aEntityClass) {
+		final List<T> list = this.jdbcClient.sql(aSql).param(aIdList).query(aEntityClass).list();
 		if (CollectionUtils.isEmpty(list)) {
 			return new ArrayList<>();
 		}

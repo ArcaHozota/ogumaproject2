@@ -2,11 +2,9 @@ package jp.co.ogumaproject.ppok.repository.impl;
 
 import java.util.List;
 
-import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppok.entity.Authority;
 import jp.co.ogumaproject.ppok.repository.AuthorityRepository;
 import oracle.jdbc.driver.OracleSQLException;
@@ -20,12 +18,6 @@ import oracle.jdbc.driver.OracleSQLException;
 @Repository
 @Transactional(rollbackFor = OracleSQLException.class)
 public class AuthorityRepositoryImpl extends CommonRepositoryImpl<Authority> implements AuthorityRepository {
-
-	/**
-	 * JDBCクライアント
-	 */
-	@Resource
-	private JdbcClient jdbcClient;
 
 	@Override
 	public List<Authority> getList() {
@@ -41,14 +33,14 @@ public class AuthorityRepositoryImpl extends CommonRepositoryImpl<Authority> imp
 
 	@Override
 	public List<Authority> getListByIds(final List<Long> ids) {
-		return this.jdbcClient.sql("SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV WHERE PAV.ID IN (?)").params(ids)
-				.query(Authority.class).list();
+		final String sql = "SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV WHERE PAV.ID IN (?)";
+		return this.getCommonListByIds(sql, ids, Authority.class);
 	}
 
 	@Override
 	public Authority getOneById(final Long id) {
-		return this.jdbcClient.sql("SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV WHERE PAV.ID = ?").param(id)
-				.query(Authority.class).single();
+		final String sql = "SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV WHERE PAV.ID = ?";
+		return this.getCommonOneById(sql, id, Authority.class);
 	}
 
 	@Deprecated
