@@ -32,6 +32,16 @@ public abstract class CommonRepositoryImpl<T> {
 	private JdbcClient jdbcClient;
 
 	/**
+	 * キーワードによってレコード数を取得する
+	 *
+	 * @param aSQL      SQL文
+	 * @param aKeywords エンティティオブジェクト
+	 */
+	protected Long commonCountByKeywords(final String aSQL, final Object... aKeywords) {
+		return this.jdbcClient.sql(aSQL).params(aKeywords).query(Long.class).single();
+	}
+
+	/**
 	 * IDによってデータ修飾を行う
 	 *
 	 * @param aSQL    SQL文
