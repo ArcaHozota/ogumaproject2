@@ -2,12 +2,13 @@ package jp.co.ogumaproject.ppok.repository.impl;
 
 import java.util.List;
 
-import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.annotation.Resource;
+import jakarta.annotation.PostConstruct;
 import jp.co.ogumaproject.ppok.entity.Chiho;
 import jp.co.ogumaproject.ppok.repository.ChihoRepository;
+import oracle.jdbc.driver.OracleSQLException;
 
 /**
  * 地方リポジトリ
@@ -16,18 +17,13 @@ import jp.co.ogumaproject.ppok.repository.ChihoRepository;
  * @since 9.97
  */
 @Repository
-public class ChihoRepositoryImpl implements ChihoRepository {
-
-	/**
-	 * JDBCクライアント
-	 */
-	@Resource
-	private JdbcClient jdbcClient;
+@Transactional(rollbackFor = OracleSQLException.class)
+public class ChihoRepositoryImpl extends CommonRepositoryImpl<Chiho> implements ChihoRepository {
 
 	@Override
 	public List<Chiho> getList() {
-		return this.jdbcClient.sql("SELECT PCHV.* FROM PPOG_CHIHOS_VIEW PCHV ORDER BY PCHV.ID ASC").query(Chiho.class)
-				.list();
+		final String sql = "SELECT PCHV.* FROM PPOG_CHIHOS_VIEW PCHV ORDER BY PCHV.ID ASC";
+		return this.getCommonList(sql);
 	}
 
 	@Deprecated
@@ -44,8 +40,16 @@ public class ChihoRepositoryImpl implements ChihoRepository {
 
 	@Override
 	public Chiho getOneById(final Long id) {
-		return this.jdbcClient.sql("SELECT PCHV.* FROM PPOG_CHIHOS_VIEW PCHV WHERE PCHV.ID = ?").param(id)
-				.query(Chiho.class).single();
+		final String sql = "SELECT PCHV.* FROM PPOG_CHIHOS_VIEW PCHV WHERE PCHV.ID = ?";
+		return this.getCommonOneById(sql, id);
+	}
+
+	/**
+	 * イニシャル
+	 */
+	@PostConstruct
+	private void initial() {
+		this.setEntityClass(Chiho.class);
 	}
 
 	@Deprecated

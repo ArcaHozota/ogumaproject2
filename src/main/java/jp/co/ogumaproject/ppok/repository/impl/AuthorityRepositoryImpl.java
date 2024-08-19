@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.annotation.PostConstruct;
 import jp.co.ogumaproject.ppok.entity.Authority;
 import jp.co.ogumaproject.ppok.repository.AuthorityRepository;
 import oracle.jdbc.driver.OracleSQLException;
@@ -41,6 +42,14 @@ public class AuthorityRepositoryImpl extends CommonRepositoryImpl<Authority> imp
 	public Authority getOneById(final Long id) {
 		final String sql = "SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV WHERE PAV.ID = ?";
 		return this.getCommonOneById(sql, id);
+	}
+
+	/**
+	 * イニシャル
+	 */
+	@PostConstruct
+	private void initial() {
+		this.setEntityClass(Authority.class);
 	}
 
 	@Deprecated

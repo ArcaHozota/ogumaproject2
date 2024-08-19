@@ -21,11 +21,6 @@ import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 public abstract class CommonRepositoryImpl<T> {
 
 	/**
-	 * エンティティ
-	 */
-	private T entity;
-
-	/**
 	 * エンティティクラス
 	 */
 	private Class<T> entityClass;
@@ -50,8 +45,7 @@ public abstract class CommonRepositoryImpl<T> {
 	/**
 	 * リストを取得する
 	 *
-	 * @param aSql         SQL文
-	 * @param aEntityClass エンティティクラス
+	 * @param aSql SQL文
 	 * @return List<T>
 	 */
 	protected List<T> getCommonList(final String aSql) {
@@ -65,9 +59,8 @@ public abstract class CommonRepositoryImpl<T> {
 	/**
 	 * 外部キーによってリストを取得する
 	 *
-	 * @param aSql         SQL文
-	 * @param aForeignKey  外部キー
-	 * @param aEntityClass エンティティクラス
+	 * @param aSql        SQL文
+	 * @param aForeignKey 外部キー
 	 * @return List<T>
 	 */
 	protected List<T> getCommonListByForeignKey(final String aSql, final Long aForeignKey) {
@@ -81,9 +74,8 @@ public abstract class CommonRepositoryImpl<T> {
 	/**
 	 * IDリストによってリストを取得する
 	 *
-	 * @param aSql         SQL文
-	 * @param aIdList      IDリスト
-	 * @param aEntityClass エンティティクラス
+	 * @param aSql    SQL文
+	 * @param aIdList IDリスト
 	 * @return List<T>
 	 */
 	protected List<T> getCommonListByIds(final String aSql, final List<Long> aIdList) {
@@ -97,9 +89,8 @@ public abstract class CommonRepositoryImpl<T> {
 	/**
 	 * IDによって一件レコードを検索する
 	 *
-	 * @param aSql         SQL文
-	 * @param aId          ID
-	 * @param aEntityClass エンティティクラス
+	 * @param aSql SQL文
+	 * @param aId  ID
 	 * @return T
 	 */
 	@SuppressWarnings("unchecked")
@@ -107,17 +98,8 @@ public abstract class CommonRepositoryImpl<T> {
 		try {
 			return this.jdbcClient.sql(aSql).param(aId).query(this.getEntityClass()).single();
 		} catch (final EmptyResultDataAccessException e) {
-			return (T) new BeanWrapperImpl(this.getEntity()).getWrappedInstance();
+			return (T) new BeanWrapperImpl(this.getEntityClass()).getWrappedInstance();
 		}
-	}
-
-	/**
-	 * getter of entity
-	 *
-	 * @return T
-	 */
-	public T getEntity() {
-		return this.entity;
 	}
 
 	/**
@@ -127,15 +109,6 @@ public abstract class CommonRepositoryImpl<T> {
 	 */
 	public Class<T> getEntityClass() {
 		return this.entityClass;
-	}
-
-	/**
-	 * setter of entity
-	 *
-	 * @return T
-	 */
-	public void setEntity(final T entity) {
-		this.entity = entity;
 	}
 
 	/**
