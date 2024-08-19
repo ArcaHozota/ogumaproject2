@@ -53,6 +53,16 @@ public abstract class CommonRepositoryImpl<T> {
 	}
 
 	/**
+	 * キーワードによってデータ修飾を行う
+	 *
+	 * @param aSQL      SQL文
+	 * @param aKeywords キーワード
+	 */
+	protected void commonModifyByKeywords(final String aSQL, final Object... aKeywords) {
+		this.jdbcClient.sql(aSQL).params(aKeywords).update();
+	}
+
+	/**
 	 * IDリストによってリストを取得する
 	 *
 	 * @param aSql    SQL文

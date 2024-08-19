@@ -1,15 +1,14 @@
 package jp.co.ogumaproject.ppok.repository.impl;
 
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.annotation.Resource;
+import jakarta.annotation.PostConstruct;
 import jp.co.ogumaproject.ppok.entity.RoleAuth;
 import jp.co.ogumaproject.ppok.repository.RoleAuthRepository;
-import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
+import oracle.jdbc.driver.OracleSQLException;
 
 /**
  * 役割権限リポジトリ
@@ -18,17 +17,13 @@ import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
  * @since 9.77
  */
 @Repository
-public class RoleAuthRepositoryImpl implements RoleAuthRepository {
-
-	/**
-	 * JDBCクライアント
-	 */
-	@Resource
-	private JdbcClient jdbcClient;
+@Transactional(rollbackFor = OracleSQLException.class)
+public class RoleAuthRepositoryImpl extends CommonRepositoryImpl<RoleAuth> implements RoleAuthRepository {
 
 	@Override
 	public void batchRemoveByForeignKey(final Long foreignKey) {
-		this.jdbcClient.sql("DELETE FROM PPOG_ROLE_AUTH PRA WHERE PRA.ROLE_ID = ?").param(foreignKey).update();
+		final String sql = "DELETE FROM PPOG_ROLE_AUTH PRA WHERE PRA.ROLE_ID = ?";
+		this.commonModifyByKeywords(sql, foreignKey);
 	}
 
 	@Deprecated
@@ -39,8 +34,8 @@ public class RoleAuthRepositoryImpl implements RoleAuthRepository {
 
 	@Override
 	public List<RoleAuth> getListByForeignKey(final Long foreignKey) {
-		return this.jdbcClient.sql("SELECT PRAV.* FROM PPOG_ROLE_AUTH_VIEW PRAV WHERE PRAV.ROLE_ID = ?")
-				.param(foreignKey).query(RoleAuth.class).list();
+		final String sql = "SELECT PRAV.* FROM PPOG_ROLE_AUTH_VIEW PRAV WHERE PRAV.ROLE_ID = ?";
+		return this.getCommonListByKeywords(sql, foreignKey);
 	}
 
 	@Deprecated
@@ -55,6 +50,14 @@ public class RoleAuthRepositoryImpl implements RoleAuthRepository {
 		return null;
 	}
 
+	/**
+	 * イニシャル
+	 */
+	@PostConstruct
+	private void initial() {
+		this.setEntityClass(RoleAuth.class);
+	}
+
 	@Deprecated
 	@Override
 	public void removeById(final RoleAuth aEntity) {
@@ -62,9 +65,8 @@ public class RoleAuthRepositoryImpl implements RoleAuthRepository {
 
 	@Override
 	public void saveById(final RoleAuth aEntity) {
-		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
-		this.jdbcClient.sql("INSERT INTO PPOG_ROLE_AUTH PRA (PRA.ROLE_ID, PRA.AUTH_ID) VALUES (:roleId, :authId)")
-				.params(paramMap).update();
+		final String sql = "INSERT INTO PPOG_ROLE_AUTH PRA (PRA.ROLE_ID, PRA.AUTH_ID) VALUES (:roleId, :authId)";
+		this.commonModifyById(sql, aEntity);
 	}
 
 	@Deprecated

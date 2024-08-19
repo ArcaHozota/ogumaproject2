@@ -1,15 +1,14 @@
 package jp.co.ogumaproject.ppok.repository.impl;
 
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.annotation.Resource;
+import jakarta.annotation.PostConstruct;
 import jp.co.ogumaproject.ppok.entity.EmployeeRole;
 import jp.co.ogumaproject.ppok.repository.EmployeeRoleRepository;
-import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
+import oracle.jdbc.driver.OracleSQLException;
 
 /**
  * 社員役割リポジトリ
@@ -18,13 +17,8 @@ import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
  * @since 9.64
  */
 @Repository
-public class EmployeeRoleRepositoryImpl implements EmployeeRoleRepository {
-
-	/**
-	 * JDBCクライアント
-	 */
-	@Resource
-	private JdbcClient jdbcClient;
+@Transactional(rollbackFor = OracleSQLException.class)
+public class EmployeeRoleRepositoryImpl extends CommonRepositoryImpl<EmployeeRole> implements EmployeeRoleRepository {
 
 	@Deprecated
 	@Override
@@ -40,35 +34,39 @@ public class EmployeeRoleRepositoryImpl implements EmployeeRoleRepository {
 
 	@Override
 	public List<EmployeeRole> getListByIds(final List<Long> ids) {
-		return this.jdbcClient.sql("SELECT PERV.* FROM PPOG_EMPLOYEE_ROLE_VIEW PERV WHERE PERV.EMPLOYEE_ID IN (?)")
-				.params(ids).query(EmployeeRole.class).list();
+		final String sql = "SELECT PERV.* FROM PPOG_EMPLOYEE_ROLE_VIEW PERV WHERE PERV.EMPLOYEE_ID IN (?)";
+		return this.getCommonListByIds(sql, ids);
 	}
 
 	@Override
 	public EmployeeRole getOneById(final Long id) {
-		return this.jdbcClient.sql("SELECT PERV.* FROM PPOG_EMPLOYEE_ROLE_VIEW PERV WHERE PERV.EMPLOYEE_ID = ?")
-				.param(id).query(EmployeeRole.class).single();
+		final String sql = "SELECT PERV.* FROM PPOG_EMPLOYEE_ROLE_VIEW PERV WHERE PERV.EMPLOYEE_ID = ?";
+		return this.getCommonOneById(sql, id);
+	}
+
+	/**
+	 * イニシャル
+	 */
+	@PostConstruct
+	private void initial() {
+		this.setEntityClass(EmployeeRole.class);
 	}
 
 	@Override
 	public void removeById(final EmployeeRole aEntity) {
-		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
-		this.jdbcClient.sql("DELETE FROM PPOG_EMPLOYEE_ROLE PER WHERE PER.EMPLOYEE_ID =:employeeId").params(paramMap)
-				.update();
+		final String sql = "DELETE FROM PPOG_EMPLOYEE_ROLE PER WHERE PER.EMPLOYEE_ID =:employeeId";
+		this.commonModifyById(sql, aEntity);
 	}
 
 	@Override
 	public void saveById(final EmployeeRole aEntity) {
-		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
-		this.jdbcClient
-				.sql("INSERT INTO PPOG_EMPLOYEE_ROLE PER (PER.EMPLOYEE_ID, PER.ROLE_ID) VALUES (:employeeId, :roleId)")
-				.params(paramMap).update();
+		final String sql = "INSERT INTO PPOG_EMPLOYEE_ROLE PER (PER.EMPLOYEE_ID, PER.ROLE_ID) VALUES (:employeeId, :roleId)";
+		this.commonModifyById(sql, aEntity);
 	}
 
 	@Override
 	public void updateById(final EmployeeRole aEntity) {
-		final Map<String, Object> paramMap = OgumaProjectUtils.getParamMap(aEntity);
-		this.jdbcClient.sql("UPDATE PPOG_EMPLOYEE_ROLE PER SET PER.ROLE_ID =:roleId WHERE PER.EMPLOYEE_ID =:employeeId")
-				.params(paramMap).update();
+		final String sql = "UPDATE PPOG_EMPLOYEE_ROLE PER SET PER.ROLE_ID =:roleId WHERE PER.EMPLOYEE_ID =:employeeId";
+		this.commonModifyById(sql, aEntity);
 	}
 }
