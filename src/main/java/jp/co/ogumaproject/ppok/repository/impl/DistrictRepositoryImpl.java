@@ -44,7 +44,7 @@ public class DistrictRepositoryImpl extends CommonRepositoryImpl<District> imple
 	public List<District> getListByForeignKey(final Long foreignKey) {
 		final String sql = "SELECT PDV.* FROM PPOG_DISTRICTS_VIEW PDV INNER JOIN PPOG_CHIHOS_VIEW PCHV ON PCHV.ID = PDV.CHIHO_ID "
 				+ "WHERE PCHV.ID = ? ORDER BY PDV.ID ASC";
-		return this.getCommonListByForeignKey(sql, foreignKey);
+		return this.getCommonListByKeywords(sql, foreignKey);
 	}
 
 	@Override

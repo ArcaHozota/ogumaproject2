@@ -44,7 +44,7 @@ public class EmployeeRepositoryImpl extends CommonRepositoryImpl<Employee> imple
 	public List<Employee> getListByForeignKey(final Long foreignKey) {
 		final String sql = "SELECT PEV.* FROM PPOG_EMPLOYEES_VIEW PEV INNER JOIN PPOG_EMPLOYEES_ROLE_VIEW PERV ON PERV.EMPLOYEE_ID = PEV.ID　"
 				+ "WHERE PERV.ROLE_ID = ?";
-		return this.getCommonListByForeignKey(sql, foreignKey);
+		return this.getCommonListByKeywords(sql, foreignKey);
 	}
 
 	@Override

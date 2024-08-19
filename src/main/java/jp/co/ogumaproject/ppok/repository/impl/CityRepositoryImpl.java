@@ -42,7 +42,7 @@ public class CityRepositoryImpl extends CommonRepositoryImpl<City> implements Ci
 	@Override
 	public List<City> getListByForeignKey(final Long foreignKey) {
 		final String sql = "SELECT PCV.* FROM PPOG_CITIES_VIEW PCV INNER JOIN PPOG_DISTRICTS_VIEW PDV ON PDV.ID = PCV.DISTRICT_ID WHERE PDV.ID = ?";
-		return this.getCommonListByForeignKey(sql, foreignKey);
+		return this.getCommonListByKeywords(sql, foreignKey);
 	}
 
 	@Deprecated

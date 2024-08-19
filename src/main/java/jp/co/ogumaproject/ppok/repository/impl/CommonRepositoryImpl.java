@@ -53,21 +53,6 @@ public abstract class CommonRepositoryImpl<T> {
 	}
 
 	/**
-	 * 外部キーによってリストを取得する
-	 *
-	 * @param aSql        SQL文
-	 * @param aForeignKey 外部キー
-	 * @return List<T>
-	 */
-	protected List<T> getCommonListByForeignKey(final String aSql, final Long aForeignKey) {
-		final List<T> list = this.jdbcClient.sql(aSql).param(aForeignKey).query(this.getEntityClass()).list();
-		if (CollectionUtils.isEmpty(list)) {
-			return new ArrayList<>();
-		}
-		return list;
-	}
-
-	/**
 	 * IDリストによってリストを取得する
 	 *
 	 * @param aSql    SQL文

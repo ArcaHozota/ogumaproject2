@@ -29,7 +29,7 @@ public class AuthorityRepositoryImpl extends CommonRepositoryImpl<Authority> imp
 	@Override
 	public List<Authority> getListByForeignKey(final Long foreignKey) {
 		final String sql = "SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV INNER JOIN PPOG_ROLE_AUTH_VIEW PRAV ON PRAV.AUTH_ID = PAV.ID WHERE PRAV.ROLE_ID = ?";
-		return this.getCommonListByForeignKey(sql, foreignKey);
+		return this.getCommonListByKeywords(sql, foreignKey);
 	}
 
 	@Override
