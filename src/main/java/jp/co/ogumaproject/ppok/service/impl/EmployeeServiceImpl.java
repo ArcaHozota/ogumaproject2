@@ -199,9 +199,10 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final Employee employee = this.employeeRepository.getOneById(employeeDto.id());
 		SecondBeanUtils.copyNullableProperties(employee, originalEntity);
 		final String password = employeeDto.password();
+		final String originalPass = employee.getPassword();
 		boolean passwordMatch = false;
 		if (OgumaProjectUtils.isNotEmpty(password)) {
-			passwordMatch = ENCODER.matches(password, employee.getPassword());
+			passwordMatch = ENCODER.matches(password, originalPass);
 		} else {
 			passwordMatch = true;
 		}
@@ -210,16 +211,17 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		originalEntity.setPassword(OgumaProjectUtils.EMPTY_STRING);
 		final EmployeeRole employeeRole = this.employeeRoleRepository.getOneById(employee.getId());
 		if (OgumaProjectUtils.isEqual(originalEntity, employee) && passwordMatch) {
-			if (OgumaProjectUtils.isEqual(employeeDto.roleId(), employeeRole.getRoleId())) {
+			if ((employeeRole == null) || OgumaProjectUtils.isEqual(employeeDto.roleId(), employeeRole.getRoleId())) {
 				return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 			} else {
 				employeeRole.setRoleId(employeeDto.roleId());
 			}
 		}
-		employeeRole.setRoleId(employeeDto.roleId());
 		this.employeeRoleRepository.updateById(employeeRole);
 		if (!passwordMatch) {
 			employee.setPassword(ENCODER.encode(password));
+		} else {
+			employee.setPassword(originalPass);
 		}
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), FORMATTER));
 		this.employeeRepository.updateById(employee);

@@ -119,7 +119,7 @@ public final class RoleServiceImpl implements IRoleService {
 			roleDtos.add(role);
 		} else {
 			final EmployeeRole employeeRole = this.employeeRoleRepository.getOneById(employeeId);
-			if (OgumaProjectUtils.isEqual(employeeRole, new EmployeeRole())) {
+			if (employeeRole == null) {
 				final Role role = new Role();
 				role.setId(0L);
 				role.setName(OgumaProjectConstants.DEFAULT_ROLE_NAME);

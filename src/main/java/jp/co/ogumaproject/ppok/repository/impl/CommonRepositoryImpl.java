@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.util.CollectionUtils;
@@ -99,12 +98,11 @@ public abstract class CommonRepositoryImpl<T> {
 	 * @param aId  ID
 	 * @return T
 	 */
-	@SuppressWarnings("unchecked")
 	protected T getCommonOneById(final String aSql, final Long aId) {
 		try {
 			return this.jdbcClient.sql(aSql).param(aId).query(this.getEntityClass()).single();
 		} catch (final EmptyResultDataAccessException e) {
-			return (T) new BeanWrapperImpl(this.getEntityClass()).getWrappedInstance();
+			return null;
 		}
 	}
 
@@ -115,12 +113,11 @@ public abstract class CommonRepositoryImpl<T> {
 	 * @param aKeywords キーワード
 	 * @return T
 	 */
-	@SuppressWarnings("unchecked")
 	protected T getCommonOneByKeywords(final String aSql, final Object... aKeywords) {
 		try {
 			return this.jdbcClient.sql(aSql).params(aKeywords).query(this.getEntityClass()).single();
 		} catch (final EmptyResultDataAccessException e) {
-			return (T) new BeanWrapperImpl(this.getEntityClass()).getWrappedInstance();
+			return null;
 		}
 	}
 

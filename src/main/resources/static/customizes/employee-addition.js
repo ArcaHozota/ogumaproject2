@@ -110,6 +110,9 @@ $("#editInfoBtn").on('click', function() {
 		let roleId = $("#roleEdit").attr('value');
 		if (roleId === null || roleId === undefined) {
 			roleId = $("#roleEdit option:selected").val();
+			if (roleId === 0) {
+				roleId = null;
+			}
 		}
 		let putData = JSON.stringify({
 			'id': $("#editIdContainer").text(),
