@@ -78,6 +78,7 @@ public abstract class CommonRepositoryImpl<T> {
 	 * @param aIdList IDリスト
 	 * @return List<T>
 	 */
+	@SuppressWarnings("unchecked")
 	protected List<T> getCommonListByIds(final String aSql, final List<Long> aIdList) {
 		final List<T> list = (List<T>) this.jdbcClient.sql(aSql).params(aIdList).query(this.getType().getClass())
 				.list();
@@ -94,6 +95,7 @@ public abstract class CommonRepositoryImpl<T> {
 	 * @param aKeywords キーワード
 	 * @return List<T>
 	 */
+	@SuppressWarnings("unchecked")
 	protected List<T> getCommonListByKeywords(final String aSql, final Object... aKeywords) {
 		final List<T> list = (List<T>) this.jdbcClient.sql(aSql).params(aKeywords).query(this.getType().getClass())
 				.list();
@@ -110,6 +112,7 @@ public abstract class CommonRepositoryImpl<T> {
 	 * @param aId  ID
 	 * @return T
 	 */
+	@SuppressWarnings("unchecked")
 	protected T getCommonOneById(final String aSql, final Long aId) {
 		try {
 			return (T) this.jdbcClient.sql(aSql).param(aId).query(this.getType().getClass()).single();
@@ -125,6 +128,7 @@ public abstract class CommonRepositoryImpl<T> {
 	 * @param aKeywords キーワード
 	 * @return T
 	 */
+	@SuppressWarnings("unchecked")
 	protected T getCommonOneByKeywords(final String aSql, final Object... aKeywords) {
 		try {
 			return (T) this.jdbcClient.sql(aSql).params(aKeywords).query(this.getType().getClass()).single();
