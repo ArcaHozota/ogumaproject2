@@ -19,15 +19,6 @@ import oracle.jdbc.driver.OracleSQLException;
 @Transactional(rollbackFor = OracleSQLException.class)
 public class EmployeeRoleRepositoryImpl extends CommonRepositoryImpl<EmployeeRole> implements EmployeeRoleRepository {
 
-	/**
-	 * コンストラクタ
-	 *
-	 * @param aClass エンティティクラス
-	 */
-	protected EmployeeRoleRepositoryImpl(final Class<EmployeeRole> aClass) {
-		super(aClass);
-	}
-
 	@Deprecated
 	@Override
 	public List<EmployeeRole> getList() {

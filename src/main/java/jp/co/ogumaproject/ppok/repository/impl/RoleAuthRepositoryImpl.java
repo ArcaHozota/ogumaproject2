@@ -19,15 +19,6 @@ import oracle.jdbc.driver.OracleSQLException;
 @Transactional(rollbackFor = OracleSQLException.class)
 public class RoleAuthRepositoryImpl extends CommonRepositoryImpl<RoleAuth> implements RoleAuthRepository {
 
-	/**
-	 * コンストラクタ
-	 *
-	 * @param aClass エンティティクラス
-	 */
-	protected RoleAuthRepositoryImpl(final Class<RoleAuth> aClass) {
-		super(aClass);
-	}
-
 	@Override
 	public void batchRemoveByForeignKey(final Long foreignKey) {
 		final String sql = "DELETE FROM PPOG_ROLE_AUTH PRA WHERE PRA.ROLE_ID = ?";
