@@ -19,15 +19,6 @@ import oracle.jdbc.driver.OracleSQLException;
 @Transactional(rollbackFor = OracleSQLException.class)
 public class AuthorityRepositoryImpl extends CommonRepositoryImpl<Authority> implements AuthorityRepository {
 
-	/**
-	 * コンストラクタ
-	 *
-	 * @param aClass エンティティクラス
-	 */
-	protected AuthorityRepositoryImpl(final Class<Authority> aClass) {
-		super(aClass);
-	}
-
 	@Override
 	public List<Authority> getList() {
 		final String sql = "SELECT PAV.* FROM PPOG_AUTHORITIES_VIEW PAV ORDER BY PAV.ID ASC";

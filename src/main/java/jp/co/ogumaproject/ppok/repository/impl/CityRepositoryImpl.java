@@ -19,15 +19,6 @@ import oracle.jdbc.driver.OracleSQLException;
 @Transactional(rollbackFor = OracleSQLException.class)
 public class CityRepositoryImpl extends CommonRepositoryImpl<City> implements CityRepository {
 
-	/**
-	 * コンストラクタ
-	 *
-	 * @param aClass エンティティクラス
-	 */
-	protected CityRepositoryImpl(final Class<City> aClass) {
-		super(aClass);
-	}
-
 	@Override
 	public Long countByKeyword(final String keyword) {
 		final String sql = "SELECT COUNT(1) FROM PPOG_CITIES_VIEW PCV INNER JOIN PPOG_DISTRICTS_VIEW PDV ON PDV.ID = PCV.DISTRICT_ID "

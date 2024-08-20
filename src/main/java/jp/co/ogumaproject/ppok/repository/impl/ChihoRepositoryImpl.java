@@ -19,15 +19,6 @@ import oracle.jdbc.driver.OracleSQLException;
 @Transactional(rollbackFor = OracleSQLException.class)
 public class ChihoRepositoryImpl extends CommonRepositoryImpl<Chiho> implements ChihoRepository {
 
-	/**
-	 * コンストラクタ
-	 *
-	 * @param aClass エンティティクラス
-	 */
-	protected ChihoRepositoryImpl(final Class<Chiho> aClass) {
-		super(aClass);
-	}
-
 	@Override
 	public List<Chiho> getList() {
 		final String sql = "SELECT PCHV.* FROM PPOG_CHIHOS_VIEW PCHV ORDER BY PCHV.ID ASC";
