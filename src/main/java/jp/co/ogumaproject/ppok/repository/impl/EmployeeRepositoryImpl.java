@@ -21,15 +21,6 @@ import oracle.jdbc.driver.OracleSQLException;
 @Transactional(rollbackFor = OracleSQLException.class)
 public class EmployeeRepositoryImpl extends CommonRepositoryImpl<Employee> implements EmployeeRepository {
 
-	/**
-	 * コンストラクタ
-	 *
-	 * @param aClass エンティティクラス
-	 */
-	protected EmployeeRepositoryImpl(final Class<Employee> aClass) {
-		super(aClass);
-	}
-
 	@Override
 	public Long countByKeyword(final String keyword) {
 		final String sql = "SELECT COUNT(1) FROM PPOG_EMPLOYEES_VIEW PEV WHERE PEV.LOGIN_ACCOUNT LIKE ? OR PEV.USERNAME LIKE ? OR PEV.EMAIL LIKE ?";
