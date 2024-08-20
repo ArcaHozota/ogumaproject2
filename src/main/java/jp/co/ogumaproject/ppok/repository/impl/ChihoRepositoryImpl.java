@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.annotation.PostConstruct;
 import jp.co.ogumaproject.ppok.entity.Chiho;
 import jp.co.ogumaproject.ppok.repository.ChihoRepository;
 import oracle.jdbc.driver.OracleSQLException;
@@ -19,6 +18,15 @@ import oracle.jdbc.driver.OracleSQLException;
 @Repository
 @Transactional(rollbackFor = OracleSQLException.class)
 public class ChihoRepositoryImpl extends CommonRepositoryImpl<Chiho> implements ChihoRepository {
+
+	/**
+	 * コンストラクタ
+	 *
+	 * @param aClass エンティティクラス
+	 */
+	protected ChihoRepositoryImpl(final Class<Chiho> aClass) {
+		super(aClass);
+	}
 
 	@Override
 	public List<Chiho> getList() {
@@ -42,14 +50,6 @@ public class ChihoRepositoryImpl extends CommonRepositoryImpl<Chiho> implements 
 	public Chiho getOneById(final Long id) {
 		final String sql = "SELECT PCHV.* FROM PPOG_CHIHOS_VIEW PCHV WHERE PCHV.ID = ?";
 		return this.getCommonOneById(sql, id);
-	}
-
-	/**
-	 * イニシャル
-	 */
-	@PostConstruct
-	private void initial() {
-		this.setEntityClass(Chiho.class);
 	}
 
 	@Deprecated

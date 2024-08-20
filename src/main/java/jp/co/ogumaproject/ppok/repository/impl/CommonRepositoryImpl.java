@@ -10,6 +10,8 @@ import org.springframework.util.CollectionUtils;
 
 import jakarta.annotation.Resource;
 import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 共通リポジトリ
@@ -17,6 +19,8 @@ import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
  * @author ArkamaHozota
  * @since 10.34
  */
+@Getter
+@Setter
 public abstract class CommonRepositoryImpl<T> {
 
 	/**
@@ -29,6 +33,15 @@ public abstract class CommonRepositoryImpl<T> {
 	 */
 	@Resource
 	private JdbcClient jdbcClient;
+
+	/**
+	 * コンストラクタ
+	 *
+	 * @param aClass エンティティクラス
+	 */
+	protected CommonRepositoryImpl(final Class<T> aClass) {
+		this.entityClass = aClass;
+	}
 
 	/**
 	 * キーワードによってレコード数を取得する
@@ -119,24 +132,6 @@ public abstract class CommonRepositoryImpl<T> {
 		} catch (final EmptyResultDataAccessException e) {
 			return null;
 		}
-	}
-
-	/**
-	 * getter of entityClass
-	 *
-	 * @return Class<T>
-	 */
-	public Class<T> getEntityClass() {
-		return this.entityClass;
-	}
-
-	/**
-	 * setter of entityClass
-	 *
-	 * @return Class<T>
-	 */
-	public void setEntityClass(final Class<T> entityClass) {
-		this.entityClass = entityClass;
 	}
 
 }

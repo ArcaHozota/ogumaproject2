@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.annotation.PostConstruct;
 import jp.co.ogumaproject.ppok.entity.District;
 import jp.co.ogumaproject.ppok.repository.DistrictRepository;
 import oracle.jdbc.driver.OracleSQLException;
@@ -19,6 +18,15 @@ import oracle.jdbc.driver.OracleSQLException;
 @Repository
 @Transactional(rollbackFor = OracleSQLException.class)
 public class DistrictRepositoryImpl extends CommonRepositoryImpl<District> implements DistrictRepository {
+
+	/**
+	 * コンストラクタ
+	 *
+	 * @param aClass エンティティクラス
+	 */
+	protected DistrictRepositoryImpl(final Class<District> aClass) {
+		super(aClass);
+	}
 
 	@Override
 	public Long countByKeyword(final String keyword) {
@@ -57,14 +65,6 @@ public class DistrictRepositoryImpl extends CommonRepositoryImpl<District> imple
 	public District getOneById(final Long id) {
 		final String sql = "SELECT PDV.* FROM PPOG_DISTRICTS_VIEW PDV WHERE PDV.ID = ?";
 		return this.getCommonOneById(sql, id);
-	}
-
-	/**
-	 * イニシャル
-	 */
-	@PostConstruct
-	private void initial() {
-		this.setEntityClass(District.class);
 	}
 
 	@Override

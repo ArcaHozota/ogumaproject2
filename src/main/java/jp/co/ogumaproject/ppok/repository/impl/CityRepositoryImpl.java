@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.annotation.PostConstruct;
 import jp.co.ogumaproject.ppok.entity.City;
 import jp.co.ogumaproject.ppok.repository.CityRepository;
 import oracle.jdbc.driver.OracleSQLException;
@@ -19,6 +18,15 @@ import oracle.jdbc.driver.OracleSQLException;
 @Repository
 @Transactional(rollbackFor = OracleSQLException.class)
 public class CityRepositoryImpl extends CommonRepositoryImpl<City> implements CityRepository {
+
+	/**
+	 * コンストラクタ
+	 *
+	 * @param aClass エンティティクラス
+	 */
+	protected CityRepositoryImpl(final Class<City> aClass) {
+		super(aClass);
+	}
 
 	@Override
 	public Long countByKeyword(final String keyword) {
@@ -55,14 +63,6 @@ public class CityRepositoryImpl extends CommonRepositoryImpl<City> implements Ci
 	public City getOneById(final Long id) {
 		final String sql = "SELECT PCV.* FROM PPOG_CITIES_VIEW PCV WHERE PCV.ID = ?";
 		return this.getCommonOneById(sql, id);
-	}
-
-	/**
-	 * イニシャル
-	 */
-	@PostConstruct
-	private void initial() {
-		this.setEntityClass(City.class);
 	}
 
 	@Override
