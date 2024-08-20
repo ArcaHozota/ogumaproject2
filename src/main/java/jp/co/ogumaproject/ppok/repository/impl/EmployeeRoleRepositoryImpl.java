@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.annotation.PostConstruct;
 import jp.co.ogumaproject.ppok.entity.EmployeeRole;
 import jp.co.ogumaproject.ppok.repository.EmployeeRoleRepository;
 import oracle.jdbc.driver.OracleSQLException;
@@ -19,6 +18,15 @@ import oracle.jdbc.driver.OracleSQLException;
 @Repository
 @Transactional(rollbackFor = OracleSQLException.class)
 public class EmployeeRoleRepositoryImpl extends CommonRepositoryImpl<EmployeeRole> implements EmployeeRoleRepository {
+
+	/**
+	 * コンストラクタ
+	 *
+	 * @param aClass エンティティクラス
+	 */
+	protected EmployeeRoleRepositoryImpl(final Class<EmployeeRole> aClass) {
+		super(aClass);
+	}
 
 	@Deprecated
 	@Override
@@ -42,14 +50,6 @@ public class EmployeeRoleRepositoryImpl extends CommonRepositoryImpl<EmployeeRol
 	public EmployeeRole getOneById(final Long id) {
 		final String sql = "SELECT PERV.* FROM PPOG_EMPLOYEE_ROLE_VIEW PERV WHERE PERV.EMPLOYEE_ID = ?";
 		return this.getCommonOneById(sql, id);
-	}
-
-	/**
-	 * イニシャル
-	 */
-	@PostConstruct
-	private void initial() {
-		this.setEntityClass(EmployeeRole.class);
 	}
 
 	@Override

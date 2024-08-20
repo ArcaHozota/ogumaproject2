@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.annotation.PostConstruct;
 import jp.co.ogumaproject.ppok.entity.Employee;
 import jp.co.ogumaproject.ppok.repository.EmployeeRepository;
 import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
@@ -21,6 +20,15 @@ import oracle.jdbc.driver.OracleSQLException;
 @Repository
 @Transactional(rollbackFor = OracleSQLException.class)
 public class EmployeeRepositoryImpl extends CommonRepositoryImpl<Employee> implements EmployeeRepository {
+
+	/**
+	 * コンストラクタ
+	 *
+	 * @param aClass エンティティクラス
+	 */
+	protected EmployeeRepositoryImpl(final Class<Employee> aClass) {
+		super(aClass);
+	}
 
 	@Override
 	public Long countByKeyword(final String keyword) {
@@ -71,14 +79,6 @@ public class EmployeeRepositoryImpl extends CommonRepositoryImpl<Employee> imple
 	public Employee getOneByLoginAccount(final String loginAccount) {
 		final String sql = "SELECT PEV.* FROM PPOG_EMPLOYEES_VIEW PEV WHERE PEV.LOGIN_ACCOUNT = ? OR PEV.EMAIL = ?";
 		return this.getCommonOneByKeywords(sql, loginAccount, loginAccount);
-	}
-
-	/**
-	 * イニシャル
-	 */
-	@PostConstruct
-	private void initial() {
-		this.setEntityClass(Employee.class);
 	}
 
 	@Override

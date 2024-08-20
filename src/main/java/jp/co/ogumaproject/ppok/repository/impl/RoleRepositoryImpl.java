@@ -20,6 +20,15 @@ import oracle.jdbc.driver.OracleSQLException;
 @Transactional(rollbackFor = OracleSQLException.class)
 public class RoleRepositoryImpl extends CommonRepositoryImpl<Role> implements RoleRepository {
 
+	/**
+	 * コンストラクタ
+	 *
+	 * @param aClass エンティティクラス
+	 */
+	protected RoleRepositoryImpl(final Class<Role> aClass) {
+		super(aClass);
+	}
+
 	@Override
 	public Long countByKeyword(final String keyword) {
 		final String sql = "SELECT COUNT(1) FROM PPOG_ROLES_VIEW PRV WHERE PRV.NAME LIKE ?";
