@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.annotation.PostConstruct;
 import jp.co.ogumaproject.ppok.entity.Role;
 import jp.co.ogumaproject.ppok.repository.RoleRepository;
 import oracle.jdbc.driver.OracleSQLException;
@@ -69,14 +68,6 @@ public class RoleRepositoryImpl extends CommonRepositoryImpl<Role> implements Ro
 	public Role getOneByName(final String name) {
 		final String sql = "SELECT PRV.* FROM PPOG_ROLES_VIEW PRV WHERE PRV.NAME = ?";
 		return this.getCommonOneByKeywords(sql, name);
-	}
-
-	/**
-	 * イニシャル
-	 */
-	@PostConstruct
-	private void initial() {
-		this.setEntityClass(Role.class);
 	}
 
 	@Override

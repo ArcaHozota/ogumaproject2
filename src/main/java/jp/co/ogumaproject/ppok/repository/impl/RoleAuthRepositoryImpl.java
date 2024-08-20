@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.annotation.PostConstruct;
 import jp.co.ogumaproject.ppok.entity.RoleAuth;
 import jp.co.ogumaproject.ppok.repository.RoleAuthRepository;
 import oracle.jdbc.driver.OracleSQLException;
@@ -57,14 +56,6 @@ public class RoleAuthRepositoryImpl extends CommonRepositoryImpl<RoleAuth> imple
 	@Override
 	public RoleAuth getOneById(final Long id) {
 		return null;
-	}
-
-	/**
-	 * イニシャル
-	 */
-	@PostConstruct
-	private void initial() {
-		this.setEntityClass(RoleAuth.class);
 	}
 
 	@Deprecated
