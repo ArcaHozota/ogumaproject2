@@ -3,7 +3,6 @@ package jp.co.ogumaproject.ppok.listener;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -60,8 +59,7 @@ public final class OgumaProjectUserDetailsService implements UserDetailsService 
 		}
 		final List<Authority> authorities = this.authorityRepository.getListByForeignKey(employeeRole.getRoleId());
 		if (authorities.isEmpty()) {
-			throw new AuthenticationCredentialsNotFoundException(
-					OgumaProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR3);
+			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR3);
 		}
 		final EmployeeDto employeeDto = new EmployeeDto(employee.getId(), employee.getLoginAccount(),
 				employee.getUsername(), employee.getPassword(), employee.getEmail(),
