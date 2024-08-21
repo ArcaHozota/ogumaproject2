@@ -50,16 +50,12 @@ public final class OgumaProjectUserDetailsService implements UserDetailsService 
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-		Employee employee;
-		try {
-			employee = this.employeeRepository.getOneByLoginAccount(username);
-		} catch (final Exception e) {
+		final Employee employee = this.employeeRepository.getOneByLoginAccount(username);
+		if (employee == null) {
 			throw new DisabledException(OgumaProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR1);
 		}
-		EmployeeRole employeeRole;
-		try {
-			employeeRole = this.employeeRoleRepository.getOneById(employee.getId());
-		} catch (final Exception e) {
+		final EmployeeRole employeeRole = this.employeeRoleRepository.getOneById(employee.getId());
+		if (employeeRole == null) {
 			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR2);
 		}
 		final List<Authority> authorities = this.authorityRepository.getListByForeignKey(employeeRole.getRoleId());
