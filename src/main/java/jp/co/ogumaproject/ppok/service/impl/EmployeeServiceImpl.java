@@ -211,8 +211,8 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		originalEntity.setPassword(OgumaProjectUtils.EMPTY_STRING);
 		final EmployeeRole employeeRole = this.employeeRoleRepository.getOneById(employee.getId());
 		if (OgumaProjectUtils.isEqual(originalEntity, employee) && passwordMatch) {
-			if (((employeeRole == null) && (employeeDto.roleId() == 0))
-					|| OgumaProjectUtils.isEqual(employeeDto.roleId(), employeeRole.getRoleId())) {
+			if (((employeeRole == null) && (employeeDto.roleId() == 0)) || ((employeeRole != null)
+					&& OgumaProjectUtils.isEqual(employeeDto.roleId(), employeeRole.getRoleId()))) {
 				return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 			} else {
 				final EmployeeRole employeeRole2 = new EmployeeRole();
