@@ -11,8 +11,6 @@ import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.util.CollectionUtils;
 
 import jakarta.annotation.Resource;
-import jp.co.ogumaproject.ppok.common.OgumaProjectConstants;
-import jp.co.ogumaproject.ppok.exception.OgumaProjectException;
 import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
 
 /**
@@ -82,12 +80,7 @@ public abstract class CommonRepositoryImpl<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	protected List<T> getCommonListByIds(final String aSql, final List<Long> aIdList) {
-		Class<T> aClass;
-		try {
-			aClass = (Class<T>) Class.forName(this.getType().toString());
-		} catch (final ClassNotFoundException e) {
-			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
-		}
+		final Class<T> aClass = (Class<T>) this.getType();
 		final List<T> list = this.jdbcClient.sql(aSql).params(aIdList).query(aClass).list();
 		if (CollectionUtils.isEmpty(list)) {
 			return new ArrayList<>();
@@ -104,12 +97,7 @@ public abstract class CommonRepositoryImpl<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	protected List<T> getCommonListByKeywords(final String aSql, final Object... aKeywords) {
-		Class<T> aClass;
-		try {
-			aClass = (Class<T>) Class.forName(this.getType().toString());
-		} catch (final ClassNotFoundException e) {
-			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
-		}
+		final Class<T> aClass = (Class<T>) this.getType();
 		final List<T> list = this.jdbcClient.sql(aSql).params(aKeywords).query(aClass).list();
 		if (CollectionUtils.isEmpty(list)) {
 			return new ArrayList<>();
@@ -126,11 +114,9 @@ public abstract class CommonRepositoryImpl<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	protected T getCommonOneById(final String aSql, final Long aId) {
+		final Class<T> aClass = (Class<T>) this.getType();
 		try {
-			final Class<T> aClass = (Class<T>) Class.forName(this.getType().toString());
 			return this.jdbcClient.sql(aSql).param(aId).query(aClass).single();
-		} catch (final ClassNotFoundException e) {
-			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 		} catch (final EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -145,11 +131,9 @@ public abstract class CommonRepositoryImpl<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	protected T getCommonOneByKeywords(final String aSql, final Object... aKeywords) {
+		final Class<T> aClass = (Class<T>) this.getType();
 		try {
-			final Class<T> aClass = (Class<T>) Class.forName(this.getType().toString());
 			return this.jdbcClient.sql(aSql).params(aKeywords).query(aClass).single();
-		} catch (final ClassNotFoundException e) {
-			throw new OgumaProjectException(OgumaProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 		} catch (final EmptyResultDataAccessException e) {
 			return null;
 		}
