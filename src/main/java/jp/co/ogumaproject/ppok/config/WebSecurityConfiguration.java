@@ -87,7 +87,7 @@ public class WebSecurityConfiguration {
 				.hasAuthority("city%retrieve")
 				.requestMatchers(OgumaProjectURLConstants.URL_CITY_CHECK_EDITION,
 						OgumaProjectURLConstants.URL_CITY_INSERT, OgumaProjectURLConstants.URL_CITY_UPDATE,
-						OgumaProjectURLConstants.URL_CITY_UPDATE)
+						OgumaProjectURLConstants.URL_CITY_DELETE)
 				.hasAuthority("city%edition").anyRequest().authenticated())
 				.csrf(csrf -> csrf.ignoringRequestMatchers(OgumaProjectURLConstants.URL_STATIC_RESOURCE)
 						.csrfTokenRepository(new CookieCsrfTokenRepository()))
