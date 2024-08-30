@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jp.co.ogumaproject.ppok.common.OgumaProjectConstants;
 import jp.co.ogumaproject.ppok.common.OgumaProjectURLConstants;
 import jp.co.ogumaproject.ppok.dto.AuthorityDto;
 import jp.co.ogumaproject.ppok.dto.RoleDto;
@@ -137,7 +138,7 @@ public final class RoleController {
 	@PostMapping(OgumaProjectURLConstants.URL_ROLE_INSERT)
 	public ResultDto<String> saveInfo(@RequestBody final RoleDto roleDto) {
 		this.iRoleService.save(roleDto);
-		return ResultDto.successWithoutData();
+		return ResultDto.successWithoutData(OgumaProjectConstants.MESSAGE_STRING_INSERTED);
 	}
 
 	/**

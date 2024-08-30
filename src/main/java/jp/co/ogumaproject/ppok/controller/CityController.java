@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jp.co.ogumaproject.ppok.common.OgumaProjectConstants;
 import jp.co.ogumaproject.ppok.common.OgumaProjectURLConstants;
 import jp.co.ogumaproject.ppok.dto.CityDto;
 import jp.co.ogumaproject.ppok.dto.DistrictDto;
@@ -112,7 +113,7 @@ public final class CityController {
 	@PostMapping(OgumaProjectURLConstants.URL_CITY_INSERT)
 	public ResultDto<String> saveInfo(@RequestBody final CityDto cityDto) {
 		this.iCityService.save(cityDto);
-		return ResultDto.successWithoutData();
+		return ResultDto.successWithoutData(OgumaProjectConstants.MESSAGE_STRING_INSERTED);
 	}
 
 	/**

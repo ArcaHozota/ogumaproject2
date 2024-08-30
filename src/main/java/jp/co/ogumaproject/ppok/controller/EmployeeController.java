@@ -157,7 +157,7 @@ public final class EmployeeController {
 	@ResponseBody
 	public ResultDto<String> saveInfo(@RequestBody final EmployeeDto employeeDto) {
 		this.iEmployeeService.save(employeeDto);
-		return ResultDto.successWithoutData();
+		return ResultDto.successWithoutData(OgumaProjectConstants.MESSAGE_STRING_INSERTED);
 	}
 
 	/**
