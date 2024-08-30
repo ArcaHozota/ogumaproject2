@@ -262,14 +262,6 @@ function ogumaInputContextGet(inputArrays) {
 	}
 	return listArray;
 }
-function normalPostSuccessFunction(element) {
-	$(element).modal('hide');
-	normalInsert();
-}
-function normalInsert(result) {
-	layer.msg(result.message);
-	toSelectedPg(totalRecords, keyword);
-}
 function normalDeleteSuccessFunction(result) {
 	if (result.status === 'SUCCESS') {
 		layer.msg(result.message);

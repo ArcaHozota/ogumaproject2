@@ -61,21 +61,21 @@ $("#addRoleBtn").on('click', function() {
 	});
 	addModal.show();
 });
-$("#nameInput").on('change', function() {
+$("#nameInput").on("change", function() {
 	$.ajax({
 		url: '/oguma/role/check',
 		data: 'name=' + this.value,
 		type: 'GET',
 		success: function(result) {
 			if (result.status === 'SUCCESS') {
-				showValidationMsg(this, "success", "");
+				showValidationMsg(this, "success", "√");
 			} else {
 				showValidationMsg(this, "error", result.message);
 			}
 		}
 	});
 });
-$("#roleInfoSaveBtn").on('click', function() {
+$("#roleInfoSaveBtn").on("click", function() {
 	let inputArrays = ["#nameInput"];
 	let listArray = ogumaInputContextGet(inputArrays);
 	if (listArray.includes("")) {
@@ -86,10 +86,10 @@ $("#roleInfoSaveBtn").on('click', function() {
 		let postData = JSON.stringify({
 			'name': $("#nameInput").val().trim()
 		});
-		ogumaAjaxModify('oguma/role/infoSave', 'POST', postData, normalPostSuccessFunction("#roleAddModal"));
+		ogumaAjaxModify('/oguma/role/infoSave', 'POST', postData, postSuccessFunction);
 	}
 });
-$("#tableBody").on('click', '.edit-btn', function() {
+$("#tableBody").on("click", '.edit-btn', function() {
 	let ajaxResult = $.ajax({
 		url: '/oguma/role/checkEdition',
 		type: 'GET',
@@ -110,7 +110,7 @@ $("#tableBody").on('click', '.edit-btn', function() {
 	});
 	editModal.show();
 });
-$("#roleInfoChangeBtn").on('click', function() {
+$("#roleInfoChangeBtn").on("click", function() {
 	let inputArrays = ["#nameEdit"];
 	let listArray = ogumaInputContextGet(inputArrays);
 	if (listArray.includes("")) {
@@ -125,7 +125,7 @@ $("#roleInfoChangeBtn").on('click', function() {
 		ogumaAjaxModify('/oguma/role/infoUpdate', 'PUT', putData, putSuccessFunction);
 	}
 });
-$("#tableBody").on('click', '.delete-btn', function() {
+$("#tableBody").on("click", '.delete-btn', function() {
 	let ajaxResult = $.ajax({
 		url: '/oguma/role/checkDelete',
 		type: 'GET',
@@ -152,7 +152,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 		}
 	});
 });
-$("#tableBody").on('click', '.fuyo-btn', function() {
+$("#tableBody").on("click", '.fuyo-btn', function() {
 	let fuyoId = $(this).attr("fuyoId");
 	$("#authChangeBtn").attr("fuyoId", fuyoId);
 	let nameVal = $(this).parent().parent().find("td:eq(0)").text();
@@ -208,7 +208,7 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 		zTreeObj.checkNode(treeNode, true, true);
 	}
 });
-$("#authChangeBtn").on('click', function() {
+$("#authChangeBtn").on("click", function() {
 	let fuyoId = $(this).attr("fuyoId");
 	let authIdArray = [];
 	let zTreeObj = $.fn.zTree.getZTreeObj("authTree");
@@ -241,6 +241,11 @@ function authPutSuccessFunction(result) {
 	} else {
 		layer.msg(result.message);
 	}
+}
+function postSuccessFunction(result) {
+	$("#roleAddModal").modal('hide');
+	layer.msg(result.message);
+	toSelectedPg(totalRecords, keyword);
 }
 function zTreeOnNodeCreated(event, treeId, treeNode) { // 设置节点创建时的回调函数
 	let iconObj = $("#" + treeNode.tId + "_ico"); // 获取图标元素
