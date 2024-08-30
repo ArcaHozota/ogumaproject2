@@ -230,7 +230,7 @@ function getDistricts(element, cityId) {
 function putSuccessFunction(result) {
 	if (result.status === 'SUCCESS') {
 		$("#cityEditModal").modal('hide');
-		layer.msg('更新済み');
+		layer.msg(result.message);
 		toSelectedPg(pageNum, keyword);
 	} else {
 		layer.msg(result.message);

@@ -123,12 +123,18 @@ $("#editInfoBtn").on('click', function() {
 		ogumaAjaxModify('/oguma/employee/infoUpdate', 'PUT', putData, putSuccessFunction);
 	}
 });
-function postSuccessFunction() {
-	window.location.replace('/oguma/employee/toPages?pageNum=' + totalRecords);
+function postSuccessFunction(result) {
+	if (result.status === 'SUCCESS') {
+		window.location.replace('/oguma/employee/toPages?pageNum=' + totalRecords);
+		layer.msg(result.message);
+	} else {
+		layer.msg(result.message);
+	}
 }
 function putSuccessFunction(result) {
 	if (result.status === 'SUCCESS') {
 		window.location.replace('/oguma/employee/toPages?pageNum=' + pageNum);
+		layer.msg(result.message);
 	} else {
 		layer.msg(result.message);
 	}

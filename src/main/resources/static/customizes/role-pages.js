@@ -219,7 +219,7 @@ $("#authChangeBtn").on("click", function() {
 function putSuccessFunction(result) {
 	if (result.status === 'SUCCESS') {
 		$("#roleEditModal").modal('hide');
-		layer.msg('更新済み');
+		layer.msg(result.message);
 		toSelectedPg(pageNum, keyword);
 	} else {
 		layer.msg(result.message);
