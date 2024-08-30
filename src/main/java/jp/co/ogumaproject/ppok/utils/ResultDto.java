@@ -3,14 +3,14 @@ package jp.co.ogumaproject.ppok.utils;
 import lombok.Data;
 
 /**
- * Ajaxリクエストの戻るクラス
+ * AJAXリクエストの戻るクラス
  *
  * @param <T> データタイプ
  * @author ArkamaHozota
  * @since 1.00beta
  */
 @Data
-public class ResultDto<T> {
+public final class ResultDto<T> {
 
 	/**
 	 * 処理成功のステータス
@@ -50,10 +50,20 @@ public class ResultDto<T> {
 	/**
 	 * リターン操作の結果はデー​​タなしで成功となります
 	 *
-	 * @return
+	 * @return ResultDto<T>
 	 */
 	public static <T> ResultDto<T> successWithoutData() {
 		return new ResultDto<>(SUCCESS, NO_MESSAGE, null);
+	}
+
+	/**
+	 * リターン操作の結果はデー​​タなしで成功となります
+	 *
+	 * @param message メッセージ
+	 * @return ResultDto<T>
+	 */
+	public static <T> ResultDto<T> successWithoutData(final String message) {
+		return new ResultDto<>(SUCCESS, message, null);
 	}
 
 	/**

@@ -154,7 +154,7 @@ public final class RoleServiceImpl implements IRoleService {
 		role.setId(id);
 		role.setDelFlg(OgumaProjectConstants.LOGIC_DELETE_FLG);
 		this.roleRepository.removeById(role);
-		return ResultDto.successWithoutData();
+		return ResultDto.successWithoutData(OgumaProjectConstants.MESSAGE_STRING_DELETED);
 	}
 
 	@Override

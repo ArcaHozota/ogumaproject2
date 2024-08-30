@@ -75,7 +75,7 @@ public final class CityServiceImpl implements ICityService {
 		city.setId(id);
 		city.setDelFlg(OgumaProjectConstants.LOGIC_DELETE_FLG);
 		this.cityRepository.updateById(city);
-		return ResultDto.successWithoutData();
+		return ResultDto.successWithoutData(OgumaProjectConstants.MESSAGE_STRING_DELETED);
 	}
 
 	@Override

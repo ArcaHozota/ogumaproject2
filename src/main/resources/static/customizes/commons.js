@@ -269,7 +269,7 @@ function normalPostSuccessFunction(element) {
 }
 function normalDeleteSuccessFunction(result) {
 	if (result.status === 'SUCCESS') {
-		layer.msg('削除済み');
+		layer.msg(result.message);
 		toSelectedPg(pageNum, keyword);
 	} else {
 		layer.msg(result.message);

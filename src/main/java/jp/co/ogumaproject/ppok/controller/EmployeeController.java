@@ -78,7 +78,7 @@ public final class EmployeeController {
 	@ResponseBody
 	public ResultDto<String> deleteInfo(@PathVariable("userId") final Long userId) {
 		this.iEmployeeService.remove(userId);
-		return ResultDto.successWithoutData();
+		return ResultDto.successWithoutData(OgumaProjectConstants.MESSAGE_STRING_DELETED);
 	}
 
 	/**

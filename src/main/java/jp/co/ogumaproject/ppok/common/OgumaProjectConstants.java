@@ -48,6 +48,12 @@ public final class OgumaProjectConstants {
 
 	public static final String MESSAGE_STRING_NOCHANGE = "変更なし";
 
+	public static final String MESSAGE_STRING_DELETED = "削除済み";
+
+	public static final String MESSAGE_STRING_INSERTED = "追加済み";
+
+	public static final String MESSAGE_STRING_UPDATED = "更新済み";
+
 	public static final String MESSAGE_STRING_PROHIBITED = "ユーザは存在しません、もう一度やり直してください";
 
 	public static final String MESSAGE_STRING_NOT_EXISTS = "役割は存在しません、もう一度やり直してください";
