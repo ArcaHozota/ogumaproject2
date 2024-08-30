@@ -62,18 +62,7 @@ $("#addRoleBtn").on('click', function() {
 	addModal.show();
 });
 $("#nameInput").on("change", function() {
-	$.ajax({
-		url: '/oguma/role/check',
-		data: 'name=' + this.value,
-		type: 'GET',
-		success: function(result) {
-			if (result.status === 'SUCCESS') {
-				showValidationMsg(this, "success", "√");
-			} else {
-				showValidationMsg(this, "error", result.message);
-			}
-		}
-	});
+	checkRoleName(this);
 });
 $("#roleInfoSaveBtn").on("click", function() {
 	let inputArrays = ["#nameInput"];
@@ -109,6 +98,9 @@ $("#tableBody").on("click", '.edit-btn', function() {
 		backdrop: 'static'
 	});
 	editModal.show();
+});
+$("#nameEdit").on("change", function() {
+	checkRoleName(this);
 });
 $("#roleInfoChangeBtn").on("click", function() {
 	let inputArrays = ["#nameEdit"];
@@ -266,5 +258,24 @@ function zTreeOnNodeCreated(event, treeId, treeNode) { // 设置节点创建时�
 		iconObj.find("i").addClass("fa-amazon");
 	} else {
 		iconObj.find("i").addClass("fa-apple");
+	}
+}
+function checkRoleName(roleName) {
+	let nameVal = $(roleName).val().trim();
+	if (nameVal === "") {
+		showValidationMsg(roleName, "error", "名称を空になってはいけません。");
+	} else {
+		$.ajax({
+			url: '/oguma/role/check',
+			data: 'name=' + nameVal,
+			type: 'GET',
+			success: function(result) {
+				if (result.status === 'SUCCESS') {
+					showValidationMsg(roleName, "success", "√");
+				} else {
+					showValidationMsg(roleName, "error", result.message);
+				}
+			}
+		});
 	}
 }
