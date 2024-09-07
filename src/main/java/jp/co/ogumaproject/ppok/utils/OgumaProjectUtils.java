@@ -42,202 +42,212 @@ public final class OgumaProjectUtils {
 	public static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
 
 	/**
-	 * 空のストリング
+	 * 空文字列
 	 */
 	public static final String EMPTY_STRING = "";
 
 	/**
+	 * 半角スペース
+	 */
+	public static final String HANKAKU_SPACE = "\u0020";
+
+	/**
+	 * 半角パーセント記号
+	 */
+	public static final String HANKAKU_PERCENTSIGN = "\u0025";
+
+	/**
 	 * 全角半角変換マップ
 	 */
-	private static final BidiMap<String, String> HALF_FULL_CONVERTOR = new DualHashBidiMap<>();
+	private static final BidiMap<String, String> ZENHANKAKU_CONVERTOR = new DualHashBidiMap<>();
 
 	static {
-		HALF_FULL_CONVERTOR.put("！", "!");
-		HALF_FULL_CONVERTOR.put("”", "\"");
-		HALF_FULL_CONVERTOR.put("＃", "#");
-		HALF_FULL_CONVERTOR.put("＄", "$");
-		HALF_FULL_CONVERTOR.put("％", "%");
-		HALF_FULL_CONVERTOR.put("＆", "&");
-		HALF_FULL_CONVERTOR.put("’", "'");
-		HALF_FULL_CONVERTOR.put("（", "(");
-		HALF_FULL_CONVERTOR.put("）", ")");
-		HALF_FULL_CONVERTOR.put("＊", "*");
-		HALF_FULL_CONVERTOR.put("＋", "+");
-		HALF_FULL_CONVERTOR.put("，", ",");
-		HALF_FULL_CONVERTOR.put("－", "-");
-		HALF_FULL_CONVERTOR.put("．", ".");
-		HALF_FULL_CONVERTOR.put("／", "/");
-		HALF_FULL_CONVERTOR.put("０", "0");
-		HALF_FULL_CONVERTOR.put("１", "1");
-		HALF_FULL_CONVERTOR.put("２", "2");
-		HALF_FULL_CONVERTOR.put("３", "3");
-		HALF_FULL_CONVERTOR.put("４", "4");
-		HALF_FULL_CONVERTOR.put("５", "5");
-		HALF_FULL_CONVERTOR.put("６", "6");
-		HALF_FULL_CONVERTOR.put("７", "7");
-		HALF_FULL_CONVERTOR.put("８", "8");
-		HALF_FULL_CONVERTOR.put("９", "9");
-		HALF_FULL_CONVERTOR.put("：", ":");
-		HALF_FULL_CONVERTOR.put("；", ";");
-		HALF_FULL_CONVERTOR.put("＜", "<");
-		HALF_FULL_CONVERTOR.put("＝", "=");
-		HALF_FULL_CONVERTOR.put("＞", ">");
-		HALF_FULL_CONVERTOR.put("？", "?");
-		HALF_FULL_CONVERTOR.put("＠", "@");
-		HALF_FULL_CONVERTOR.put("Ａ", "A");
-		HALF_FULL_CONVERTOR.put("Ｂ", "B");
-		HALF_FULL_CONVERTOR.put("Ｃ", "C");
-		HALF_FULL_CONVERTOR.put("Ｄ", "D");
-		HALF_FULL_CONVERTOR.put("Ｅ", "E");
-		HALF_FULL_CONVERTOR.put("Ｆ", "F");
-		HALF_FULL_CONVERTOR.put("Ｇ", "G");
-		HALF_FULL_CONVERTOR.put("Ｈ", "H");
-		HALF_FULL_CONVERTOR.put("Ｉ", "I");
-		HALF_FULL_CONVERTOR.put("Ｊ", "J");
-		HALF_FULL_CONVERTOR.put("Ｋ", "K");
-		HALF_FULL_CONVERTOR.put("Ｌ", "L");
-		HALF_FULL_CONVERTOR.put("Ｍ", "M");
-		HALF_FULL_CONVERTOR.put("Ｎ", "N");
-		HALF_FULL_CONVERTOR.put("Ｏ", "O");
-		HALF_FULL_CONVERTOR.put("Ｐ", "P");
-		HALF_FULL_CONVERTOR.put("Ｑ", "Q");
-		HALF_FULL_CONVERTOR.put("Ｒ", "R");
-		HALF_FULL_CONVERTOR.put("Ｓ", "S");
-		HALF_FULL_CONVERTOR.put("Ｔ", "T");
-		HALF_FULL_CONVERTOR.put("Ｕ", "U");
-		HALF_FULL_CONVERTOR.put("Ｖ", "V");
-		HALF_FULL_CONVERTOR.put("Ｗ", "W");
-		HALF_FULL_CONVERTOR.put("Ｘ", "X");
-		HALF_FULL_CONVERTOR.put("Ｙ", "Y");
-		HALF_FULL_CONVERTOR.put("Ｚ", "Z");
-		HALF_FULL_CONVERTOR.put("［", "[");
-		HALF_FULL_CONVERTOR.put("￥", "\\");
-		HALF_FULL_CONVERTOR.put("］", "]");
-		HALF_FULL_CONVERTOR.put("＾", "^");
-		HALF_FULL_CONVERTOR.put("＿", "_");
-		HALF_FULL_CONVERTOR.put("｀", "`");
-		HALF_FULL_CONVERTOR.put("ａ", "a");
-		HALF_FULL_CONVERTOR.put("ｂ", "b");
-		HALF_FULL_CONVERTOR.put("ｃ", "c");
-		HALF_FULL_CONVERTOR.put("ｄ", "d");
-		HALF_FULL_CONVERTOR.put("ｅ", "e");
-		HALF_FULL_CONVERTOR.put("ｆ", "f");
-		HALF_FULL_CONVERTOR.put("ｇ", "g");
-		HALF_FULL_CONVERTOR.put("ｈ", "h");
-		HALF_FULL_CONVERTOR.put("ｉ", "i");
-		HALF_FULL_CONVERTOR.put("ｊ", "j");
-		HALF_FULL_CONVERTOR.put("ｋ", "k");
-		HALF_FULL_CONVERTOR.put("ｌ", "l");
-		HALF_FULL_CONVERTOR.put("ｍ", "m");
-		HALF_FULL_CONVERTOR.put("ｎ", "n");
-		HALF_FULL_CONVERTOR.put("ｏ", "o");
-		HALF_FULL_CONVERTOR.put("ｐ", "p");
-		HALF_FULL_CONVERTOR.put("ｑ", "q");
-		HALF_FULL_CONVERTOR.put("ｒ", "r");
-		HALF_FULL_CONVERTOR.put("ｓ", "s");
-		HALF_FULL_CONVERTOR.put("ｔ", "t");
-		HALF_FULL_CONVERTOR.put("ｕ", "u");
-		HALF_FULL_CONVERTOR.put("ｖ", "v");
-		HALF_FULL_CONVERTOR.put("ｗ", "w");
-		HALF_FULL_CONVERTOR.put("ｘ", "x");
-		HALF_FULL_CONVERTOR.put("ｙ", "y");
-		HALF_FULL_CONVERTOR.put("ｚ", "z");
-		HALF_FULL_CONVERTOR.put("｛", "{");
-		HALF_FULL_CONVERTOR.put("｜", "|");
-		HALF_FULL_CONVERTOR.put("｝", "}");
-		HALF_FULL_CONVERTOR.put("～", "~");
-		HALF_FULL_CONVERTOR.put("。", "｡");
-		HALF_FULL_CONVERTOR.put("「", "｢");
-		HALF_FULL_CONVERTOR.put("」", "｣");
-		HALF_FULL_CONVERTOR.put("、", "､");
-		HALF_FULL_CONVERTOR.put("・", "･");
-		HALF_FULL_CONVERTOR.put("ァ", "ｧ");
-		HALF_FULL_CONVERTOR.put("ィ", "ｨ");
-		HALF_FULL_CONVERTOR.put("ゥ", "ｩ");
-		HALF_FULL_CONVERTOR.put("ェ", "ｪ");
-		HALF_FULL_CONVERTOR.put("ォ", "ｫ");
-		HALF_FULL_CONVERTOR.put("ャ", "ｬ");
-		HALF_FULL_CONVERTOR.put("ュ", "ｭ");
-		HALF_FULL_CONVERTOR.put("ョ", "ｮ");
-		HALF_FULL_CONVERTOR.put("ッ", "ｯ");
-		HALF_FULL_CONVERTOR.put("ー", "ｰ");
-		HALF_FULL_CONVERTOR.put("ア", "ｱ");
-		HALF_FULL_CONVERTOR.put("イ", "ｲ");
-		HALF_FULL_CONVERTOR.put("ウ", "ｳ");
-		HALF_FULL_CONVERTOR.put("エ", "ｴ");
-		HALF_FULL_CONVERTOR.put("オ", "ｵ");
-		HALF_FULL_CONVERTOR.put("カ", "ｶ");
-		HALF_FULL_CONVERTOR.put("キ", "ｷ");
-		HALF_FULL_CONVERTOR.put("ク", "ｸ");
-		HALF_FULL_CONVERTOR.put("ケ", "ｹ");
-		HALF_FULL_CONVERTOR.put("コ", "ｺ");
-		HALF_FULL_CONVERTOR.put("サ", "ｻ");
-		HALF_FULL_CONVERTOR.put("シ", "ｼ");
-		HALF_FULL_CONVERTOR.put("ス", "ｽ");
-		HALF_FULL_CONVERTOR.put("セ", "ｾ");
-		HALF_FULL_CONVERTOR.put("ソ", "ｿ");
-		HALF_FULL_CONVERTOR.put("タ", "ﾀ");
-		HALF_FULL_CONVERTOR.put("チ", "ﾁ");
-		HALF_FULL_CONVERTOR.put("ツ", "ﾂ");
-		HALF_FULL_CONVERTOR.put("テ", "ﾃ");
-		HALF_FULL_CONVERTOR.put("ト", "ﾄ");
-		HALF_FULL_CONVERTOR.put("ナ", "ﾅ");
-		HALF_FULL_CONVERTOR.put("ニ", "ﾆ");
-		HALF_FULL_CONVERTOR.put("ヌ", "ﾇ");
-		HALF_FULL_CONVERTOR.put("ネ", "ﾈ");
-		HALF_FULL_CONVERTOR.put("ノ", "ﾉ");
-		HALF_FULL_CONVERTOR.put("ハ", "ﾊ");
-		HALF_FULL_CONVERTOR.put("ヒ", "ﾋ");
-		HALF_FULL_CONVERTOR.put("フ", "ﾌ");
-		HALF_FULL_CONVERTOR.put("ヘ", "ﾍ");
-		HALF_FULL_CONVERTOR.put("ホ", "ﾎ");
-		HALF_FULL_CONVERTOR.put("マ", "ﾏ");
-		HALF_FULL_CONVERTOR.put("ミ", "ﾐ");
-		HALF_FULL_CONVERTOR.put("ム", "ﾑ");
-		HALF_FULL_CONVERTOR.put("メ", "ﾒ");
-		HALF_FULL_CONVERTOR.put("モ", "ﾓ");
-		HALF_FULL_CONVERTOR.put("ヤ", "ﾔ");
-		HALF_FULL_CONVERTOR.put("ユ", "ﾕ");
-		HALF_FULL_CONVERTOR.put("ヨ", "ﾖ");
-		HALF_FULL_CONVERTOR.put("ラ", "ﾗ");
-		HALF_FULL_CONVERTOR.put("リ", "ﾘ");
-		HALF_FULL_CONVERTOR.put("ル", "ﾙ");
-		HALF_FULL_CONVERTOR.put("レ", "ﾚ");
-		HALF_FULL_CONVERTOR.put("ロ", "ﾛ");
-		HALF_FULL_CONVERTOR.put("ワ", "ﾜ");
-		HALF_FULL_CONVERTOR.put("ヲ", "ｦ");
-		HALF_FULL_CONVERTOR.put("ン", "ﾝ");
-		HALF_FULL_CONVERTOR.put("ガ", "ｶﾞ");
-		HALF_FULL_CONVERTOR.put("ギ", "ｷﾞ");
-		HALF_FULL_CONVERTOR.put("グ", "ｸﾞ");
-		HALF_FULL_CONVERTOR.put("ゲ", "ｹﾞ");
-		HALF_FULL_CONVERTOR.put("ゴ", "ｺﾞ");
-		HALF_FULL_CONVERTOR.put("ザ", "ｻﾞ");
-		HALF_FULL_CONVERTOR.put("ジ", "ｼﾞ");
-		HALF_FULL_CONVERTOR.put("ズ", "ｽﾞ");
-		HALF_FULL_CONVERTOR.put("ゼ", "ｾﾞ");
-		HALF_FULL_CONVERTOR.put("ゾ", "ｿﾞ");
-		HALF_FULL_CONVERTOR.put("ダ", "ﾀﾞ");
-		HALF_FULL_CONVERTOR.put("ヂ", "ﾁﾞ");
-		HALF_FULL_CONVERTOR.put("ヅ", "ﾂﾞ");
-		HALF_FULL_CONVERTOR.put("デ", "ﾃﾞ");
-		HALF_FULL_CONVERTOR.put("ド", "ﾄﾞ");
-		HALF_FULL_CONVERTOR.put("バ", "ﾊﾞ");
-		HALF_FULL_CONVERTOR.put("ビ", "ﾋﾞ");
-		HALF_FULL_CONVERTOR.put("ブ", "ﾌﾞ");
-		HALF_FULL_CONVERTOR.put("ベ", "ﾍﾞ");
-		HALF_FULL_CONVERTOR.put("ボ", "ﾎﾞ");
-		HALF_FULL_CONVERTOR.put("パ", "ﾊﾟ");
-		HALF_FULL_CONVERTOR.put("ピ", "ﾋﾟ");
-		HALF_FULL_CONVERTOR.put("プ", "ﾌﾟ");
-		HALF_FULL_CONVERTOR.put("ペ", "ﾍﾟ");
-		HALF_FULL_CONVERTOR.put("ポ", "ﾎﾟ");
-		HALF_FULL_CONVERTOR.put("ヴ", "ｳﾞ");
-		HALF_FULL_CONVERTOR.put("ヷ", "ﾜﾞ");
-		HALF_FULL_CONVERTOR.put("ヺ", "ｦﾞ");
-		HALF_FULL_CONVERTOR.put("゛", "ﾞ");
-		HALF_FULL_CONVERTOR.put("゜", "ﾟ");
-		HALF_FULL_CONVERTOR.put("\u3000", " ");
+		ZENHANKAKU_CONVERTOR.put("\uff01", "\u0021");
+		ZENHANKAKU_CONVERTOR.put("\uff02", "\"");
+		ZENHANKAKU_CONVERTOR.put("\uff03", "\u0023");
+		ZENHANKAKU_CONVERTOR.put("\uff04", "\u0024");
+		ZENHANKAKU_CONVERTOR.put("\uff05", HANKAKU_PERCENTSIGN);
+		ZENHANKAKU_CONVERTOR.put("\uff06", "\u0026");
+		ZENHANKAKU_CONVERTOR.put("\uff07", "\u0027");
+		ZENHANKAKU_CONVERTOR.put("\uff08", "\u0028");
+		ZENHANKAKU_CONVERTOR.put("\uff09", "\u0029");
+		ZENHANKAKU_CONVERTOR.put("\uff0a", "\u002a");
+		ZENHANKAKU_CONVERTOR.put("\uff0b", "\u002b");
+		ZENHANKAKU_CONVERTOR.put("\uff0c", "\u002c");
+		ZENHANKAKU_CONVERTOR.put("\uff0d", "\u002d");
+		ZENHANKAKU_CONVERTOR.put("\uff0e", "\u002e");
+		ZENHANKAKU_CONVERTOR.put("\uff0f", "\u002f");
+		ZENHANKAKU_CONVERTOR.put("\uff10", "\u0030");
+		ZENHANKAKU_CONVERTOR.put("\uff11", "\u0031");
+		ZENHANKAKU_CONVERTOR.put("\uff12", "\u0032");
+		ZENHANKAKU_CONVERTOR.put("\uff13", "\u0033");
+		ZENHANKAKU_CONVERTOR.put("\uff14", "\u0034");
+		ZENHANKAKU_CONVERTOR.put("\uff15", "\u0035");
+		ZENHANKAKU_CONVERTOR.put("\uff16", "\u0036");
+		ZENHANKAKU_CONVERTOR.put("\uff17", "\u0037");
+		ZENHANKAKU_CONVERTOR.put("\uff18", "\u0038");
+		ZENHANKAKU_CONVERTOR.put("\uff19", "\u0039");
+		ZENHANKAKU_CONVERTOR.put("\uff1a", "\u003a");
+		ZENHANKAKU_CONVERTOR.put("\uff1b", "\u003b");
+		ZENHANKAKU_CONVERTOR.put("\uff1c", "\u003c");
+		ZENHANKAKU_CONVERTOR.put("\uff1d", "\u003d");
+		ZENHANKAKU_CONVERTOR.put("\uff1e", "\u003e");
+		ZENHANKAKU_CONVERTOR.put("\uff1f", "\u003f");
+		ZENHANKAKU_CONVERTOR.put("\uff20", "\u0040");
+		ZENHANKAKU_CONVERTOR.put("\uff21", "\u0041");
+		ZENHANKAKU_CONVERTOR.put("\uff22", "\u0042");
+		ZENHANKAKU_CONVERTOR.put("\uff23", "\u0043");
+		ZENHANKAKU_CONVERTOR.put("\uff24", "\u0044");
+		ZENHANKAKU_CONVERTOR.put("\uff25", "\u0045");
+		ZENHANKAKU_CONVERTOR.put("\uff26", "\u0046");
+		ZENHANKAKU_CONVERTOR.put("\uff27", "\u0047");
+		ZENHANKAKU_CONVERTOR.put("\uff28", "\u0048");
+		ZENHANKAKU_CONVERTOR.put("\uff29", "\u0049");
+		ZENHANKAKU_CONVERTOR.put("\uff2a", "\u004a");
+		ZENHANKAKU_CONVERTOR.put("\uff2b", "\u004b");
+		ZENHANKAKU_CONVERTOR.put("\uff2c", "\u004c");
+		ZENHANKAKU_CONVERTOR.put("\uff2d", "\u004d");
+		ZENHANKAKU_CONVERTOR.put("\uff2e", "\u004e");
+		ZENHANKAKU_CONVERTOR.put("\uff2f", "\u004f");
+		ZENHANKAKU_CONVERTOR.put("\uff30", "\u0050");
+		ZENHANKAKU_CONVERTOR.put("\uff31", "\u0051");
+		ZENHANKAKU_CONVERTOR.put("\uff32", "\u0052");
+		ZENHANKAKU_CONVERTOR.put("\uff33", "\u0053");
+		ZENHANKAKU_CONVERTOR.put("\uff34", "\u0054");
+		ZENHANKAKU_CONVERTOR.put("\uff35", "\u0055");
+		ZENHANKAKU_CONVERTOR.put("\uff36", "\u0056");
+		ZENHANKAKU_CONVERTOR.put("\uff37", "\u0057");
+		ZENHANKAKU_CONVERTOR.put("\uff38", "\u0058");
+		ZENHANKAKU_CONVERTOR.put("\uff39", "\u0059");
+		ZENHANKAKU_CONVERTOR.put("\uff3a", "\u005a");
+		ZENHANKAKU_CONVERTOR.put("\uff3b", "\u005b");
+		ZENHANKAKU_CONVERTOR.put("\uff3c", "\\");
+		ZENHANKAKU_CONVERTOR.put("\uff3d", "\u005d");
+		ZENHANKAKU_CONVERTOR.put("\uff3e", "\u005e");
+		ZENHANKAKU_CONVERTOR.put("\uff3f", "\u005f");
+		ZENHANKAKU_CONVERTOR.put("\uff40", "\u0060");
+		ZENHANKAKU_CONVERTOR.put("\uff41", "\u0061");
+		ZENHANKAKU_CONVERTOR.put("\uff42", "\u0062");
+		ZENHANKAKU_CONVERTOR.put("\uff43", "\u0063");
+		ZENHANKAKU_CONVERTOR.put("\uff44", "\u0064");
+		ZENHANKAKU_CONVERTOR.put("\uff45", "\u0065");
+		ZENHANKAKU_CONVERTOR.put("\uff46", "\u0066");
+		ZENHANKAKU_CONVERTOR.put("\uff47", "\u0067");
+		ZENHANKAKU_CONVERTOR.put("\uff48", "\u0068");
+		ZENHANKAKU_CONVERTOR.put("\uff49", "\u0069");
+		ZENHANKAKU_CONVERTOR.put("\uff4a", "\u006a");
+		ZENHANKAKU_CONVERTOR.put("\uff4b", "\u006b");
+		ZENHANKAKU_CONVERTOR.put("\uff4c", "\u006c");
+		ZENHANKAKU_CONVERTOR.put("\uff4d", "\u006d");
+		ZENHANKAKU_CONVERTOR.put("\uff4e", "\u006e");
+		ZENHANKAKU_CONVERTOR.put("\uff4f", "\u006f");
+		ZENHANKAKU_CONVERTOR.put("\uff50", "\u0070");
+		ZENHANKAKU_CONVERTOR.put("\uff51", "\u0071");
+		ZENHANKAKU_CONVERTOR.put("\uff52", "\u0072");
+		ZENHANKAKU_CONVERTOR.put("\uff53", "\u0073");
+		ZENHANKAKU_CONVERTOR.put("\uff54", "\u0074");
+		ZENHANKAKU_CONVERTOR.put("\uff55", "\u0075");
+		ZENHANKAKU_CONVERTOR.put("\uff56", "\u0076");
+		ZENHANKAKU_CONVERTOR.put("\uff57", "\u0077");
+		ZENHANKAKU_CONVERTOR.put("\uff58", "\u0078");
+		ZENHANKAKU_CONVERTOR.put("\uff59", "\u0079");
+		ZENHANKAKU_CONVERTOR.put("\uff5a", "\u007a");
+		ZENHANKAKU_CONVERTOR.put("\uff5b", "\u007b");
+		ZENHANKAKU_CONVERTOR.put("\uff5c", "\u007c");
+		ZENHANKAKU_CONVERTOR.put("\uff5d", "\u007d");
+		ZENHANKAKU_CONVERTOR.put("\uff5e", "\u007e");
+		ZENHANKAKU_CONVERTOR.put("\u3002", "\uff61");
+		ZENHANKAKU_CONVERTOR.put("\u300c", "\uff62");
+		ZENHANKAKU_CONVERTOR.put("\u300d", "\uff63");
+		ZENHANKAKU_CONVERTOR.put("\u3001", "\uff64");
+		ZENHANKAKU_CONVERTOR.put("\u30fb", "\uff65");
+		ZENHANKAKU_CONVERTOR.put("\u30a1", "\uff67");
+		ZENHANKAKU_CONVERTOR.put("\u30a3", "\uff68");
+		ZENHANKAKU_CONVERTOR.put("\u30a5", "\uff69");
+		ZENHANKAKU_CONVERTOR.put("\u30a7", "\uff6a");
+		ZENHANKAKU_CONVERTOR.put("\u30a9", "\uff6b");
+		ZENHANKAKU_CONVERTOR.put("\u30e3", "\uff6c");
+		ZENHANKAKU_CONVERTOR.put("\u30e5", "\uff6d");
+		ZENHANKAKU_CONVERTOR.put("\u30e7", "\uff6e");
+		ZENHANKAKU_CONVERTOR.put("\u30c3", "\uff6f");
+		ZENHANKAKU_CONVERTOR.put("\u30fc", "\uff70");
+		ZENHANKAKU_CONVERTOR.put("\u30a2", "\uff71");
+		ZENHANKAKU_CONVERTOR.put("\u30a4", "\uff72");
+		ZENHANKAKU_CONVERTOR.put("\u30a6", "\uff73");
+		ZENHANKAKU_CONVERTOR.put("\u30a8", "\uff74");
+		ZENHANKAKU_CONVERTOR.put("\u30aa", "\uff75");
+		ZENHANKAKU_CONVERTOR.put("\u30ab", "\uff76");
+		ZENHANKAKU_CONVERTOR.put("\u30ad", "\uff77");
+		ZENHANKAKU_CONVERTOR.put("\u30af", "\uff78");
+		ZENHANKAKU_CONVERTOR.put("\u30b1", "\uff79");
+		ZENHANKAKU_CONVERTOR.put("\u30b3", "\uff7a");
+		ZENHANKAKU_CONVERTOR.put("\u30b5", "\uff7b");
+		ZENHANKAKU_CONVERTOR.put("\u30b7", "\uff7c");
+		ZENHANKAKU_CONVERTOR.put("\u30b9", "\uff7d");
+		ZENHANKAKU_CONVERTOR.put("\u30bb", "\uff7e");
+		ZENHANKAKU_CONVERTOR.put("\u30bd", "\uff7f");
+		ZENHANKAKU_CONVERTOR.put("\u30bf", "\uff80");
+		ZENHANKAKU_CONVERTOR.put("\u30c1", "\uff81");
+		ZENHANKAKU_CONVERTOR.put("\u30c4", "\uff82");
+		ZENHANKAKU_CONVERTOR.put("\u30c6", "\uff83");
+		ZENHANKAKU_CONVERTOR.put("\u30c8", "\uff84");
+		ZENHANKAKU_CONVERTOR.put("\u30ca", "\uff85");
+		ZENHANKAKU_CONVERTOR.put("\u30cb", "\uff86");
+		ZENHANKAKU_CONVERTOR.put("\u30cc", "\uff87");
+		ZENHANKAKU_CONVERTOR.put("\u30cd", "\uff88");
+		ZENHANKAKU_CONVERTOR.put("\u30ce", "\uff89");
+		ZENHANKAKU_CONVERTOR.put("\u30cf", "\uff8a");
+		ZENHANKAKU_CONVERTOR.put("\u30d2", "\uff8b");
+		ZENHANKAKU_CONVERTOR.put("\u30d5", "\uff8c");
+		ZENHANKAKU_CONVERTOR.put("\u30d8", "\uff8d");
+		ZENHANKAKU_CONVERTOR.put("\u30db", "\uff8e");
+		ZENHANKAKU_CONVERTOR.put("\u30de", "\uff8f");
+		ZENHANKAKU_CONVERTOR.put("\u30df", "\uff90");
+		ZENHANKAKU_CONVERTOR.put("\u30e0", "\uff91");
+		ZENHANKAKU_CONVERTOR.put("\u30e1", "\uff92");
+		ZENHANKAKU_CONVERTOR.put("\u30e2", "\uff93");
+		ZENHANKAKU_CONVERTOR.put("\u30e4", "\uff94");
+		ZENHANKAKU_CONVERTOR.put("\u30e6", "\uff95");
+		ZENHANKAKU_CONVERTOR.put("\u30e8", "\uff96");
+		ZENHANKAKU_CONVERTOR.put("\u30e9", "\uff97");
+		ZENHANKAKU_CONVERTOR.put("\u30ea", "\uff98");
+		ZENHANKAKU_CONVERTOR.put("\u30eb", "\uff99");
+		ZENHANKAKU_CONVERTOR.put("\u30ec", "\uff9a");
+		ZENHANKAKU_CONVERTOR.put("\u30ed", "\uff9b");
+		ZENHANKAKU_CONVERTOR.put("\u30ef", "\uff9c");
+		ZENHANKAKU_CONVERTOR.put("\u30f2", "\uff66");
+		ZENHANKAKU_CONVERTOR.put("\u30f3", "\uff9d");
+		ZENHANKAKU_CONVERTOR.put("\u30ac", "\uff76\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30ae", "\uff77\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30b0", "\uff78\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30b2", "\uff79\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30b4", "\uff7a\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30b6", "\uff7b\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30b8", "\uff7c\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30ba", "\uff7d\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30bc", "\uff7e\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30be", "\uff7f\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30c0", "\uff80\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30c2", "\uff81\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30c5", "\uff82\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30c7", "\uff83\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30c9", "\uff84\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30d0", "\uff8a\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30d3", "\uff8b\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30d6", "\uff8c\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30d9", "\uff8d\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30dc", "\uff8e\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30d1", "\uff8a\uff9f");
+		ZENHANKAKU_CONVERTOR.put("\u30d4", "\uff8b\uff9f");
+		ZENHANKAKU_CONVERTOR.put("\u30d7", "\uff8c\uff9f");
+		ZENHANKAKU_CONVERTOR.put("\u30da", "\uff8d\uff9f");
+		ZENHANKAKU_CONVERTOR.put("\u30dd", "\uff8e\uff9f");
+		ZENHANKAKU_CONVERTOR.put("\u30f4", "\uff73\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30f7", "\uff9c\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u30fa", "\uff66\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u309b", "\uff9e");
+		ZENHANKAKU_CONVERTOR.put("\u309c", "\uff9f");
+		ZENHANKAKU_CONVERTOR.put("\u3000", HANKAKU_SPACE);
 	}
 
 	/**
@@ -275,10 +285,10 @@ public final class OgumaProjectUtils {
 	 */
 	public static String getDetailKeyword(final String keyword) {
 		final StringBuilder builder = new StringBuilder();
-		builder.append("%");
+		builder.append(HANKAKU_PERCENTSIGN);
 		for (final char aChar : keyword.toCharArray()) {
 			final String charAt = String.valueOf(aChar);
-			builder.append(charAt).append("%");
+			builder.append(charAt).append(HANKAKU_PERCENTSIGN);
 		}
 		return builder.toString();
 	}
@@ -286,7 +296,7 @@ public final class OgumaProjectUtils {
 	/**
 	 * エンティティのパラメータマップを取得する
 	 *
-	 * @param city 都市エンティティ
+	 * @param obj エンティティ
 	 * @return Map<String, Object>
 	 */
 	public static Map<String, Object> getParamMap(final Object obj) {
@@ -310,7 +320,7 @@ public final class OgumaProjectUtils {
 	 * @return true: すべて半角文字列, false: 全角文字も含める
 	 */
 	public static boolean isAllHankaku(final String hankaku) {
-		final List<String> zenkakuList = new ArrayList<>(HALF_FULL_CONVERTOR.keySet());
+		final List<String> zenkakuList = new ArrayList<>(ZENHANKAKU_CONVERTOR.keySet());
 		for (final char aChar : hankaku.toCharArray()) {
 			if (zenkakuList.contains(String.valueOf(aChar))) {
 				return false;
@@ -326,7 +336,7 @@ public final class OgumaProjectUtils {
 	 * @return true: すべて全角文字列, false: 半角文字も含める
 	 */
 	public static boolean isAllZenkaku(final String zenkaku) {
-		final List<String> hankakuList = new ArrayList<>(HALF_FULL_CONVERTOR.values());
+		final List<String> hankakuList = new ArrayList<>(ZENHANKAKU_CONVERTOR.values());
 		for (final char aChar : zenkaku.toCharArray()) {
 			if (hankakuList.contains(String.valueOf(aChar))) {
 				return false;
@@ -368,11 +378,11 @@ public final class OgumaProjectUtils {
 	public static boolean isEqual(@Nullable final Long long1, @Nullable final Long long2) {
 		if ((long1 == null) && (long2 == null)) {
 			return true;
-		} else if ((long1 == null) || (long2 == null)) {
-		} else if (long1.longValue() == long2.longValue()) {
-			return true;
 		}
-		return false;
+		if ((long1 == null) || (long2 == null)) {
+			return false;
+		}
+		return long1.longValue() == long2.longValue();
 	}
 
 	/**
@@ -478,11 +488,11 @@ public final class OgumaProjectUtils {
 			return EMPTY_STRING;
 		}
 		final StringBuilder builder = new StringBuilder();
-		final List<String> zenkakuList = new ArrayList<>(HALF_FULL_CONVERTOR.keySet());
+		final List<String> zenkakuList = new ArrayList<>(ZENHANKAKU_CONVERTOR.keySet());
 		for (final char charAt : zenkaku.toCharArray()) {
 			final String charAtString = String.valueOf(charAt);
 			if (zenkakuList.contains(charAtString)) {
-				builder.append(HALF_FULL_CONVERTOR.get(charAtString));
+				builder.append(ZENHANKAKU_CONVERTOR.get(charAtString));
 			} else {
 				builder.append(charAtString);
 			}
@@ -501,11 +511,11 @@ public final class OgumaProjectUtils {
 			return EMPTY_STRING;
 		}
 		final StringBuilder builder = new StringBuilder();
-		final List<String> hankakuList = new ArrayList<>(HALF_FULL_CONVERTOR.values());
+		final List<String> hankakuList = new ArrayList<>(ZENHANKAKU_CONVERTOR.values());
 		for (final char charAt : hankaku.toCharArray()) {
 			final String charAtString = String.valueOf(charAt);
 			if (hankakuList.contains(charAtString)) {
-				builder.append(HALF_FULL_CONVERTOR.inverseBidiMap().get(charAtString));
+				builder.append(ZENHANKAKU_CONVERTOR.inverseBidiMap().get(charAtString));
 			} else {
 				builder.append(charAtString);
 			}
