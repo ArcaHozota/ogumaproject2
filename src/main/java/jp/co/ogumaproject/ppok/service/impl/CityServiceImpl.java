@@ -2,6 +2,7 @@ package jp.co.ogumaproject.ppok.service.impl;
 
 import java.util.List;
 
+import org.jdbi.v3.core.Jdbi;
 import org.springframework.stereotype.Service;
 
 import jp.co.ogumaproject.ppok.common.OgumaProjectConstants;
@@ -35,18 +36,13 @@ public final class CityServiceImpl implements ICityService {
 	private static final Integer PAGE_SIZE = OgumaProjectConstants.DEFAULT_PAGE_SIZE;
 
 	/**
-	 * 地域リポジトリ
+	 * 共通リポジトリ
 	 */
-	private final DistrictRepository districtRepository;
-
-	/**
-	 * 都市リポジトリ
-	 */
-	private final CityRepository cityRepository;
+	private final Jdbi jdbi;
 
 	@Override
 	public ResultDto<String> checkDuplicated(final String name, final Long districtId) {
-		return this.cityRepository.countByName(name, districtId) > 0
+		return this.jdbi.onDemand(CityRepository.class).countByName(name, districtId) > 0
 				? ResultDto.failed(OgumaProjectConstants.MESSAGE_CITY_NAME_DUPLICATED)
 				: ResultDto.successWithoutData();
 	}
@@ -55,10 +51,11 @@ public final class CityServiceImpl implements ICityService {
 	public Pagination<CityDto> getCitiesByKeyword(final Integer pageNum, final String keyword) {
 		final int offset = (pageNum - 1) * PAGE_SIZE;
 		final String detailKeyword = OgumaProjectUtils.getDetailKeyword(keyword);
-		final Long totalRecords = this.cityRepository.countByKeyword(detailKeyword);
-		final List<CityDto> cityDtos = this.cityRepository.pagination(offset, PAGE_SIZE, detailKeyword).stream()
-				.map(item -> {
-					final District district = this.districtRepository.getOneById(item.getDistrictId());
+		final Long totalRecords = this.jdbi.onDemand(CityRepository.class).countByKeyword(detailKeyword);
+		final List<CityDto> cityDtos = this.jdbi.onDemand(CityRepository.class)
+				.pagination(offset, PAGE_SIZE, detailKeyword).stream().map(item -> {
+					final District district = this.jdbi.onDemand(DistrictRepository.class)
+							.getOneById(item.getDistrictId());
 					return new CityDto(item.getId(), item.getName(), item.getDistrictId(), item.getPronunciation(),
 							district.getName(), item.getPopulation(), item.getCityFlag());
 				}).toList();
@@ -67,14 +64,14 @@ public final class CityServiceImpl implements ICityService {
 
 	@Override
 	public ResultDto<String> remove(final Long id) {
-		final Long countByShutoId = this.districtRepository.countByShutoId(id);
+		final Long countByShutoId = this.jdbi.onDemand(DistrictRepository.class).countByShutoId(id);
 		if (countByShutoId > 0) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_FORBIDDEN3);
 		}
 		final City city = new City();
 		city.setId(id);
 		city.setDelFlg(OgumaProjectConstants.LOGIC_DELETE_FLG);
-		this.cityRepository.updateById(city);
+		this.jdbi.onDemand(CityRepository.class).updateById(city);
 		return ResultDto.successWithoutData(OgumaProjectConstants.MESSAGE_STRING_DELETED);
 	}
 
@@ -84,19 +81,19 @@ public final class CityServiceImpl implements ICityService {
 		SecondBeanUtils.copyNullableProperties(cityDto, city);
 		city.setId(SnowflakeUtils.snowflakeId());
 		city.setDelFlg(OgumaProjectConstants.LOGIC_DELETE_INITIAL);
-		this.cityRepository.insertById(city);
+		this.jdbi.onDemand(CityRepository.class).insertById(city);
 	}
 
 	@Override
 	public ResultDto<String> update(final CityDto cityDto) {
 		final City originalEntity = new City();
-		final City city = this.cityRepository.getOneById(cityDto.id());
+		final City city = this.jdbi.onDemand(CityRepository.class).getOneById(cityDto.id());
 		SecondBeanUtils.copyNullableProperties(city, originalEntity);
 		SecondBeanUtils.copyNullableProperties(cityDto, city);
 		if (OgumaProjectUtils.isEqual(originalEntity, city)) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 		}
-		this.cityRepository.updateById(city);
+		this.jdbi.onDemand(CityRepository.class).updateById(city);
 		return ResultDto.successWithoutData();
 	}
 }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.jdbi.v3.core.Jdbi;
 import org.springframework.stereotype.Service;
 
 import jp.co.ogumaproject.ppok.common.OgumaProjectConstants;
@@ -42,28 +43,13 @@ public final class RoleServiceImpl implements IRoleService {
 	private static final Integer PAGE_SIZE = OgumaProjectConstants.DEFAULT_PAGE_SIZE;
 
 	/**
-	 * 社員役割リポジトリ
+	 * 共通リポジトリ
 	 */
-	private final EmployeeRoleRepository employeeRoleRepository;
-
-	/**
-	 * 役割リポジトリ
-	 */
-	private final RoleRepository roleRepository;
-
-	/**
-	 * 役割権限リポジトリ
-	 */
-	private final RoleAuthRepository roleAuthRepository;
-
-	/**
-	 * 権限リポジトリ
-	 */
-	private final AuthorityRepository authorityRepository;
+	private final Jdbi jdbi;
 
 	@Override
 	public ResultDto<String> checkDuplicated(final String name) {
-		return this.roleRepository.countByName(name) > 0
+		return this.jdbi.onDemand(RoleRepository.class).countByName(name) > 0
 				? ResultDto.failed(OgumaProjectConstants.MESSAGE_ROLE_NAME_DUPLICATED)
 				: ResultDto.successWithoutData();
 	}
@@ -74,51 +60,52 @@ public final class RoleServiceImpl implements IRoleService {
 		final Long[] authIdArray = { 1L, 5L, 9L, 12L };
 		final List<Long> authIds = paramMap.get("authIds").stream().filter(a -> !Arrays.asList(authIdArray).contains(a))
 				.toList();
-		final List<Long> list = this.roleAuthRepository.getListByForeignKey(roleId).stream().map(RoleAuth::getAuthId)
-				.toList();
+		final List<Long> list = this.jdbi.onDemand(RoleAuthRepository.class).getListByForeignKey(roleId).stream()
+				.map(RoleAuth::getAuthId).toList();
 		if (OgumaProjectUtils.isEqual(list, authIds)) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 		}
-		this.roleAuthRepository.batchRemoveByForeignKey(roleId);
+		this.jdbi.onDemand(RoleAuthRepository.class).batchRemoveByForeignKey(roleId);
 		final List<RoleAuth> roleAuths = authIds.stream().map(item -> {
 			final RoleAuth roleAuth = new RoleAuth();
 			roleAuth.setRoleId(roleId);
 			roleAuth.setAuthId(item);
 			return roleAuth;
 		}).toList();
-		roleAuths.forEach(roleAuth -> this.roleAuthRepository.insertById(roleAuth));
+		roleAuths.forEach(roleAuth -> this.jdbi.onDemand(RoleAuthRepository.class).insertById(roleAuth));
 		return ResultDto.successWithoutData();
 	}
 
 	@Override
 	public List<Long> getAuthIdsById(final Long id) {
-		return this.roleAuthRepository.getListByForeignKey(id).stream().map(RoleAuth::getAuthId).toList();
+		return this.jdbi.onDemand(RoleAuthRepository.class).getListByForeignKey(id).stream().map(RoleAuth::getAuthId)
+				.toList();
 	}
 
 	@Override
 	public List<AuthorityDto> getAuthList() {
-		return this.authorityRepository.getList().stream()
+		return this.jdbi.onDemand(AuthorityRepository.class).getList().stream()
 				.map(item -> new AuthorityDto(item.getId(), item.getName(), item.getTitle(), item.getCategoryId()))
 				.toList();
 	}
 
 	@Override
 	public RoleDto getRoleById(final Long id) {
-		final Role role = this.roleRepository.getOneById(id);
+		final Role role = this.jdbi.onDemand(RoleRepository.class).getOneById(id);
 		return new RoleDto(role.getId(), role.getName());
 	}
 
 	@Override
 	public List<RoleDto> getRolesByEmployeeId(final Long employeeId) {
 		final List<Role> roleDtos = new ArrayList<>();
-		final List<Role> roles = this.roleRepository.getList();
+		final List<Role> roles = this.jdbi.onDemand(RoleRepository.class).getList();
 		if (employeeId == null) {
 			final Role role = new Role();
 			role.setId(0L);
 			role.setName(OgumaProjectConstants.DEFAULT_ROLE_NAME);
 			roleDtos.add(role);
 		} else {
-			final EmployeeRole employeeRole = this.employeeRoleRepository.getOneById(employeeId);
+			final EmployeeRole employeeRole = this.jdbi.onDemand(EmployeeRoleRepository.class).getOneById(employeeId);
 			if (employeeRole == null) {
 				final Role role = new Role();
 				role.setId(0L);
@@ -138,22 +125,23 @@ public final class RoleServiceImpl implements IRoleService {
 	public Pagination<RoleDto> getRolesByKeyword(final Integer pageNum, final String keyword) {
 		final int offset = (pageNum - 1) * PAGE_SIZE;
 		final String detailKeyword = OgumaProjectUtils.getDetailKeyword(keyword);
-		final Long totalRecords = this.roleRepository.countByKeyword(detailKeyword);
-		final List<Role> roles = this.roleRepository.pagination(offset, PAGE_SIZE, detailKeyword);
+		final Long totalRecords = this.jdbi.onDemand(RoleRepository.class).countByKeyword(detailKeyword);
+		final List<Role> roles = this.jdbi.onDemand(RoleRepository.class).pagination(offset, PAGE_SIZE, detailKeyword);
 		final List<RoleDto> roleDtos = roles.stream().map(item -> new RoleDto(item.getId(), item.getName())).toList();
 		return Pagination.of(roleDtos, totalRecords, pageNum, PAGE_SIZE);
 	}
 
 	@Override
 	public ResultDto<String> remove(final Long id) {
-		final List<EmployeeRole> listByForeignKey = this.employeeRoleRepository.getListByForeignKey(id);
+		final List<EmployeeRole> listByForeignKey = this.jdbi.onDemand(EmployeeRoleRepository.class)
+				.getListByForeignKey(id);
 		if (!listByForeignKey.isEmpty()) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_FORBIDDEN);
 		}
 		final Role role = new Role();
 		role.setId(id);
 		role.setDelFlg(OgumaProjectConstants.LOGIC_DELETE_FLG);
-		this.roleRepository.removeById(role);
+		this.jdbi.onDemand(RoleRepository.class).removeById(role);
 		return ResultDto.successWithoutData(OgumaProjectConstants.MESSAGE_STRING_DELETED);
 	}
 
@@ -163,19 +151,19 @@ public final class RoleServiceImpl implements IRoleService {
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
 		role.setId(SnowflakeUtils.snowflakeId());
 		role.setDelFlg(OgumaProjectConstants.LOGIC_DELETE_INITIAL);
-		this.roleRepository.insertById(role);
+		this.jdbi.onDemand(RoleRepository.class).insertById(role);
 	}
 
 	@Override
 	public ResultDto<String> update(final RoleDto roleDto) {
 		final Role originalEntity = new Role();
-		final Role role = this.roleRepository.getOneById(roleDto.id());
+		final Role role = this.jdbi.onDemand(RoleRepository.class).getOneById(roleDto.id());
 		SecondBeanUtils.copyNullableProperties(role, originalEntity);
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
 		if (OgumaProjectUtils.isEqual(originalEntity, role)) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 		}
-		this.roleRepository.updateById(role);
+		this.jdbi.onDemand(RoleRepository.class).updateById(role);
 		return ResultDto.successWithoutData();
 	}
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.jdbi.v3.core.Jdbi;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -59,30 +60,20 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	private static final Random RANDOM = new Random();
 
 	/**
-	 * 社員リポジトリ
+	 * 共通リポジトリ
 	 */
-	private final EmployeeRepository employeeRepository;
-
-	/**
-	 * 社員リポジトリ
-	 */
-	private final EmployeeRoleRepository employeeRoleRepository;
-
-	/**
-	 * 役割リポジトリ
-	 */
-	private final RoleRepository roleRepository;
+	private final Jdbi jdbi;
 
 	@Override
 	public ResultDto<String> checkDuplicated(final String loginAccount) {
-		return this.employeeRepository.countByName(loginAccount) > 0
+		return this.jdbi.onDemand(EmployeeRepository.class).countByName(loginAccount) > 0
 				? ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_DUPLICATED)
 				: ResultDto.successWithoutData();
 	}
 
 	@Override
 	public EmployeeDto getEmployeeById(final Long id) {
-		final Employee employee = this.employeeRepository.getOneById(id);
+		final Employee employee = this.jdbi.onDemand(EmployeeRepository.class).getOneById(id);
 		return new EmployeeDto(employee.getId(), employee.getLoginAccount(), employee.getUsername(),
 				OgumaProjectConstants.DEFAULT_ROLE_NAME, employee.getEmail(),
 				FORMATTER.format(employee.getDateOfBirth()), null);
@@ -92,7 +83,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	public Pagination<EmployeeDto> getEmployeesByKeyword(final Integer pageNum, final String keyword, final Long userId,
 			final String authChkFlag) {
 		if (Boolean.FALSE.equals(Boolean.valueOf(authChkFlag))) {
-			final Employee employee = this.employeeRepository.getOneById(userId);
+			final Employee employee = this.jdbi.onDemand(EmployeeRepository.class).getOneById(userId);
 			final EmployeeDto employeeDto = new EmployeeDto(employee.getId(), employee.getLoginAccount(),
 					employee.getUsername(), employee.getPassword(), employee.getEmail(),
 					FORMATTER.format(employee.getDateOfBirth()), null);
@@ -102,8 +93,9 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		}
 		final int offset = (pageNum - 1) * PAGE_SIZE;
 		final String detailKeyword = OgumaProjectUtils.getDetailKeyword(keyword);
-		final Long totalRecords = this.employeeRepository.countByKeyword(detailKeyword);
-		final List<Employee> employees = this.employeeRepository.pagination(offset, PAGE_SIZE, detailKeyword);
+		final Long totalRecords = this.jdbi.onDemand(EmployeeRepository.class).countByKeyword(detailKeyword);
+		final List<Employee> employees = this.jdbi.onDemand(EmployeeRepository.class).pagination(offset, PAGE_SIZE,
+				detailKeyword);
 		final List<EmployeeDto> employeeDtos = employees.stream()
 				.map(item -> new EmployeeDto(item.getId(), item.getLoginAccount(), item.getUsername(),
 						item.getPassword(), item.getEmail(), FORMATTER.format(item.getDateOfBirth()), null))
@@ -130,7 +122,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public Boolean register(final EmployeeDto employeeDto) {
-		final Long emailCount = this.employeeRepository.countByKeyword(employeeDto.email());
+		final Long emailCount = this.jdbi.onDemand(EmployeeRepository.class).countByKeyword(employeeDto.email());
 		if (emailCount > 0) {
 			return Boolean.FALSE;
 		}
@@ -143,12 +135,12 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), FORMATTER));
 		employee.setCreatedTime(LocalDateTime.now());
 		employee.setDelFlg(OgumaProjectConstants.LOGIC_DELETE_INITIAL);
-		final Role role = this.roleRepository.getOneByName("正社員");
+		final Role role = this.jdbi.onDemand(RoleRepository.class).getOneByName("正社員");
 		final EmployeeRole employeeRole = new EmployeeRole();
 		employeeRole.setEmployeeId(employee.getId());
 		employeeRole.setRoleId(role.getId());
-		this.employeeRoleRepository.insertById(employeeRole);
-		this.employeeRepository.insertById(employee);
+		this.jdbi.onDemand(EmployeeRoleRepository.class).insertById(employeeRole);
+		this.jdbi.onDemand(EmployeeRepository.class).insertById(employee);
 		return Boolean.TRUE;
 	}
 
@@ -157,19 +149,19 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final Employee employee = new Employee();
 		employee.setId(userId);
 		employee.setDelFlg(OgumaProjectConstants.LOGIC_DELETE_FLG);
-		this.employeeRepository.removeById(employee);
+		this.jdbi.onDemand(EmployeeRepository.class).removeById(employee);
 	}
 
 	@Override
 	public Boolean resetPassword(final EmployeeDto employeeDto) {
 		final Employee aEntity = new Employee();
 		SecondBeanUtils.copyNullableProperties(employeeDto, aEntity);
-		final Employee employee = this.employeeRepository.getOneByEntity(aEntity);
+		final Employee employee = this.jdbi.onDemand(EmployeeRepository.class).getOneByEntity(aEntity);
 		if (employee == null) {
 			return Boolean.FALSE;
 		}
 		employee.setPassword(ENCODER.encode(OgumaProjectConstants.DEFAULT_PASSWORD));
-		this.employeeRepository.updateById(employee);
+		this.jdbi.onDemand(EmployeeRepository.class).updateById(employee);
 		return Boolean.TRUE;
 	}
 
@@ -188,15 +180,15 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			final EmployeeRole employeeRole = new EmployeeRole();
 			employeeRole.setEmployeeId(employee.getId());
 			employeeRole.setRoleId(employeeDto.roleId());
-			this.employeeRoleRepository.insertById(employeeRole);
+			this.jdbi.onDemand(EmployeeRoleRepository.class).insertById(employeeRole);
 		}
-		this.employeeRepository.insertById(employee);
+		this.jdbi.onDemand(EmployeeRepository.class).insertById(employee);
 	}
 
 	@Override
 	public ResultDto<String> update(final EmployeeDto employeeDto) {
 		final Employee originalEntity = new Employee();
-		final Employee employee = this.employeeRepository.getOneById(employeeDto.id());
+		final Employee employee = this.jdbi.onDemand(EmployeeRepository.class).getOneById(employeeDto.id());
 		SecondBeanUtils.copyNullableProperties(employee, originalEntity);
 		final String password = employeeDto.password();
 		final String originalPass = employee.getPassword();
@@ -209,7 +201,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setPassword(OgumaProjectUtils.EMPTY_STRING);
 		originalEntity.setPassword(OgumaProjectUtils.EMPTY_STRING);
-		final EmployeeRole employeeRole = this.employeeRoleRepository.getOneById(employee.getId());
+		final EmployeeRole employeeRole = this.jdbi.onDemand(EmployeeRoleRepository.class).getOneById(employee.getId());
 		if (OgumaProjectUtils.isEqual(originalEntity, employee) && passwordMatch) {
 			if (((employeeRole == null) && (employeeDto.roleId() == 0)) || ((employeeRole != null)
 					&& OgumaProjectUtils.isEqual(employeeDto.roleId(), employeeRole.getRoleId()))) {
@@ -218,7 +210,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 				final EmployeeRole employeeRole2 = new EmployeeRole();
 				employeeRole2.setEmployeeId(employee.getId());
 				employeeRole2.setRoleId(employeeDto.roleId());
-				this.employeeRoleRepository.updateById(employeeRole2);
+				this.jdbi.onDemand(EmployeeRoleRepository.class).updateById(employeeRole2);
 			}
 		}
 		if (!passwordMatch) {
@@ -227,7 +219,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			employee.setPassword(originalPass);
 		}
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.dateOfBirth(), FORMATTER));
-		this.employeeRepository.updateById(employee);
+		this.jdbi.onDemand(EmployeeRepository.class).updateById(employee);
 		return ResultDto.successWithoutData();
 	}
 }

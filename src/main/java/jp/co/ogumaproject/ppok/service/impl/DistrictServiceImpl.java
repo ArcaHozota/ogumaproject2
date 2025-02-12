@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jdbi.v3.core.Jdbi;
 import org.springframework.stereotype.Service;
 
 import jp.co.ogumaproject.ppok.common.OgumaProjectConstants;
@@ -39,24 +40,14 @@ public final class DistrictServiceImpl implements IDistrictService {
 	private static final Integer PAGE_SIZE = OgumaProjectConstants.DEFAULT_PAGE_SIZE;
 
 	/**
-	 * 地方リポジトリ
+	 * 共通リポジトリ
 	 */
-	private final ChihoRepository chihoRepository;
-
-	/**
-	 * 地域リポジトリ
-	 */
-	private final DistrictRepository districtRepository;
-
-	/**
-	 * 都市リポジトリ
-	 */
-	private final CityRepository cityRepository;
+	private final Jdbi jdbi;
 
 	@Override
 	public List<Chiho> getChihos(final String chihoName) {
 		final List<Chiho> chihos = new ArrayList<>();
-		final List<Chiho> list = this.chihoRepository.getList();
+		final List<Chiho> list = this.jdbi.onDemand(ChihoRepository.class).getList();
 		chihos.add(list.stream().filter(a -> OgumaProjectUtils.isEqual(a.getName(), chihoName)).findFirst().get());
 		chihos.addAll(list);
 		return chihos.stream().distinct().toList();
@@ -64,21 +55,21 @@ public final class DistrictServiceImpl implements IDistrictService {
 
 	@Override
 	public List<DistrictDto> getDistrictsByCityId(final String cityId) {
-		final List<District> districts = this.districtRepository.getList();
+		final List<District> districts = this.jdbi.onDemand(DistrictRepository.class).getList();
 		if (!OgumaProjectUtils.isDigital(cityId)) {
 			return districts.stream().map(item -> {
-				final Chiho chiho = this.chihoRepository.getOneById(item.getChihoId());
+				final Chiho chiho = this.jdbi.onDemand(ChihoRepository.class).getOneById(item.getChihoId());
 				return new DistrictDto(item.getId(), item.getName(), null, null, null, chiho.getName(), null,
 						item.getDistrictFlag());
 			}).toList();
 		}
 		final List<District> aDistricts = new ArrayList<>();
-		final City city = this.cityRepository.getOneById(Long.parseLong(cityId));
+		final City city = this.jdbi.onDemand(CityRepository.class).getOneById(Long.parseLong(cityId));
 		aDistricts.add(districts.stream().filter(a -> OgumaProjectUtils.isEqual(a.getId(), city.getDistrictId()))
 				.findFirst().get());
 		aDistricts.addAll(districts);
 		return aDistricts.stream().distinct().map(item -> {
-			final Chiho chiho = this.chihoRepository.getOneById(item.getChihoId());
+			final Chiho chiho = this.jdbi.onDemand(ChihoRepository.class).getOneById(item.getChihoId());
 			return new DistrictDto(item.getId(), item.getName(), null, null, null, chiho.getName(), null,
 					item.getDistrictFlag());
 		}).toList();
@@ -88,13 +79,13 @@ public final class DistrictServiceImpl implements IDistrictService {
 	public Pagination<DistrictDto> getDistrictsByKeyword(final Integer pageNum, final String keyword) {
 		final int offset = (pageNum - 1) * PAGE_SIZE;
 		final String detailKeyword = OgumaProjectUtils.getDetailKeyword(keyword);
-		final Long totalRecords = this.districtRepository.countByKeyword(detailKeyword);
-		final List<DistrictDto> districtDtos = this.districtRepository.pagination(offset, PAGE_SIZE, detailKeyword)
-				.stream().map(item -> {
-					final Chiho chiho = this.chihoRepository.getOneById(item.getChihoId());
-					final City shuto = this.cityRepository.getOneById(item.getShutoId());
-					final Long population = this.cityRepository.getListByForeignKey(item.getId()).stream()
-							.map(City::getPopulation).reduce((a, v) -> a + v).get();
+		final Long totalRecords = this.jdbi.onDemand(DistrictRepository.class).countByKeyword(detailKeyword);
+		final List<DistrictDto> districtDtos = this.jdbi.onDemand(DistrictRepository.class)
+				.pagination(offset, PAGE_SIZE, detailKeyword).stream().map(item -> {
+					final Chiho chiho = this.jdbi.onDemand(ChihoRepository.class).getOneById(item.getChihoId());
+					final City shuto = this.jdbi.onDemand(CityRepository.class).getOneById(item.getShutoId());
+					final Long population = this.jdbi.onDemand(CityRepository.class).getListByForeignKey(item.getId())
+							.stream().map(City::getPopulation).reduce((a, v) -> a + v).get();
 					return new DistrictDto(item.getId(), item.getName(), item.getShutoId(), shuto.getName(),
 							item.getChihoId(), chiho.getName(), population, item.getDistrictFlag());
 				}).toList();
@@ -104,7 +95,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 	@Override
 	public List<CityDto> getShutos(final DistrictDto districtDto) {
 		final List<CityDto> cityDtos = new ArrayList<>();
-		final List<City> cities = this.cityRepository.getListByForeignKey(districtDto.id());
+		final List<City> cities = this.jdbi.onDemand(CityRepository.class).getListByForeignKey(districtDto.id());
 		cityDtos.add(cities.stream().filter(a -> OgumaProjectUtils.isEqual(a.getName(), districtDto.shutoName()))
 				.map(item -> new CityDto(item.getId(), item.getName(), null, null, null, null, null)).findFirst()
 				.get());
@@ -116,13 +107,13 @@ public final class DistrictServiceImpl implements IDistrictService {
 	@Override
 	public ResultDto<String> update(final DistrictDto districtDto) {
 		final District originalEntity = new District();
-		final District district = this.districtRepository.getOneById(districtDto.id());
+		final District district = this.jdbi.onDemand(DistrictRepository.class).getOneById(districtDto.id());
 		SecondBeanUtils.copyNullableProperties(district, originalEntity);
 		SecondBeanUtils.copyNullableProperties(districtDto, district);
 		if (OgumaProjectUtils.isEqual(originalEntity, district)) {
 			return ResultDto.failed(OgumaProjectConstants.MESSAGE_STRING_NOCHANGE);
 		}
-		this.districtRepository.updateById(district);
+		this.jdbi.onDemand(DistrictRepository.class).updateById(district);
 		return ResultDto.successWithoutData();
 	}
 }
