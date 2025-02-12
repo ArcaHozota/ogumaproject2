@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
 import jp.co.ogumaproject.ppok.common.OgumaProjectConstants;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Ogumaアプリケーション
@@ -13,7 +13,7 @@ import lombok.extern.log4j.Log4j2;
  * @author ArkamaHozota
  * @since 1.00beta
  */
-@Log4j2
+@Slf4j
 @SpringBootApplication
 @ServletComponentScan
 public class Oguma2Application {

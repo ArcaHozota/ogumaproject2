@@ -18,7 +18,7 @@ import jp.co.ogumaproject.ppok.common.OgumaProjectConstants;
 import jp.co.ogumaproject.ppok.common.OgumaProjectURLConstants;
 import jp.co.ogumaproject.ppok.listener.OgumaProjectUserDetailsService;
 import jp.co.ogumaproject.ppok.utils.OgumaProjectUtils;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * SpringSecurity配置クラス
@@ -26,7 +26,7 @@ import lombok.extern.log4j.Log4j2;
  * @author ArkamaHozota
  * @since 5.99
  */
-@Log4j2
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration {
