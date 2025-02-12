@@ -86,7 +86,7 @@ public final class RoleServiceImpl implements IRoleService {
 			roleAuth.setAuthId(item);
 			return roleAuth;
 		}).toList();
-		roleAuths.forEach(roleAuth -> this.roleAuthRepository.saveById(roleAuth));
+		roleAuths.forEach(roleAuth -> this.roleAuthRepository.insertById(roleAuth));
 		return ResultDto.successWithoutData();
 	}
 
@@ -163,7 +163,7 @@ public final class RoleServiceImpl implements IRoleService {
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
 		role.setId(SnowflakeUtils.snowflakeId());
 		role.setDelFlg(OgumaProjectConstants.LOGIC_DELETE_INITIAL);
-		this.roleRepository.saveById(role);
+		this.roleRepository.insertById(role);
 	}
 
 	@Override

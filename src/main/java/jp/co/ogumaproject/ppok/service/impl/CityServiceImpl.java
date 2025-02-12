@@ -84,7 +84,7 @@ public final class CityServiceImpl implements ICityService {
 		SecondBeanUtils.copyNullableProperties(cityDto, city);
 		city.setId(SnowflakeUtils.snowflakeId());
 		city.setDelFlg(OgumaProjectConstants.LOGIC_DELETE_INITIAL);
-		this.cityRepository.saveById(city);
+		this.cityRepository.insertById(city);
 	}
 
 	@Override

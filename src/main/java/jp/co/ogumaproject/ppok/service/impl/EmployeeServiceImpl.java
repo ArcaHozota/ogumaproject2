@@ -147,8 +147,8 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final EmployeeRole employeeRole = new EmployeeRole();
 		employeeRole.setEmployeeId(employee.getId());
 		employeeRole.setRoleId(role.getId());
-		this.employeeRoleRepository.saveById(employeeRole);
-		this.employeeRepository.saveById(employee);
+		this.employeeRoleRepository.insertById(employeeRole);
+		this.employeeRepository.insertById(employee);
 		return Boolean.TRUE;
 	}
 
@@ -188,9 +188,9 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			final EmployeeRole employeeRole = new EmployeeRole();
 			employeeRole.setEmployeeId(employee.getId());
 			employeeRole.setRoleId(employeeDto.roleId());
-			this.employeeRoleRepository.saveById(employeeRole);
+			this.employeeRoleRepository.insertById(employeeRole);
 		}
-		this.employeeRepository.saveById(employee);
+		this.employeeRepository.insertById(employee);
 	}
 
 	@Override
