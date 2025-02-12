@@ -28,7 +28,7 @@ public interface EmployeeRepository {
 	 * @param keyword キーワード
 	 * @return Long
 	 */
-	@SqlQuery("SELECT COUNT(1) FROM PPOG_EMPLOYEES_VIEW PEV WHERE PEV.LOGIN_ACCOUNT LIKE ? OR PEV.USERNAME LIKE ? OR PEV.EMAIL LIKE ?")
+	@SqlQuery("SELECT COUNT(1) FROM PPOG_EMPLOYEES_VIEW PEV WHERE PEV.LOGIN_ACCOUNT LIKE :keyword OR PEV.USERNAME LIKE :keyword OR PEV.EMAIL LIKE :keyword")
 	Long countByKeyword(@Bind("keyword") String keyword);
 
 	/**

@@ -27,4 +27,4 @@ spring:
     suffix: .html
 logging:
   level:
-    root: DEBUG
+    root: INFO
